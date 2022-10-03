@@ -1,0 +1,15 @@
+---
+trial_id: 315
+discovery_date: 2022-04-02 17:30:16.024200
+date: 2022-04-02 17:30:16.024200
+title: "A Long-Term International, Extension of Study GNC-003, with GNbAC1 in Patients with Relapsing Remitting Multiple Sclerosis"
+summary: |
+  <p>EudraCT Number: 2016-004935-18<br />Sponsor Protocol Number: GNC-004<br />Sponsor Name: GeNeuro SA<br />Start Date: 2017-04-12<br />Medical condition: Multiple Sclerosis (MS)<br />Disease: <br />Version: 20.0<br />SOC Term: 10029205 - Nervous system disorders<br />Classification Code: 10063399<br />Term: Relapsing-remitting multiple sclerosis<br />Level: PT<br /><br />Population Age: Adults<br />Gender: Male, Female<br />Trial Protocol: <a href="https://www.clinicaltrialsregister.eu/ctr-search/trial/2016-004935-18/HU">HU</a> (Completed), <a href="https://www.clinicaltrialsregister.eu/ctr-search/trial/2016-004935-18/DE">DE</a> (Prematurely Ended), <a href="https://www.clinicaltrialsregister.eu/ctr-search/trial/2016-004935-18/CZ">CZ</a> (Prematurely Ended), <a href="https://www.clinicaltrialsregister.eu/ctr-search/trial/2016-004935-18/ES">ES</a> (Prematurely Ended), <a href="https://www.clinicaltrialsregister.eu/ctr-search/trial/2016-004935-18/PL">PL</a> (Prematurely Ended), <a href="https://www.clinicaltrialsregister.eu/ctr-search/trial/2016-004935-18/BG">BG</a> (Prematurely Ended), <a href="https://www.clinicaltrialsregister.eu/ctr-search/trial/2016-004935-18/HR">HR</a> (Prematurely Ended), <a href="https://www.clinicaltrialsregister.eu/ctr-search/trial/2016-004935-18/IT">IT</a> (Completed)</p>
+link: 'https://www.clinicaltrialsregister.eu/ctr-search/search?query=eudract_number:2016-004935-18'
+published_date: NaT
+trial_source: Clinical Trials Register Europe
+relevant: 
+options:
+  unlisted: false
+---
+<p>EudraCT Number: 2016-004935-18<br />Sponsor Protocol Number: GNC-004<br />Sponsor Name: GeNeuro SA<br />Start Date: 2017-04-12<br />Medical condition: Multiple Sclerosis (MS)<br />Disease: <br />Version: 20.0<br />SOC Term: 10029205 - Nervous system disorders<br />Classification Code: 10063399<br />Term: Relapsing-remitting multiple sclerosis<br />Level: PT<br /><br />Population Age: Adults<br />Gender: Male, Female<br />Trial Protocol: <a href="https://www.clinicaltrialsregister.eu/ctr-search/trial/2016-004935-18/HU">HU</a> (Completed), <a href="https://www.clinicaltrialsregister.eu/ctr-search/trial/2016-004935-18/DE">DE</a> (Prematurely Ended), <a href="https://www.clinicaltrialsregister.eu/ctr-search/trial/2016-004935-18/CZ">CZ</a> (Prematurely Ended), <a href="https://www.clinicaltrialsregister.eu/ctr-search/trial/2016-004935-18/ES">ES</a> (Prematurely Ended), <a href="https://www.clinicaltrialsregister.eu/ctr-search/trial/2016-004935-18/PL">PL</a> (Prematurely Ended), <a href="https://www.clinicaltrialsregister.eu/ctr-search/trial/2016-004935-18/BG">BG</a> (Prematurely Ended), <a href="https://www.clinicaltrialsregister.eu/ctr-search/trial/2016-004935-18/HR">HR</a> (Prematurely Ended), <a href="https://www.clinicaltrialsregister.eu/ctr-search/trial/2016-004935-18/IT">IT</a> (Completed)</p>
