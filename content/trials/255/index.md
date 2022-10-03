@@ -1,0 +1,15 @@
+---
+trial_id: 255
+discovery_date: 2022-03-29 21:28:27.972068
+date: 2022-03-29 21:28:27.972068
+title: "A long-term follow-up study for Multiple Sclerosis patients who have completed the alemtuzumab Extension Study (CAMMS03409)"
+summary: |
+  <p>EudraCT Number: 2013-003884-71<br />Sponsor Protocol Number: LPS13649<br />Sponsor Name: Genzyme Corporation<br />Start Date: 2015-02-05<br />Medical condition: Relapsing-remitting multiple sclerosis<br />Disease: <br />Version: 17.0<br />SOC Term: 10029205 - Nervous system disorders<br />Classification Code: 10063399<br />Term: Relapsing-remitting multiple sclerosis<br />Level: PT<br /><br />Population Age: Adults<br />Gender: Male, Female<br />Trial Protocol: <a href="https://www.clinicaltrialsregister.eu/ctr-search/trial/2013-003884-71/BE">BE</a> (Completed), <a href="https://www.clinicaltrialsregister.eu/ctr-search/trial/2013-003884-71/NL">NL</a> (Completed), <a href="https://www.clinicaltrialsregister.eu/ctr-search/trial/2013-003884-71/CZ">CZ</a> (Completed), <a href="https://www.clinicaltrialsregister.eu/ctr-search/trial/2013-003884-71/ES">ES</a> (Ongoing), <a href="https://www.clinicaltrialsregister.eu/ctr-search/trial/2013-003884-71/DE">DE</a> (Completed), <a href="https://www.clinicaltrialsregister.eu/ctr-search/trial/2013-003884-71/IT">IT</a> (Completed), <a href="https://www.clinicaltrialsregister.eu/ctr-search/trial/2013-003884-71/DK">DK</a> (Completed), <a href="https://www.clinicaltrialsregister.eu/ctr-search/trial/2013-003884-71/HR">HR</a> (Completed)</p>
+link: 'https://www.clinicaltrialsregister.eu/ctr-search/search?query=eudract_number:2013-003884-71'
+published_date: NaT
+trial_source: Clinical Trials Register Europe
+relevant: 
+options:
+  unlisted: false
+---
+<p>EudraCT Number: 2013-003884-71<br />Sponsor Protocol Number: LPS13649<br />Sponsor Name: Genzyme Corporation<br />Start Date: 2015-02-05<br />Medical condition: Relapsing-remitting multiple sclerosis<br />Disease: <br />Version: 17.0<br />SOC Term: 10029205 - Nervous system disorders<br />Classification Code: 10063399<br />Term: Relapsing-remitting multiple sclerosis<br />Level: PT<br /><br />Population Age: Adults<br />Gender: Male, Female<br />Trial Protocol: <a href="https://www.clinicaltrialsregister.eu/ctr-search/trial/2013-003884-71/BE">BE</a> (Completed), <a href="https://www.clinicaltrialsregister.eu/ctr-search/trial/2013-003884-71/NL">NL</a> (Completed), <a href="https://www.clinicaltrialsregister.eu/ctr-search/trial/2013-003884-71/CZ">CZ</a> (Completed), <a href="https://www.clinicaltrialsregister.eu/ctr-search/trial/2013-003884-71/ES">ES</a> (Ongoing), <a href="https://www.clinicaltrialsregister.eu/ctr-search/trial/2013-003884-71/DE">DE</a> (Completed), <a href="https://www.clinicaltrialsregister.eu/ctr-search/trial/2013-003884-71/IT">IT</a> (Completed), <a href="https://www.clinicaltrialsregister.eu/ctr-search/trial/2013-003884-71/DK">DK</a> (Completed), <a href="https://www.clinicaltrialsregister.eu/ctr-search/trial/2013-003884-71/HR">HR</a> (Completed)</p>
