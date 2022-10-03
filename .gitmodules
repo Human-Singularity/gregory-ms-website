@@ -1,0 +1,3 @@
+[submodule "themes/NowUI-Pro"]
+	path = themes/NowUI-Pro
+	url = git@github.com:brunoamaral/Hugo-NowUI-Pro.git
