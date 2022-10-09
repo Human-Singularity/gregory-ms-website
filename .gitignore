@@ -2,7 +2,9 @@ node_modules/
 content/articles/
 content/trials/
 resources/
-
+data/embeds.json
+content/developers/articles.zip
+content/developers/trials.zip
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
