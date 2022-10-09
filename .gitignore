@@ -1,6 +1,7 @@
 node_modules/
 content/articles/
 content/trials/
+resources/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
