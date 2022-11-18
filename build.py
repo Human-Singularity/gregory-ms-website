@@ -306,7 +306,7 @@ dashboards = json.load(f)
 metabase_json = {}
 for i in dashboards:
 	print("Generating key for dashboard: "+ str(i))
-	payload = { "resource": {"dashboard": i}, "params": { }, "exp": round(time.time()) + (60 * 180)}
+	payload = { "resource": {"dashboard": i}, "params": { }, "exp": round(time.time()) + (60 * 1440)}
 	token = jwt.encode(payload, METABASE_SECRET_KEY, algorithm='HS256')
 	iframeUrl = METABASE_SITE_URL + 'embed/dashboard/' + token + '#bordered=true&titled=true'
 	entry = "dashboard_" + str(i) 
