@@ -6,6 +6,7 @@ resources/
 data/embeds.json
 content/developers/articles.zip
 content/developers/trials.zip
+resources/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
