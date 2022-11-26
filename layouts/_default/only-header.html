@@ -112,7 +112,7 @@
 {{ end }}
 
 {{ define "list-javascript" }}
-	{{ if ne .Params.disable_comments true }}
+	{{ if or (eq .Params.disable_comments false) ( eq .Site.Params.enableComments true) }}
 		{{ partial "comments-js.html" . }}
 		<script defer src="https://commento.brunoamaral.eu/js/commento.js" data-no-fonts="true"></script>
 	{{ end }}
