@@ -19,7 +19,7 @@
 		<div class="container">
 			<a name="content"></a>
 			<section id="category-list" class="card-group">
-					<div class="row">
+
 					{{ $list := "none" }}
 						{{ if eq .Params.options.unlisted true }}
 							{{ $list = (where (where .Data.Pages ".Params.options.unlisted" true) "Section" "!=" "instagram") }}
@@ -37,13 +37,53 @@
 
 						<div class="col-12">{{ .Content }}</div>
 
-						{{ if not (or (eq .CurrentSection.Name (i18n "stories")) (eq .Section "page")) }}
-							{{ range (.Paginate $list 9).Pages }}
-								{{ .Render "summary" }}
-							{{ end }}
-						{{ end }}
-						
-					</div>
+						<script src="https://unpkg.com/htmx.org"></script>
+						<script src="https://unpkg.com/htmx.org/dist/ext/client-side-templates.js"></script>
+						<script src="https://unpkg.com/mustache@latest"></script>
+						<script src="https://unpkg.com/mustache-wax@0.6.0/lib/mustache-wax.js"></script>
+						<script type="text/javascript">
+							Mustache.Formatters = {
+								"multiply": function (value, multiplier) {
+									console.log('multiply')
+										return value * multiplier;
+								},
+								"divide": function(value, divider){
+									console.log('divide')
+									return value / divider;
+								}
+							}
+							
+						</script>
+					
+						<div hx-ext="client-side-templates"> 
+							<div hx-get="http://localhost:1313/data.json" hx-trigger="load"	mustache-template="handlebars-template" class="row"></div>
+						</div>
+
+						{{ safeHTML `<template id="handlebars-template">
+							divide by 10 =  {{ count | divide:10}} 
+							{{#results}}
+							<div class="col-md-6">
+								<div class="card card-plain card-blog">
+									<div class="card-body">
+										<span class="h6 category text-info text-left {{ category }} ">{{ category }}</span>
+										{{ published_date }} <span class="badge badge-info text-white font-weight-normal">{{ category }}</span>
+										<h4 class="card-title">
+											<a href="{{ article_id }}">{{ title }}</a>
+										</h4>
+										<p class="author">
+											{{#authors}}
+											<a href="#" itemprop="author" title="" class="author">{{ given_name }} {{family_name}}</a></b>, {{ /authors }}
+											<span class="badge badge-info text-white font-weight-normal">{{ source }}</span> {{ #ml_prediction_gnb }}<span class="badge badge-success text-white font-weight-normal">auto</span>{{/ml_prediction_gnb}} {{#relevant}}<span class="badge badge-primary text-white font-weight-normal">human</span>{{/relevant}}
+										</p>
+										<p class="card-description">
+											<a href="/{{ article_id }}" class="btn btn-sm btn-success">Read More</a>
+										</p>
+									</div>
+								</div>
+							</div>
+							{{/results}}
+						</template>`}}
+
 			</section>
 			<section class="py-1">
 				<div class="container">
