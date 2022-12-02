@@ -1,5 +1,6 @@
 .DS_Store
 node_modules/
+assets/node_modules
 content/articles/
 content/trials/
 resources/
