@@ -37,30 +37,16 @@
 
 						<div class="col-12">{{ .Content }}</div>
 
-						<script src="https://unpkg.com/htmx.org"></script>
-						<script src="https://unpkg.com/htmx.org/dist/ext/client-side-templates.js"></script>
-						<script src="https://unpkg.com/mustache@latest"></script>
-						<script src="https://unpkg.com/mustache-wax@0.6.0/lib/mustache-wax.js"></script>
-						<script type="text/javascript">
-							Mustache.Formatters = {
-								"multiply": function (value, multiplier) {
-									console.log('multiply')
-										return value * multiplier;
-								},
-								"divide": function(value, divider){
-									console.log('divide')
-									return value / divider;
-								}
-							}
-							
-						</script>
+
+
+
 					
 						<div hx-ext="client-side-templates"> 
-							<div hx-get="http://localhost:1313/data.json" hx-trigger="load"	mustache-template="handlebars-template" class="row"></div>
+							<div hx-get="http://localhost:1313/data.json" hx-trigger="load"	handlebars-template="handlebars-template" class="row"></div>
 						</div>
 
 						{{ safeHTML `<template id="handlebars-template">
-							divide by 10 =  {{ count | divide:10}} 
+{{results}}
 							{{#results}}
 							<div class="col-md-6">
 								<div class="card card-plain card-blog">
@@ -163,4 +149,8 @@
 
 {{ define "list-javascript" }}
 	{{ partial "comments-js.html" . }}
+	{{ $js := resources.Get "js/index.js" | js.Build}}
+	<script src="{{$js.Permalink}}"></script>
+	<script src="https://unpkg.com/htmx.org/dist/ext/client-side-templates.js"></script>
+
 {{ end }}
