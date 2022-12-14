@@ -27,11 +27,6 @@
     "postcss": "^8.4.19",
     "purgecss": "^5.0.0"
   },
-  "browser": {
-    "fs": false,
-    "path": false,
-    "os": false
-  },
   "devDependencies": {
     "fs": "^0.0.1-security"
   }

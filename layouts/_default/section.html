@@ -42,11 +42,11 @@
 
 					
 						<div hx-ext="client-side-templates"> 
-							<div hx-get="http://localhost:1313/data.json" hx-trigger="load"	handlebars-template="handlebars-template" class="row"></div>
+							<div hx-get="/data.json" hx-trigger="load"	handlebars-template="handlebars-template" class="row"></div>
 						</div>
 
-						{{ safeHTML `<template id="handlebars-template">
-{{results}}
+						{{ safeHTML `<div id="handlebars-template">
+{{count}}
 							{{#results}}
 							<div class="col-md-6">
 								<div class="card card-plain card-blog">
@@ -68,7 +68,7 @@
 								</div>
 							</div>
 							{{/results}}
-						</template>`}}
+						</div>`}}
 
 			</section>
 			<section class="py-1">
@@ -149,8 +149,8 @@
 
 {{ define "list-javascript" }}
 	{{ partial "comments-js.html" . }}
+	{{/*  <script src="https://unpkg.com/htmx.org/dist/ext/client-side-templates.js"></script>  */}}
 	{{ $js := resources.Get "js/index.js" | js.Build}}
 	<script src="{{$js.Permalink}}"></script>
-	<script src="https://unpkg.com/htmx.org/dist/ext/client-side-templates.js"></script>
 
 {{ end }}

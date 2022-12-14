@@ -126,13 +126,14 @@ for index, row in categories.iterrows():
 	categoryDir = pathlib.Path(categoriesDir + slugify(str(row["category_name"])))
 	categoryDir.mkdir(parents=True, exist_ok=True)
 	with open(str(categoryDir)+"/_index.md", "w+") as f:
-		category_data = "---" + \
-			"\ntitle: \"" + title + "\"" + \
-			"\nsubtitle: \"" + description + "\"" + \
-			"\n---\n" + \
-			html.unescape(row["category_description"])
-		# add content to file
+		category_data = f"""
+		---
+		title: "{title}"
+		subtitle: "{description}"
+		---
 
+		{html.unescape(description)}
+		"""
 		f.write(category_data)
 		f.close()
 

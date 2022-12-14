@@ -11,6 +11,7 @@
       "button",
       "code",
       "div",
+      "em",
       "footer",
       "form",
       "h1",
@@ -32,7 +33,6 @@
       "link",
       "meta",
       "nav",
-      "noscript",
       "ol",
       "option",
       "p",
@@ -419,7 +419,9 @@
       "w-100",
       "w-50",
       "w-75",
-      "wrapper"
+      "wrapper",
+      "{{",
+      "}}"
     ],
     "ids": [
       "",
@@ -454,6 +456,7 @@
       "fresh-content-as-it-happens",
       "gregory-ms-team",
       "gráfico-atualizado",
+      "handlebars-template",
       "hardware-requirements",
       "home",
       "id",

@@ -1,0 +1,2 @@
+#!/bin/bash
+git submodule update --remote && git add gregory && git commit -m update && git push && ssh gregory@House 'cd ~/gregory-ms-website && git pull && git submodule update' && ssh root@House 'docker restart admin'

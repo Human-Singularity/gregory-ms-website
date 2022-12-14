@@ -1,8 +1,6 @@
+import htmx from 'htmx.org';
+import Handlebars from 'handlebars';
 
-import htmx from "htmx.org";
-import "htmx.org/dist/ext/client-side-templates.js"
-import Handlebars from "handlebars/runtime"
-window.htmx = require('htmx.org');
 
 // Wax(Mustache);
 // Mustache.Formatters = {
@@ -17,4 +15,3 @@ window.htmx = require('htmx.org');
 // }
 
 //Mustache.render(...);
-
