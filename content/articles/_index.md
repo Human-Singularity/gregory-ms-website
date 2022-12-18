@@ -19,9 +19,7 @@ cta:
     classes: btn-sm btn-success
 ---
 
-<div id="root"></div>
-
-
+{{< articleslist >}}
 
 Articles listed come from the following sites, using keyword searches for `Multiple Sclerosis, autoimmune encephalomyelitis, encephalomyelitis, immune tolerance, myelin`.
 
