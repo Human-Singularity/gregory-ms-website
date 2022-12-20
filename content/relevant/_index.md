@@ -39,4 +39,10 @@ Articles listed here come from the following sites, with keyword searches for `M
 
 </ul>
 
+<p class="text-center col-12"> <strong>Labels:</strong>
+  <span class="badge badge-info font-weight-normal">source</span> <span class="badge badge-primary font-weight-normal">manual selection</span> <span class="badge badge-success font-weight-normal">AI prediction</span>
+</p>    
+
+{{< relevant >}}
+
 <a href='https://www.freepik.com/photos/design'>Design photo created by rawpixel.com - www.freepik.com</a>

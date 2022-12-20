@@ -423,6 +423,10 @@
 				{{- . | safeHTML -}}
 			{{- end -}}
 		{{- end -}}
+		{{- if .HasShortcode "relevant"  -}}yes
+		{{ $api := resources.Get "js/gregory_api_relevant_articles.jsx" | js.Build | babel }} }}
+		<script src="{{ $api.Permalink }}"></script>
+		{{ end }}
 		{{- if or (.HasShortcode "metabase-embed")  -}}
 		<script src="https://metabase.gregory-ms.com/app/iframeResizer.js"></script>
 		{{end}}
