@@ -81,7 +81,21 @@ function Pagination(props){
 				<span aria-hidden="true"><i className="fa fa-angle-double-left" aria-hidden="true"></i></span>
 				</a>
 			</li>
-	<li></li>
+			{ props.page > 2 &&
+			<React.Fragment>
+				<li className="page-item">
+					<a className="page-link" onClick={() => props.setPage(props.page - 2)}>{props.page - 2}</a>
+				</li>
+			</React.Fragment>
+			}
+
+	{ props.page > 1 &&
+			<React.Fragment>
+				<li className="page-item">
+					<a className="page-link" onClick={() => props.setPage(props.page - 1)}>{props.page - 1}</a>
+				</li>
+			</React.Fragment>
+			}
 			<li className="page-item active">
 				<a className="page-link" href="/articles/page/{props.page}/">{props.page}</a>
 			</li>
