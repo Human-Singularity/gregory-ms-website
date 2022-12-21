@@ -204,44 +204,44 @@ print('''
 ####
 ''')
 
-# Make sure directory exists or create it
-trialsDir = GREGORY_DIR + "/content/trials/"
-trialsDirExists = pathlib.Path(trialsDir)
+# # Make sure directory exists or create it
+# trialsDir = GREGORY_DIR + "/content/trials/"
+# trialsDirExists = pathlib.Path(trialsDir)
 
-if trialsDirExists.exists() == False:
-	trialsDirExists.mkdir(parents=True, exist_ok=True)
+# if trialsDirExists.exists() == False:
+# 	trialsDirExists.mkdir(parents=True, exist_ok=True)
 
 
-# Open trials.json
+# # Open trials.json
 
-for index, row in trials.iterrows():
-	title = row["title"].replace("'", "\\'").replace("\"",'\\"')
+# for index, row in trials.iterrows():
+# 	title = row["title"].replace("'", "\\'").replace("\"",'\\"')
 
-	# Write a file for each record
-	markdownDir = pathlib.Path(trialsDir+str(row["trial_id"]))
-	markdownDir.mkdir(parents=True, exist_ok=True)
+# 	# Write a file for each record
+# 	markdownDir = pathlib.Path(trialsDir+str(row["trial_id"]))
+# 	markdownDir.mkdir(parents=True, exist_ok=True)
 
-	with open(str(markdownDir)+"/index.md", "w+") as f:
+# 	with open(str(markdownDir)+"/index.md", "w+") as f:
 
-		trialdata = "---\ntrial_id: " + \
-			str(row["trial_id"]) + \
-			"\ndiscovery_date: " + str(row["discovery_date"]) + \
-			"\ndate: " + str(row["discovery_date"]) +\
-			"\ntitle: \"" + title + "\"" +\
-			"\nsummary: |" + \
-			'\n  ' + str(row["summary"]).replace("\n", "\n  ") +\
-			"\nlink: \'" + row["link"] + "\'" +\
-			"\npublished_date: " + str(row["published_date"]) + \
-			"\ntrial_source: " + str(row["Sources__name"]) + \
-			"\nrelevant: " + str(row["relevant"]).lower() + \
-			"\noptions:" + \
-			"\n  unlisted: false" + \
-			"\n---\n" + \
-			html.unescape(str(row["summary"]))
-		# add content to file
+# 		trialdata = "---\ntrial_id: " + \
+# 			str(row["trial_id"]) + \
+# 			"\ndiscovery_date: " + str(row["discovery_date"]) + \
+# 			"\ndate: " + str(row["discovery_date"]) +\
+# 			"\ntitle: \"" + title + "\"" +\
+# 			"\nsummary: |" + \
+# 			'\n  ' + str(row["summary"]).replace("\n", "\n  ") +\
+# 			"\nlink: \'" + row["link"] + "\'" +\
+# 			"\npublished_date: " + str(row["published_date"]) + \
+# 			"\ntrial_source: " + str(row["Sources__name"]) + \
+# 			"\nrelevant: " + str(row["relevant"]).lower() + \
+# 			"\noptions:" + \
+# 			"\n  unlisted: false" + \
+# 			"\n---\n" + \
+# 			html.unescape(str(row["summary"]))
+# 		# add content to file
 
-		f.write(trialdata)
-		f.close()
+# 		f.write(trialdata)
+# 		f.close()
 
 
 print('''
