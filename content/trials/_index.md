@@ -41,7 +41,7 @@ cta:
 <div class="col-md-6 justify-content-center align-self-center align-right ">
 <img src="/trials/undraw_mail_re_duel.svg" class="w-75 float-right">
 </div>
-<div class="col-md-6 ml-auto mr-auto">
+<div class="col-md-6 ml-auto mr-auto mb-5">
 	<div class="card card-contact card-raised">
 		<form role="form" id="contact-form1" method="post" action="https://api.gregory-ms.com/subscriptions/new/">
 			<div class="card-header text-center">
@@ -106,7 +106,7 @@ cta:
 
 
 <div class="col-12 align-content-center text-center">
-<h2 class="title">Clinical Trials by descending date</h2>
+<h2 class="title">Recent Clinical Trials for Multiple Sclerosis</h2>
 
 <p>Clinical Trials listed are retrieved from <a target="_blank" href="https://www.cuf.pt/cuf-academic-center/ensaios-clinicos?combine=&unidade=&estado=All&patologia=2346&especialidade=">CUF <i class="text-muted text-primary fas fa-external-link-square-alt"></i></a> &nbsp;
   <a target="_blank" href="https://clinicaltrials.gov/ct2/results/rss.xml?rcv_d=14&lup_d=&sel_rss=new14&cond=Multiple+Sclerosis&count=10000">ClinicalTrials.gov <i class="text-muted text-primary fas fa-external-link-square-alt"></i></a> &nbsp;
@@ -114,3 +114,5 @@ cta:
 </p>
 
 </div>
+
+{{< trials >}}
