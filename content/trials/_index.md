@@ -106,7 +106,7 @@ cta:
 
 
 <div class="col-12 align-content-center text-center">
-<h2 class="title">Recent Clinical Trials for Multiple Sclerosis</h2>
+<h2 class="title" id="clinical-trial">Recent Clinical Trials for Multiple Sclerosis</h2>
 
 <p>Clinical Trials listed are retrieved from <a target="_blank" href="https://www.cuf.pt/cuf-academic-center/ensaios-clinicos?combine=&unidade=&estado=All&patologia=2346&especialidade=">CUF <i class="text-muted text-primary fas fa-external-link-square-alt"></i></a> &nbsp;
   <a target="_blank" href="https://clinicaltrials.gov/ct2/results/rss.xml?rcv_d=14&lup_d=&sel_rss=new14&cond=Multiple+Sclerosis&count=10000">ClinicalTrials.gov <i class="text-muted text-primary fas fa-external-link-square-alt"></i></a> &nbsp;
