@@ -38,7 +38,7 @@ scripts:
 
 
 <div class="col-12 justify-content-center align-self-center align-right ">
-  <img src="images/undraw_working_out_6psf.svg" class="w-50 align-middle d-none d-md-block float-right" alt="medical Physical Therapists" loading="lazy" />
+  <img src="/physicaltherapists/images/undraw_working_out_6psf.svg" class="w-50 align-middle d-none d-md-block float-right" alt="medical Physical Therapists" loading="lazy" />
   </div>
   <div class="col-12 justify-content-center align-self-center mb-5">
   
