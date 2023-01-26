@@ -93,6 +93,7 @@ articles.summary = articles.summary.replace(np.nan, '', regex=True)
 articles.summary = articles.summary.apply(html.unescape)
 articles.to_excel('content/developers/articles_'+ datetime_string + '.xlsx')
 articles.to_json('content/developers/articles_'+ datetime_string + '.json')
+articles.to_csv('content/developers/articles_'+ datetime_string + '.csv')
 
 ## CATEGORIES
 categories = pd.read_sql_query(query_categories, engine)
@@ -107,7 +108,7 @@ trials.link = trials.link.apply(html.unescape)
 trials.summary = trials.summary.apply(html.unescape)
 trials.to_excel('content/developers/trials_' + datetime_string + '.xlsx')
 trials.to_json('content/developers/trials_' + datetime_string + '.json')
-
+trials.to_csv('content/developers/trials_' + datetime_string + '.csv')
 
 print('''
 ####
