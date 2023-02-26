@@ -1,13 +1,13 @@
 ---
 title: "Developers"
-subtitle: "All you need to access our database"
+subtitle: "GregoryAI is an Open Source Project to help filter medical research"
 date: 2021-08-11T15:27:16+01:00
 lastmod: 
 author: Bruno Amaral
 options:
   unlisted: false
   header: mini
-description: Gregory MS, information for developers researching multiple sclerosis
+description: Gregory AI, information for developers researching multiple sclerosis and other diseases
 categories: []
 tags: []
 layout: page
@@ -26,23 +26,33 @@ disableAutoCollapse: true
 resources:
   - src: lagos-techie-kwzWjTnDPLk-unsplash.jpeg
     name: header
+
+cta:
+  - label: Gregory AI <i class="fas fa-external-link-alt text-xs ms-1" aria-hidden="true"></i>
+    url: https://gregory-ai.com/
+    classes: btn btn-sm btn-info umami--click--gregory-ai-header-button
+
 ---
 
 <div class="col-md-6 mx-auto">
 
-There are two ways you can use this site, through the several subscription options or installing locally for your own goals.
+## Open Source AI Research Tool{.title}
 
-## Installing Gregory MS
+For detailed documentation to install Gregory on your server and up to date information, visit https://gregory-ai.com/.
+
+If you have any questions, please open an [issue](https://github.com/brunoamaral/gregory/issues) or [discussion](https://github.com/brunoamaral/gregory/discussions) on GitHub
+
+## Installing Gregory AI
 
 [This software is open source and available on GitHub, with instructions to install it using docker images](https://github.com/brunoamaral/gregory#install).
 
 ### Hardware requirements{.title}
 
-Gregory is running on a [Digital Ocean](https://digitalocean.com) virtual private server.
+Gregory MS is running on a [Digital Ocean](https://digitalocean.com) virtual private server.
 
 - 2 vCPU
-- 4 GB Memory 
-- 80 GB Disk 
+- 4 GB Memory
+- 80 GB Disk
 - Ubuntu 20.04 (LTS) x64
 
 ### Software requirements{.title}
