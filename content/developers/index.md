@@ -30,7 +30,7 @@ resources:
 cta:
   - label: Gregory AI <i class="fas fa-external-link-alt text-xs ms-1" aria-hidden="true"></i>
     url: https://gregory-ai.com/
-    classes: btn btn-sm btn-info umami--click--gregory-ai-header-button
+    classes: btn btn-info umami--click--gregory-ai-header-button
 
 ---
 
