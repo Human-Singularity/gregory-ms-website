@@ -1,5 +1,5 @@
 ---
-title: "neurovax"
+title: "Neurovax"
 subtitle: "sg"
 ---
 sg
