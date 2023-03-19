@@ -145,7 +145,7 @@ def build_website():
 	hugo_command = which("hugo")
 	subprocess.run([hugo_command, "build"])
 
-if __name__ == "main":
+if __name__ == "__main__":
 	pull_from_github()
 	articles, categories, trials = get_data()
 	save_excel_and_json(articles, categories, trials)
