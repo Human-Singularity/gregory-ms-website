@@ -32,9 +32,9 @@ METABASE_SECRET_KEY = os.getenv('METABASE_SECRET_KEY')
 
 def pull_from_github():
 	print('''
-	####
-	## PULL FROM GITHUB
-	####
+####
+## PULL FROM GITHUB
+####
 	''')
 	os.chdir(GREGORY_DIR)
 	g = git.cmd.Git(GREGORY_DIR)
@@ -43,9 +43,9 @@ def pull_from_github():
 
 def get_data():
 	print('''
-	####
-	## GET DATA
-	####
+####
+## GET DATA
+####
 	''')
 
 	# It's localhost because we are running outside the container
@@ -69,11 +69,11 @@ def get_data():
 	return articles, categories, trials
 
 
-def save_excel_and_json(articles, categories, trials):
+def save_excel_and_json(articles, trials):
 	print('''
-	####
-	## SAVE EXCEL AND JSON VERSIONS
-	####
+####
+## SAVE EXCEL AND JSON VERSIONS
+####
 	''')
 
 	# Process and save articles
@@ -84,71 +84,126 @@ def save_excel_and_json(articles, categories, trials):
 
 
 def process_and_save_dataframe(df, name):
-	df['published_date'] = df['published_date'].dt.tz_localize(None)
-	df['discovery_date'] = df['discovery_date'].dt.tz_localize(None)
+    df['published_date'] = df['published_date'].dt.tz_localize(None)
+    df['discovery_date'] = df['discovery_date'].dt.tz_localize(None)
 
-	df.link = df.link.apply(html.unescape)
-	df.summary = df.summary.replace(np.nan, '', regex=True)
-	df.summary = df.summary.apply(html.unescape)
-	df.to_excel('content/developers/' + name + '_' + datetime_string + '.xlsx')
-	df.to_json('content/developers/' + name + '_' + datetime_string + '.json')
-	df.to_csv('content/developers/' + name + '_' + datetime_string + '.csv')
+    df.link = df.link.apply(html.unescape)
+    df.summary = df.summary.replace(np.nan, '', regex=True)
+    df.summary = df.summary.apply(html.unescape)
+    df.to_excel('content/developers/' + name + '_' + datetime_string + '.xlsx')
+    df.to_json('content/developers/' + name + '_' + datetime_string + '.json')
+    df.to_csv('content/developers/' + name + '_' + datetime_string + '.csv')
 
 
 def create_categories(categories):
 	print('''
-	####
-	## CREATE CATEGORIES
-	####
+####
+## CREATE CATEGORIES
+####
 	''')
 	categoriesDir = GREGORY_DIR + "/content/categories/"
 
 	for index, row in categories.iterrows():       
-		category_slug = slugify(row['name'])
+		category_slug = slugify(row['category_name'])
 		category_path = categoriesDir + category_slug
+		category_index_file = category_path + "/_index.md"
+		os.makedirs(category_path, exist_ok=True)
 
-		if not os.path.exists(category_path):
-			os.makedirs(category_path)
-			with open(category_path + "/_index.md", "w") as f:
-				f.write("title: {}\n".format(row['name']))
-				f.write("slug: {}\n".format(category_slug))
-				f.write("id: {}\n".format(row['id']))
-				f.close()
-def generate_metabase_embeds(trials):
+		with open(category_index_file, "w") as f:
+				f.write("+++\n")
+				f.write(f"title = \"{row['category_name']}\"\n")
+				f.write(f"slug = \"{category_slug}\"\n")
+				f.write("+++\n")
+		print(f"Created category '{row['category_name']}'")
+
+def create_zip_files():
 	print('''
 ####
-## GENERATE METABASE EMBEDS
+## CREATE ZIP FILES
 ####
-''')
-	metabase_json = []
 
-	for index, row in trials.iterrows():
-		token = jwt.encode({"resource": {"dashboard": row['dashboard_id']},
-							"params": {},
-							"exp": int(time.time()) + (60 * 60 * 4)},
-						METABASE_SECRET_KEY, algorithm="HS256")
+### Articles''')
 
-		embed_url = METABASE_SITE_URL + "/embed/dashboard/" + token.decode("utf8") + "#bordered=true&titled=true"
-		metabase_json.append({"id": row['id'], "embed_url": embed_url})
+	zipArticles = ZipFile('content/developers/articles.zip', 'w')
+	print('- content/developers/articles_' + datetime_string + '.xlsx')
+	print('- content/developers/articles_' + datetime_string + '.json')
+	print('- content/developers/README.md\n')
 
-	with open('data/metabase_embeds.json', 'w') as embed_file:
-		json.dump(metabase_json, embed_file, indent=4)
-	embed_file.close()
+	zipArticles.write('content/developers/articles_' + datetime_string + '.xlsx')
+	zipArticles.write('content/developers/articles_' + datetime_string + '.json')
+	zipArticles.write('content/developers/README.md')
+	zipArticles.close()
 
+	print('### Clinical Trials')
+
+	zipTrials = ZipFile('content/developers/trials.zip', 'w')
+	print('- content/developers/trials_' + datetime_string + '.xlsx')
+	print('- content/developers/trials_' + datetime_string + '.json')
+	print('- content/developers/README.md\n')
+
+	zipTrials.write('content/developers/trials_' + datetime_string + '.xlsx')
+	zipTrials.write('content/developers/trials_' + datetime_string + '.json')
+	zipTrials.write('content/developers/README.md')
+	zipTrials.close()
+
+def delete_temporary_files():
+	print('\n# delete temporary files')
+	excel_file = Path('content/developers/articles_' + datetime_string + '.xlsx')
+	json_file = Path('content/developers/articles_' + datetime_string + '.json')
+	Path.unlink(excel_file)
+	Path.unlink(json_file)
+	excel_file = Path('content/developers/trials_' + datetime_string + '.xlsx')
+	json_file = Path('content/developers/trials_' + datetime_string + '.json')
+	Path.unlink(excel_file)
+	Path.unlink(json_file)
+
+def generate_metabase_embeds():
+	print('''
+####
+## GENERATE EMBED KEYS FOR METABASE
+####
+	''')
+
+	# Opening JSON file
+	f = open('data/dashboards.json')
+	
+	# returns JSON object as
+	# a dictionary
+	dashboards = json.load(f)
+	
+	# Iterating through the json list
+	metabase_json = {}
+	for i in dashboards:
+		print("Generating key for dashboard: "+ str(i))
+		payload = { "resource": {"dashboard": i}, "params": { }, "exp": round(time.time()) + (60 * 1440)}
+		token = jwt.encode(payload, METABASE_SECRET_KEY, algorithm='HS256')
+		iframeUrl = METABASE_SITE_URL + 'embed/dashboard/' + token + '#bordered=true&titled=true'
+		entry = "dashboard_" + str(i) 
+		metabase_json[str(entry)] = iframeUrl
+
+	f.close()
+
+	embedsJson = GREGORY_DIR + 'data/embeds.json';
+
+	with open(embedsJson, "w") as f:
+		f.write(json.dumps(metabase_json))
+		f.close()
 def build_website():
 	print('''
 ####
 ## RUN HUGO BUILD
 ####
 ''')
-	os.chdir(WEBSITE_PATH)
 	hugo_command = which("hugo")
-	subprocess.run([hugo_command, "build"])
+	subprocess.run([hugo_command])
 
-if __name__ == "__main__":
+
+if __name__ == '__main__':
 	pull_from_github()
 	articles, categories, trials = get_data()
-	save_excel_and_json(articles, categories, trials)
+	save_excel_and_json(articles, trials)
 	create_categories(categories)
-	generate_metabase_embeds(trials)
+	create_zip_files()
+	delete_temporary_files()
+	generate_metabase_embeds()
 	build_website()
