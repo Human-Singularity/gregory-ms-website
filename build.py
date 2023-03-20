@@ -52,7 +52,7 @@ os.chdir(GREGORY_DIR)
 g = git.cmd.Git(GREGORY_DIR)
 output = g.pull()
 
-print(output)
+#print(output)
 
 print('''
 ####
@@ -85,7 +85,7 @@ print('''
 ''')
 
 ## ARTICLES
-articles = pd.read_sql_query(query_articles, engine)
+articles = pd.read_sql_query(sql=sqlalchemy.text(query_articles), con=engine.connect())
 articles['published_date'] = articles['published_date'].dt.tz_localize(None)
 articles['discovery_date'] = articles['discovery_date'].dt.tz_localize(None)
 
@@ -97,10 +97,10 @@ articles.to_json('content/developers/articles_'+ datetime_string + '.json')
 articles.to_csv('content/developers/articles_'+ datetime_string + '.csv')
 
 ## CATEGORIES
-categories = pd.read_sql_query(query_categories, engine)
+categories = pd.read_sql_query(sql=sqlalchemy.text(query_categories), con=engine.connect())
 
 ## TRIALS
-trials = pd.read_sql_query(query_trials, engine)
+trials = pd.read_sql_query(sql=sqlalchemy.text(query_trials), con=engine.connect())
 trials['published_date'] = trials['published_date'].dt.tz_localize(None)
 trials['discovery_date'] = trials['discovery_date'].dt.tz_localize(None)
 
@@ -203,52 +203,6 @@ for index, row in articles.iterrows():
 
 		f.write(articledata)
 		f.close()
-
-print('''
-####
-## CREATE TRIALS
-####
-''')
-
-# # Make sure directory exists or create it
-# trialsDir = GREGORY_DIR + "/content/trials/"
-# trialsDirExists = pathlib.Path(trialsDir)
-
-# if trialsDirExists.exists() == False:
-# 	trialsDirExists.mkdir(parents=True, exist_ok=True)
-
-
-# # Open trials.json
-
-# for index, row in trials.iterrows():
-# 	title = row["title"].replace("'", "\\'").replace("\"",'\\"')
-
-# 	# Write a file for each record
-# 	markdownDir = pathlib.Path(trialsDir+str(row["trial_id"]))
-# 	markdownDir.mkdir(parents=True, exist_ok=True)
-
-# 	with open(str(markdownDir)+"/index.md", "w+") as f:
-
-# 		trialdata = "---\ntrial_id: " + \
-# 			str(row["trial_id"]) + \
-# 			"\ndiscovery_date: " + str(row["discovery_date"]) + \
-# 			"\ndate: " + str(row["discovery_date"]) +\
-# 			"\ntitle: \"" + title + "\"" +\
-# 			"\nsummary: |" + \
-# 			'\n  ' + str(row["summary"]).replace("\n", "\n  ") +\
-# 			"\nlink: \'" + row["link"] + "\'" +\
-# 			"\npublished_date: " + str(row["published_date"]) + \
-# 			"\ntrial_source: " + str(row["Sources__name"]) + \
-# 			"\nrelevant: " + str(row["relevant"]).lower() + \
-# 			"\noptions:" + \
-# 			"\n  unlisted: false" + \
-# 			"\n---\n" + \
-# 			html.unescape(str(row["summary"]))
-# 		# add content to file
-
-# 		f.write(trialdata)
-# 		f.close()
-
 
 print('''
 ####
