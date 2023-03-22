@@ -5,7 +5,7 @@ date: 2023-03-22T18:05:38Z
 description: "The medical field, as many others, is overwhelmed with the amount of research-related information available, such as journal papers, conference proceedings and clinical trials. The task of parsing through all this information to keep up to date with the most recent research findings on their area of expertise is especially difficult for practitioners who must also focus on their clinical duties. Recommender systems can help make decisions and provide relevant information on specific matters, such as for these clinical practitioners looking into which research to prioritize. In this paper, we describe the early work on a machine learning approach, which through an intelligent reinforcement learning approach, maps and recommends research information (papers and clinical trials) specifically for multiple sclerosis research. We tested and evaluated several different machine learning algorithms and present which one is the most promising in developing a complete and efficient model for recommending relevant multiple sclerosis research."
 draft: false
 resources: 
-- src: images/
+- src: images/hcist-cidade-do-porto.jpeg
   name: "header"
 - src: "gallery/*.jpg"
   name: gallery-:counter
@@ -13,7 +13,7 @@ resources:
 - src:
   name: slide-1
 slug:
-subtitle: 
+subtitle: Paper presented at the International Conference on Health and Social Care Information Systems and Technologies (HCist) 2023
 tags: 
   - 
 categories: 
