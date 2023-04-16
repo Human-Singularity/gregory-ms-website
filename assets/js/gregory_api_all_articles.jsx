@@ -223,12 +223,12 @@ function SingleArticle() {
 		  <p><strong className='text-muted'>Machine Learning Prediction (Gaussian Naive Bayes Model)</strong>: <span id="ml_prediction_gnb">{article.ml_prediction_gnb === null ? "not set" : article.ml_prediction_gnb.toString()}</span></p>
 	
 			<div className="post-text" id="takeaways">
-				<h4>Main Takeaways</h4>
+				<h2>Main Takeaways</h2>
 				<p>{article.takeaways}</p>
 			</div>
 	
 			<div className="post-text" id="abstract">
-				<h4>Abstract</h4>
+				<h2>Abstract</h2>
 				<div dangerouslySetInnerHTML={{ __html: article.summary }}></div>
 			</div>
 		</>
