@@ -19,6 +19,42 @@ function formatDate(date) {
   const dateObj = new Date(date);
   return new Intl.DateTimeFormat('en-UK', options).format(dateObj);
 }
+function updateTitleAndMeta(article) {
+	// Update the <title> tag
+	document.title = article.title;
+
+  // Update the title
+  const titleElement = document.querySelector('h1.title');
+  if (titleElement) {
+    titleElement.textContent = article.title;
+  }
+	// Truncate the article.takeaways to 155 characters
+	const truncatedTakeaways = article.takeaways.slice(0, 155);
+
+	// Update the meta description
+	const metaDescription = document.querySelector('meta[name="description"]');
+	if (metaDescription) {
+		metaDescription.setAttribute('content', truncatedTakeaways);
+	}
+
+	
+
+  // Remove the first specified element (h2)
+  const h2ElementToRemove = document.querySelector('#home > div.wrapper > div.page-header.page-header-mini > div.content-center > div > div > h2');
+  if (h2ElementToRemove) {
+    h2ElementToRemove.parentNode.removeChild(h2ElementToRemove);
+  } else {
+    console.log('h2 Element not found');
+  }
+
+  // Remove the second specified element (a)
+  const aElementToRemove = document.querySelector('#home > div.wrapper > div.page-header.page-header-mini > div.content-center > div > div > a');
+  if (aElementToRemove) {
+    aElementToRemove.parentNode.removeChild(aElementToRemove);
+  } else {
+    console.log('a Element not found');
+  }
+}
 
 const generateArticleURL = (article) => {
   const article_id = article.article_id;
@@ -161,24 +197,24 @@ function SingleArticle() {
   const [article, setArticle] = useState(null);
   const { articleId } = useParams();
 
-  useEffect(() => {
-    async function fetchData() {
-      const response = await axios.get(`https://api.gregory-ms.com/articles/${articleId}/?format=json`);
-      setArticle(response.data);
-    }
-    fetchData();
-  }, [articleId]);
-
-  if (!article) {
-    return <div>Loading...</div>;
-  }
+	useEffect(() => {
+		async function fetchData() {
+			const response = await axios.get(`https://api.gregory-ms.com/articles/${articleId}/?format=json`);
+			setArticle(response.data);
+			updateTitleAndMeta(response.data); // Call updateTitleAndMeta() after setting the state
+		}
+		fetchData();
+	}, [articleId]);
+	
+	if (!article) {
+		return <div>Loading...</div>;
+	}	
 
 	return (
 		<>
 			<span id="article" className="anchor"></span>
-			<h3 className='title'>{article.title}</h3>
 			<p><strong className='text-muted'>ID</strong>: <span id="id" data-datetime={article.article_id}>{article.article_id}</span></p>
-			<p><strong className='text-muted'>Short Link: </strong></p>
+			<p><strong className='text-muted'>Short Link: </strong> <a href={`https://gregory-ms.com/articles/${article.article_id}`}>https://gregory-ms.com/articles/{article.article_id}</a> </p>
 			<p><strong className='text-muted'>Discovery Date</strong>: <span id="discovery_date" data-datetime={article.discovery_date}>{article.discovery_date ? formatDate(article.discovery_date) : 'Unknown'}</span></p>
 			<p><strong className='text-muted'>Published Date</strong>: <span id="published_date" data-datetime={article.published_date}>{article.published_date ? formatDate(article.published_date) : 'Unknown'}</span></p>
 			<p><strong className='text-muted'>Source</strong>: <span id="source">{article.publisher}</span></p>
@@ -206,6 +242,7 @@ function App() {
       <Routes>
         <Route path="/articles/" element={<ArticlesList />} />
         <Route path="/articles/:articleId/:article_slug" element={<SingleArticle />} />
+				<Route path="/articles/:articleId" element={<SingleArticle />} />
       </Routes>
     </Router>
   );
