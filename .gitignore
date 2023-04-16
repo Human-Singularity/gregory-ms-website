@@ -141,3 +141,6 @@ dmypy.json
 public/
 themes/.DS_Store
 layouts/.DS_Store
+package.json
+assets/.DS_Store
+layouts/.DS_Store
