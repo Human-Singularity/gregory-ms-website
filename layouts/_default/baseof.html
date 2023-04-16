@@ -423,11 +423,15 @@
 				{{- . | safeHTML -}}
 			{{- end -}}
 		{{- end -}}
-		{{- if .HasShortcode "relevant"  -}}yes
+		{{- if .HasShortcode "relevant"  -}}
 		{{ $api := resources.Get "js/gregory_api_relevant_articles.jsx" | js.Build | babel }} }}
 		<script src="{{ $api.Permalink }}"></script>
 		{{ end }}
-		{{- if .HasShortcode "trials"  -}}yes
+		{{- if .HasShortcode "articles"  -}}yes!
+		{{ $api := resources.Get "js/gregory_api_all_articles.jsx" | js.Build | babel }}
+		<script src="{{ $api.Permalink }}"></script>
+		{{ end }}
+		{{- if .HasShortcode "trials"  -}}
 		{{ $api := resources.Get "js/gregory_api_trials.jsx" | js.Build | babel }} }}
 		<script src="{{ $api.Permalink }}"></script>
 		{{ end }}
