@@ -2,18 +2,22 @@ import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import axios from 'axios';
 //import { BrowserRouter as Router, Route, Link, Outlet, useParams } from 'react-router-dom';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-
-
+import { BrowserRouter as Router, Route, Routes, useParams } from 'react-router-dom';
 
 // const root = ReactDOM.createRoot(document.getElementById("root"));
 function formatDate(date) {
+  if (isNaN(Date.parse(date))) {
+    throw new Error('Invalid date value');
+  }
+
   const options = {
     year: 'numeric',
     month: 'long',
     day: 'numeric'
   };
-  return new Intl.DateTimeFormat('en-UK', options).format(date);
+
+  const dateObj = new Date(date);
+  return new Intl.DateTimeFormat('en-UK', options).format(dateObj);
 }
 
 const generateArticleURL = (article) => {
@@ -66,6 +70,21 @@ function ArticlesList() {
 
 	
 	return (
+		<div>
+			<p>Articles listed come from the following sites, using keyword searches for `Multiple Sclerosis, autoimmune encephalomyelitis, encephalomyelitis, immune tolerance, myelin`.</p>
+			<ul className="list-inline">
+			<li className="list-inline-item"><a target="_blank" className="btn btn-primary btn-outline-primary btn-round" href='https://www.apta.org/search?Q=&quot;Multiple+Sclerosis&quot;+OR+&quot;autoimmune+encephalomyelitis&quot;+OR+encephalomyelitis+OR+&quot;immune+tolerance&quot;+OR+myelin&amp;searcharticletypes=8834&amp;searchconditionandsymptoms=&amp;searchloc=APTA'>APTA <i className="text-muted text-primary fas fa-external-link-square-alt"></i></a> </li>
+			<li className="list-inline-item"><a target="_blank" className="btn btn-primary btn-outline-primary btn-round" href='https://www.biomedcentral.com/search?searchType=publisherSearch&amp;sort=PubDate&amp;page=1&amp;query=Multiple+Sclerosis'>BioMedCentral <i className="text-muted text-primary fas fa-external-link-square-alt"></i></a> </li>
+			<li className="list-inline-item"><a target="_blank" className="btn btn-primary btn-outline-primary btn-round" href='https://www.jneurosci.org/search/text_abstract_title%3AMultiple%2BSclerosis text_abstract_title_flags%3Amatch-phrase exclude_meeting_abstracts%3A1 numresults%3A50 sort%3Apublication-date direction%3Adescending format_result%3Astandard'>JNeurosci <i className="text-muted text-primary fas fa-external-link-square-alt"></i></a> </li>
+			<li className="list-inline-item"><a target="_blank" className="btn btn-primary btn-outline-primary btn-round" href='https://search.pedro.org.au/advanced-search/results?abstract_with_title=Multiple+Sclerosis&amp;therapy=0&amp;problem=0&amp;body_part=0&amp;subdiscipline=0&amp;topic=0&amp;method=0&amp;authors_association=&amp;title=&amp;source=&amp;year_of_publication=&amp;date_record_was_created=&amp;nscore=&amp;perpage=20&amp;lop=or&amp;find=&amp;find=Start+Search'>PEDro <i className="text-muted text-primary fas fa-external-link-square-alt"></i></a> </li>
+			<li className="list-inline-item"><a target="_blank" className="btn btn-primary btn-outline-primary btn-round" href='https://pubmed.ncbi.nlm.nih.gov/rss/search/10guX6I3SqrbUeeLKSTD6FCRM44ewnrN2MKKTQLLPMHB4xNsZU/?limit=15&amp;utm_campaign=pubmed-2&amp;fc=20210216052009'>PubMed <i className="text-muted text-primary fas fa-external-link-square-alt"></i></a> </li>
+			<li className="list-inline-item"><a target="_blank" className="btn btn-primary btn-outline-primary btn-round" href='https://www.reutersagency.com/feed/?best-topics=health'>Reuters <i className="text-muted text-primary fas fa-external-link-square-alt"></i></a> </li>
+			<li className="list-inline-item"><a target="_blank" className="btn btn-primary btn-outline-primary btn-round" href='https://search.scielo.org/?q=Multiple+Sclerosis&amp;lang=en&amp;count=15&amp;from=0&amp;output=site&amp;sort=&amp;format=summary&amp;fb=&amp;page=1&amp;q=&quot;Multiple+Sclerosis&quot;+OR+&quot;autoimmune+encephalomyelitis&quot;+OR+encephalomyelitis+OR+&quot;immune+tolerance&quot;+OR+myelin&amp;lang=en&amp;page=1'>Scielo <i className="text-muted text-primary fas fa-external-link-square-alt"></i></a> </li>
+			<li className="list-inline-item"><a target="_blank" className="btn btn-primary btn-outline-primary btn-round" href='https://www.thelancet.com/action/doSearch?text1=&quot;Multiple+Sclerosis&quot;+OR+&quot;autoimmune+encephalomyelitis&quot;+OR+encephalomyelitis+OR+&quot;immune+tolerance&quot;+OR+myelin&amp;field1=AbstractTitleKeywordFilterField&amp;startPage=0&amp;sortBy=Earliest'>TheLancet <i className="text-muted text-primary fas fa-external-link-square-alt"></i></a> </li>
+			<li className="list-inline-item"><a target="_blank" className="btn btn-primary btn-outline-primary btn-round" href='https://www.msard-journal.com/action/doSearch?text1=Multiple+Sclerosis&amp;field1=AbstractTitleKeywordFilterField&amp;startPage=0&amp;sortBy=Earliest'>MS and Related Disorders <i className="text-muted text-primary fas fa-external-link-square-alt"></i></a> </li>
+			<li className="list-inline-item"><a target="_blank" className="btn btn-primary btn-outline-primary btn-round" href='https://journals.sagepub.com/action/doSearch?AllField=multiple+sclerosis&amp;SeriesKey=msja&amp;content=articlesChapters&amp;countTerms=true&amp;target=default&amp;sortBy=Ppub&amp;startPage=&amp;ContentItemType=research-article'>Sage <i className="text-muted text-primary fas fa-external-link-square-alt"></i></a> </li>
+			</ul>
+			<a className="btn btn-outline-info btn-round btn-lg font-weight-bold mx-auto umami--click--relevant-articles-on-articles-page" href="/relevant/">Filter by relevant articles <i className="text-muted text-info fas fa-arrow-right" style={{ transform: ".4s", boxShadow: ".4s" }}></i></a>
 		<div className="row">
 			<div className="col-md-12">
 				<Pagination page={page} setPage={setPage} last_page={last_page} />
@@ -77,6 +96,7 @@ function ArticlesList() {
 				<Pagination page={page} setPage={setPage} last_page={last_page} />
 			</div>
 		</div>
+	</div>
 	);
 }
 
@@ -153,24 +173,42 @@ function SingleArticle() {
     return <div>Loading...</div>;
   }
 
-  return (
-    <div>
-      <h1>{article.title}</h1>
-      <p>{article.summary}</p>
-      <Link to="/">Back to articles list</Link>
-    </div>
-  );
+	return (
+		<>
+			<span id="article" className="anchor"></span>
+			<h3 className='title'>{article.title}</h3>
+			<p><strong className='text-muted'>ID</strong>: <span id="id" data-datetime={article.article_id}>{article.article_id}</span></p>
+			<p><strong className='text-muted'>Short Link: </strong></p>
+			<p><strong className='text-muted'>Discovery Date</strong>: <span id="discovery_date" data-datetime={article.discovery_date}>{article.discovery_date ? formatDate(article.discovery_date) : 'Unknown'}</span></p>
+			<p><strong className='text-muted'>Published Date</strong>: <span id="published_date" data-datetime={article.published_date}>{article.published_date ? formatDate(article.published_date) : 'Unknown'}</span></p>
+			<p><strong className='text-muted'>Source</strong>: <span id="source">{article.publisher}</span></p>
+			<p><strong className='text-muted'>Link</strong>: <span id="link"><a href={article.link}>{article.link}</a></span></p>
+			<p><strong className='text-muted'>Manual Selection</strong>: <span id="relevant">{article.relevant === null ? "not set" : article.relevant.toString()}</span></p>
+		  <p><strong className='text-muted'>Machine Learning Prediction (Gaussian Naive Bayes Model)</strong>: <span id="ml_prediction_gnb">{article.ml_prediction_gnb === null ? "not set" : article.ml_prediction_gnb.toString()}</span></p>
+	
+			<div className="post-text" id="takeaways">
+				<h4>Main Takeaways</h4>
+				<p>{article.takeaways}</p>
+			</div>
+	
+			<div className="post-text" id="abstract">
+				<h4>Abstract</h4>
+				<div dangerouslySetInnerHTML={{ __html: article.summary }}></div>
+			</div>
+		</>
+	);
+	
 }
+
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/articles/" element={<ArticlesList />} />
-        <Route path="/articles/:article_id/:article_slug" element={<SingleArticle />} />
+        <Route path="/articles/:articleId/:article_slug" element={<SingleArticle />} />
       </Routes>
     </Router>
   );
 }
-
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(<App />);
