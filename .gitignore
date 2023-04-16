@@ -139,3 +139,5 @@ dmypy.json
 
 # Hugo
 public/
+themes/.DS_Store
+layouts/.DS_Store
