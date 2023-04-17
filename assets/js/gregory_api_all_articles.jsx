@@ -120,7 +120,9 @@ function ArticlesList() {
 			<li className="list-inline-item"><a target="_blank" className="btn btn-primary btn-outline-primary btn-round" href='https://www.msard-journal.com/action/doSearch?text1=Multiple+Sclerosis&amp;field1=AbstractTitleKeywordFilterField&amp;startPage=0&amp;sortBy=Earliest'>MS and Related Disorders <i className="text-muted text-primary fas fa-external-link-square-alt"></i></a> </li>
 			<li className="list-inline-item"><a target="_blank" className="btn btn-primary btn-outline-primary btn-round" href='https://journals.sagepub.com/action/doSearch?AllField=multiple+sclerosis&amp;SeriesKey=msja&amp;content=articlesChapters&amp;countTerms=true&amp;target=default&amp;sortBy=Ppub&amp;startPage=&amp;ContentItemType=research-article'>Sage <i className="text-muted text-primary fas fa-external-link-square-alt"></i></a> </li>
 			</ul>
-			<a className="btn btn-outline-info btn-round btn-lg font-weight-bold mx-auto umami--click--relevant-articles-on-articles-page" href="/relevant/">Filter by relevant articles <i className="text-muted text-info fas fa-arrow-right" style={{ transform: ".4s", boxShadow: ".4s" }}></i></a>
+			<p>
+				<a className="btn btn-info btn-round btn-lg font-weight-bold mx-auto umami--click--relevant-articles-on-articles-page" href="/relevant/">Filter by relevant articles <i className="text-muted text-info fas fa-arrow-right" style={{ transform: ".4s", boxShadow: ".4s" }}></i></a>
+			</p>
 		<div className="row">
 			<div className="col-md-12">
 				<Pagination page={page} setPage={setPage} last_page={last_page} />
