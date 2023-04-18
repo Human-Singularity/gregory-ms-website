@@ -6,30 +6,30 @@ import { BrowserRouter as Router, Route, Routes, useParams, useNavigate } from '
 
 // const root = ReactDOM.createRoot(document.getElementById("root"));
 function formatDate(date) {
-  if (isNaN(Date.parse(date))) {
-    throw new Error('Invalid date value');
-  }
+	if (isNaN(Date.parse(date))) {
+		throw new Error('Invalid date value');
+	}
 
-  const options = {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  };
+	const options = {
+		year: 'numeric',
+		month: 'long',
+		day: 'numeric'
+	};
 
-  const dateObj = new Date(date);
-  return new Intl.DateTimeFormat('en-UK', options).format(dateObj);
+	const dateObj = new Date(date);
+	return new Intl.DateTimeFormat('en-UK', options).format(dateObj);
 }
 function updateTitleAndMeta(article) {
 	// Update the <title> tag
 	document.title = article.title;
 
-  // Update the title
-  const titleElement = document.querySelector('h1.title');
-  if (titleElement) {
-    titleElement.textContent = article.title;
-  }
-	// Truncate the article.takeaways to 155 characters
-	const truncatedTakeaways = article.takeaways.slice(0, 155);
+	// Update the title
+	const titleElement = document.querySelector('h1.title');
+	if (titleElement) {
+		titleElement.textContent = article.title;
+	}
+	// Truncate the article.takeaways to 155 characters if it exists
+	const truncatedTakeaways = article.takeaways ? article.takeaways.slice(0, 155) : '';
 
 	// Update the meta description
 	const metaDescription = document.querySelector('meta[name="description"]');
@@ -37,34 +37,33 @@ function updateTitleAndMeta(article) {
 		metaDescription.setAttribute('content', truncatedTakeaways);
 	}
 
-	
+	// Remove the first specified element (h2)
+	const h2ElementToRemove = document.querySelector('#home > div.wrapper > div.page-header.page-header-mini > div.content-center > div > div > h2');
+	if (h2ElementToRemove) {
+		h2ElementToRemove.parentNode.removeChild(h2ElementToRemove);
+	} else {
+		console.log('h2 Element not found');
+	}
 
-  // Remove the first specified element (h2)
-  const h2ElementToRemove = document.querySelector('#home > div.wrapper > div.page-header.page-header-mini > div.content-center > div > div > h2');
-  if (h2ElementToRemove) {
-    h2ElementToRemove.parentNode.removeChild(h2ElementToRemove);
-  } else {
-    console.log('h2 Element not found');
-  }
-
-  // Remove the second specified element (a)
-  const aElementToRemove = document.querySelector('#home > div.wrapper > div.page-header.page-header-mini > div.content-center > div > div > a');
-  if (aElementToRemove) {
-    aElementToRemove.parentNode.removeChild(aElementToRemove);
-  } else {
-    console.log('a Element not found');
-  }
+	// Remove the second specified element (a)
+	const aElementToRemove = document.querySelector('#home > div.wrapper > div.page-header.page-header-mini > div.content-center > div > div > a');
+	if (aElementToRemove) {
+		aElementToRemove.parentNode.removeChild(aElementToRemove);
+	} else {
+		console.log('a Element not found');
+	}
 }
 
+
 const generateArticleURL = (article) => {
-  const article_id = article.article_id;
-  const article_slug = article.title.replace(/ /g, '-').toLowerCase();
-  return `/articles/${article_id}/${article_slug}`;
+	const article_id = article.article_id;
+	const article_slug = article.title.replace(/ /g, '-').toLowerCase();
+	return `/articles/${article_id}/${article_slug}`;
 };
 
 
 function ArticleSnippet(props) {
-  const date = new Date(props.article.published_date);
+	const date = new Date(props.article.published_date);
 	return (
 		<div className='col-md-6'>
 			<div className="card card-plain card-blog">
@@ -95,14 +94,14 @@ function ArticlesList() {
 	const [last_page, setLastPage] = useState(null);
 	
 
-  useEffect(() => {
-    async function fetchData() {
-      const response = await axios.get(`https://api.gregory-ms.com/articles/?format=json&page=${page}`);
-      setArticles(response.data.results);
+	useEffect(() => {
+		async function fetchData() {
+			const response = await axios.get(`https://api.gregory-ms.com/articles/?format=json&page=${page}`);
+			setArticles(response.data.results);
 			setLastPage(Math.ceil(response.data.count / 10));
-    }
-    fetchData();
-  }, [page]);
+		}
+		fetchData();
+	}, [page]);
 
 	
 	return (
@@ -139,12 +138,12 @@ function ArticlesList() {
 }
 
 function Pagination(props){
-  const navigate = useNavigate();
+	const navigate = useNavigate();
 
-  const setPage = (page) => {
-    props.setPage(page);
-    navigate(`/articles/page/${page}`);
-  };
+	const setPage = (page) => {
+		props.setPage(page);
+		navigate(`/articles/page/${page}`);
+	};
 
 	return (
 		<ul className="pagination pagination-primary m-4 d-flex justify-content-center">
@@ -203,8 +202,8 @@ function Pagination(props){
 )}
 
 function SingleArticle() {
-  const [article, setArticle] = useState(null);
-  const { articleId } = useParams();
+	const [article, setArticle] = useState(null);
+	const { articleId } = useParams();
 
 	useEffect(() => {
 		async function fetchData() {
@@ -229,7 +228,7 @@ function SingleArticle() {
 			<p><strong className='text-muted'>Source</strong>: <span id="source">{article.publisher}</span></p>
 			<p><strong className='text-muted'>Link</strong>: <span id="link"><a href={article.link}>{article.link}</a></span></p>
 			<p><strong className='text-muted'>Manual Selection</strong>: <span id="relevant">{article.relevant === null ? "not set" : article.relevant.toString()}</span></p>
-		  <p><strong className='text-muted'>Machine Learning Prediction (Gaussian Naive Bayes Model)</strong>: <span id="ml_prediction_gnb">{article.ml_prediction_gnb === null ? "not set" : article.ml_prediction_gnb.toString()}</span></p>
+			<p><strong className='text-muted'>Machine Learning Prediction (Gaussian Naive Bayes Model)</strong>: <span id="ml_prediction_gnb">{article.ml_prediction_gnb === null ? "not set" : article.ml_prediction_gnb.toString()}</span></p>
 	
 			<div className="post-text" id="takeaways">
 				<h2>Main Takeaways</h2>
