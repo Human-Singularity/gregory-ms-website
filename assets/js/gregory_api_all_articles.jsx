@@ -9,7 +9,6 @@ function formatDate(date) {
 	if (isNaN(Date.parse(date))) {
 		throw new Error('Invalid date value');
 	}
-
 	const options = {
 		year: 'numeric',
 		month: 'long',
@@ -93,7 +92,6 @@ function ArticlesList() {
 	const [page, setPage] = useState(1);
 	const [last_page, setLastPage] = useState(null);
 	
-
 	useEffect(() => {
 		async function fetchData() {
 			const response = await axios.get(`https://api.gregory-ms.com/articles/?format=json&page=${page}`);
@@ -103,7 +101,6 @@ function ArticlesList() {
 		fetchData();
 	}, [page]);
 
-	
 	return (
 		<div>
 			<p>Articles listed come from the following sites, using keyword searches for `Multiple Sclerosis, autoimmune encephalomyelitis, encephalomyelitis, immune tolerance, myelin`.</p>
@@ -139,7 +136,6 @@ function ArticlesList() {
 
 function Pagination(props){
 	const navigate = useNavigate();
-
 	const setPage = (page) => {
 		props.setPage(page);
 		navigate(`/articles/page/${page}`);
