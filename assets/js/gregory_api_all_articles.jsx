@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import axios from 'axios';
 //import { BrowserRouter as Router, Route, Link, Outlet, useParams } from 'react-router-dom';
-import { BrowserRouter as Router, Route, Routes, useParams } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useParams, useNavigate } from 'react-router-dom';
 
 // const root = ReactDOM.createRoot(document.getElementById("root"));
 function formatDate(date) {
@@ -139,22 +139,29 @@ function ArticlesList() {
 }
 
 function Pagination(props){
+  const navigate = useNavigate();
+
+  const setPage = (page) => {
+    props.setPage(page);
+    navigate(`/articles/page/${page}`);
+  };
+
 	return (
 		<ul className="pagination pagination-primary m-4 d-flex justify-content-center">
 			<li className="page-item">
-				<a onClick={() => props.setPage(1)} className="page-link" aria-label="First">
+				<a onClick={() => setPage(1)} className="page-link" aria-label="First">
 				<span aria-hidden="true"><i className="fa fa-angle-left" aria-hidden="true"></i><i className="fa fa-angle-double-left" aria-hidden="true"></i></span>
 			</a>
 			</li>
 			<li className="page-item">
-				<a onClick={() => props.setPage(props.page + 1)} className="page-link" aria-label="Previous">
+				<a onClick={() => setPage(props.page + 1)} className="page-link" aria-label="Previous">
 				<span aria-hidden="true"><i className="fa fa-angle-double-left" aria-hidden="true"></i></span>
 				</a>
 			</li>
 			{ props.page > 2 &&
 			<React.Fragment>
 				<li className="page-item">
-					<a className="page-link" onClick={() => props.setPage(props.page - 2)}>{props.page - 2}</a>
+					<a className="page-link" onClick={() => setPage(props.page - 2)}>{props.page - 2}</a>
 				</li>
 			</React.Fragment>
 			}
@@ -162,7 +169,7 @@ function Pagination(props){
 	{ props.page > 1 &&
 			<React.Fragment>
 				<li className="page-item">
-					<a className="page-link" onClick={() => props.setPage(props.page - 1)}>{props.page - 1}</a>
+					<a className="page-link" onClick={() => setPage(props.page - 1)}>{props.page - 1}</a>
 				</li>
 			</React.Fragment>
 			}
@@ -172,21 +179,21 @@ function Pagination(props){
 			{ props.page < props.last_page &&
 			<React.Fragment>
 				<li className="page-item">
-					<a className="page-link" onClick={() => props.setPage(props.page + 1)}>{props.page + 1}</a>
+					<a className="page-link" onClick={() => setPage(props.page + 1)}>{props.page + 1}</a>
 				</li>
 				<li className="page-item disabled">
 					<span aria-hidden="true">&nbsp;…&nbsp;</span>
 				</li>
 				<li className="page-item">
-					<a className="page-link" onClick={() => props.setPage(props.last_page)}>{props.last_page}</a>
+					<a className="page-link" onClick={() => setPage(props.last_page)}>{props.last_page}</a>
 				</li>
 				<li className="page-item">
-					<a onClick={() => props.setPage(props.page + 1)} className="page-link" aria-label="Next">
+					<a onClick={() => setPage(props.page + 1)} className="page-link" aria-label="Next">
 					<span aria-hidden="true"><i className="fa fa-angle-double-right" aria-hidden="true"></i></span>
 					</a>
 				</li>
 				<li className="page-item">
-					<a onClick={() => props.setPage(props.last_page)} className="page-link" aria-label="Last">
+					<a onClick={() => setPage(props.last_page)} className="page-link" aria-label="Last">
 					<span aria-hidden="true"><i className="fa fa-angle-double-right" aria-hidden="true"></i><i className="fa fa-angle-right" aria-hidden="true"></i></span>
 					</a>
 				</li>
@@ -239,15 +246,23 @@ function SingleArticle() {
 }
 
 function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/articles/" element={<ArticlesList />} />
-        <Route path="/articles/:articleId/:article_slug" element={<SingleArticle />} />
-				<Route path="/articles/:articleId" element={<SingleArticle />} />
-      </Routes>
-    </Router>
-  );
+		return (
+			<Router>
+				<Routes>
+					<Route path="/articles/" element={<ArticlesList />} />
+					<Route path="/articles/page/:page" element={<ArticlesList />} />
+					<Route path="/articles/:articleId/:articleSlug" element={<SingleArticle />} />
+					<Route path="/articles/:articleId" element={<SingleArticle />} />
+				</Routes>
+			</Router>
+		);
 }
+// ReactDOM.render(
+//   <React.StrictMode>
+//     <App />
+//   </React.StrictMode>,
+//   document.getElementById("root")
+// );
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(<App />);
