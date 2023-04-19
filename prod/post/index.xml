@@ -1,0 +1,449 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Multiple Sclerosis research by Gregory MS by Bruno Amaral</title>
+		<link>https://gregory-ms.com/post/</link>
+		<description></description>
+		<generator>Hugo -- gohugo.io</generator>
+		<language>en</language>
+		<lastBuildDate>Wed, 22 Mar 2023 18:05:38 +0000</lastBuildDate>
+		<image>
+			<url>https://gregory-ms.com/Gregory_Banner3.png</url>
+			<title>Multiple Sclerosis research by Gregory MS</title>
+			<link>https://gregory-ms.com/post/</link>
+		</image>
+		
+		<atom:link href="https://gregory-ms.com/post/index.xml" rel="self" type="application/rss+xml" />
+		
+		
+		<item>
+			<title>A machine learning approach for mapping and accelerating multiple sclerosis research</title>
+			<link>https://gregory-ms.com/post/2023-03-22/</link>
+			<pubDate>Wed, 22 Mar 2023 18:05:38 +0000</pubDate>
+			
+			<guid>https://gregory-ms.com/post/2023-03-22/</guid>
+			<description>
+				
+				
+				
+				<![CDATA[<img src="https://gregory-ms.com/post/2023-03-22/images/hcist-cidade-do-porto_huc07a1946e4c7c9f2e5907e8eb9a8c701_557058_640x0_resize_q75_box.jpeg" width="640" height="262"/>]]>
+				
+				&lt;p&gt;The Gregory MS team, António Lopes and Bruno Amaral, participated in the &lt;a href=&#34;http://hcist.scika.org/?page=home&#34;&gt;International Conference on Health and Social Care Information Systems and Technologies (HCist)&lt;/a&gt; 2023 conference with a paper that describes the Machine Learning approach we use here to identify relevant articles.&lt;/p&gt;
+&lt;p&gt;The paper is available under open access through Science Direct.&lt;/p&gt;
+&lt;h2 id=&#34;a-machine-learning-approach-for-mapping-and-accelerating-multiple-sclerosis-research&#34;&gt;A machine learning approach for mapping and accelerating multiple sclerosis research&lt;/h2&gt;
+&lt;h3 id=&#34;abtract&#34;&gt;Abtract&lt;/h3&gt;
+&lt;p&gt;The medical field, as many others, is overwhelmed with the amount of research-related information available, such as journal papers, conference proceedings and clinical trials. The task of parsing through all this information to keep up to date with the most recent research findings on their area of expertise is especially difficult for practitioners who must also focus on their clinical duties. Recommender systems can help make decisions and provide relevant information on specific matters, such as for these clinical practitioners looking into which research to prioritize. In this paper, we describe the early work on a machine learning approach, which through an intelligent reinforcement learning approach, maps and recommends research information (papers and clinical trials) specifically for multiple sclerosis research. We tested and evaluated several different machine learning algorithms and present which one is the most promising in developing a complete and efficient model for recommending relevant multiple sclerosis research.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.sciencedirect.com/science/article/pii/S1877050923004106&#34;&gt;https://www.sciencedirect.com/science/article/pii/S1877050923004106&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://lisboncollective.com/&#34;&gt;The required fees to participate remotely in the conference were incured by the Lisbon Collective.&lt;/a&gt;&lt;/p&gt;
+
+			</description>
+		</item>
+		
+		<item>
+			<title>Artificial Intelligence and robots in healthcare</title>
+			<link>https://gregory-ms.com/post/cruzamento-podcast/</link>
+			<pubDate>Thu, 24 Nov 2022 23:16:56 +0000</pubDate>
+			
+			<guid>https://gregory-ms.com/post/cruzamento-podcast/</guid>
+			<description>
+				
+				
+				
+				<![CDATA[<img src="https://gregory-ms.com/post/cruzamento-podcast/images/podcast-cruzamento_hu6ac384ca66016bf22fe472a23841e7c1_206612_640x0_resize_q75_box.jpg" width="640" height="360"/>]]>
+				
+				&lt;p&gt;&amp;ldquo;&lt;em&gt;Cruzamento&lt;/em&gt;&amp;rdquo; is a portugues podcast about the crossroads of Health and Technology.&lt;/p&gt;
+&lt;p&gt;For episode 53, &lt;a href=&#34;https://antoniolopes.info/&#34;&gt;António Lopes&lt;/a&gt; and &lt;a href=&#34;https://brunoamaral.eu/&#34;&gt;Bruno Amaral&lt;/a&gt; shared this project with the audience and discussed some of the possibilities and ethical concerns of using Artificial Intelligence (AI) and Machine Learning (ML).&lt;/p&gt;
+&lt;p&gt;António and Bruno are the core team responsible for moving this project forward.&lt;/p&gt;
+&lt;p&gt;The ML models and other AI features were made possible by António. While Bruno handles the communication, steering of the project, and implements features in the main code base.&lt;/p&gt;
+&lt;p&gt;This episode is available in Portuguese at &lt;a href=&#34;https://www.cruzamentopodcast.com/podcast/53-antonio-lopes-e-bruno-amaral-inteligencia-artificial-e-robos-na-saude/&#34;&gt;Podcast Cruzamento — 53: António Lopes e Bruno Amaral: Inteligência artificial e robôs na saúde&lt;/a&gt;.&lt;/p&gt;
+&lt;iframe style=&#34;border-radius:12px&#34; src=&#34;https://open.spotify.com/embed/episode/1ytHHl5O4S1S9HtQOuhlOy?utm_source=generator&#34; width=&#34;100%&#34; height=&#34;152&#34; frameBorder=&#34;0&#34; allowfullscreen=&#34;&#34; allow=&#34;autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture&#34; loading=&#34;lazy&#34;&gt;&lt;/iframe&gt;
+&lt;p&gt;For the english version, we have made the transcription below.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Daniel Guedelha&lt;/strong&gt; [00:00:04] Welcome to Cruzamento, where the subjects of technology, health, and sustainability meet. My name is Daniel Guedelha and I am joined by my friend and host André Correia. We invite you
+to subscribe to our newsletter cruzamentopodcast.com.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;André Correia&lt;/strong&gt; [00:00:21] Hello and welcome. Today we have two guests, António Lopes and Bruno Amaral, who are here to talk about artificial intelligence and a rather nice robot named Gregory that deals with multiple sclerosis. But we&amp;rsquo;ll get to that in a moment. Hello, António! Hi Bruno, welcome to Cruzamento podcast. Let&amp;rsquo;s start with our usual question. In 30 seconds, who is António Lopes? And who is Bruno Amaral?&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;António Lopes&lt;/strong&gt; [00:00:46] Can I start? I would say that it is difficult to define, much less in such a brief time. But I will try. I think this difficulty also comes from the fact that I never know what I want, and this can be noticed a little bit in my path in computer science and management. I started to take my first steps in intelligence. But, at that time, everything was still a bit abstract for me, because I was fascinated by telecommunications and 3G. I ended up doing a master&amp;rsquo;s degree in Telecommunications Engineering. But I also realized that telecommunications  were not my thing. Because I had worked on European research projects,  I thought I wanted to research artificial intelligence. I ended up doing a PhD in Information Science and Technology, with a major in Artificial Intelligence.  But, if I needed to define myself, I would say that I am an industrious programmer and I like to tell machines what they should do. And, although my focus now is more on web programming and artificial intelligence, I still always dip my toes in other puddles. That is, to experiment in other fields,
+even to keep myself trained. And that is also why I created the Um Sobre Zero podcast, to talk about several topics in science and technology with interesting people. I must say that this  has been the most rewarding experience. Okay, I think that this is the best I could do in 30 seconds.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Bruno Amaral&lt;/strong&gt; [00:02:07] I somewhat share António&amp;rsquo;s feeling. I still don&amp;rsquo;t know what I want to be when I grow up, because I&amp;rsquo;m in the communications field. I&amp;rsquo;m a communication consultant and I teach classes in public relations and communication strategy. But, like António, I also like to make computers do what we want them to do, what they should do for us, and make them a tool for our well-being, without becoming slaves to computers, as some  people think we want. Concisely, this is pretty much it.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Daniel Guedelha&lt;/strong&gt; [00:02:35] Excellent! Thank you, António and Bruno. I will start with you, António. You are a researcher in artificial intelligence systems. The inauguration of this new Cruzamento season in 2020 was with Arlindo Oliveira. Precisely about artificial intelligence. Do you want to explain to our listeners how you define artificial intelligence?  And, as a researcher, what has changed in the last two years? And what are the major trends in this area?&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;António Lopes&lt;/strong&gt; [00:03:02]  Professor Arlindo Oliveira, from IST, is a great reference in the field of artificial intelligence. And I think he was an excellent choice for your first episode. Congratulations! I think you couldn&amp;rsquo;t have chosen a better person to talk about these areas. Regarding the definition of artificial intelligence, it&amp;rsquo;s a bit like my self-analysis. It is, at the same time, simple and complicated.  Let me explain: it is simple because artificial intelligence is basically  a field of study that wants to create an intelligent machine.  That is the most basic concept. So far, so good. The tricky part  comes later when you must define what is meant by intelligent. From the human point of view,
+we characterize intelligence in several ways. We can consider intelligence as an ability to infer new knowledge, to make decisions based on facts. To analyze our surroundings, right? Or we can consider intelligence as the ability to learn from past experiences,  to plan future steps, right? Even if it is in new situations that we  have never experienced before. It is this inherently human capacity, that which distinguishes us from other beings on the planet. That&amp;rsquo;s also why we are the dominant being. And then there are other levels of intelligence that are expressed in ... they end up being evident,  but in different fields, like emotional intelligence, musical intelligence, etc. But that doesn&amp;rsquo;t have much to do with this point either. Whatever the perspective,  the definition of artificial intelligence
+comes from trying to reproduce these abilities on the machine side. In other words, in this field we try to study and create machines that can show this kind of behavior in a way equivalent
+or superior to that of humans. The bottom line  is that we don&amp;rsquo;t even perceive this phenomenon of intelligence in humans. As such, it is difficult to replicate it in machines. So, we tap into capabilities  that machines are particularly good at. Right? For instance, the ability to run calculations, process large volumes of data very quickly to simulate this veneer of intelligence. We&amp;rsquo;re slowly getting there, but we&amp;rsquo;re not quite there yet. I would say we are not even close to being able to mimic the human brain. We are decades away from that. Regarding the second part of the question, about the changes in recent years and the trends in the field. The main change that has brought artificial intelligence to this current level and that everyone talks about. I would say that, in the last decade, it has been the democratization of its access. Before, those  who wanted to work in this area needed iron,
+hardware, and to invest in vast knowledge of computer infrastructure to build machines in this area. With the expansion of cloud infrastructure, which started to feature in its service catalogs, solutions and specific hardware profiles for the development of artificial intelligence models, everything changed. Right? People no longer had to worry about creating this type of infrastructure, and it became available to anyone. The focus has shifted to what matters: the development of models that support the  artificial intelligence we see today. As far as trends go, the answer is obvious. The last two years have been very fruitful in these models of generating multiple types of content. That is, the models in which we introduce a first input and the model does the rest. I will give some examples. I think you might know GPT-3, which is able to perceive the structure in the text input  given by a human. And, based on that, it produces a dose of extra text that is grammatically correct, even preserving the context coherence.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Daniel Guedelha&lt;/strong&gt; [00:06:30] António, can you explain what that is to our audience?&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;António Lopes&lt;/strong&gt; [00:06:32] The GPT-3? Sure, I&amp;rsquo;ll explain. The GPT-3  is the language generation model that does exactly what I was describing. Based on a text input by the human person, it can create more text  subsequently, keeping not only grammatical coherence, but also context coherence. By the way, I did an episode on my podcast -  sorry to mention my podcast -, but I did an episode where  I used GPT-3  to have a chat with an artificial intelligence.  And, if you listen to the episode, sometimes it sounds like I&amp;rsquo;m having a conversation with a  person who&amp;rsquo;s a little bit d
+distracted, but coherent. At least the speech is coherent. I&amp;rsquo;ll give you another example: DAL-E, which is similar. It is also a content generation model capable of understanding the structure of a human input text. Then it creates an image based on that situation. Instead of creating text, it generates an image. We submit the circumstance  and that is unbelievably powerful. It is extraordinary.  So, this approach is making artificial intelligence a  genuine commodity. I was struggling to find the right word. I would say that artificial intelligence has come to be considered an extremely  useful tool in this expansion of human intelligence and creativity.  And I would say that we are at the beginning of these kinds of models. But we can already see its stunning potential.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Bruno Amaral&lt;/strong&gt; [00:07:54] And I can attest that your chat with GPT-3 was interesting. It is worth listening to it. Gregory is another face of
+artificial intelligence, Bruno. Gregory was born to do specific research on  multiple sclerosis. On the Cruzamento podcast, we also want to contribute to the knowledge of our listeners. So, first, I would like you to explain what multiple sclerosis is. And then we will talk about Gregory.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Bruno Amaral&lt;/strong&gt; [00:08:19] I&amp;rsquo;ll start by conceding that I don&amp;rsquo;t know as much about the condition as one would like to. Multiple sclerosis is an
+autoimmune disease, where our immune system starts attacking the nervous system,  removing the protective layer of the nerves. This causes some difficulties in movement for people, and many other symptoms can arise.  Each person ends up developing different symptoms, because it all depends on where the immune system attacks the nervous system, as well as the injuries that arise because of this disruption of the immune system.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Daniel Guedelha&lt;/strong&gt; [00:08:54] Sounds like a great explanation, Bruno. As André said, let&amp;rsquo;s go back to Gregory, born to do this research. Do you want to tell us a little bit more about Gregory? How did it come about, what is its purpose, and what impact it has had on its users?&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Bruno Amaral&lt;/strong&gt; [00:09:09] Gregory was born more out of a need of mine than anything else. The idea started to come up when I was diagnosed. I started thinking: okay, I need to get a little bit better informed about research in this subject. How can I improve my quality of life? Obviously, I didn&amp;rsquo;t want to spend all my time Googling or looking at unreliable sources. The solution was to structure a system that could do this research for me, organizing it all in a database. And then, luckily, seeing the system growing, António said: &amp;ldquo;what if we add a machine learning algorithm here? That way, you don&amp;rsquo;t have to read everything and we can start sending notifications automatically about what is relevant, taking into account what the system has learned from you.&amp;rdquo; That was the beginning. It&amp;rsquo;s been almost two years now. The second anniversary happens next February and it has had an impact on people. I have been growing the system little by little. Some people go to the site to search for clinical trials and get clinical trial information automatically sent to their email. And we also have some doctors and researchers in neurology
+who are using Gregory to receive every Tuesday an email with what the system has found to be most relevant. And Gregory is no longer just for multiple sclerosis. One of the things we have done is to make the system more abstract to be used for any kind of medical condition. If the sources
+of information are reliable, and the keyword search is correct, Gregory can investigate. It can search fibromyalgia, for example, endometriosis, and many other conditions.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;André Correia&lt;/strong&gt; [00:10:52] Using Gregory&amp;rsquo;s example, and covering other areas, António, how can artificial intelligence be used in data processing
+in this context mentioned by Bruno? To give researchers and health
+professionals access to the latest information and allow better care in prevention and diagnosis?&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;António Lopes&lt;/strong&gt; [00:11:12] As I said in the beginning, I&amp;rsquo;m very much into
+this idea, right? Using machines, and artificial intelligence in particular, to exponentially increase human productivity. To me, that&amp;rsquo;s where the greatest potential lies. And I don&amp;rsquo;t like this perspective of using artificial intelligence
+to replace human intelligence. We should work on extending our capabilities. We should delegate to machines tasks that they are incredibly good at, such
+as the ability to process large volumes of data, as I mentioned at the beginning. And Gregory is precisely that when it comes to delegation. We left the boring part, i.e., analyzing thousands of articles on the machine side. On the human side, we take credit for having to process only the relevant
+information. In other words, it is the adage &amp;lsquo;separate the wheat from the chaff&amp;rsquo;. We get the machine to sort through all the information, helping us to process only what is important to the human being. This increases human productivity, something that can be verified in different areas of health care - analysis of images and photographs to diagnose diseases such as skin cancer; analysis of continuous vital signs to detect events such as heart or metabolic problems; analysis of phenomena such as Protein Folding. Do you know what this is? I can&amp;rsquo;t explain it very well, but it&amp;rsquo;s that idea that you study the 3D structure of a protein to understand how it should be folded correctly. This helps to understand how some of these biological phenomena can contribute to preventing disease, I imagine. In this context, I think artificial intelligence has enormous potential as a tool to increase the productivity of humans. It helps us study and diagnose diseases based on this. They take away a lot of the routine, boring work that can be done by machines. So, we avoid spending time that people can invest in another, much more interesting facet.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Daniel Guedelha&lt;/strong&gt; [00:13:08] Absolutely, António. In the most recent episode of the Cruzamento podcast, we talked with João Magalhães, cofounder of NoKare. In that episode, and in line with what you&amp;rsquo;re saying, it was stated that intelligence doesn&amp;rsquo;t threaten healthcare professionals. But health professionals don&amp;rsquo;t know if these technologies will end up replacing them. Do you agree with this, Bruno? Does this idea make sense to you as well?&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Bruno Amaral&lt;/strong&gt; [00:13:35] I think a lot of people are a bit afraid of robots because of movies, right? It ends up placing in people&amp;rsquo;s heads the idea that they&amp;rsquo;re going to lose their jobs because artificial intelligence is going to do everything for them. It&amp;rsquo;s not true. As António was saying, Gregory can do the boring work of analyzing 15.000 articles in detail, the current approximate size of the database. Healthcare professionals don&amp;rsquo;t need to look every day at what has been published recently to see if there is anything relevant. This was António&amp;rsquo;s idea a while ago. The information volume we produce nowadays is so big that a health professional, or any other worker, will never attain the full extent of knowledge. He will never even be able to answer a question directly without spending two or three days researching that specific issue. This is where artificial intelligence comes in. That means being able to ask questions to a trained system with quality information. And it will tell me: &amp;ldquo;okay, for your specific question - what is the best treatment for this disease - we have this evidence here.&amp;rdquo; In the second phase, it&amp;rsquo;s up to the health professional - physician or researcher - to think &amp;ldquo;ok, let&amp;rsquo;s confirm what the artificial intelligence is saying to know if this is credible for my patient&amp;rsquo;s specific case, if this is the best way. In other words, it is never replacing one for the other. It&amp;rsquo;s about giving people more tools.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;André Correia&lt;/strong&gt; [00:15:06] And, as for the overall picture of this complementarity that you have mentioned briefly, intelligence
+also presents some ethical challenges in its complementarity with the human being. For example, the crashes with autonomous cars that are sometimes featured in the news. What if an algorithm gives incorrect information to a technician or causes an accident? Whose is to blame? Is it the machine and the developer and who uses it? António, we would like to know your opinion about this ethical issue of artificial intelligence.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;António Lopes&lt;/strong&gt; [00:15:35] I love this debate. I think it&amp;rsquo;s very important on many levels. I would say that it is impossible to answer it within the brief time that we have. I think it would take an episode just to address that. But I believe there is another, smaller discussion that we can have. Just a small disclaimer: I don&amp;rsquo;t think I&amp;rsquo;m the right person to do a purely legal analysis of these issues, because I know very little about law. But I think we should extrapolate some of the blame regarding the example you gave - the autopilot that currently exists in Teslas. Just a small note: those autopilots that currently exist are in what is called level two, within a scale that, if I am not mistaken, goes up to level five, the threshold for truly autonomous vehicles. We are still only at level two. The vehicle can do some maneuvers, but the driver is required to be always aware of the vehicle&amp;rsquo;s behavior to react in case of a mistake by the supposedly autonomous vehicle. So, if there is a mistake by the car, and a catastrophe happens, I would say that the driver is always to blame. Right now, there&amp;rsquo;s no doubt about it. But I guess you don&amp;rsquo;t want to talk about this current perspective, but a future one, where the vehicles will be, for example, at level 5, where they are considered truly autonomous. In that context, it is more complicated to analyze who is to blame. At least, I want to believe that whoever decides to assign that grade to a certain vehicle - allowing that same vehicle to navigate the road without any human intervention - must have done all the required tests, ensuring that the vehicle is safe when autonomously driven. Once we are at that point, the responsibility becomes widely spread among many different entities, because there are so many players. They are part of a circuit of reviewing, of testing, people who have assessed whether the product is safe and therefore consider whether the product should be used without limitations. If we consider that the product is properly monitored by official bodies, to ensure that it remains safe over time, that seems to me a suitable model. This allows us to have autonomous vehicles on our roads. I don&amp;rsquo;t know if you get where I&amp;rsquo;m going with this. I&amp;rsquo;m trying to make a comparison between this and what exists today. Today, and for quite a few decades now, we have a specific field, which are the entities responsible for monitoring pharmaceuticals. Just as we have a body like Infarmed, and similar entities in other countries, which rigorously test and monitor all drugs to see if they are safe for general consumption, isn&amp;rsquo;t it time to think about a similar approach for artificial intelligence? Does it make sense to have o
+ne entity responsible for analyzing the artificial intelligence algorithms made available worldwide?&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Daniel Guedelha&lt;/strong&gt; [00:18:31] I find the comparison with pharmaceuticals remarkably interesting. I was just thinking about that. I think there is a little caveat: in the pharmaceutical industry, when you submit a file, it stays intact. Therefore, the drug will have no further subsequent changes. Artificial intelligence is a continuum... or not. Just a thought.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;António Lopes&lt;/strong&gt; [00:18:51] It&amp;rsquo;s true, you are absolutely right about that. That&amp;rsquo;s why I also talked about continuous monitoring. If we have what I was explaining, we will also solve the ethics issue in artificial intelligence. Just as Infarmed analyzes all ethical aspects of a clinical trial of a medicine, this body would be responsible for analyzing the ethical implications of deploying any type of artificial intelligence algorithm in society. But, yes, these algorithms evolve, as you say. In fact, that is the idea; that they learn from the environment in which they operate and that they get to work. I would also hope that these bodies would have the skills to do that analysis, constantly monitoring what is done. Once they identify biases in these algorithms, they can see dangerous consequences of using these sorts of algorithms in society. Naturally, there must be a process in place to ensure this. On the issue of pharmaceuticals, this also ends up happening. There are drugs on the market about which, at some point, someone says, &amp;ldquo;Oh, wait, something new has been discovered, a case that killed a person. Let&amp;rsquo;s reinvestigate it.&amp;rdquo; The drug is taken off the market and re-investigated. Is that correct? It&amp;rsquo;s the same thing. I wouldn&amp;rsquo;t say that the drug has undergone an evolution. But maybe there was something that was missed in the earlier analysis and testing phase. All of this, which made it possible to ensure constant monitoring, forces the drug to go back to the analysis and testing phase. This is the discussion we should have about the ethics part. We cannot rely strictly on the ethics of the companies&amp;rsquo; developers because they have economic interests behind them. We can&amp;rsquo;t go in there. It&amp;rsquo;s dangerous to mix ethics with that part. We must make sure that ethics are enforced on these people. This is where this kind of approach must come in. I&amp;rsquo;m not saying it&amp;rsquo;s exactly the same as with pharmaceuticals, but something has to exist for these areas.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Daniel Guedelha&lt;/strong&gt; [00:20:47] Very interesting comparison. Thanks for sharing. Unfortunately, we are almost at the end of the episode. In this second season, we focus on the intersection between technology, health and sustainability. If we were to speak with Bruno and António ten years from now, how would you describe the changes these three areas have brought to the world and why? Let&amp;rsquo;s start with you, Bruno.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Bruno Amaral&lt;/strong&gt; [00:21:13] Those three areas? Well, I&amp;rsquo;m going to talk more about Gregory&amp;rsquo;s side. I think we are seeing a paradigm shift in computing and technology. In the old days, we used to make computer programs to be tools. Now, we are starting to make computer programs to be assistants. As António says, to do the boring part of the work, which is the thing that robs us of time and quality of decision. I think that&amp;rsquo;s the way. In health, many things can happen. But I wouldn&amp;rsquo;t dare risk it too much. What I would like to see happen is that tools like Gregory, which are open source, can be used more because people don&amp;rsquo;t realize that this is just like vaccines. The more people use quality tools and quality information, the better for everybody. That&amp;rsquo;s why Gregory is open source. That and other reasons make it helpful, allowing other patients to use it for other health conditions. Ultimately, that&amp;rsquo;s what matters. And, as for sustainability, it should not only be environmental, social and ecological. We should also be looking to be sustainable in everything we do. How to be sustainable? This is one of the other reasons why Gregory is open source. If anything happens to any of us, the code continues to exist. Somebody can tinker with it and evolve it. To me, that long-term sustainability is important. I don&amp;rsquo;t see that being taken into account by tools that we use today. Things like GPT-3 and the like have economic interests and private companies behind them. Naturally, they try to protect their competitive advantage.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Daniel Guedelha&lt;/strong&gt; [00:22:51] Thank you, Bruno. Before I move
+on to António, I wanted to say that if people want to know more
+about Gregory, they can just go to Google and type in Gregory.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Bruno Amaral&lt;/strong&gt; [00:22:58] Or Gregory ...&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;António Lopes&lt;/strong&gt; [00:23:01] I think if you just
+write Gregory you will find many other things.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Bruno Amaral&lt;/strong&gt; [00:23:03] Right. The name Gregory came about because he initially aggregated
+research and because it&amp;rsquo;s also a hat-tip to Doctor  Gregory House.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Daniel Guedelha&lt;/strong&gt; [00:23:12] How can people write Gregory plus something else to find the right place? What do you suggest?&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Bruno Amaral&lt;/strong&gt; [00:23:18] Gregory dash MS dot com, from Multiple Sclerosis.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Daniel Guedelha&lt;/strong&gt; [00:23:22] Thank you, Bruno. António, same question for you.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Antonio Lopes&lt;/strong&gt; [00:23:27] I would very much like to accept this challenge and embody António in ten years from now. But I find it impossible. Look, I&amp;rsquo;m going to do it the other way around. I&amp;rsquo;m going to say what I wish I could say ten years from now. I would like to be able to state that we have effectively managed to motivate the major technological companies to develop artificial intelligence models useful for the progress of health. And that the fight against diseases would end up being more customized. Let&amp;rsquo;s imagine this: a blood test makes it possible to determine not only the ailments from which the patient suffers, but also to define the appropriate treatment, directed and personalized to the patient&amp;rsquo;s biological and genetic background. This is the kind of analysis that entails an absurd amount of data. That, ten years from now, there will be artificial intelligence
+capable of doing that kind of thing. I would also like to be able to say that these same breakthroughs in artificial intelligence would make it possible to go further and even work on the prevention of diseases, right? Let&amp;rsquo;s imagine the possibility of, with more accuracy and customization, gauging the consequences that daily actions, such as our diet, have on disease prevention. And I would also like to say that artificial intelligence has been used to
+accelerate technological and social progress. A great hallmark like this one. That we managed to realize that we can use artificial intelligence
+for good, without ever neglecting sustainable development to create a better world for later generations. Be it climate change, agriculture, transportation, health, justice, inclusivity, freedom and equality. If I could say that ten years from now, I would be happy.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;André Correia&lt;/strong&gt; [00:25:18] António and Bruno, we will be back here to talk to you in ten years, to see if these statements
+have come true. I would like to thank you. Thank you very much for your time, for your availability. Today, at the Cruzamento, we have talked with António Lopes and Bruno Amaral about artificial intelligence, about the excellent work they are developing, and about an especially critical issue: ethics. Finally, Gregory&amp;rsquo;s website will also be in the episode notes. But, to wrap up, if our listeners want to know more about you, and follow your activity, where can they find you online?&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Bruno Amaral&lt;/strong&gt;: As for myself, I&amp;rsquo;m on Twitter, and soon I will also be at a mastodon near you. Yes, and at brunoamaral.eu.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;António Lopes&lt;/strong&gt; [00:26:04] You can also look for me on Twitter. If Elon Musk doesn&amp;rsquo;t kick me out, I&amp;rsquo;ll be there. I am Tonyvirtual.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Daniel Guedelha&lt;/strong&gt; [00:26:11] Great. To conclude, we would like to recommend to our listeners the Um Sobre Zero Podcast by António, who was here with us. As for us, you can also find us on our website and social media such as LinkedIn, YouTube or Twitter. If we are still there, we also invite you to subscribe to our newsletter. Goodbye and until the next conversation. See you soon.&lt;/p&gt;
+
+			</description>
+		</item>
+		
+		<item>
+			<title>Presenting at Fórum Saúde XXI</title>
+			<link>https://gregory-ms.com/post/2022-05-03/</link>
+			<pubDate>Tue, 03 May 2022 14:14:24 +0100</pubDate>
+			
+			<guid>https://gregory-ms.com/post/2022-05-03/</guid>
+			<description>
+				
+				
+				
+				<![CDATA[<img src="https://gregory-ms.com/post/2022-05-03/images/IMG_4609_hu36e9fd7321fdfbe1a5bb9b62ea304e6b_515165_640x0_resize_q75_box.JPG" width="640" height="480"/>]]>
+				
+				&lt;p&gt;Last Saturday I had the opportunity to be present at Fórum Saúde XXI and show GregoryMS to the Medical Community in Portugal.&lt;/p&gt;
+&lt;p&gt;This project runs on good will and hope, and opportunities like this are extremely valuable to get the word out to our main stakeholders. Doctors and Researchers.&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;m very grateful to &lt;a href=&#34;https://www.linkedin.com/in/andrea-lima-47190417/&#34;&gt;Andrea Lima&lt;/a&gt; and the whole team at &lt;a href=&#34;https://forumsaudexxi.pt/&#34;&gt;Fórum Saúde para o Século XXI&lt;/a&gt; for the invitation.&lt;/p&gt;
+&lt;p&gt;It&amp;rsquo;s not easy to explain what Gregory does in five minutes and ten slides, so we focused on what is essential.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Gregory is able to plot a map of what is being researched in Multiple Sclerosis (MS)&lt;/li&gt;
+&lt;li&gt;We can use that information to manage our resources better&lt;/li&gt;
+&lt;li&gt;We need to get the word out.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Raising awareness for the project is hard because this is a one-man show, &lt;a href=&#34;https://github.com/orgs/oneoverzero/teams/lobsters/members&#34;&gt;with help from a very dear group of friends that go by &amp;ldquo;The Lobsters&amp;rdquo;&lt;/a&gt;. They help by pointing the way to developing the software, solving bugs, and teaching me.&lt;/p&gt;
+&lt;p&gt;This weekend they went far beyond that. I came down sick on Friday and was close to not making it to the presentation. &lt;a href=&#34;https://twitter.com/arturventura&#34;&gt;Artur Ventura&lt;/a&gt;, &lt;a href=&#34;https://twitter.com/mca&#34;&gt;Luís Amaral&lt;/a&gt;, and &lt;a href=&#34;https://twitter.com/ppinheiro76&#34;&gt;Pedro Pinheiro&lt;/a&gt; took turns taking me to the hospital and even drove me to Aveiro.&lt;/p&gt;
+&lt;p&gt;It was well worth the trip given the number of people that were there and came to share some words after.&lt;/p&gt;
+&lt;p&gt;If you would like to help, share the link to Gregory MS with anyone you know in the scientific and medical community, or friends with MS. And if you would like to use it, book a free video call with me for a personal introduction to how it works.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://calendly.com/bruno-amaral&#34; target=&#34;_blank&#34; class=&#34;btn btn-success btn-round btn-lg font-weight-bold umami--click--post-link-book-a-call&#34;&gt;Book a Call Now &lt;i class=&#34;fas fa-calendar-alt&#34;&gt;&lt;/i&gt;&lt;/a&gt; &lt;a href=&#34;Bruno_Amaral_-_gregory-ms.pdf&#34; target=&#34;_blank&#34; class=&#34;btn btn-warning btn-round btn-lg font-weight-bold umami--click--post-link-view-slides&#34;&gt;View the Presentation &lt;i class=&#34;fas fa-file-pdf&#34;&gt;&lt;/i&gt;&lt;/a&gt;&lt;/p&gt;
+
+			</description>
+		</item>
+		
+		<item>
+			<title>XVI National Congress on Multiple Sclerosis</title>
+			<link>https://gregory-ms.com/post/2021-12-04/</link>
+			<pubDate>Sat, 04 Dec 2021 12:45:33 +0000</pubDate>
+			
+			<guid>https://gregory-ms.com/post/2021-12-04/</guid>
+			<description>
+				
+				
+				
+				<![CDATA[<img src="https://gregory-ms.com/post/2021-12-04/robot-hand-background-presenting-technology-gesture_hu1cec21ab898273034683b7f1b91e25d7_2275826_640x0_resize_q75_box.jpeg" width="640" height="427"/>]]>
+				
+				&lt;p&gt;This year the theme of the conference was &amp;ldquo;Health + Social 4.0&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;The conference is organized by the Portuguese MS Society and I had the opportunity to present Gregory to the people he is meant to serve.&lt;/p&gt;
+&lt;p&gt;This was a big milestone that was made possible by the Portuguese MS Society, &lt;a href=&#34;https://spem.pt/&#34;&gt;https://spem.pt/&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I wanted to make the most of this opportunity and bring something extra to the participants.&lt;/p&gt;
+&lt;h3 class=&#34;title&#34; id=&#34;introducing-metabase&#34;&gt;Introducing Metabase&lt;/h3&gt;
+&lt;p&gt;If you want to explore data and share it with a team, &lt;a href=&#34;https://www.metabase.com/&#34;&gt;Metabase&lt;/a&gt; is the tool for you. Metabase connects to any data source you can think of and allows anyone to build dashboards with an intuitive interface.&lt;/p&gt;
+&lt;p&gt;We are using it for two objectives. &lt;strong&gt;First&lt;/strong&gt;, Metabase charts are used in some of the pages of the Observatory. One example is the page for &lt;a href=&#34;https://gregory-ms.com/observatory/ocrelizumab/&#34;&gt;Ocrevus, also known as Ocrelizumab&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;This page now features two interactive charts where you can see the number of articles found with &amp;ldquo;ocrelizumab&amp;rdquo; in the title and how many of them seem to be relevant for People with Multiple Sclerosis and their quality of life.&lt;/p&gt;
+&lt;p&gt;Visitors can also download an Excel or JSON file with the data of each chart.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Second&lt;/strong&gt;, with Metabase we can now give people an improved access to the database. Doctors and Researchers can navigate to &lt;a href=&#34;https://metabase.gregory-ms.com/&#34;&gt;Metabase.Gregory-ms.com&lt;/a&gt; and login to build their own charts and configure automatic updates and email notifications.&lt;/p&gt;
+&lt;p&gt;This is an addition and not a replacement for the weekly digest of relevant research.&lt;/p&gt;
+&lt;p&gt;We are being cautious with the number of user accounts for Metabase to make sure the server can handle the number of requests. We gave away 10 accounts at the conference and there are another 10 available to anyone who shows interest.&lt;/p&gt;
+&lt;p&gt;If you would like one send an email to &lt;a href=&#34;mailto:bruno@gregory-ms.com&#34;&gt;bruno@gregory-ms.com&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 class=&#34;title&#34; id=&#34;revisiting-the-road-map&#34;&gt;Revisiting the road map&lt;/h3&gt;
+&lt;p&gt;Gregory as been doing a good job in collecting research and sending it to subscribers, and the algorithm keeps improving as the database grows.&lt;/p&gt;
+&lt;p&gt;It&amp;rsquo;s now time to level up and focus more on Clinical Trials. We have 3 priorities for 2022.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Spread the word about clinical trials in Portugal ⬜️&lt;/li&gt;
+&lt;li&gt;Inform of related clinical trials 🟡&lt;/li&gt;
+&lt;li&gt;Track acceptance of new therapies and drugs ⬜️&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;We already have some information on trials, but are unable to inform our stakeholders on which are recruiting and which are underway.&lt;/p&gt;
+&lt;p&gt;Even the information we have right now is of little use, it merely aggregates and filters MS Trials. A worthy goal would be to segment this list by country. We will be focusing on trials taking place in Portugal for the next year and see how far we can go.&lt;/p&gt;
+&lt;h3 class=&#34;title&#34; id=&#34;the-road-ahead-is-hard&#34;&gt;The road ahead is hard&lt;/h3&gt;
+&lt;p&gt;In Portugal, clinical trials are posted in the &lt;a href=&#34;https://rnec.pt/&#34;&gt;Registo Nacional de Estudo Clínicos&lt;/a&gt;, and at the moment we have no way to index the information on multiple sclerosis.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.ema.europa.eu/en/human-regulatory/research-development/clinical-trials/clinical-trials-information-system-training-support&#34;&gt;The European Medicine Agency is planning to launch the Clinical Trials Information System (CTIS) in January 2022&lt;/a&gt;. I haven&amp;rsquo;t had the time to focus on the documentation available, but I hope this new system will allow Gregory to index information.&lt;/p&gt;
+&lt;p&gt;As usual, I am open to your questions and suggestions. Feel free to reach out by emailing me or through twitter. &lt;a href=&#34;https://twitter.com/brunoamaral&#34;&gt;You can use my personal account (@brunoamaral)&lt;/a&gt;, or &lt;a href=&#34;https://twitter.com/gregoryms_&#34;&gt;@GregoryMS_&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;To subscribe to the weekly digest, send an email to &lt;a href=&#34;mailto:bruno@gregory-ms.com&#34;&gt;bruno@gregory-ms.com&lt;/a&gt;&lt;/p&gt;
+&lt;h2 class=&#34;title&#34; id=&#34;presentation&#34;&gt;Presentation&lt;/h2&gt;
+&lt;div class=&#34;embed-responsive embed-responsive-16by9&#34;&gt;
+&lt;iframe src=&#34;https://gregory-ms.com/post/2021-12-04/ViewerJS/#/post/2021-12-04/gregory_presentation_2021_spem.pdf&#34; width=&#39;800&#39; height=&#39;600&#39; allowfullscreen webkitallowfullscreen&gt;&lt;/iframe&gt;
+&lt;/div&gt;
+&lt;h3 id=&#34;portuguese-version-of-the-slides&#34;&gt;Portuguese version of the slides&lt;/h3&gt;
+&lt;div class=&#34;embed-responsive embed-responsive-16by9&#34;&gt;
+&lt;iframe src=&#34;https://gregory-ms.com/post/2021-12-04/ViewerJS/#/post/2021-12-04/Gregory_spem2021_PT.pdf&#34; width=&#39;800&#39; height=&#39;600&#39; allowfullscreen webkitallowfullscreen&gt;&lt;/iframe&gt;
+&lt;/div&gt;
+			</description>
+		</item>
+		
+		<item>
+			<title>A much needed update</title>
+			<link>https://gregory-ms.com/post/2021-10-16/</link>
+			<pubDate>Sat, 16 Oct 2021 13:21:28 +0100</pubDate>
+			
+			<guid>https://gregory-ms.com/post/2021-10-16/</guid>
+			<description>
+				
+				
+				
+				<![CDATA[<img src="https://gregory-ms.com/post/2021-10-16/images/alejandro-escamilla-LF8gK8-HGSg-unsplash_hu7645d73a20e60fdcc982392cec677bd3_276524_640x0_resize_q75_box.jpeg" width="640" height="427"/>]]>
+				
+				&lt;p&gt;Let me start by saying I feel exhausted and drained, so this update will feel a bit more personal.&lt;/p&gt;
+&lt;p&gt;Between life, work and Gregory, the last 40 or so days have been demanding and filled with good news. Let&amp;rsquo;s focus on Gregory because he&amp;rsquo;s the important one.&lt;/p&gt;
+&lt;h3 class=&#34;title&#34; id=&#34;cloudflare&#34;&gt;Cloudflare&lt;/h3&gt;
+&lt;img src=&#34;images/Powered_by_project_Galileo.png&#34; class=&#34;float-right w-50 d-none d-md-inline-block&#34;&gt;
+&lt;p&gt;I am very grateful to Cloudflare, it became the first Company to officially support this project by providing their services under Project Galileo. This means a lot to us. It helps us provide you with a fast and secure website and to track how many visitors we have.&lt;/p&gt;
+&lt;p&gt;Cloudflare&amp;rsquo;s web analytics feature is focused on privacy and will not track you in any intrusive way.&lt;/p&gt;
+&lt;p&gt;We plan to use this information to improve the website, by exploring new features and focusing on keeping the most visited pages up to date.&lt;/p&gt;
+&lt;h4 class=&#34;title&#34; id=&#34;it-is-also-a-source-of-motivation&#34;&gt;It is also a source of motivation&lt;/h4&gt;
+&lt;p&gt;Up to this point I always felt like I was standing in a backroom of the web, building Gregory on my own, with friends that came to visit now and then to help me overcome obstacles and get the word out.&lt;/p&gt;
+&lt;p&gt;Turns out there was also a silent crowd with interest in what we are doing.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;images/metrics-cloudflare-visits-gregory.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;The spike you see in the chart happened when we launched the new design and shared it on some social networks.&lt;/p&gt;
+&lt;h3 class=&#34;title&#34; id=&#34;automating-the-site-with-machine-learning&#34;&gt;Automating the site with Machine Learning&lt;/h3&gt;
+&lt;p&gt;Gregory became smarter thanks to &lt;a href=&#34;https://github.com/antoniolopes&#34;&gt;António Lopes&lt;/a&gt;, he is the Head of Development at ISCTE, University Institute of Lisbon, and a researcher in Artificial Intelligence and Machine Learning.&lt;/p&gt;
+&lt;p&gt;Thanks to António, &lt;strong&gt;we were able to train Gregory to identify relevant articles on his own&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;We are still looking over Gregory&amp;rsquo;s shoulder and improving the algorithm on a weekly basis. Yet, this represents a huge step towards giving you up to date information with a high level of quality.&lt;/p&gt;
+&lt;p&gt;This algorithm was trained based on my own work in tagging articles that appear to be relevant. It means that the algorithm is not perfect and reflects my bias and lack of scientific training.&lt;/p&gt;
+&lt;p&gt;The best way to resolve this problem is to train Gregory&amp;rsquo;s algorithm with feedback from someone with scientific and medical training.&lt;/p&gt;
+&lt;p&gt;On the homepage, you can tell if an article was identified by the algorithm when you see a green button like this. &lt;span class=&#34;badge badge-success text-white font-weight-normal&#34;&gt;auto&lt;/span&gt;&lt;/p&gt;
+&lt;h3 class=&#34;title&#34; id=&#34;an-improved-newsletter-digest&#34;&gt;An improved newsletter digest&lt;/h3&gt;
+&lt;p&gt;There has been a newsletter digest available to anyone, for free, since Gregory was born. It was programmed by me in a quick and dirty way. It worked but it sometimes included duplicate articles from one week to the next.&lt;/p&gt;
+&lt;p&gt;From now on, the list of articles will consist only of fresh content week after week.&lt;/p&gt;
+&lt;h3 class=&#34;title&#34; id=&#34;search-page&#34;&gt;Search page&lt;/h3&gt;
+&lt;p&gt;In the past it was dificult to search the website for a specific query. Now, &lt;a href=&#34;https://gregory-ms.com/search/&#34;&gt;you can navigate to the search page and get instant results from Gregory&amp;rsquo;s database&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 class=&#34;title&#34; id=&#34;downloading-the-database&#34;&gt;Downloading the Database&lt;/h3&gt;
+&lt;p&gt;There have always been Excel and Json files with the full database. I made a tiny improvement to the download page so that the filename will always indicate the date and time it was exported.&lt;/p&gt;
+&lt;h3 class=&#34;title&#34; id=&#34;fresh-content-as-it-happens&#34;&gt;Fresh content as it happens&lt;/h3&gt;
+&lt;p&gt;Maybe what you want is our full feed of articles updated as it happens. For that you can use our RSS Feed and your favorite app on mobile or desktop.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://gregory-ms.com/articles/index.xml&#34; class=&#34;btn btn-lg btn-dark btn-sm btn-primary&#34;&gt;&lt;i class=&#34;fas fa-rss&#34;&gt;&lt;/i&gt; RSS&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Here are a few suggestions of RSS Reader apps from Zapier:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://zapier.com/blog/best-rss-feed-reader-apps/#feedly&#34;&gt;Feedly&lt;/a&gt; for the best all-around free feed RSS reader&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://zapier.com/blog/best-rss-feed-reader-apps/#newsblur&#34;&gt;NewsBlur&lt;/a&gt; for filtering your RSS feeds&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://zapier.com/blog/best-rss-feed-reader-apps/#inoreader&#34;&gt;Inoreader&lt;/a&gt; for the best free reader with search and archiving&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://zapier.com/blog/best-rss-feed-reader-apps/#oldreader&#34;&gt;The Old Reader&lt;/a&gt; for sharing and recommendations&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://zapier.com/blog/best-rss-feed-reader-apps/#feeder&#34;&gt;Feeder&lt;/a&gt; for quickly browsing headlines&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Just make sure you give it this URL : &lt;a href=&#34;https://gregory-ms.com/articles/index.xml&#34;&gt;https://gregory-ms.com/articles/index.xml&lt;/a&gt;&lt;/p&gt;
+&lt;h3 class=&#34;title&#34; id=&#34;disclaimer&#34;&gt;Disclaimer&lt;/h3&gt;
+&lt;p&gt;On the footer of the page you find links to this changelog and also &lt;a href=&#34;https://gregory-ms.com/disclaimer/&#34;&gt;the required disclaimer, explaining how this information can be used and by whom&lt;/a&gt;. Allow me to save you a click.&lt;/p&gt;
+&lt;blockquote class=&#34;blockquote blockquote-info&#34;&gt;
+&lt;p&gt;Gregory MS is an Open Project built by &lt;a href=&#39;https://brunoamaral.eu/&#39;&gt;Bruno Amaral&lt;/a&gt;, who does not have any kind of medical training.&lt;/p&gt;
+&lt;p&gt;Therefore, please keep in mind none of the content found on this site is a prescription, recommendation, or even a suggestion. The information found here is meant to assist medical teams and researchers.&lt;/p&gt;
+&lt;p&gt;We are trying to help them save time by collecting up to date information and identifying articles which are relevant in providing new treatment protocols.&lt;/p&gt;
+&lt;p&gt;This is done manually and with the assistance of a &lt;a href=&#39;https://en.wikipedia.org/wiki/Machine_learning&#39;&gt;machine learning algorithm&lt;/a&gt;. This algorithm was trained by Bruno, and therefore reflects his bias and interpretation of what is relevant.&lt;/p&gt;
+&lt;p&gt;We appreciate your interest, and advise you to discuss the information found here with your medical team.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 class=&#34;title&#34; id=&#34;a-final-note-and-how-to-get-involved&#34;&gt;A final note and how to get involved&lt;/h2&gt;
+&lt;p&gt;I doubt it this is everything that was done in the last two months. There were also a lot of minor fixes and improvements to give you a corporate-level experience in collecting information for research on Multiple Sclerosis.&lt;/p&gt;
+&lt;p&gt;All I ask now is that you help spread the word about the website. Share it on Twitter tagging @&lt;a href=&#34;https://twitter.com/gregoryms_&#34;&gt;gregoryms_&lt;/a&gt;, send the link to every neurologist you know, tell your doctor about us.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Do you have something to say?&lt;/strong&gt; I welcome any suggestion and feedback. Send an email to &lt;a href=&#34;mailto:mail@brunoamaral.eu&#34;&gt;mail@brunoamaral.eu&lt;/a&gt; with what is on your mind.&lt;/p&gt;
+&lt;p&gt;Thank you for taking the time to reach this far. If you could please click one of the share buttons bellow, I will be very grateful.&lt;/p&gt;
+
+			</description>
+		</item>
+		
+		<item>
+			<title>v2.0 - New design</title>
+			<link>https://gregory-ms.com/post/2021-09-21-v20/</link>
+			<pubDate>Tue, 21 Sep 2021 18:10:09 +0100</pubDate>
+			
+			<guid>https://gregory-ms.com/post/2021-09-21-v20/</guid>
+			<description>
+				
+				
+				&lt;p&gt;This is mostly an aesthetic update. The site now uses the Now-UI theme from Creative Tim, with tons of changes to fit the purpose of listing research and clinical trials.&lt;/p&gt;
+&lt;p&gt;Some highlights of the theme:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Pagination of the homepage and clinical trials sections&lt;/li&gt;
+&lt;li&gt;Thumbnails for when static pages are shared on social media&lt;/li&gt;
+&lt;li&gt;When available, abstracts are now listed after the title of the Article/Trial&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Changes to the build script:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;We now produce an index.md for each Article or Clinical Trial&lt;/li&gt;
+&lt;li&gt;Prints out each stage of the build process&lt;/li&gt;
+&lt;li&gt;We are in contact with a few stakeholders and hope to improve Gregory with their help.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Thank you to everyone reading this. 🙂&lt;/p&gt;
+
+			</description>
+		</item>
+		
+		<item>
+			<title>Version 1.8.1</title>
+			<link>https://gregory-ms.com/post/2021-08-26/</link>
+			<pubDate>Thu, 26 Aug 2021 11:30:58 +0100</pubDate>
+			
+			<guid>https://gregory-ms.com/post/2021-08-26/</guid>
+			<description>
+				
+				
+				&lt;h3 id=&#34;new-sources-added-for-clinical-trials-and-articles&#34;&gt;New Sources Added for Clinical Trials and Articles&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;No new sources were added in this release&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;new-features&#34;&gt;New Features&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Adds new API endpoints to search the database by keyword&lt;/li&gt;
+&lt;li&gt;Adds a new section called &lt;a href=&#34;https://gregory-ms.com/observatorio/&#34;&gt;Observatory&lt;/a&gt; that lists promissing research according to the MS Society Website. &lt;a href=&#34;https://www.mssociety.org.uk/research/explore-our-research/emerging-research-and-treatments/explore-treatments-in-trials&#34;&gt;https://www.mssociety.org.uk/research/explore-our-research/emerging-research-and-treatments/explore-treatments-in-trials&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;changes&#34;&gt;Changes&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Adds the new section to the menu&lt;/li&gt;
+&lt;/ul&gt;
+
+			</description>
+		</item>
+		
+		<item>
+			<title>Ensaios Clínicos e melhorias na partilha de informação</title>
+			<link>https://gregory-ms.com/post/2021-08-10/</link>
+			<pubDate>Tue, 10 Aug 2021 10:58:28 +0100</pubDate>
+			
+			<guid>https://gregory-ms.com/post/2021-08-10/</guid>
+			<description>
+				
+				
+				&lt;p&gt;Nos últimos dias estivemos a fazer um conjunto de melhorias em dois campos: recolha de informação sobre ensaios clínicos e método de divulgação.&lt;/p&gt;
+&lt;p&gt;Os sites da CUF e Novartis agora são consultados para saber de novos estudos clínicos. Para ajudar na divulgação, o digest de email foi melhorado e integrado com uma conta de twitter. @&lt;a href=&#34;https://twitter.com/gregoryms_&#34;&gt;GregroryMS_&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Além disso, foram tomadas medidas de backup para prevenir perder a informação que tem vindo a ser recolhida desde fevereiro de 2021.&lt;/p&gt;
+&lt;p&gt;Esta informação pode ser consultada e comentada no site onde gerimos toda a programação e plano de desenvolvimento: &lt;a href=&#34;https://github.com/brunoamaral/gregory/releases/tag/v1.6&#34;&gt;https://github.com/brunoamaral/gregory/releases/tag/v1.6&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;No futuro gostaríamos de acrescentar as seguintes fontes de informação para ensaios clínicos:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;RNEC&lt;/li&gt;
+&lt;li&gt;FirstWord Pharma&lt;/li&gt;
+&lt;li&gt;EMA&lt;/li&gt;
+&lt;li&gt;Champalimaud Foundation&lt;/li&gt;
+&lt;li&gt;CEIC&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.ema.europa.eu/en/human-regulatory/research-development/clinical-trials/clinical-trials-information-system-training-support&#34;&gt;Destas, a EMA tem previsto colocar online o Clinical Trial Information System em Janeiro de 2022.&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;strong&gt;O que se segue é a descrição mais completa de todas estas alterações.&lt;/strong&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;new-sources-added-for-clinical-trials&#34;&gt;New Sources Added for Clinical Trials&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.cuf.pt/cuf-academic-center/ensaios-clinicos?combine=&amp;amp;unidade=&amp;amp;estado=All&amp;amp;patologia=2346&amp;amp;especialidade=&#34;&gt;CUF&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.novartis.com/clinicaltrials/recruiting-trials?title=multiple%20sclerosis&#34;&gt;Novartis&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;new-features&#34;&gt;New Features&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;A digest of new articles is sent to the Admin every 48h so that the most relevant findings can be flagged.&lt;/li&gt;
+&lt;li&gt;Weekly digest is sent to the subscribers, it lists the articles flagged by the admin.&lt;/li&gt;
+&lt;li&gt;The Admin now receives a notification of new clinical trials as they are posted.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;changes&#34;&gt;Changes&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;The file  notification flows.json replaces newsletter.json&lt;/li&gt;
+&lt;li&gt;The main json file with the node-red flows was cleaned up and corrected some missing links between nodes&lt;/li&gt;
+&lt;li&gt;The database schema was added to the repository as &lt;code&gt;gregory_schema.sql&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;The full sqlite database was added to the repository as &lt;code&gt;gregory.sql&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;A new flow was added that integrates with twitter using a &lt;a href=&#34;https://www.notion.so/&#34;&gt;Notion&lt;/a&gt; database&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;twitter-integration&#34;&gt;Twitter integration&lt;/h2&gt;
+&lt;p&gt;Results that are flagged as relevant are posted in the account @&lt;a href=&#34;https://twitter.com/gregoryms_&#34;&gt;GregroryMS_&lt;/a&gt; using the service provided by &lt;a href=&#34;https://automate.io/&#34;&gt;Automate.io&lt;/a&gt;.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-mermaid&#34; data-lang=&#34;mermaid&#34;&gt;graph LR
+    Gregory --&amp;gt; Notion[&amp;#34;Notion Database&amp;#34;]
+    Notion --&amp;gt; Automate.io
+    Automate.io --&amp;gt; Twitter[&amp;#34;Twitter @GregoryMS_&amp;#34;]
+&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&#34;roadmap&#34;&gt;Roadmap&lt;/h1&gt;
+&lt;p&gt;New sources we would like to add:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;RNEC&lt;/li&gt;
+&lt;li&gt;FirstWord Pharma&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.ema.europa.eu/en/human-regulatory/research-development/clinical-trials/clinical-trials-information-system-training-support&#34;&gt;EMA&lt;/a&gt; (CTIS system to be made available online on January 2022)&lt;/li&gt;
+&lt;li&gt;Champalimaud Foundation&lt;/li&gt;
+&lt;li&gt;CEIC (Doesn&amp;rsquo;t seem to have any public database)&lt;/li&gt;
+&lt;/ul&gt;
+
+			</description>
+		</item>
+		
+		<item>
+			<title>Newsletter</title>
+			<link>https://gregory-ms.com/post/2021-06-12/</link>
+			<pubDate>Sat, 12 Jun 2021 17:11:10 +0100</pubDate>
+			
+			<guid>https://gregory-ms.com/post/2021-06-12/</guid>
+			<description>
+				
+				
+				&lt;p&gt;Como parte de uma sugestão recebida por email, foi criado um sumário da pesquisa com os artigos que são, aparentemente, mais relevantes.&lt;/p&gt;
+&lt;p&gt;Esta seleção é feita com base no que parece ser mais vantajoso para a qualidade de vida das pessoas com Esclerose Múltipla. Esta recolha destina-se somente a ser usada por profissionais de saúde e não deve ser considerada como qualquer tipo de sugestão clínica.&lt;/p&gt;
+&lt;p&gt;Para inclusão nesta lista de email basta contactar através de um dos canais seguintes:&lt;/p&gt;
+&lt;h3 id=&#34;bruno-amaral&#34;&gt;Bruno Amaral&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;mailto:mail@brunoamaral.eu&#34;&gt;mail@brunoamaral.eu&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://twitter.com/brunoamaral&#34;&gt;https://twitter.com/brunoamaral&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;tel:+351912875856&#34;&gt;+351 912 875 856&lt;/a&gt;&lt;/p&gt;
+
+			</description>
+		</item>
+		
+		<item>
+			<title>Novas fontes de pesquisa</title>
+			<link>https://gregory-ms.com/post/2021-05-26/</link>
+			<pubDate>Wed, 26 May 2021 21:21:13 +0100</pubDate>
+			
+			<guid>https://gregory-ms.com/post/2021-05-26/</guid>
+			<description>
+				
+				
+				&lt;p&gt;Por recomendação do Dr. João Sequeira, o site agora apresenta resultados recolhidos de mais dois sites:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;https://journals.sagepub.com/action/doSearch?AllField=multiple+sclerosis&amp;amp;SeriesKey=msja&amp;amp;content=articlesChapters&amp;amp;countTerms=true&amp;amp;target=default&amp;amp;sortBy=Ppub&amp;amp;startPage=&amp;amp;ContentItemType=research-article&#34;&gt;MS Journal&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.msard-journal.com/action/doSearch?text1=Multiple+Sclerosis&amp;amp;field1=AbstractTitleKeywordFilterField&amp;amp;startPage=0&amp;amp;sortBy=Earliest&#34;&gt;MS and Related Disorders&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Somam-se assim um total de 12 fontes de pesquisa.&lt;/p&gt;
+&lt;p&gt;Para mais informações ou para sugerir mais fontes de informação sobre Esclerose Múltipla, os contactos a usar são os seguintes:&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;mailto:mail@brunoamaral.eu&#34;&gt;mail@brunoamaral.eu&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://twitter.com/brunoamaral&#34;&gt;https://twitter.com/brunoamaral&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;+351 912 875 856&lt;/p&gt;
+&lt;h3 id=&#34;gráfico-atualizado&#34;&gt;Gráfico atualizado&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-mermaid&#34; data-lang=&#34;mermaid&#34;&gt;graph LR;
+    APTA[fa:fa-newspaper APTA.org] --&amp;gt;Gregory;
+    BioMedCentral[fa:fa-newspaper BioMedCentral.com] --&amp;gt;Gregory;
+    ClinicalTrials[fa:fa-newspaper ClinicalTrials.gov]--&amp;gt;Gregory;
+    JNeurosci[fa:fa-newspaper JNeurosci.org]--&amp;gt;Gregory;
+    PEDro[fa:fa-newspaper PEDro.org.au] --&amp;gt;Gregory;
+    PubMed[fa:fa-newspaper PubMed.gov] --&amp;gt;Gregory;
+    Reuters[fa:fa-newspaper Reuters Health]--&amp;gt;Gregory;
+    Scielo[fa:fa-newspaper Scielo.org] --&amp;gt;Gregory;
+    TheLancet[fa:fa-newspaper The Lancet Health]--&amp;gt;Gregory;
+    Manual[fa:fa-keyboard Inserção Manual]--&amp;gt;Gregory;
+    Gregory{fa:fa-robot Gregory}--&amp;gt;Website(fa:fa-globe Website)
+    MSJournal[fa:fa-newspaper MS Journal]--&amp;gt;Gregory;
+    MSandRelatedDisorders[fa:fa-newspaper MS and Related Disorders]--&amp;gt;Gregory;
+&lt;/code&gt;&lt;/pre&gt;
+			</description>
+		</item>
+		
+	</channel>
+</rss>

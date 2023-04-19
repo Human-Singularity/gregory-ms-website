@@ -1,0 +1,87 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Multiple Sclerosis research by Gregory MS by Bruno Amaral</title>
+		<link>https://gregory-ms.com/tags/machine-learning/</link>
+		<description></description>
+		<generator>Hugo -- gohugo.io</generator>
+		<language>en</language>
+		<lastBuildDate>Sat, 16 Oct 2021 13:21:28 +0100</lastBuildDate>
+		<image>
+			<url>https://gregory-ms.com/Gregory_Banner3.png</url>
+			<title>Multiple Sclerosis research by Gregory MS</title>
+			<link>https://gregory-ms.com/tags/machine-learning/</link>
+		</image>
+		
+		<atom:link href="https://gregory-ms.com/tags/machine-learning/index.xml" rel="self" type="application/rss+xml" />
+		
+		
+		<item>
+			<title>A much needed update</title>
+			<link>https://gregory-ms.com/post/2021-10-16/</link>
+			<pubDate>Sat, 16 Oct 2021 13:21:28 +0100</pubDate>
+			
+			<guid>https://gregory-ms.com/post/2021-10-16/</guid>
+			<description>
+				
+				
+				
+				<![CDATA[<img src="https://gregory-ms.com/post/2021-10-16/images/alejandro-escamilla-LF8gK8-HGSg-unsplash_hu7645d73a20e60fdcc982392cec677bd3_276524_640x0_resize_q75_box.jpeg" width="640" height="427"/>]]>
+				
+				&lt;p&gt;Let me start by saying I feel exhausted and drained, so this update will feel a bit more personal.&lt;/p&gt;
+&lt;p&gt;Between life, work and Gregory, the last 40 or so days have been demanding and filled with good news. Let&amp;rsquo;s focus on Gregory because he&amp;rsquo;s the important one.&lt;/p&gt;
+&lt;h3 class=&#34;title&#34; id=&#34;cloudflare&#34;&gt;Cloudflare&lt;/h3&gt;
+&lt;img src=&#34;images/Powered_by_project_Galileo.png&#34; class=&#34;float-right w-50 d-none d-md-inline-block&#34;&gt;
+&lt;p&gt;I am very grateful to Cloudflare, it became the first Company to officially support this project by providing their services under Project Galileo. This means a lot to us. It helps us provide you with a fast and secure website and to track how many visitors we have.&lt;/p&gt;
+&lt;p&gt;Cloudflare&amp;rsquo;s web analytics feature is focused on privacy and will not track you in any intrusive way.&lt;/p&gt;
+&lt;p&gt;We plan to use this information to improve the website, by exploring new features and focusing on keeping the most visited pages up to date.&lt;/p&gt;
+&lt;h4 class=&#34;title&#34; id=&#34;it-is-also-a-source-of-motivation&#34;&gt;It is also a source of motivation&lt;/h4&gt;
+&lt;p&gt;Up to this point I always felt like I was standing in a backroom of the web, building Gregory on my own, with friends that came to visit now and then to help me overcome obstacles and get the word out.&lt;/p&gt;
+&lt;p&gt;Turns out there was also a silent crowd with interest in what we are doing.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;images/metrics-cloudflare-visits-gregory.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;The spike you see in the chart happened when we launched the new design and shared it on some social networks.&lt;/p&gt;
+&lt;h3 class=&#34;title&#34; id=&#34;automating-the-site-with-machine-learning&#34;&gt;Automating the site with Machine Learning&lt;/h3&gt;
+&lt;p&gt;Gregory became smarter thanks to &lt;a href=&#34;https://github.com/antoniolopes&#34;&gt;António Lopes&lt;/a&gt;, he is the Head of Development at ISCTE, University Institute of Lisbon, and a researcher in Artificial Intelligence and Machine Learning.&lt;/p&gt;
+&lt;p&gt;Thanks to António, &lt;strong&gt;we were able to train Gregory to identify relevant articles on his own&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;We are still looking over Gregory&amp;rsquo;s shoulder and improving the algorithm on a weekly basis. Yet, this represents a huge step towards giving you up to date information with a high level of quality.&lt;/p&gt;
+&lt;p&gt;This algorithm was trained based on my own work in tagging articles that appear to be relevant. It means that the algorithm is not perfect and reflects my bias and lack of scientific training.&lt;/p&gt;
+&lt;p&gt;The best way to resolve this problem is to train Gregory&amp;rsquo;s algorithm with feedback from someone with scientific and medical training.&lt;/p&gt;
+&lt;p&gt;On the homepage, you can tell if an article was identified by the algorithm when you see a green button like this. &lt;span class=&#34;badge badge-success text-white font-weight-normal&#34;&gt;auto&lt;/span&gt;&lt;/p&gt;
+&lt;h3 class=&#34;title&#34; id=&#34;an-improved-newsletter-digest&#34;&gt;An improved newsletter digest&lt;/h3&gt;
+&lt;p&gt;There has been a newsletter digest available to anyone, for free, since Gregory was born. It was programmed by me in a quick and dirty way. It worked but it sometimes included duplicate articles from one week to the next.&lt;/p&gt;
+&lt;p&gt;From now on, the list of articles will consist only of fresh content week after week.&lt;/p&gt;
+&lt;h3 class=&#34;title&#34; id=&#34;search-page&#34;&gt;Search page&lt;/h3&gt;
+&lt;p&gt;In the past it was dificult to search the website for a specific query. Now, &lt;a href=&#34;https://gregory-ms.com/search/&#34;&gt;you can navigate to the search page and get instant results from Gregory&amp;rsquo;s database&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 class=&#34;title&#34; id=&#34;downloading-the-database&#34;&gt;Downloading the Database&lt;/h3&gt;
+&lt;p&gt;There have always been Excel and Json files with the full database. I made a tiny improvement to the download page so that the filename will always indicate the date and time it was exported.&lt;/p&gt;
+&lt;h3 class=&#34;title&#34; id=&#34;fresh-content-as-it-happens&#34;&gt;Fresh content as it happens&lt;/h3&gt;
+&lt;p&gt;Maybe what you want is our full feed of articles updated as it happens. For that you can use our RSS Feed and your favorite app on mobile or desktop.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://gregory-ms.com/articles/index.xml&#34; class=&#34;btn btn-lg btn-dark btn-sm btn-primary&#34;&gt;&lt;i class=&#34;fas fa-rss&#34;&gt;&lt;/i&gt; RSS&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Here are a few suggestions of RSS Reader apps from Zapier:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://zapier.com/blog/best-rss-feed-reader-apps/#feedly&#34;&gt;Feedly&lt;/a&gt; for the best all-around free feed RSS reader&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://zapier.com/blog/best-rss-feed-reader-apps/#newsblur&#34;&gt;NewsBlur&lt;/a&gt; for filtering your RSS feeds&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://zapier.com/blog/best-rss-feed-reader-apps/#inoreader&#34;&gt;Inoreader&lt;/a&gt; for the best free reader with search and archiving&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://zapier.com/blog/best-rss-feed-reader-apps/#oldreader&#34;&gt;The Old Reader&lt;/a&gt; for sharing and recommendations&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://zapier.com/blog/best-rss-feed-reader-apps/#feeder&#34;&gt;Feeder&lt;/a&gt; for quickly browsing headlines&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Just make sure you give it this URL : &lt;a href=&#34;https://gregory-ms.com/articles/index.xml&#34;&gt;https://gregory-ms.com/articles/index.xml&lt;/a&gt;&lt;/p&gt;
+&lt;h3 class=&#34;title&#34; id=&#34;disclaimer&#34;&gt;Disclaimer&lt;/h3&gt;
+&lt;p&gt;On the footer of the page you find links to this changelog and also &lt;a href=&#34;https://gregory-ms.com/disclaimer/&#34;&gt;the required disclaimer, explaining how this information can be used and by whom&lt;/a&gt;. Allow me to save you a click.&lt;/p&gt;
+&lt;blockquote class=&#34;blockquote blockquote-info&#34;&gt;
+&lt;p&gt;Gregory MS is an Open Project built by &lt;a href=&#39;https://brunoamaral.eu/&#39;&gt;Bruno Amaral&lt;/a&gt;, who does not have any kind of medical training.&lt;/p&gt;
+&lt;p&gt;Therefore, please keep in mind none of the content found on this site is a prescription, recommendation, or even a suggestion. The information found here is meant to assist medical teams and researchers.&lt;/p&gt;
+&lt;p&gt;We are trying to help them save time by collecting up to date information and identifying articles which are relevant in providing new treatment protocols.&lt;/p&gt;
+&lt;p&gt;This is done manually and with the assistance of a &lt;a href=&#39;https://en.wikipedia.org/wiki/Machine_learning&#39;&gt;machine learning algorithm&lt;/a&gt;. This algorithm was trained by Bruno, and therefore reflects his bias and interpretation of what is relevant.&lt;/p&gt;
+&lt;p&gt;We appreciate your interest, and advise you to discuss the information found here with your medical team.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 class=&#34;title&#34; id=&#34;a-final-note-and-how-to-get-involved&#34;&gt;A final note and how to get involved&lt;/h2&gt;
+&lt;p&gt;I doubt it this is everything that was done in the last two months. There were also a lot of minor fixes and improvements to give you a corporate-level experience in collecting information for research on Multiple Sclerosis.&lt;/p&gt;
+&lt;p&gt;All I ask now is that you help spread the word about the website. Share it on Twitter tagging @&lt;a href=&#34;https://twitter.com/gregoryms_&#34;&gt;gregoryms_&lt;/a&gt;, send the link to every neurologist you know, tell your doctor about us.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Do you have something to say?&lt;/strong&gt; I welcome any suggestion and feedback. Send an email to &lt;a href=&#34;mailto:mail@brunoamaral.eu&#34;&gt;mail@brunoamaral.eu&lt;/a&gt; with what is on your mind.&lt;/p&gt;
+&lt;p&gt;Thank you for taking the time to reach this far. If you could please click one of the share buttons bellow, I will be very grateful.&lt;/p&gt;
+
+			</description>
+		</item>
+		
+	</channel>
+</rss>
