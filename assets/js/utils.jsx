@@ -53,5 +53,14 @@ export function updateTitleAndMeta(article) {
 	} else {
 		console.log('a Element not found');
 	}
+
+	// Remove the information about the source of the articles (div#sourceinfo)
+	const divElementToRemove = document.querySelector('div#sourceinfo');
+	if (divElementToRemove) {
+		divElementToRemove.parentNode.removeChild(divElementToRemove);
+	} else {
+		console.log('div#sourceinfo Element not found');
+	}
+	
 }
 
