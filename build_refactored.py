@@ -84,17 +84,26 @@ def save_excel_and_json(articles, trials):
 
 
 def process_and_save_dataframe(df, name):
-    df['published_date'] = df['published_date'].dt.tz_localize(None)
-    df['discovery_date'] = df['discovery_date'].dt.tz_localize(None)
+	df['published_date'] = df['published_date'].dt.tz_localize(None)
+	df['discovery_date'] = df['discovery_date'].dt.tz_localize(None)
 
-    df.link = df.link.apply(html.unescape)
-    df.summary = df.summary.replace(np.nan, '', regex=True)
-    df.summary = df.summary.apply(html.unescape)
-    df.to_excel('content/developers/' + name + '_' + datetime_string + '.xlsx')
-    df.to_json('content/developers/' + name + '_' + datetime_string + '.json')
-    df.to_csv('content/developers/' + name + '_' + datetime_string + '.csv')
+	df.link = df.link.apply(html.unescape)
+	df.summary = df.summary.replace(np.nan, '', regex=True)
+	df.summary = df.summary.apply(html.unescape)
+	df.to_excel('content/developers/' + name + '_' + datetime_string + '.xlsx')
+	df.to_json('content/developers/' + name + '_' + datetime_string + '.json')
+	df.to_csv('content/developers/' + name + '_' + datetime_string + '.csv')
 
+def save_articles_to_json(articles):
+	# Keep only 'article_id' and 'title' columns
+	json_articles = articles[['article_id', 'title']]
 
+	# Create 'slug' column from 'title' column
+	json_articles['slug'] = articles['title'].apply(lambda x: x.lower().replace(" ", "-"))
+
+	# Save the processed DataFrame to a JSON file
+	json_articles.to_json('data/articles.json', orient='records')
+	
 def create_categories(categories):
 	print('''
 ####
