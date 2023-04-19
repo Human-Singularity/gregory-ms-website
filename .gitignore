@@ -11,7 +11,7 @@ content/developers/articles_*
 __pycache__/
 *.py[cod]
 *$py.class
-
+.jampack/
 # C extensions
 *.so
 
