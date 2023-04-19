@@ -1,4 +1,10 @@
 #!/usr/bin/python3
+from datetime import datetime
+from dotenv import load_dotenv
+from pathlib import Path
+from shutil import which
+from slugify import slugify
+from zipfile import ZipFile
 import git
 import html
 import json
@@ -6,16 +12,10 @@ import jwt
 import numpy as np
 import os
 import pandas as pd
-import pathlib
 import sqlalchemy
 import subprocess
 import time
-from datetime import datetime
-from dotenv import load_dotenv
-from pathlib import Path
-from shutil import which
-from slugify import slugify
-from zipfile import ZipFile
+
 
 load_dotenv()
 
@@ -95,6 +95,11 @@ def process_and_save_dataframe(df, name):
 	df.to_csv('content/developers/' + name + '_' + datetime_string + '.csv')
 
 def save_articles_to_json(articles):
+	print('''
+####
+## CREATE data/articles.json
+####
+	''')
 	# Keep only 'article_id', 'title' and 'published_date' columns
 	json_articles = articles[['article_id', 'title','published_date']]
 
@@ -197,6 +202,7 @@ def generate_metabase_embeds():
 	with open(embedsJson, "w") as f:
 		f.write(json.dumps(metabase_json))
 		f.close()
+
 def build_website():
 	print('''
 ####
@@ -204,7 +210,8 @@ def build_website():
 ####
 ''')
 	hugo_command = which("hugo")
-	subprocess.run([hugo_command])
+	website_path = os.environ.get("WEBSITE_PATH", "public")
+	subprocess.run([hugo_command, "-d", website_path])
 
 
 if __name__ == '__main__':
