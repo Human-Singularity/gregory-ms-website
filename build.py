@@ -95,8 +95,8 @@ def process_and_save_dataframe(df, name):
 	df.to_csv('content/developers/' + name + '_' + datetime_string + '.csv')
 
 def save_articles_to_json(articles):
-	# Keep only 'article_id' and 'title' columns
-	json_articles = articles[['article_id', 'title']]
+	# Keep only 'article_id', 'title' and 'published_date' columns
+	json_articles = articles[['article_id', 'title','published_date']]
 
 	# Create 'slug' column from 'title' column
 	json_articles['slug'] = articles['title'].apply(lambda x: x.lower().replace(" ", "-"))
