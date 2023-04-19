@@ -427,7 +427,7 @@
 		{{ $api := resources.Get "js/gregory_api_relevant_articles.jsx" | js.Build | babel | resources.Minify | resources.Fingerprint }}
 		<script src="{{ $api.Permalink }}"></script>
 		{{ end }}
-		{{- if .HasShortcode "articles"  -}}yes!
+		{{- if .HasShortcode "articles"  -}}
 		{{ $api := resources.Get "js/gregory_api_all_articles.jsx" | js.Build | babel | resources.Minify | resources.Fingerprint }}
 		<script src="{{ $api.Permalink }}"></script>
 		{{ end }}
