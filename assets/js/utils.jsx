@@ -58,7 +58,6 @@ export function updateTitleAndMeta(article) {
 	const divElementToRemove = document.querySelector('div#sourceinfo');
 	if (divElementToRemove) {
 		divElementToRemove.parentNode.removeChild(divElementToRemove);
-		console.log('div#sourceinfo Element removed');
 	} else {
 		console.log('div#sourceinfo Element not found');
 	}
