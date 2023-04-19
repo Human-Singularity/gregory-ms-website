@@ -23,6 +23,7 @@ cta:
     classes: btn btn-sm btn-success font-weight-bold umami--click--downloads-page-download-articles-zip
 ---
 
+<div id="sourceinfo">
 <p>Articles listed come from the following sites, using keyword searches for `Multiple Sclerosis, autoimmune encephalomyelitis, encephalomyelitis, immune tolerance, myelin`.</p>
 <ul class="list-inline">
   <li class="list-inline-item"><a target="_blank" class="btn btn-primary btn-outline-primary btn-round" href='https://www.apta.org/search?Q=&quot;Multiple+Sclerosis&quot;+OR+&quot;autoimmune+encephalomyelitis&quot;+OR+encephalomyelitis+OR+&quot;immune+tolerance&quot;+OR+myelin&amp;searcharticletypes=8834&amp;searchconditionandsymptoms=&amp;searchloc=APTA'>APTA <i class="text-muted text-primary fas fa-external-link-square-alt"></i></a> </li>
@@ -36,6 +37,7 @@ cta:
   <li class="list-inline-item"><a target="_blank" class="btn btn-primary btn-outline-primary btn-round" href='https://www.msard-journal.com/action/doSearch?text1=Multiple+Sclerosis&amp;field1=AbstractTitleKeywordFilterField&amp;startPage=0&amp;sortBy=Earliest'>MS and Related Disorders <i class="text-muted text-primary fas fa-external-link-square-alt"></i></a> </li>
   <li class="list-inline-item"><a target="_blank" class="btn btn-primary btn-outline-primary btn-round" href='https://journals.sagepub.com/action/doSearch?AllField=multiple+sclerosis&amp;SeriesKey=msja&amp;content=articlesChapters&amp;countTerms=true&amp;target=default&amp;sortBy=Ppub&amp;startPage=&amp;ContentItemType=research-article'>Sage <i class="text-muted text-primary fas fa-external-link-square-alt"></i></a> </li>
 </ul>
+</div>
 
 {{< relevant >}}
 
