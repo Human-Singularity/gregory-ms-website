@@ -211,6 +211,7 @@ if __name__ == '__main__':
 	pull_from_github()
 	articles, categories, trials = get_data()
 	save_excel_and_json(articles, trials)
+	save_articles_to_json(articles)
 	create_categories(categories)
 	create_zip_files()
 	delete_temporary_files()
