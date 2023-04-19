@@ -424,15 +424,15 @@
 			{{- end -}}
 		{{- end -}}
 		{{- if .HasShortcode "relevant"  -}}
-		{{ $api := resources.Get "js/gregory_api_relevant_articles.jsx" | js.Build | babel }} }}
+		{{ $api := resources.Get "js/gregory_api_relevant_articles.jsx" | js.Build | babel | resources.Minify | resources.Fingerprint }}
 		<script src="{{ $api.Permalink }}"></script>
 		{{ end }}
 		{{- if .HasShortcode "articles"  -}}yes!
-		{{ $api := resources.Get "js/gregory_api_all_articles.jsx" | js.Build | babel }}
+		{{ $api := resources.Get "js/gregory_api_all_articles.jsx" | js.Build | babel | resources.Minify | resources.Fingerprint }}
 		<script src="{{ $api.Permalink }}"></script>
 		{{ end }}
 		{{- if .HasShortcode "trials"  -}}
-		{{ $api := resources.Get "js/gregory_api_trials.jsx" | js.Build | babel }} }}
+		{{ $api := resources.Get "js/gregory_api_trials.jsx" | js.Build | babel | resources.Minify | resources.Fingerprint }}
 		<script src="{{ $api.Permalink }}"></script>
 		{{ end }}
 		{{- if or (.HasShortcode "metabase-embed")  -}}
