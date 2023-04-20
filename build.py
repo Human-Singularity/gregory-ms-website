@@ -95,22 +95,25 @@ def process_and_save_dataframe(df, name):
 	df.to_csv('content/developers/' + name + '_' + datetime_string + '.csv')
 
 def save_articles_to_json(articles):
-	print('''
+		print('''
 ####
 ## CREATE data/articles.json
 ####
-	''')
-	# Keep only 'article_id', 'title' and 'published_date' columns
-	json_articles = articles[['article_id', 'title', 'published_date']]
+		''')
+		# Keep only 'article_id', 'title' and 'published_date' columns
+		json_articles = articles[['article_id', 'title', 'published_date']]
 
-	# Convert the Unix timestamp (in ms) to a human-readable date format
-	json_articles['published_date'] = pd.to_datetime(json_articles['published_date'], unit='ms')
+		# Convert the Unix timestamp (in ms) to a human-readable date format
+		json_articles['published_date'] = pd.to_datetime(json_articles['published_date'], unit='ms')
 
-	# Create 'slug' column from 'title' column
-	json_articles['slug'] = articles['title'].apply(lambda x: x.lower().replace(" ", "-"))
+		# Format the 'published_date' column as "yyyy-mm-dd"
+		json_articles['published_date'] = json_articles['published_date'].dt.strftime('%Y-%m-%d')
 
-	# Save the processed DataFrame to a JSON file
-	json_articles.to_json('data/articles.json', orient='records')
+		# Create 'slug' column from 'title' column
+		json_articles['slug'] = articles['title'].apply(lambda x: x.lower().replace(" ", "-"))
+
+		# Save the processed DataFrame to a JSON file
+		json_articles.to_json('data/articles.json', orient='records')
 	
 def create_categories(categories):
 	print('''
