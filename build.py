@@ -101,7 +101,10 @@ def save_articles_to_json(articles):
 ####
 	''')
 	# Keep only 'article_id', 'title' and 'published_date' columns
-	json_articles = articles[['article_id', 'title','published_date']]
+	json_articles = articles[['article_id', 'title', 'published_date']]
+
+	# Convert the Unix timestamp (in ms) to a human-readable date format
+	json_articles['published_date'] = pd.to_datetime(json_articles['published_date'], unit='ms')
 
 	# Create 'slug' column from 'title' column
 	json_articles['slug'] = articles['title'].apply(lambda x: x.lower().replace(" ", "-"))
