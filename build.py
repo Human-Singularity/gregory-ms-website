@@ -115,6 +115,8 @@ def save_articles_to_json(articles):
 		# Save the processed DataFrame to a JSON file
 		json_articles.to_json('data/articles.json', orient='records')
 	
+import os
+
 def create_categories(categories):
 	print('''
 ####
@@ -129,12 +131,16 @@ def create_categories(categories):
 		category_index_file = category_path + "/_index.md"
 		os.makedirs(category_path, exist_ok=True)
 
-		with open(category_index_file, "w") as f:
-				f.write("+++\n")
-				f.write(f"title = \"{row['category_name']}\"\n")
-				f.write(f"slug = \"{category_slug}\"\n")
-				f.write("+++\n")
-		print(f"Created category '{row['category_name']}'")
+		if not os.path.exists(category_index_file):
+				with open(category_index_file, "w") as f:
+					f.write("+++\n")
+					f.write(f"title = \"{row['category_name']}\"\n")
+					f.write(f"slug = \"{category_slug}\"\n")
+					f.write("+++\n")
+				print(f"Created category '{row['category_name']}'")
+		else:
+				print(f"Category '{row['category_name']}' already exists. File not modified.")
+
 
 def create_zip_files():
 	print('''
