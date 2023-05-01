@@ -5,7 +5,11 @@ slug: alemtuzumab
 options:
   header: mini
 layout: page 
+resources:
+  - src: scott-webb-OxHPDs4WV8Y-unsplash.jpg
+    name: header
 ---
+
 <div class="col-md-6 mx-auto">
 
 
@@ -16,3 +20,5 @@ LEMTRADA, or Alemtuzumab, is a prescription medicine used to treat relapsing for
 </div>
 
 {{< metabase-embed dashboard="21" width="1300" height="1250" >}}
+
+{{< copyright >}}
