@@ -19,7 +19,7 @@ tags:
   - 
 categories: 
   - 
-title: ""
+title: "How we process donations"
 layout: page
 options:
   unlisted: false
