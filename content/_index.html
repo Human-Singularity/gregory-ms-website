@@ -28,9 +28,9 @@ options:
 ---
 
 <div class="section py-2">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-3">
+	<div class="container-fluid">
+		<div class="row justify-content-center">
+			<div class="col-md-2">
 				<a href='{{< ref "doctors/index.md" >}}' class="umami--click--body-link-doctors">
 					<div class="info info-hover">
 						<div class="icon icon-success icon-circle">
@@ -41,7 +41,7 @@ options:
 				</a>
 			</div>
 
-			<div class="col-md-3">
+			<div class="col-md-2">
 				<a href='{{< ref "researchers/index.md" >}}' class="umami--click--body-link-researchers">
 					<div class="info info-hover">
 						<div class="icon icon-info icon-circle">
@@ -51,7 +51,7 @@ options:
 					</div>
 				</a>
 			</div>
-			<div class="col-md-3">
+			<div class="col-md-2">
 				<a href='{{< ref "physicaltherapists/_index.md" >}}' class="umami--click--body-link-physical-therapists">
 					<div class="info info-hover">
 						<div class="icon icon-warning icon-circle">
@@ -64,7 +64,7 @@ options:
 				</a>
 			</div>
 
-			<div class="col-md-3">
+			<div class="col-md-2">
 				<a href='{{< ref "patients/index.md" >}}' class="umami--click--body-link-patients">
 					<div class="info info-hover">
 						<div class="icon icon-primary icon-circle">
@@ -76,8 +76,8 @@ options:
 			</div>
 		</div>
 
-		<div class="row align-items-center">
-			<div class="col-md-7">
+		<div class="row justify-content-center">
+			<div class="col-md-5">
 				<h2 class="title">How it works</h2>
 
 				<p>This website is an implementation of <a href="https://gregory-ai.com/" class="font-weight-bold" target="_blank">GregoryAI <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="width:14px; height:auto;" class="">
@@ -86,10 +86,10 @@ options:
 					</svg></a> focused on Multiple Sclerosis research. We use this Artificial Intelligence assistant to find, filter, and distribute relevant research to Doctors and clinical researchers.</p>
 			</div>
 			
-			<div class="col-md-5">
+			<div class="col-md-3 text-center">
 				<img
 					src="gregory_standing.svg"
-					class="w-75"
+					class="w-100"
 					alt="GregoryAI - Artificial Intelligence"
 					height=""
 					loading="lazy"
@@ -99,9 +99,9 @@ options:
 
 		<div class="separator separator-primary"></div>
 
-		<div class="row align-items-center">
+		<div class="row justify-content-center bg-grey pt-5">
 
-			<div class="col-md-4 mb-5 col-12 justify-content-center align-self-center align-right">
+			<div class="col-md-3 mb-5 col-12 justify-content-center align-self-center align-right">
 				<img
 					src="undraw_file_searching_re_3evy.svg" 
 					class="w-75 align-middle d-none d-md-block float-left"
@@ -109,7 +109,7 @@ options:
 					loading="lazy"
 				/>
 			</div>
-			<div class="col-md-7 text-right col-12 mb-5  justify-content-center align-self-center">
+			<div class="col-md-4 text-right col-12 mb-5  justify-content-center align-self-center">
 				<h3 class="">View the selection of research for Multiple Sclerosis</h3>
 
 				<p class="lead font-weight-normal">
@@ -121,38 +121,39 @@ options:
 					>Relevant Research <i class="fas fa-arrow-circle-right"></i
 				></a>
 			</div>
-
-			<div class="col-md-7 col-12">
-				<h3 class="">Observatory</h3>
-
+			</div>
+<div class="row justify-content-center mt-5">
+			<div class="col-md-4 col-12">
 				<p class="lead font-weight-normal">
 				</p>
 
 				<a
 					href='{{< ref "/observatory/_index.md" >}}'
 					class="btn btn-success btn-round btn-lg font-weight-bold umami--click--body-link-observatory"
-					>Browse articles by date, title, or category <i class="fas fa-arrow-circle-right"></i
+					>Multiple Sclerosis Observatory <i class="fas fa-arrow-circle-right"></i
 				></a>
+				<p class="ps-3">Monitor MS research in real time.</p>
 			</div>
 
 			<div class="col-md-4 col-12">
 				<img
 					src="undraw_searching_re_3ra9.svg" 
-					class="align-middle d-none d-md-block float-left"
+					class="align-middle d-none d-md-block float-left w-75"
 					alt="updates on the roadmap and news about the project"
 					loading="lazy"
 				/>
 			</div>
-
+</div>
+<div class="row justify-content-center bg-grey mt-5 pt-5 pb-5">
 			<div class="col-md-4 col-12 justify-content-center align-self-center align-right">
 				<img
 					src="undraw_sync_files_re_ws4c.svg" 
-					class="w-75 align-middle d-none d-md-block float-left"
+					class="w-50 align-middle d-none d-md-block float-left"
 					alt="relevant articles for multiple sclerosis patients"
 					loading="lazy"
 				/>
 			</div>
-			<div class="col-md-8 col-12">
+			<div class="col-md-4 col-12">
 				<h3 class="">Annual Reports</h3>
 			
 				<p class="lead font-weight-normal">We keep track of our activities and expenses for the sake of transparency. The report also includes extensive findings and use cases.
@@ -163,8 +164,10 @@ options:
 					class="btn btn-success btn-round btn-lg font-weight-bold umami--click--body-link-annual-reports"
 					>What we learned in 2021 <i class="fas fa-arrow-circle-right"></i
 				></a>
-			</div>
-			<div class="col-md-7 col-12">
+</div>
+</div>
+<div class="row justify-content-center mt-5 pt-5 mb-5">
+			<div class="col-md-4 col-12">
 				<h3 class="">Project news and development of new features</h3>
 
 				<p class="lead font-weight-normal">
@@ -180,7 +183,7 @@ options:
 			<div class="col-md-5 col-12">
 				<img
 					src="undraw_add_information_j2wg.svg" 
-					class="align-middle d-none d-md-block float-left"
+					class="align-middle d-none d-md-block float-left w-75"
 					alt="updates on the roadmap and news about the project"
 					loading="lazy"
 				/>
