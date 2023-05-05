@@ -28,7 +28,34 @@ scripts:
   -
 ---
 
-<a class="btn btn-success umami--click--download-pdf-2022" href="./GregoryMS_Annual_Report_2022.pdf">Download PDF</a>
+<a class="btn btn-success umami--click--download-pdf-2022" href="./GregoryMS_Annual_Report_2022.pdf">Download PDF Report</a>
+
+<div class="container">
+  <h2>Source Files</h2>
+  <table class="table table-hover table-bordered">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>File Name</th>
+        <th>Link</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>Authors with published research on aHSCT</td>
+        <td><a href="supporting-files/01._Authors_with_published_research_on_aHSCT.xlsx" target="_blank" class="btn btn-info">Download</a></td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Possible promoters of Myelin production</td>
+        <td><a href="supporting-files/02._Possible_promoters_of_Myelin_production.xlsx" target="_blank" class="btn btn-info">Download</a></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+---
 
 <iframe src="./GregoryMS_Annual_Report_2022.pdf" width="100%" height="700px">
 </iframe>
