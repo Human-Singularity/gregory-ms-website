@@ -13,8 +13,7 @@
 											<img class="img img-raised rounded" src="{{- .RelPermalink -}}" alt="{{ i18n "photo_of" }}{{ .Params.name }}">
 										{{- else }}
 											{{- $avatar := .Fill "400x400" -}}
-											<img class="img img-raised rounded" src="{{- $avatar.RelPermalink -}}" alt="{{ i18n "photo_of" }}{{ .Params.name }}">
-										{{- end }}
+											<img class="img img-raised rounded" src="{{- $avatar.RelPermalink -}}" alt="{{ i18n "photo_of" }}{{ .Params.name }}" style="transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0px)'">											{{- end }}
 									{{- end -}}
 								</a>
 							</div>
@@ -26,7 +25,9 @@
 								<h6 class="category">{{ . }}</h6>
 								{{ end }}
 								<p class="card-description">
-									{{ .Summary }}
+									{{ $truncatedSummary := truncate 100 .Content }}
+									{{ $truncatedSummaryWithIcon := printf "%s <i class='fa fa-arrow-right'></i>" $truncatedSummary }}
+									<a href="{{.Permalink}}">{{ $truncatedSummaryWithIcon | safeHTML }}</a>
 								</p>
 								<div class="card-footer">
 									{{ with .Params.profiles }}
