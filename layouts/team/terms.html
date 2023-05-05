@@ -33,7 +33,10 @@
 											<h6 class="category">{{ . }}</h6>
 											{{ end }}
 											<p class="card-description">
-												{{ .Summary }}
+												{{ $truncatedSummary := truncate 200 .Content | plainify }}
+												{{ $truncatedSummaryWithIcon := printf "%s <i class='fa fa-arrow-right'></i>" $truncatedSummary  }}
+												<a href="{{.Permalink}}">{{ $truncatedSummaryWithIcon | safeHTML  }}</a>
+			
 											</p>
 											<div class="card-footer">
 												{{ with .Params.profiles }}
