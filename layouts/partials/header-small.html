@@ -1,6 +1,6 @@
 {{ $headerSize := $.Params.options.header }}
 
-{{ if eq $headerSize nil }}
+{{ if eq $headerSize nil }} 
 	{{ $headerSize = "small" }}
 {{ end }}
 <div class="page-header page-header-{{ $headerSize }}">
