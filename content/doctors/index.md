@@ -35,31 +35,6 @@ scripts:
   - '<script src="/js/mermaid.min.js"></script>'
 ---
 </div>
-<div class="row justify-content-center align-self-center mb-5 p-md-5 mb-5">
-<div class="col-md-5 col-12 justify-content-center align-self-center align-left">
-  <h3 class="title">Promising articles for patient outcomes</h3>
-  <p class="lead font-weight-biold">View online or download the full listing.</p>
-  <a href='/developers/articles.zip' target="_blank" class="btn btn-primary btn-round btn-lg font-weight-bold umami--click--doctors-page-download-articles-zip"> Download Articles <i class="ml-1 fas fa-file-archive"></i></a>
-  <a href='/relevant/' class="btn btn-info btn-round btn-lg font-weight-bold umami--click--doctors-page-download-articles-zip"> View online <i class="ml-1 fas fa-arrow-circle-right"></i></a>
-  </div>
-<div class="col-md-5 col-12 align-self-center">
-  <img src="images/undraw_export_files_re_99ar.svg" class="w-50 align-middle d-none d-md-block ml-auto mr-auto" alt="Email newsletter" loading="lazy" />
-</div>  
-
-
-
-<div class="col-md-4 col-12 justify-content-center align-self-center align-right mt-5">
-  <img src="images/undraw_medicine_b1ol.svg" class="w-75 align-middle d-none d-md-block" alt="medical doctors" loading="lazy"/>
-  </div>
-  <div class="col-md-5 col-12 justify-content-center align-self-center mt-5">  
-  <h3 class="title">The observatory</h3>
-  <p class="lead font-weight-biold">On this page you will find a listing of promissing medicine and therapies with their associated articles and clinical trials.</p>
-  <p>An item is added to the list based on what is identified by the MS Society Website, or when there is an associated clinical trial.</p>
-  <a href='{{< ref "/observatory/_index.md" >}}' class="btn btn-success btn-round btn-lg font-weight-bold umami--click--doctors-page-observatory">Observatory <i class="mr-1 fas fa-arrow-circle-right"></i></a>
-  
-  </div>
-</div>
-
 <div class="row justify-content-center align-self-center mb-5 p-md-5">
 <div class="col-md-5 col-12 justify-content-center align-self-center ">
   <div class="col-md-12 ml-auto mr-auto">
@@ -128,14 +103,45 @@ scripts:
   </div>  
 </div>
 
+<div class="row justify-content-center align-self-center mb-5 p-md-5 mb-1 bg-grey">
 
-<div class="row justify-content-center align-self-center mb-5 p-md-5">
+<div class="col-md-4 col-12 justify-content-center align-self-center align-right mt-5">
+  <img src="images/undraw_medicine_b1ol.svg" class="w-75 align-middle d-none d-md-block" alt="medical doctors" loading="lazy"/>
+  </div>
+  <div class="col-md-5 col-12 justify-content-center align-self-center mt-5">  
+  <h3 class="title">The observatory</h3>
+  <p class="lead font-weight-bold">On this page you will find a listing of promissing medicine and therapies with their associated articles and clinical trials.</p>
+  <p>An item is added to the list based on what is identified by the MS Society Website, or when there is an associated clinical trial.</p>
+  <a href='{{< ref "/observatory/_index.md" >}}' class="btn btn-success btn-round btn-lg font-weight-bold umami--click--doctors-page-observatory">Observatory <i class="mr-1 fas fa-arrow-circle-right"></i></a>
+  
+  </div>
+</div>
+
+<div class="row justify-content-center align-self-center mb-5 p-md-5 mb-5 ">
+
+<div class="col-md-5 col-12 justify-content-center align-self-center align-left">
+  <h3 class="title">Promising articles for patient outcomes</h3>
+  <p class="lead font-weight-biold">View online or download the full listing.</p>
+  <a href='/developers/articles.zip' target="_blank" class="btn btn-primary btn-round btn-lg font-weight-bold umami--click--doctors-page-download-articles-zip"> Download Articles <i class="ml-1 fas fa-file-archive"></i></a>
+  <a href='/relevant/' class="btn btn-info btn-round btn-lg font-weight-bold umami--click--doctors-page-download-articles-zip"> View online <i class="ml-1 fas fa-arrow-circle-right"></i></a>
+  </div>
+<div class="col-md-5 col-12 align-self-center">
+  <img src="images/undraw_export_files_re_99ar.svg" class="w-50 align-middle d-none d-md-block ml-auto mr-auto" alt="Email newsletter" loading="lazy" />
+</div>  
+
+</div>
+
+
+
+
+
+<div class="row justify-content-center align-self-center mb-5 p-md-5 bg-grey">
   <div class="col-md-4 col-12 align-self-center">
     <img src="images/undraw_medical_research_qg4d.svg" class="w-75 align-middle d-none d-md-block" alt="Email newsletter" loading="lazy" />
   </div>
   <div class="col-md-5 col-12 justify-content-center align-self-center">
     <h3 class="title">Clinical Trials</h3>
-    <p class="lead font-weight-biold">We do the best we can to identify clinical trials for Multiple Sclerosis and list them.</p>
+    <p class="lead font-weight-bold">We do our best to identify clinical trials for Multiple Sclerosis and publicise them.</p>
     <a href='{{< ref "/trials/_index.md" >}}' class="btn btn-success btn-round btn-lg font-weight-bold umami--click--doctors-page-view-trials">View latest clinical trials <i class="ml-1 fas fa-arrow-circle-right"></i></a>
     </div>
 </div>

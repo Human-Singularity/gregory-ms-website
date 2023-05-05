@@ -6,6 +6,7 @@ summary: ""
 authorlink: ""
 subtitle: Founder 
 twitterUsername: "@brunoamaral"
+weight: 2
 options:
   header: mini
 profiles:
