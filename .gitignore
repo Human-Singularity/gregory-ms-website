@@ -11,7 +11,7 @@ content/developers/articles_*
 __pycache__/
 *.py[cod]
 *$py.class
-
+.jampack/
 # C extensions
 *.so
 
@@ -141,3 +141,8 @@ dmypy.json
 public/
 
 .jampack
+themes/.DS_Store
+layouts/.DS_Store
+package.json
+assets/.DS_Store
+layouts/.DS_Store

@@ -40,7 +40,7 @@ Between life, work and Gregory, the last 40 or so days have been demanding and f
 
 ### Cloudflare{.title}
 
-<img src="images/Powered_by_project_Galileo.png" class="float-right w-50 d-none d-md-inline-block">
+<img src="images/Powered_by_project_Galileo.png" class="float-right w-50 d-none d-md-inline-block" alt="Support by CloudFlare, Project Galileo">
 
 I am very grateful to Cloudflare, it became the first Company to officially support this project by providing their services under Project Galileo. This means a lot to us. It helps us provide you with a fast and secure website and to track how many visitors we have.
 
