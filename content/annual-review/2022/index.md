@@ -32,7 +32,7 @@ scripts:
 
 <div class="container">
   <h2>Source Files</h2>
-  <table class="table table-hover table-bordered">
+  <table class="table table-hover">
     <thead>
       <tr>
         <th>#</th>
