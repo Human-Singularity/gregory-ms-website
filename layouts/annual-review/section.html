@@ -33,17 +33,21 @@
 								{{ .Scratch.Set "columns" (len $stories) }}
 								<div class="col-md-4">
 									<div class="card card-blog card-story">
-										<a href="{{ .Permalink }}">
-										  <div class="card-image">??
-											  <img class="img rounded" loading="lazy" src="{{ with .Resources.GetMatch "header" }}{{ $image := .Fill "450x250" }}{{ $image.RelPermalink }}{{ end }}https://placekitten.com/400/300" alt="{{ i18n (.Section | lower) }} header: {{ .Params.title }}">
-										  </div>
+										
+										  <div class="card-image">
+												<a href="{{ .Permalink }}">
+											  <img class="img rounded" loading="lazy" src='{{ with .Resources.GetMatch "thumb" }}{{ $image := .Fill "400x400" }}{{ $image.RelPermalink }}{{ end }}' alt="{{ i18n (.Section | lower) }} header: {{ .Params.title }}">
+										  	</a>
+											</div>
 										  <div class="card-body">
 											<span class="h6 category text-primary"><i class="now-ui-icons education_agenda-bookmark"></i>&nbsp;{{ i18n (.Section | lower) }}</span>
 											<h5 class="card-title">
-											  {{ .Params.title }} 
+											  <a href="{{ .Permalink }}">{{ .Params.title }}</a>
 											</h5>
 											<p class="card-description">
+												<a href="{{ .Permalink }}">
 											  {{ with .Params.subtitle }} {{ . }} {{ else }}&nbsp;{{ end }}
+												</a>
 											</p>
 											<div class="card-footer">
 											  <div class="stats stats-right">
@@ -51,7 +55,7 @@
 											  </div>
 											</div>
 										  </div>
-										</a>
+
 									</div>
 								</div>
 							{{ end }}                               
