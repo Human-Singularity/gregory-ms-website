@@ -5,9 +5,15 @@
 {{ end }}
 
 {{ define "main" }}
+{{ $headerSize := $.Params.options.header }}
+
+{{ if eq $headerSize nil }} 
+	{{ $headerSize = "small" }}
+	{{else}}
+{{ end }}
 {{ $name := .Params.name }}
 <div class="wrapper">
-<div class="page-header clear-filter page-header-small" filter-color="orange">
+<div class="page-header clear-filter page-header-{{$headerSize}}" filter-color="orange">
 	<div class="page-header-image" data-parallax="true" style="background-image: url({{ partial "header-image" . }}); transform: translate3d(0px, 0px, 0px);">
 	</div>
 	<div class="container">
@@ -56,7 +62,7 @@
 					{{ end }}
 					</div>
 
-				<h5 class="description text-center" id="content">{{ .Content }}</h5>
+				<h5 class="description text-center" id="content">{{ .Content | safeHTML | markdownify }}</h5>
 				<section id="category-list" class="card-group">
 						<div class="row">
 							{{ range (.Paginator 9).Pages }}
