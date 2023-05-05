@@ -5,13 +5,10 @@ date: 2022-01-20T23:37:41Z
 description: ""
 draft: false
 resources: 
-- src: images/annual-review-2021.png
+- src: images/gregoryai_background.png
   name: "header"
-- src: "gallery/*.jpg"
-  name: gallery-:counter
-  title: gallery-title-:counter
-- src:
-  name: slide-1
+- src: "images/report_bg_2021.png"
+  name: thumb
 slug:
 subtitle: 
 tags: 
