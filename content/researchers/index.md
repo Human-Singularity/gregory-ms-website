@@ -37,17 +37,6 @@ menu:
     weight: 3
 ---
 
-<div class="col-md-5 col-12 justify-content-center align-self-center align-right">
-  <img src="images/undraw_Online_articles_re_yrkj.svg" class="float-right w-50 align-middle d-none d-md-block" alt="medical doctors" loading="lazy"/>
-  </div>
-  <div class="col-md-5 col-12 justify-content-center align-self-center">
-  
-  <h3 class="title">Current Multiple Sclerosis Research</h3>
-  
-  <p class="lead font-weight-biold">You can browse the most up to date research articles, download our database, and receive a free newsletter with the most relevant articles.</p>
-      <a href='{{< ref "/articles/_index.md" >}}' class="btn btn-primary btn-round btn-lg font-weight-bold umami--click--view-articles-researchers-page">View articles <i class="fas fa-arrow-circle-right"></i></a>
-      <a href='{{< ref "/downloads/_index.md" >}}' class="btn btn-success btn-round btn-lg font-weight-bold umami--click--downloads-researchers-page">Download the database <i class="fas fa-download"></i></a>
-  </div>
 </div>
 
 <div class="row justify-content-center align-self-center mb-5 mt-5 p-md-5">
@@ -118,6 +107,24 @@ menu:
   </div>  
 </div>
 
+
+<div class="row justify-content-center align-self-center mb-5 mt-5 p-md-5 bg-grey">
+
+<div class="col-md-5 col-12 justify-content-center align-self-center align-right">
+  <img src="images/undraw_Online_articles_re_yrkj.svg" class="float-right w-50 align-middle d-none d-md-block" alt="medical doctors" loading="lazy"/>
+  </div>
+  <div class="col-md-5 col-12 justify-content-center align-self-center">
+  
+  <h3 class="title">Current Multiple Sclerosis Research</h3>
+  
+  <p class="lead font-weight-bold">You can browse the most up to date research articles, download our database, and receive a free newsletter with the most relevant articles.</p>
+      <a href='{{< ref "/articles/_index.md" >}}' class="btn btn-primary btn-round btn-lg font-weight-bold umami--click--view-articles-researchers-page">View articles <i class="fas fa-arrow-circle-right"></i></a>
+      <a href='{{< ref "/downloads/_index.md" >}}' class="btn btn-success btn-round btn-lg font-weight-bold umami--click--downloads-researchers-page">Download the database <i class="fas fa-download"></i></a>
+  </div>
+</div>
+
+
+
 <div class="row justify-content-center align-self-center mb-5 p-md-5">
 <div class="col-md-5 col-12 justify-content-center align-self-center align-right ">
   <img src="images/undraw_medicine_b1ol.svg" class="w-50 align-middle d-none d-md-block float-left" alt="medical doctors" loading="lazy" />
@@ -126,7 +133,7 @@ menu:
   
   <h3 class="title">The Multiple Sclerosis observatory of current research</h3>
   
-  <p class="lead font-weight-biold">On this page you will find a listing of promissing medicine and therapies with their associated articles and clinical trials.</p>
+  <p class="lead font-weight-bold">On this page you will find a listing of promissing medicine and therapies with their associated articles and clinical trials.</p>
   
   <p>An item is added to the list based on what is identified by the MS Society Website, or when there is an associated clinical trial.</p>
   <a href='{{< ref "/observatory/_index.md" >}}' class="btn btn-success btn-round btn-lg font-weight-bold umami--click--observatory-researchers-page">Observatory <i class="fas fa-arrow-circle-right"></i></a>
