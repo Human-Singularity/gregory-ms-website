@@ -1,0 +1,47 @@
+<div class="about-team team-4">
+	<div class="container">
+		<div class="row">
+			{{ range (where ($.Site.Pages.ByTitle) "Section" "team") }}{{ if .Params.name }}
+			<div class="col-xl-6 col-lg-7 ">
+				<div class="card card-profile card-plain">
+					<div class="row">
+						<div class="col-md-5">
+							<div class="card-image">
+								<a href="{{ .Permalink }}">
+									{{- with .Resources.GetMatch "avatar" -}}
+										{{- if eq .MediaType.SubType "gif" -}}
+											<img class="img img-raised rounded" src="{{- .RelPermalink -}}" alt="{{ i18n "photo_of" }}{{ .Params.name }}">
+										{{- else }}
+											{{- $avatar := .Fill "400x400" -}}
+											<img class="img img-raised rounded" src="{{- $avatar.RelPermalink -}}" alt="{{ i18n "photo_of" }}{{ .Params.name }}" style="transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0px)'">											{{- end }}
+									{{- end -}}
+								</a>
+							</div>
+						</div>
+						<div class="col-md-7">
+							<div class="card-body">
+								<h4 class="card-title"><a href="{{ .Permalink }}">{{ .Params.name }}</a></h4>
+								{{ with .Params.subtitle }}
+								<h6 class="category">{{ . }}</h6>
+								{{ end }}
+								<p class="card-description">
+									{{ $truncatedSummary := truncate 100 .Content }}
+									{{ $truncatedSummaryWithIcon := printf "%s <i class='fa fa-arrow-right'></i>" $truncatedSummary }}
+									<a href="{{.Permalink}}">{{ $truncatedSummaryWithIcon | safeHTML }}</a>
+								</p>
+								<div class="card-footer">
+									{{ with .Params.profiles }}
+										{{ range $key, $val := . }}
+										<a href="{{ $val }}" class="btn btn-icon btn-neutral btn-{{ $key }}"><i class="fab fa-{{ $key }}"></i></a>
+										{{ end }}
+									{{ end }}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			{{ end }} {{ end }}
+		</div>
+	</div>
+</div>
