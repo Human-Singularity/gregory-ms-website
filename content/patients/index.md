@@ -103,7 +103,7 @@ menu:
 
 
 
-<div class="offset-2 col-md-5 col-12 justify-content-center align-self-center">
+<div class="offset-md-2 col-md-5 col-12 justify-content-center align-self-center">
   <h3 class="title text-primary">Information on this website should not be considered medical advise of any sort.</h3>
   <p>What you see here was done with no funding and by a small team. It runs on good will and donations to keep the server running.</p>
   <p>We need your help in spreading the word. Send an email to your healthcare team, share the website on your social networks and groups.</p>
