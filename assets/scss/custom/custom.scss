@@ -12,6 +12,13 @@ width: auto;
 height: 250px;
 margin-bottom: 20px;
 }
+
+
+[class*="team-"]
+{
+    padding: 50px 0;
+}
+
 // smooth scrolling
 html {
   scroll-behavior: smooth;
