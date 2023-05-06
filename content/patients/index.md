@@ -11,7 +11,7 @@ resources:
 
 rowclasses: justify-content-center align-self-center
 slug:
-subtitle: Stay informed about Clinical Trials and help us spread the word
+subtitle: Stay informed about Clinical Trials and help spread the word
 tags: 
   - 
 categories: 
@@ -35,7 +35,7 @@ menu:
 
 
 <div class="col-md-5 col-12 justify-content-center align-self-center align-right ">
-  <img src="images/undraw_mail_re_duel.svg" class="w-50 float-right">
+  <img src="images/undraw_mail_re_duel.svg" class="w-50 float-right d-none d-sm-block">
 </div>
 <div class="col-md-5 col-12 justify-content-center align-self-center ">
   <div class="col-md-12 ml-auto mr-auto">
@@ -140,7 +140,7 @@ menu:
 </div>
 <div class="row bg-grey pt-5 pb-5 mb-0 ">
 <div class="col-md-6 col-12 justify-content-center align-self-center mt-5">
-  <a href="https://ko-fi.com/gregoryms"><img src="images/Ko-fi_Logo_RGB.svg" class="col-md-7 umami--click--patients-page-donate-logo-link float-right"/></a>
+  <a href="https://ko-fi.com/gregoryms"><img src="images/Ko-fi_Logo_RGB.svg" class="d-none d-sm-block col-md-7 umami--click--patients-page-donate-logo-link float-right"/></a>
 </div>
 
 <div class="col-md-5 col-12 justify-content-center align-self-center align-left">
