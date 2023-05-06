@@ -1,4 +1,4 @@
-{{ define "bodyclasses" }}section-list annual-review/section.html post-list post-list-html {{ end }}
+{{ define "bodyclasses" }}section-list annual-review section.html post-list post-list-html {{ end }}
 
 {{ define "data-attributes" }}
 	data-contentgrouptype="{{ .Section }}" data-contentgroupname="{{ .CurrentSection.Title }}" data-articletitle="{{ .Title }}"
@@ -64,9 +64,11 @@
 						<div class="col-12">{{ .Content }}</div>
 
 						{{ if not (or (eq .CurrentSection.Name (i18n "stories")) (eq .Section "page")) }}
+						<div class="row justify-content-around">
 							{{ range (.Paginate $list 9).Pages }}
 								{{ .Render "summary" }}
 							{{ end }}
+						</div>
 						{{ end }}
 						
 					</div>
