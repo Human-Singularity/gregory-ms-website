@@ -15,7 +15,7 @@ resources:
   name: slide-1
 rowclasses: justify-content-center align-self-center
 slug:
-subtitle: We help you focus your research and find related articles with ease
+subtitle: We help you focus your research and find papers with good patient outcomes
 tags: 
   - 
 categories: 
@@ -28,6 +28,7 @@ options:
   hideFooter: false
   hideSubscribeForm: false
   header: mini
+  navbar: navbar navbar-expand-lg bg-white fixed-top font-weight-bold
 scripts:
   - '<script src="/js/mermaid.min.js"></script>'
 menu:

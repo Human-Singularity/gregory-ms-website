@@ -31,6 +31,7 @@ options:
   hideFooter: false
   hideSubscribeForm: false
   header: mini
+  navbar: navbar navbar-expand-lg bg-white fixed-top font-weight-bold
 scripts:
   -
 ---
