@@ -1,31 +1,36 @@
 <!-- TEMPLATE 1 for blog post lists -->
-<div class="col-md-6">
-	<div class="card-image">
-		<a href="{{ .Permalink }}">
-		<img class="img rounded" width="400" height="400" loading="lazy" src="{{ with .Resources.GetMatch "thumb" }}{{ .RelPermalink }}{{ end }}" alt="{{ i18n (.Section | lower) }} header: {{ .Params.title }}">
-		</a>
-	</div>
+
+<div class="col-md-4">
+  <div class="card-image">
+    <a href="{{ .Permalink }}">
+      <img class="img rounded" loading="lazy" src="{{ with .Resources.GetMatch
+      "thumb" }}{{ .RelPermalink }}{{ end }}" alt="{{ i18n (.Section | lower) }}
+      header: {{ .Params.title }}">
+    </a>
+  </div>
 </div>
-						<div class="col-md-6">
+<div class="col-md-2">
+  <div class="card card-plain card-blog">
+    <div class="card-body">
+      {{ if isset .Params "categories" }} {{ range $index, $category :=
+      .Params.categories }}
+      <span class="h6 category text-info text-left {{ $category | urlize }} "
+        >{{ $category }}</span
+      >
+      {{ end }} {{ end }} {{.Date | time.Format ":date_long" }}
+      <span class="badge badge-info text-white font-weight-normal"
+        >{{ .Params.source }}</span
+      >
+      <h4 class="card-title">
+        <a href="{{ .Permalink }}">{{ .Title | safeHTML }}</a>
+      </h4>
+      <p class="card-description">
+        <a href="{{ .Permalink }}" class="btn btn-sm btn-success"
+          >{{ i18n "read_more" }}</a
+        >
+      </p>
 
-							<div class="card card-plain card-blog">
-
-								<div class="card-body">
-									{{ if isset .Params "categories" }}
-									{{ range $index, $category := .Params.categories }}
-									<span class="h6 category text-info text-left {{ $category | urlize }} ">{{ $category }}</span>
-										{{ end }}
-										{{ end }}
-									{{.Date | time.Format ":date_long" }} <span class="badge badge-info text-white font-weight-normal">{{ .Params.source }}</span>
-									<h4 class="card-title">
-										<a href="{{ .Permalink }}">{{ .Title | safeHTML }}</a>
-									</h4>
-									<p class="card-description">
-
-										<a href="{{ .Permalink }}" class="btn btn-sm btn-success">{{ i18n "read_more" }}</a>
-									</p>
-
-									<p></p>
-								</div>
-							</div>
-						</div>
+      <p></p>
+    </div>
+  </div>
+</div>
