@@ -9,6 +9,7 @@ menu:
 options:
   header: mini
   showHeader: true
+  navbar: navbar navbar-expand-lg bg-white fixed-top font-weight-bold
 
 resources:
   - src: arif-riyanto-UD9nADGj2mc-unsplash.jpeg

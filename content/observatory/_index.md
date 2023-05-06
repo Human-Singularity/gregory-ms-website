@@ -7,6 +7,7 @@ author: Bruno Amaral
 options:
   unlisted: false
   header: mini
+  navbar: navbar navbar-expand-lg bg-white fixed-top font-weight-bold
 
 resources:
   - src: lucas-vasques-9vnACvX2748-unsplash.jpeg
@@ -24,10 +25,7 @@ enableDisqus : true
 enableMathJax: false
 disableToC: false
 disableAutoCollapse: true
-cta:
-  - label: Browse categories
-    url: /categories/
-    classes: btn btn-sm btn-info umami--click--categories-header-button
+
 ---
 
 Visit the page of [Multiple Sclerosis categories](/categories/) to browse articles refering to new or current medicines, medical fields, or areas of MS Research.
