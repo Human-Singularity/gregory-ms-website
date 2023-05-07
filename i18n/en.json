@@ -36,7 +36,7 @@
     { "id": "story", "translation": "story" },
     { "id": "submit_label", "translation": "Submit" },
     { "id": "subscribe_label", "translation": "Subscribe" },
-    { "id": "subscribe_description", "translation": "You can help by spreading the word or by donating what you can to pay for the server costs." },
+    { "id": "subscribe_description", "translation": "You can help by spreading the word or by making a donation to pay for the server costs." },
     { "id": "categories", "translation": "Categories" },
     { "id": "category", "translation": "Category" },
     { "id": "reading_time", "translation": "min read" },
