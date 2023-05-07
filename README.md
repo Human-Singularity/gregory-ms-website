@@ -2,6 +2,8 @@
 
 This is an implementation of the software found at <https://gregory-ai.com/>, configured to assist doctors and people with Multiple Sclerosis find the most up to date information.
 
+<https://gregory-ms.com/>
+
 ## Documentation
 
 ### Adding new dashboards
