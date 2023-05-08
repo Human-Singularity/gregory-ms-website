@@ -119,8 +119,8 @@ menu:
   <h3 class="title">Current Multiple Sclerosis Research</h3>
   
   <p class="lead font-weight-normal">You can browse the most up to date research articles, download our database, and receive a free newsletter with the most relevant articles.</p>
-      <a href='{{< ref "/articles/_index.md" >}}' class="btn btn-primary btn-round btn-lg font-weight-bold umami--click--view-articles-researchers-page">View articles <i class="fas fa-arrow-circle-right"></i></a>
-      <a href='{{< ref "/downloads/_index.md" >}}' class="btn btn-success btn-round btn-lg font-weight-bold umami--click--downloads-researchers-page">Download the database <i class="fas fa-download"></i></a>
+      <a href='{{< ref "/articles/_index.md" >}}' class="btn btn-primary btn-round btn-lg font-weight-bold " data-umami-event="click--view-articles-researchers-page">View articles <i class="fas fa-arrow-circle-right"></i></a>
+      <a href='{{< ref "/downloads/_index.md" >}}' class="btn btn-success btn-round btn-lg font-weight-bold " data-umami-event="click--downloads-researchers-page">Download the database <i class="fas fa-download"></i></a>
   </div>
 </div>
 
@@ -137,7 +137,7 @@ menu:
   <p class="lead font-weight-bold">On this page you will find a listing of promissing medicine and therapies with their associated articles and clinical trials.</p>
   
   <p>An item is added to the list based on what is identified by the MS Society Website, or when there is an associated clinical trial.</p>
-  <a href='{{< ref "/observatory/_index.md" >}}' class="btn btn-success btn-round btn-lg font-weight-bold umami--click--observatory-researchers-page">Observatory <i class="fas fa-arrow-circle-right"></i></a>
+  <a href='{{< ref "/observatory/_index.md" >}}' class="btn btn-success btn-round btn-lg font-weight-bold " data-umami-event="click--observatory-researchers-page">Observatory <i class="fas fa-arrow-circle-right"></i></a>
 </div>  
 </div>
 
@@ -159,6 +159,6 @@ graph TD;
     Gregory{fa:fa-robot Gregory}-->Newsletter(fa:fa-envelope Newsletter)
 </div>
 <div class="col-md-12 text-center">
-  <a href='{{< ref "/about/index.md" >}}' class="btn btn-primary btn-round btn-lg font-weight-bold umami--click--more-info-on-sources-researchers-page">More information on the about page <i class="fas fa-arrow-circle-right"></i></a>
+  <a href='{{< ref "/about/index.md" >}}' class="btn btn-primary btn-round btn-lg font-weight-bold " data-umami-event="click--more-info-on-sources-researchers-page">More information on the about page <i class="fas fa-arrow-circle-right"></i></a>
 </div>
 </div>
