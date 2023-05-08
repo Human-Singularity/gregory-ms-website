@@ -67,11 +67,11 @@ Gregory MS is running on a [Digital Ocean](https://digitalocean.com) virtual pri
 
 There are RSS a number of RSS feeds you can use to access the database in real time:
 
-<a class="btn btn-outline-primary umami--click--developers-rss-latest-articles" href="https://api.gregory-ms.com/feed/latest/articles/"><i class="fas fa-rss"></i> Latest Articles</a>
+<a class="btn btn-outline-primary" href="https://api.gregory-ms.com/feed/latest/articles/" data-umami-event="click--developers-rss-latest-articles"><i class="fas fa-rss"></i> Latest Articles</a>
 
-<a class="btn btn-outline-primary umami--click--developers-rss-l" href="https://api.gregory-ms.com/feed/latest/trials/"><i class="fas fa-rss"></i> Latest Trials</a>
+<a class="btn btn-outline-primary" data-umami-event="click--developers-rss-l" href="https://api.gregory-ms.com/feed/latest/trials/"><i class="fas fa-rss"></i> Latest Trials</a>
 
-<a class="btn btn-outline-primary umami--click--developers-rss-latest-trials" href="https://api.gregory-ms.com/feed/machine-learning/"><i class="fas fa-rss"></i> Machine Learning Prediction</a>
+<a class="btn btn-outline-primary" data-umami-event="click--developers-rss-latest-trials" href="https://api.gregory-ms.com/feed/machine-learning/"><i class="fas fa-rss"></i> Machine Learning Prediction</a>
 
 ### API Endpoints{.title .text-primary}
 
@@ -87,7 +87,7 @@ The API is served using Django Rest Framework and can be accessed at <https://ap
 
 `https://api.gregory-ms.com/articles/id/{ID}`
 
-Example: <a class="umami--click--developers-api-latest-trials-example" href="https://api.gregory-ms.com/articles/19">https://api.gregory-ms.com/articles/19</a>
+Example: <a data-umami-event="click--developers-api-latest-trials-example" href="https://api.gregory-ms.com/articles/19">https://api.gregory-ms.com/articles/19</a>
 
 
 **List all relevant articles.**
@@ -121,7 +121,7 @@ Example: <a href="https://api.gregory-ms.com/trials/all">https://api.gregory-ms.
 
 `https://api.gregory-ms.com/trials/source/{source_id}`
 
-Example: <a class="umami--click--developers-api-all-trials-by-source-example" href="https://api.gregory-ms.com/trials/source/12/">https://api.gregory-ms.com/trials/source/12/</a>
+Example: <a data-umami-event="click--developers-api-all-trials-by-source-example" href="https://api.gregory-ms.com/trials/source/12/">https://api.gregory-ms.com/trials/source/12/</a>
 
 ## Database Structure{.title .text-primary}
 
