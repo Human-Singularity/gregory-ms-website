@@ -34,7 +34,7 @@ For a more flexible analysis, use the dashboard bellow to suit your needs.
 
 Hover each chart to download the results, click each title or article id number to read more information.
 
-<a href="https://metabase.gregory-ms.com/public/dashboard/39cbe602-4d42-46af-bfe4-0de04ef5e5f9" target="_blank" class="umami--click--open-dashboard-new-tab">Open dashboard in new tab <i class="fas fa-external-link-square-alt"></i></a> 
+<a href="https://metabase.gregory-ms.com/public/dashboard/39cbe602-4d42-46af-bfe4-0de04ef5e5f9" target="_blank" data-umami-event="click--open-dashboard-new-tab">Open dashboard in new tab <i class="fas fa-external-link-square-alt"></i></a> 
 
 {{< metabase-embed dashboard="1" width="1300" height="1250" >}}
 
