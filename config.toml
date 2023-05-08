@@ -67,9 +67,6 @@ headerPhoto = ""
   [[menu.column_2]]
   name = '<img src="/images/powered_by_project_galileo.png" alt="Support by CloudFlare, Project Galileo" loading="lazy" />'
   url = 'https://www.cloudflare.com/en-gb/galileo/'
-  [[menu.column_2]]
-  name ="Bruno Amaral"
-  url = "https://brunoamaral.eu/"
   [[menu.column_3]]
   name = "Website stats"
   url = "https://analytics.gregory-ms.com/share/bEuESUpF/GregoryMS"
