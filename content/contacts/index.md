@@ -37,13 +37,13 @@ resources:
 
 ### Gregory MS Team
 
-<a href="mailto:gregory@gregory-ms.com" class="umami--click--email-gregory-contacts-page">gregory@gregory-ms.com</a>
+<a href="mailto:gregory@gregory-ms.com" data-umami-event="click--email-gregory-contacts-page" class="">gregory@gregory-ms.com</a>
 
 ### Bruno Amaral{.title .text-info}
 
 https://brunoamaral.eu
 
-<a href="mailto:bruno@gregory-ms.com" class="umami--click--email-bruno-contacts-page">bruno@gregory-ms.com</a>
+<a href="mailto:bruno@gregory-ms.com" data-umami-event="click--email-bruno-contacts-page" class="click--email-bruno-contacts-page">bruno@gregory-ms.com</a>
 
 
 https://twitter.com/brunoamaral     

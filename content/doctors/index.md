@@ -112,7 +112,7 @@ scripts:
   <div class="col-md-5 col-12 justify-content-center align-self-center mt-5">  
   <h3 class="title">The observatory</h3>
   <p class="lead font-weight-normal">Here you can customise a dashboard of current research and download the results.</p>
-  <a href='{{< ref "/observatory/_index.md" >}}' class="btn btn-success btn-round btn-lg font-weight-bold umami--click--doctors-page-observatory">Observatory <i class="mr-1 fas fa-arrow-circle-right"></i></a>
+  <a href='{{< ref "/observatory/_index.md" >}}' class="btn btn-success btn-round btn-lg font-weight-bold " data-umami-event="click--doctors-page-observatory">Observatory <i class="mr-1 fas fa-arrow-circle-right"></i></a>
   
   </div>
 </div>
@@ -122,8 +122,8 @@ scripts:
 <div class="col-md-5 col-12 justify-content-center align-self-center align-left">
   <h3 class="title">Promising articles for patient outcomes</h3>
   <p class="lead font-weight-normal">View online or download the full listing.</p>
-  <a href='/developers/articles.zip' target="_blank" class="btn btn-primary btn-round btn-lg font-weight-bold umami--click--doctors-page-download-articles-zip"> Download Articles <i class="ml-1 fas fa-file-archive"></i></a>
-  <a href='/relevant/' class="btn btn-info btn-round btn-lg font-weight-bold umami--click--doctors-page-download-articles-zip"> View online <i class="ml-1 fas fa-arrow-circle-right"></i></a>
+  <a href='/developers/articles.zip' target="_blank" class="btn btn-primary btn-round btn-lg font-weight-bold " data-umami-event="click--doctors-page-download-articles-zip"> Download Articles <i class="ml-1 fas fa-file-archive"></i></a>
+  <a href='/relevant/' class="btn btn-info btn-round btn-lg font-weight-bold " data-umami-event="click--doctors-page-download-articles-zip"> View online <i class="ml-1 fas fa-arrow-circle-right"></i></a>
   </div>
 <div class="col-md-5 col-12 align-self-center">
   <img src="images/undraw_export_files_re_99ar.svg" class="w-50 align-middle d-none d-md-block ml-auto mr-auto" alt="Email newsletter" loading="lazy" />
@@ -142,7 +142,7 @@ scripts:
   <div class="col-md-5 col-12 justify-content-center align-self-center">
     <h3 class="title">Clinical Trials</h3>
     <p class="lead font-weight-normal">We do our best to identify clinical trials for Multiple Sclerosis and publicise them.</p>
-    <a href='{{< ref "/trials/_index.md" >}}' class="btn btn-success btn-round btn-lg font-weight-bold umami--click--doctors-page-view-trials">View latest clinical trials <i class="ml-1 fas fa-arrow-circle-right"></i></a>
+    <a href='{{< ref "/trials/_index.md" >}}' class="btn btn-success btn-round btn-lg font-weight-bold" data-umami-event="click--doctors-page-view-trials">View latest clinical trials <i class="ml-1 fas fa-arrow-circle-right"></i></a>
     </div>
 </div>
 
@@ -164,7 +164,7 @@ graph TD;
     Gregory{fa:fa-robot Gregory}-->Newsletter(fa:fa-envelope Newsletter)
 </div>
 <div class="col-md-12 text-center">
-  <a href='{{< ref "/about/index.md" >}}' class="btn btn-primary btn-round btn-lg font-weight-bold umami--click--doctors-page-link-about-page">More information on the about page <i class="fas fa-arrow-circle-right"></i></a>
+  <a href='{{< ref "/about/index.md" >}}' class="btn btn-primary btn-round btn-lg font-weight-bold" data-umami-event="click--doctors-page-link-about-page">More information on the about page <i class="fas fa-arrow-circle-right"></i></a>
 </div>
 </div>
 

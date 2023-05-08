@@ -28,7 +28,7 @@ scripts:
   -
 ---
 
-<a class="btn btn-success umami--click--download-pdf-2022" href="./GregoryMS_Annual_Report_2022.pdf">
+<a class="btn btn-success" href="./GregoryMS_Annual_Report_2022.pdf" data-umami-event="click--download-pdf-2022">
   Download PDF Report 
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="height: 1rem; vertical-align: middle; opacity: 0.5">
     <!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
