@@ -16,7 +16,7 @@ profiles:
   mastodon: https://mastodon.social/@brunoamaral
 resources:
     - name: avatar
-      src: brunoamaral.jpg
+      src: bruno_amaral.png
 ---
 
 A Digital Strategist who works bridging the gap between tech and communication. He founded and works at the Lisbon Collective, and is a teacher, both in Lisbon University’s Masters Course of Communication and Digital Strategy, and Public Relations at the School of Communication and Media Studies, also in Lisbon.
