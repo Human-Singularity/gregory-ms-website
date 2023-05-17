@@ -2,7 +2,7 @@
 authors:
   - bruno-amaral
 date: 2023-05-05T20:44:22Z
-description: ""
+description: "Multiple Sclerosis research, activities, and accounts for the GregoryMS project."
 draft: false
 resources: 
 - src: images/report_bg_2022.png
