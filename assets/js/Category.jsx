@@ -10,7 +10,7 @@ import { BrowserRouter as Router, Route, Routes, useParams } from 'react-router-
 function InteractiveLineChart() {  
 	const { category, page } = useParams();
   const apiEndpoint = `https://api.gregory-ms.com/articles/category/${category}/`;
-  const page_path = `/categories/${category}/`;
+  const page_path = `/categories/${category}`;
 
 
 	const [articles, setArticles] = useState([]);
