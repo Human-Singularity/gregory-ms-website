@@ -1,83 +1,92 @@
 import ReactDOM from 'react-dom/client';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from 'recharts';
 import * as d3 from 'd3';
+import {ArticleList} from './ArticleList';  // Import the ArticleList component
+import { BrowserRouter as Router, Route, Routes, useParams } from 'react-router-dom';
 
-function LineChart({ apiEndpoint }) {
-    const [articles, setArticles] = useState([]);
-    const ref = useRef();
-    const margin = {top: 20, right: 20, bottom: 50, left: 50};
 
-    useEffect(() => {
-        async function fetchData() {
-            const response = await axios.get(`${apiEndpoint}?format=json`);
-            setArticles(response.data.results);
-        }
-        fetchData();
-    }, [apiEndpoint]);
+function InteractiveLineChart() {  
+	const { category, page } = useParams();
+  const apiEndpoint = `https://api.gregory-ms.com/articles/category/${category}/`;
+  const page_path = `/categories/${category}/`;
 
-    useEffect(() => {
-        if (!articles.length) {
-            return;
-        }
 
-        // Parse and sort data by published_date
-        const parsedData = articles.map(item => ({
-            ...item,
-            published_date: d3.timeParse("%Y-%m-%dT%H:%M:%SZ")(item.published_date)
-        })).sort((a, b) => a.published_date - b.published_date);
-        
-        // Count articles by date
-        const countByDate = d3.rollup(parsedData, v => v.length, d => d.published_date);
+	const [articles, setArticles] = useState([]);
 
-        // Generate cumulative count
-        let cumulativeCount = 0;
-        const cumulativeData = Array.from(countByDate, ([date, count]) => {
-            cumulativeCount += count;
-            return { date, cumulativeCount };
-        });
+	useEffect(() => {
+		async function fetchData() {
+			let page = 1;
+			let allArticles = [];
 
-        const svg = d3.select(ref.current);
-        const { width, height } = svg.node().getBoundingClientRect();
-        const xScale = d3.scaleTime()
-            .domain(d3.extent(cumulativeData, d => d.date))
-            .range([margin.left, width - margin.right]);
-        const yScale = d3.scaleLinear()
-            .domain([0, d3.max(cumulativeData, d => d.cumulativeCount)])
-            .range([height - margin.bottom, margin.top]);
+			while (true) {
+				const response = await axios.get(`${apiEndpoint}?format=json&page=${page}`);
+				const data = response.data.results;
 
-        // Generate line
-        const line = d3.line()
-            .x(d => xScale(d.date))
-            .y(d => yScale(d.cumulativeCount));
+				allArticles = allArticles.concat(data);
 
-        svg.append('path')
-            .datum(cumulativeData)
-            .attr('fill', 'none')
-            .attr('stroke', 'steelblue')
-            .attr('stroke-width', 1.5)
-            .attr('d', line);
+				if (response.data.next) {
+					page++;
+				} else {
+					break;
+				}
+			}
 
-        // Add X Axis
-        svg.append('g')
-            .attr('transform', `translate(0,${height - margin.bottom})`)
-            .call(d3.axisBottom(xScale).tickFormat(d3.timeFormat("%d-%m-%Y")))
-            .selectAll("text")  
-            .style("text-anchor", "end")
-            .attr("dx", "-.8em")
-            .attr("dy", ".15em")
-            .attr("transform", "rotate(-65)");
+			setArticles(allArticles);
+		}
 
-        // Add Y Axis
-        svg.append('g')
-            .attr('transform', `translate(${margin.left},0)`)
-            .call(d3.axisLeft(yScale));
-    }, [articles]);
+		fetchData();
+	}, [apiEndpoint]);
 
-    return <svg id="graph" ref={ref} style={{ height: '500px', width: '100%' }} />;
+	// Parse and sort data by published_date
+	const parsedData = articles.map(item => ({
+		...item,
+		published_date: d3.timeParse("%Y-%m-%dT%H:%M:%SZ")(item.published_date)
+	})).sort((a, b) => a.published_date - b.published_date);
+
+	// Group articles by month
+	const groupedData = d3.group(parsedData, d => d3.timeMonth(d.published_date));
+
+	// Calculate cumulative count for each month
+	let cumulativeCount = 0;
+	const cumulativeData = Array.from(groupedData, ([date, articles]) => {
+		cumulativeCount += articles.length;
+		return { date, cumulativeCount };
+	});
+
+	const formatDate = date => {
+		const format = d3.timeFormat("%b %Y");
+		return format(date);
+	};
+	const tooltipLabelFormatter = (value, entry) => {
+		const date = formatDate(value);
+		return `${date}`;
+	};
+	return (
+		<><ResponsiveContainer height={300}>
+			<LineChart data={cumulativeData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+				<XAxis dataKey="date" tickFormatter={formatDate} />
+				<YAxis />
+				<Tooltip labelFormatter={tooltipLabelFormatter} />
+				<CartesianGrid stroke="#f5f5f5" />
+				<Line type="monotone" dataKey="cumulativeCount" stroke="#ff7300" />
+			</LineChart>
+		</ResponsiveContainer>
+		<ArticleList apiEndpoint={apiEndpoint} page_path={page_path} /> 
+		</>  // Add ArticleList component
+	);
 }
-
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<LineChart apiEndpoint="https://api.gregory-ms.com/articles/category/ocrelizumab/" />);
+root.render(
+  <Router>
+    <Routes>
+      <Route path="/categories/:category/page/:page" element={<InteractiveLineChart />} />
+      <Route path="/categories/:category" element={<InteractiveLineChart />} />
+    </Routes>
+  </Router>
+);
 
-export default LineChart;
+// root.render(<ArticleList apiEndpoint="https://api.gregory-ms.com/articles/category/ocrelizumab/" page_path='/categories/ocrelizumab' />)
+
+export default InteractiveLineChart;
