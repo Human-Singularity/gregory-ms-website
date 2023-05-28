@@ -10,21 +10,31 @@ function InteractiveLineChart() {
   const { category, page } = useParams();
   const apiEndpoint = `https://api.gregory-ms.com/articles/category/${category}/`;
   const page_path = `/categories/${category}`;
-  const [articles, setArticles] = useState([]);
+	const [articles, setArticles] = useState([]);
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await axios.get(`${apiEndpoint}?format=json&page=${page}`);
-        setArticles(response.data.results);
-      } catch (error) {
-        console.error(error);
-      }
-    }
+	useEffect(() => {
+		async function fetchData() {
+			let api_page = 1;
+			let allArticles = [];
 
-    fetchData();
-  }, [apiEndpoint, page]);
+			while (true) {
+				const response = await axios.get(`${apiEndpoint}?format=json&page=${api_page}`);
+				const data = response.data.results;
 
+				allArticles = allArticles.concat(data);
+				
+				if (response.data.next) {
+					api_page++;
+				} else {
+					break;
+				}
+			}
+
+			setArticles(allArticles);
+		}
+
+		fetchData();
+	}, [apiEndpoint]);
   const parsedData = articles.map(item => ({
     ...item,
     published_date: d3.timeParse("%Y-%m-%dT%H:%M:%SZ")(item.published_date)
