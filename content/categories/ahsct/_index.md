@@ -4,4 +4,11 @@ subtitle: "aHSCT"
 resources:
   - src: luke-chesser-pJadQetzTkI-unsplash.jpg
     name: header
+options:
+  header: mini
 ---
+
+The articles below contain one or more of these keywords in the title or abstract: `ahsct, Autologous hematopoietic stem cell transplantation, Bone marrow, Transplantation, Immunoablation`.
+
+Information on the procedure is available at <https://www.msaustralia.org.au/ahsct/autologous-haematopoietic-stem-cell-transplant/> and <https://www.nationalmssociety.org/Research/Research-News-Progress/Stem-Cells-in-MS/Bone-Marrow-Stem-Cell-Transplant-%E2%80%93-HSCT>
+
