@@ -19,8 +19,6 @@ LEMTRADA, or Alemtuzumab, is a prescription medicine used to treat relapsing for
 
 </div>
 
-{{< metabase-embed dashboard="21" width="1300" height="1250" >}}
-
 <div class="col-md-6 mx-auto">
 {{< copyright >}}
 </div>
