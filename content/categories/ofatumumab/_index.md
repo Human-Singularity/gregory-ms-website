@@ -10,5 +10,3 @@ options:
 
 
 </div>
-
-{{< metabase-embed dashboard="23" width="1300" height="1250" >}}
