@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom/client';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { ComposedChart, Bar, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from 'recharts';
+import { ComposedChart, Bar, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer, Label } from 'recharts';
 import * as d3 from 'd3';
 import { ArticleList } from './ArticleList';
 import { BrowserRouter as Router, Route, Routes, useParams } from 'react-router-dom';
@@ -60,20 +60,25 @@ function InteractiveLineChart() {
   };
 
   return (
-    <>  
-      <h4 class="title">Published articles per month</h4>
+    <>
+      <h4 className='title'>Published articles per month</h4>
       <ResponsiveContainer height={300}>
-        <ComposedChart data={dataWithCumulativeAndMonthlyCounts} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-          <XAxis dataKey="date" tickFormatter={formatDate} />
-          <YAxis yAxisId="left" />
-          <YAxis yAxisId="right" orientation="right" />
+        <ComposedChart data={dataWithCumulativeAndMonthlyCounts} margin={{ top: 50, right: 30, left: 20, bottom: 5 }}>
+          <XAxis dataKey="date" tickFormatter={formatDate}>
+          </XAxis>
+          <YAxis yAxisId="left">
+            <Label value="Cumulative Count" angle={-90} position="insideLeft" />
+          </YAxis>
+          <YAxis yAxisId="right" orientation="right">
+            <Label value="Monthly Count" angle={90} position="insideRight" />
+          </YAxis>
           <Tooltip labelFormatter={tooltipLabelFormatter} />
           <CartesianGrid stroke="#f5f5f5" />
           <Bar yAxisId="right" dataKey="monthlyCount" fill="#8884d8" />
           <Line yAxisId="left" type="monotone" dataKey="cumulativeCount" stroke="#ff7300" />
         </ComposedChart>
       </ResponsiveContainer>
-      <h4 class="title text-center">All articles mentioning {category}</h4>
+      <h4 className='title text-center'>Articles mentioning {category}</h4>
       <ArticleList apiEndpoint={apiEndpoint} page_path={page_path} page={parseInt(page)} />
     </>
   );
