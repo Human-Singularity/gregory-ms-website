@@ -36,10 +36,15 @@ function InteractiveLineChart() {
     fetchData();
   }, [apiEndpoint]);
 
-  const parsedData = articles.map(item => ({
-    ...item,
-    published_date: d3.timeParse("%Y-%m-%dT%H:%M:%SZ")(item.published_date)
-  })).sort((a, b) => a.published_date - b.published_date);
+  const parsedData = articles.map(item => {
+    const { noun_phrases, ...rest } = item;  // remove noun_phrases from item
+    let authors = item.authors.map(a => `"${a.given_name} ${a.family_name}"`).join(', ');
+    return {
+      ...rest,
+      authors,
+      published_date: d3.timeParse("%Y-%m-%dT%H:%M:%SZ")(item.published_date)
+    };
+  }).sort((a, b) => a.published_date - b.published_date);
 
   const groupedData = d3.group(parsedData, d => d3.timeMonth(d.published_date));
 
@@ -58,6 +63,28 @@ function InteractiveLineChart() {
     const date = formatDate(value);
     return `${date}`;
   };
+
+  const exportToCSV = (csvData, fileName) => {
+    const csvRow = [];
+    const headers = Object.keys(csvData[0]);
+    csvRow.push(headers.join(','));
+
+    for (let row of csvData) {
+      csvRow.push(headers.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
+    }
+
+    function replacer(key, value) {
+      if (value === null) return '';
+      else return value; // convert it to string
+    }
+
+    const csvString = csvRow.join('\r\n');
+    const downloadLink = document.createElement('a');
+    downloadLink.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvString);
+    downloadLink.target = '_blank';
+    downloadLink.download = fileName;
+    downloadLink.click();
+  }
 
   return (
     <>
@@ -79,6 +106,18 @@ function InteractiveLineChart() {
           <Legend />
         </ComposedChart>
       </ResponsiveContainer>
+      <div className="d-flex justify-content-end">
+      <button 
+        onClick={() => exportToCSV(parsedData, `${category}_articles.csv`)} 
+        className='mr-5 btn btn-md btn-info font-weight-bold d-flex align-items-center justify-content-between' 
+        data-umami-event={`download articles for ${category}`}
+      >
+        Download CSV&nbsp;
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 ml-2" viewBox="0 0 384 512" style={{ height: "16px" }}>
+          <path d="M64 0C28.7 0 0 28.7 0 64V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V160H256c-17.7 0-32-14.3-32-32V0H64zM256 0V128H384L256 0zM216 232V334.1l31-31c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-72 72c-9.4 9.4-24.6 9.4-33.9 0l-72-72c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l31 31V232c0-13.3 10.7-24 24-24s24 10.7 24 24z" fill="White"></path>
+        </svg>
+      </button>
+      </div>
       <h3 className='title text-center'>Scientific research on {category}</h3>
       <ArticleList apiEndpoint={apiEndpoint} page_path={page_path} page={parseInt(page)} />
     </>
