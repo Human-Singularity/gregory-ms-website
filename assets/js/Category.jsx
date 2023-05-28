@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom/client';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from 'recharts';
+import { ComposedChart, Bar, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from 'recharts';
 import * as d3 from 'd3';
 import { ArticleList } from './ArticleList';
 import { BrowserRouter as Router, Route, Routes, useParams } from 'react-router-dom';
@@ -10,31 +10,32 @@ function InteractiveLineChart() {
   const { category, page } = useParams();
   const apiEndpoint = `https://api.gregory-ms.com/articles/category/${category}/`;
   const page_path = `/categories/${category}`;
-	const [articles, setArticles] = useState([]);
+  const [articles, setArticles] = useState([]);
 
-	useEffect(() => {
-		async function fetchData() {
-			let api_page = 1;
-			let allArticles = [];
+  useEffect(() => {
+    async function fetchData() {
+      let api_page = 1;
+      let allArticles = [];
 
-			while (true) {
-				const response = await axios.get(`${apiEndpoint}?format=json&page=${api_page}`);
-				const data = response.data.results;
+      while (true) {
+        const response = await axios.get(`${apiEndpoint}?format=json&page=${api_page}`);
+        const data = response.data.results;
 
-				allArticles = allArticles.concat(data);
-				
-				if (response.data.next) {
-					api_page++;
-				} else {
-					break;
-				}
-			}
+        allArticles = allArticles.concat(data);
 
-			setArticles(allArticles);
-		}
+        if (response.data.next) {
+          api_page++;
+        } else {
+          break;
+        }
+      }
 
-		fetchData();
-	}, [apiEndpoint]);
+      setArticles(allArticles);
+    }
+
+    fetchData();
+  }, [apiEndpoint]);
+  
   const parsedData = articles.map(item => ({
     ...item,
     published_date: d3.timeParse("%Y-%m-%dT%H:%M:%SZ")(item.published_date)
@@ -43,9 +44,9 @@ function InteractiveLineChart() {
   const groupedData = d3.group(parsedData, d => d3.timeMonth(d.published_date));
 
   let cumulativeCount = 0;
-  const cumulativeData = Array.from(groupedData, ([date, articles]) => {
+  const dataWithCumulativeAndMonthlyCounts = Array.from(groupedData, ([date, articles]) => {
     cumulativeCount += articles.length;
-    return { date, cumulativeCount };
+    return { date, cumulativeCount, monthlyCount: articles.length };
   });
 
   const formatDate = date => {
@@ -59,16 +60,20 @@ function InteractiveLineChart() {
   };
 
   return (
-    <>
+    <>  
+      <h4 class="title">Published articles per month</h4>
       <ResponsiveContainer height={300}>
-        <LineChart data={cumulativeData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+        <ComposedChart data={dataWithCumulativeAndMonthlyCounts} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
           <XAxis dataKey="date" tickFormatter={formatDate} />
-          <YAxis />
+          <YAxis yAxisId="left" />
+          <YAxis yAxisId="right" orientation="right" />
           <Tooltip labelFormatter={tooltipLabelFormatter} />
           <CartesianGrid stroke="#f5f5f5" />
-          <Line type="monotone" dataKey="cumulativeCount" stroke="#ff7300" />
-        </LineChart>
+          <Bar yAxisId="right" dataKey="monthlyCount" fill="#8884d8" />
+          <Line yAxisId="left" type="monotone" dataKey="cumulativeCount" stroke="#ff7300" />
+        </ComposedChart>
       </ResponsiveContainer>
+      <h4 class="title text-center">All articles mentioning {category}</h4>
       <ArticleList apiEndpoint={apiEndpoint} page_path={page_path} page={parseInt(page)} />
     </>
   );
