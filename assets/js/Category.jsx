@@ -73,7 +73,7 @@ function InteractiveLineChart() {
 				<Line type="monotone" dataKey="cumulativeCount" stroke="#ff7300" />
 			</LineChart>
 		</ResponsiveContainer>
-		<ArticleList apiEndpoint={apiEndpoint} page_path={page_path} /> 
+		<ArticleList apiEndpoint={apiEndpoint} page_path={page_path} page={parseInt(page)} /> 
 		</>  // Add ArticleList component
 	);
 }
