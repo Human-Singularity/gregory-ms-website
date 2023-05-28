@@ -9,7 +9,7 @@ function App() {
 			<Router>
 				<Routes>
 					<Route path="/relevant/" element={<ArticleList apiEndpoint="https://api.gregory-ms.com/articles/relevant" page_path='/relevant' />} />
-					<Route path="/relevant/page/:page" element={<ArticleList apiEndpoint="https://api.gregory-ms.com/articles/relevant" page_path='/relevant' />} />
+					<Route path="/relevant/page/:pageNumber" element={<ArticleList apiEndpoint="https://api.gregory-ms.com/articles/relevant" page_path='/relevant' />} />
 					<Route path="/articles/:articleId/:articleSlug" element={<SingleArticle />} />
 					<Route path="/articles/:articleId" element={<SingleArticle />} />
 				</Routes>
