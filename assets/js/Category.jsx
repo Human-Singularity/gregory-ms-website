@@ -61,7 +61,7 @@ function InteractiveLineChart() {
 
   return (
     <>
-      <h3 className='title'>Published articles per month</h3>
+      <h3 className='title text-center'>Published articles per month</h3>
       <ResponsiveContainer height={350}>
         <ComposedChart data={dataWithCumulativeAndMonthlyCounts} margin={{ top: 50, right: 30, left: 20, bottom: 5 }}>
           <XAxis dataKey="date" tickFormatter={formatDate}>
@@ -79,7 +79,7 @@ function InteractiveLineChart() {
           <Legend />
         </ComposedChart>
       </ResponsiveContainer>
-      <h3 className='title'>Scientific research on {category}</h3>
+      <h3 className='title text-center'>Scientific research on {category}</h3>
       <ArticleList apiEndpoint={apiEndpoint} page_path={page_path} page={parseInt(page)} />
     </>
   );
