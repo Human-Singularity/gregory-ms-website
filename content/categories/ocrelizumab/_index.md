@@ -1,6 +1,9 @@
 ---
 title: "Ocrelizumab"
-subtitle: ""
+subtitle: "Ocrevus"
+resources:
+  - src: luke-chesser-pJadQetzTkI-unsplash.jpg
+    name: header
 options:
   header: mini
 ---
