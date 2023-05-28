@@ -45,6 +45,8 @@ Medication and other topics of interest for people with Multiple Sclerosis.
                 <a href="https://gregory-ms.com/categories/natalizumab/" class="list-group-item list-group-item-action btn btn-info font-weight-bold">Natalizumab</a>
                 <a href="https://gregory-ms.com/categories/ocrelizumab/" class="list-group-item list-group-item-action btn btn-info font-weight-bold">Ocrelizumab</a>
             </div>
+</div>
+<div class="row">
             <div class="col-md-4 list-group">
                 <a href="https://gregory-ms.com/categories/ofatumumab/" class="list-group-item list-group-item-action btn btn-info font-weight-bold">Ofatumumab</a>
                 <a href="https://gregory-ms.com/categories/rituximab/" class="list-group-item list-group-item-action btn btn-info font-weight-bold">Rituximab</a>
