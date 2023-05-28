@@ -6,28 +6,25 @@ import * as d3 from 'd3';
 import {ArticleList} from './ArticleList';  // Import the ArticleList component
 import { BrowserRouter as Router, Route, Routes, useParams } from 'react-router-dom';
 
-
 function InteractiveLineChart() {  
 	const { category, page } = useParams();
   const apiEndpoint = `https://api.gregory-ms.com/articles/category/${category}/`;
   const page_path = `/categories/${category}`;
-
-
 	const [articles, setArticles] = useState([]);
 
 	useEffect(() => {
 		async function fetchData() {
-			let page = 1;
+			let api_page = 1;
 			let allArticles = [];
 
 			while (true) {
-				const response = await axios.get(`${apiEndpoint}?format=json&page=${page}`);
+				const response = await axios.get(`${apiEndpoint}?format=json&page=${api_page}`);
 				const data = response.data.results;
 
 				allArticles = allArticles.concat(data);
 
 				if (response.data.next) {
-					page++;
+					api_page++;
 				} else {
 					break;
 				}
@@ -86,7 +83,5 @@ root.render(
     </Routes>
   </Router>
 );
-
-// root.render(<ArticleList apiEndpoint="https://api.gregory-ms.com/articles/category/ocrelizumab/" page_path='/categories/ocrelizumab' />)
 
 export default InteractiveLineChart;
