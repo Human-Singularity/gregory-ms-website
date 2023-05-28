@@ -19,9 +19,6 @@ export function ArticleList({ apiEndpoint, page_path }) {
 
 	return (
 		<div>
-			<p>
-				<a className="btn btn-info btn-round btn-lg font-weight-bold mx-auto" data-umami-event="click--relevant-articles-on-articles-page" href="/relevant/">Filter by relevant articles <i className="text-muted text-info fas fa-arrow-right" style={{ transform: ".4s", boxShadow: ".4s" }}></i></a>
-			</p>
 			<div className="row">
 				<div className="col-md-12">
 					<Pagination page={page} setPage={setPage} last_page={last_page} page_path={page_path} />

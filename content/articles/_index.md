@@ -36,4 +36,8 @@ cta:
 </ul>
 </div>
 
+
+<p>
+  <a class="btn btn-info btn-round btn-lg font-weight-bold mx-auto" data-umami-event="click--relevant-articles-on-articles-page" href="/relevant/">Filter by relevant articles <i class="text-muted text-info fas fa-arrow-right" style={{ transform: ".4s", boxShadow: ".4s" }}></i></a>
+</p>
 {{< articles >}}
