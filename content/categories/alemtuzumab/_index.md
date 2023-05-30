@@ -4,6 +4,7 @@ subtitle: Lemtrada
 slug: alemtuzumab
 options:
   header: mini
+  navbar: navbar navbar-expand-lg bg-white fixed-top font-weight-bold
 layout: page 
 resources:
   - src: scott-webb-OxHPDs4WV8Y-unsplash.jpg

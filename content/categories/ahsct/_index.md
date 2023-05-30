@@ -6,6 +6,7 @@ resources:
     name: header
 options:
   header: mini
+  navbar: navbar navbar-expand-lg bg-white fixed-top font-weight-bold
 ---
 
 The articles below contain one or more of these keywords in the title or abstract: `ahsct, Autologous hematopoietic stem cell transplantation, Bone marrow, Transplantation, Immunoablation`.
