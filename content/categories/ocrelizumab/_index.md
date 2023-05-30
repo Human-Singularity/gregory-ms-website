@@ -6,6 +6,7 @@ resources:
     name: header
 options:
   header: mini
+  navbar: navbar navbar-expand-lg bg-white fixed-top font-weight-bold
 ---
 
 <div class="col-md-10 mx-auto">
