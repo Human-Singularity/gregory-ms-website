@@ -40,6 +40,12 @@ def pull_from_github():
 	g = git.cmd.Git(GREGORY_DIR)
 	output = g.pull()
 	print(output)
+	if "Already up to date." in output:
+		print("Git pull was successful, but there were no changes to the codebase.")
+		return False
+	else:
+		print("Git pull was successful and new changes to the codebase were fetched.")
+		return True
 
 def get_data():
 	print('''
@@ -227,12 +233,14 @@ def build_website():
 
 
 if __name__ == '__main__':
-	pull_from_github()
-	articles, categories, trials = get_data()
-	save_excel_and_json(articles, trials)
-	save_articles_to_json(articles)
-	create_categories(categories)
-	create_zip_files()
-	delete_temporary_files()
-	generate_metabase_embeds()
-	build_website()
+	if pull_from_github():
+		articles, categories, trials = get_data()
+		save_excel_and_json(articles, trials)
+		save_articles_to_json(articles)
+		create_categories(categories)
+		create_zip_files()
+		delete_temporary_files()
+		generate_metabase_embeds()
+		build_website()
+	else:
+		print("The script will not continue because there were no changes to the codebase.")
