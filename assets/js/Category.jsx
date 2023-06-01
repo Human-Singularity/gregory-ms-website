@@ -8,17 +8,19 @@ import { BrowserRouter as Router, Route, Routes, useParams } from 'react-router-
 
 function InteractiveLineChart() {
   const { category, page } = useParams();
-  const apiEndpoint = `https://api.gregory-ms.com/articles/category/${category}/`;
+  const articleEndpoint = `https://api.gregory-ms.com/articles/category/${category}/`;
+  const trialEndpoint = `https://api.gregory-ms.com/trials/category/${category}/`;
   const page_path = `/categories/${category}`;
   const [articles, setArticles] = useState([]);
+  const [trials, setTrials] = useState([]);
 
   useEffect(() => {
-    async function fetchData() {
+    async function fetchArticleData() {
       let api_page = 1;
       let allArticles = [];
 
       while (true) {
-        const response = await axios.get(`${apiEndpoint}?format=json&page=${api_page}`);
+        const response = await axios.get(`${articleEndpoint}?format=json&page=${api_page}`);
         const data = response.data.results;
 
         allArticles = allArticles.concat(data);
@@ -33,11 +35,33 @@ function InteractiveLineChart() {
       setArticles(allArticles);
     }
 
-    fetchData();
-  }, [apiEndpoint]);
+    async function fetchTrialData() {
+      let api_page = 1;
+      let allTrials = [];
+
+      while (true) {
+        const response = await axios.get(`${trialEndpoint}?format=json&page=${api_page}`);
+        const data = response.data.results;
+
+        allTrials = allTrials.concat(data);
+
+        if (response.data.next) {
+          api_page++;
+        } else {
+          break;
+        }
+      }
+
+      setTrials(allTrials);
+    }
+
+    fetchArticleData();
+    fetchTrialData();
+  }, [articleEndpoint, trialEndpoint]);
+
 
   const parsedData = articles.map(item => {
-    const { noun_phrases, ...rest } = item;  // remove noun_phrases from item
+    const { noun_phrases, ...rest } = item;
     let authors = item.authors.map(a => `"${a.given_name} ${a.family_name}"`).join(', ');
     return {
       ...rest,
@@ -46,12 +70,32 @@ function InteractiveLineChart() {
     };
   }).sort((a, b) => a.published_date - b.published_date);
 
-  const groupedData = d3.group(parsedData, d => d3.timeMonth(d.published_date));
+  const parsedTrialData = trials.map(item => {
+    return {
+      ...item,
+      published_date: d3.timeParse("%Y-%m-%dT%H:%M:%SZ")(item.published_date)
+    };
+  }).sort((a, b) => a.published_date - b.published_date);
 
-  let cumulativeCount = 0;
-  const dataWithCumulativeAndMonthlyCounts = Array.from(groupedData, ([date, articles]) => {
-    cumulativeCount += articles.length;
-    return { date, cumulativeCount, monthlyCount: articles.length };
+
+  const groupedArticleData = d3.group(parsedData, d => d3.timeMonth(d.published_date));
+  const groupedTrialData = d3.group(parsedTrialData, d => d3.timeMonth(d.published_date));
+
+  let cumulativeArticleCount = 0;
+  let cumulativeTrialCount = 0;
+
+  const articleDataWithCounts = Array.from(groupedArticleData, ([date, articles]) => {
+    cumulativeArticleCount += articles.length;
+    return { date, cumulativeArticleCount, monthlyArticleCount: articles.length };
+  });
+
+  const trialDataWithCounts = Array.from(groupedTrialData, ([date, trials]) => {
+    cumulativeTrialCount += trials.length;
+    return { date, cumulativeTrialCount, monthlyTrialCount: trials.length };
+  });
+
+  const dataWithCounts = articleDataWithCounts.map((articleData, index) => {
+    return { ...articleData, ...trialDataWithCounts[index] };
   });
 
   const formatDate = date => {
@@ -88,11 +132,10 @@ function InteractiveLineChart() {
 
   return (
     <>
-      <h3 className='title text-center'>Published articles per month</h3>
+      <h3 className='title text-center'>Published articles and CT per month</h3>
       <ResponsiveContainer height={350}>
-        <ComposedChart data={dataWithCumulativeAndMonthlyCounts} margin={{ top: 50, right: 30, left: 20, bottom: 5 }}>
-          <XAxis dataKey="date" tickFormatter={formatDate}>
-          </XAxis>
+        <ComposedChart data={dataWithCounts} margin={{ top: 50, right: 30, left: 20, bottom: 5 }}>
+          <XAxis dataKey="date" tickFormatter={formatDate}></XAxis>
           <YAxis yAxisId="left">
             <Label value="Cumulative Count" angle={-90} position="insideLeft" />
           </YAxis>
@@ -101,8 +144,9 @@ function InteractiveLineChart() {
           </YAxis>
           <Tooltip labelFormatter={tooltipLabelFormatter} />
           <CartesianGrid stroke="#f5f5f5" />
-          <Bar yAxisId="right" dataKey="monthlyCount" fill="#8884d8" name="Monthly Count" />
-          <Line yAxisId="left" type="monotone" dataKey="cumulativeCount" stroke="#ff7300" name="Cumulative Count" />
+          <Bar yAxisId="right" dataKey="monthlyArticleCount" fill="#8884d8" name="Monthly Article Count" />
+          <Bar yAxisId="right" dataKey="monthlyTrialCount" fill="#413ea0" name="Monthly Trial Count" />
+          <Line yAxisId="left" type="monotone" dataKey="cumulativeArticleCount" stroke="#ff7300" name="Cumulative Article Count" />
           <Legend />
         </ComposedChart>
       </ResponsiveContainer>
@@ -119,7 +163,7 @@ function InteractiveLineChart() {
       </button>
       </div>
       <h3 className='title text-center'>Scientific research on {category}</h3>
-      <ArticleList apiEndpoint={apiEndpoint} page_path={page_path} page={parseInt(page)} />
+      <ArticleList apiEndpoint={articleEndpoint} page_path={page_path} page={parseInt(page)} />
     </>
   );
 }
