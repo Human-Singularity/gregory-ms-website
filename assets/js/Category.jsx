@@ -214,9 +214,9 @@ function InteractiveLineChart() {
           <Legend />
         </ComposedChart>
       </ResponsiveContainer>
-      <div className="alert alert-danger" role="alert">
-        <p className='font-weight-bold text-center'>Attention, the source data for the chart may contain duplicate clinical trials.</p>
-        <p className='text-center'>We are working on solving this issue as soon as possible.</p>
+      <div className="text-center rounded col-8 mt-5 mx-auto alert alert-danger" role="alert">
+        <span className='font-weight-bold'>Attention, the source data for the chart may contain duplicate clinical trials.</span><br></br>
+        <span className=''>We are working on solving this issue as soon as possible.</span>
       </div>
 
       <div className="d-flex justify-content-end">
