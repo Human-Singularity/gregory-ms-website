@@ -76,14 +76,13 @@ disableAutoCollapse: true
         <a href="/categories/rg7845" class="list-group-item list-group-item-action list-group-item-info">rg7845</a>
         <a href="/categories/rituximab" class="list-group-item list-group-item-action">rituximab</a>
         <a href="/categories/sandoz" class="list-group-item list-group-item-action list-group-item-info">sandoz</a>
-        <a href="/categories/sar441344" class="list-group-item list-group-item-action">sar441344</a>
-        <a href="/categories/sar442168" class="list-group-item list-group-item-action list-group-item-info">sar442168</a>
-        <a href="/categories/simvastatin" class="list-group-item list-group-item-action">simvastatin</a>
-        <a href="/categories/siponimod" class="list-group-item list-group-item-action list-group-item-info">siponimod</a>
-        <a href="/categories/stem-cells" class="list-group-item list-group-item-action">stem-cells</a>
-        <a href="/categories/tcelna" class="list-group-item list-group-item-action list-group-item-info">tcelna</a>
-        <a href="/categories/tolebrutinib" class="list-group-item list-group-item-action">tolebrutinib</a>
-        <a href="/categories/ublituximab" class="list-group-item list-group-item-action list-group-item-info">ublituximab</a>
+        <a href="/categories/sar442168" class="list-group-item list-group-item-action">sar442168</a>
+        <a href="/categories/simvastatin" class="list-group-item list-group-item-action list-group-item-info">simvastatin</a>
+        <a href="/categories/siponimod" class="list-group-item list-group-item-action">siponimod</a>
+        <a href="/categories/stem-cells" class="list-group-item list-group-item-action list-group-item-info">stem-cells</a>
+        <a href="/categories/tcelna" class="list-group-item list-group-item-action">tcelna</a>
+        <a href="/categories/tolebrutinib" class="list-group-item list-group-item-action list-group-item-info">tolebrutinib</a>
+        <a href="/categories/ublituximab" class="list-group-item list-group-item-action">ublituximab</a>
       </div>
     </div>
   </div>
