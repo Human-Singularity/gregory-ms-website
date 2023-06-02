@@ -214,6 +214,11 @@ function InteractiveLineChart() {
           <Legend />
         </ComposedChart>
       </ResponsiveContainer>
+      <div className="alert alert-danger" role="alert">
+        <p className='font-weight-bold text-center'>Attention, the source data for the chart may contain duplicate clinical trials.</p>
+        <p className='text-center'>We are working on solving this issue as soon as possible.</p>
+      </div>
+
       <div className="d-flex justify-content-end">
         <button 
           onClick={() => exportToCSV(csvData, `${category}_articles_trials.csv`)} 
