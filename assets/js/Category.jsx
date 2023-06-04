@@ -157,6 +157,34 @@ function InteractiveLineChart() {
     });
   }
 const countsByDate = new Map();
+// Find earliest and latest dates among articles and trials
+const earliestDate = new Date(Math.min(
+  ...articleDataWithCounts.map(data => data.date.getTime()),
+  ...trialDataWithCounts.map(data => data.date.getTime())
+));
+const latestDate = new Date(Math.max(
+  ...articleDataWithCounts.map(data => data.date.getTime()),
+  ...trialDataWithCounts.map(data => data.date.getTime())
+));
+
+// Generate array of dates for each month between January 2021 and latestDate
+const allDates = d3.timeMonths(
+  d3.timeMonth.floor(new Date(2021, 0)), // This represents January 1, 2021
+  // d3.timeMonth.floor(earliestDate),
+  d3.timeMonth.ceil(latestDate)
+);
+
+// Fill countsByDate map with default data for each month
+for (const date of allDates) {
+  countsByDate.set(date.getTime(), {
+    date,
+    cumulativeArticleCount: 0,
+    monthlyArticleCount: 0,
+    cumulativeTrialCount: 0,
+    monthlyTrialCount: 0,
+  });
+}
+
 
 for (const { date, cumulativeArticleCount, monthlyArticleCount } of articleDataWithCounts) {
   countsByDate.set(date.getTime(), {
