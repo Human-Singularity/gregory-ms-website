@@ -112,9 +112,7 @@ function InteractiveLineChart() {
     summary = summary.replace(/,/g, ';');
     
     // escape double quotes
-    summary = summary.replace(/"/g, '');
-    let trial_id = item.trial_id || ""; // assuming trial_id exists in item
-
+    summary = summary.replace(/"/g, ''); 
     return {
       ...rest,
       article_id: "", // Add a placeholder for article_id
@@ -158,9 +156,36 @@ function InteractiveLineChart() {
       monthlyTrialCount: 0,
     });
   }
-  const dataWithCounts = articleDataWithCounts.map((articleData, index) => {
-    return { ...articleData, ...trialDataWithCounts[index] };
+const countsByDate = new Map();
+
+for (const { date, cumulativeArticleCount, monthlyArticleCount } of articleDataWithCounts) {
+  countsByDate.set(date.getTime(), {
+    date,
+    cumulativeArticleCount,
+    monthlyArticleCount,
+    cumulativeTrialCount: 0,
+    monthlyTrialCount: 0,
   });
+}
+
+for (const { date, cumulativeTrialCount, monthlyTrialCount } of trialDataWithCounts) {
+  const timestamp = date.getTime();
+
+  if (countsByDate.has(timestamp)) {
+    countsByDate.get(timestamp).cumulativeTrialCount = cumulativeTrialCount;
+    countsByDate.get(timestamp).monthlyTrialCount = monthlyTrialCount;
+  } else {
+    countsByDate.set(timestamp, {
+      date,
+      cumulativeTrialCount,
+      monthlyTrialCount,
+      cumulativeArticleCount: 0,
+      monthlyArticleCount: 0,
+    });
+  }
+}
+
+const dataWithCounts = Array.from(countsByDate.values()).sort((a, b) => a.date - b.date);
 
   const formatDate = date => {
     const format = d3.timeFormat("%b %Y");
