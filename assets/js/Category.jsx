@@ -267,11 +267,6 @@ const dataWithCounts = Array.from(countsByDate.values()).sort((a, b) => a.date -
           <Legend />
         </ComposedChart>
       </ResponsiveContainer>
-      <div className="text-center rounded col-8 mt-5 mx-auto alert alert-danger" role="alert">
-        <span className='font-weight-bold'>Attention, the source data for the chart may contain duplicate clinical trials.</span><br></br>
-        <span className=''>We are working on solving this issue as soon as possible.</span>
-      </div>
-
       <div className="d-flex justify-content-end">
         <button 
           onClick={() => exportToCSV(csvData, `${category}_articles_trials.csv`)} 
