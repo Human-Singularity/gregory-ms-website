@@ -76,6 +76,7 @@ function App() {
   }, []);
 
   useEffect(() => {
+		// to do: add pagination of api
     const fetchMonthlyCounts = async () => {
       let categoryMonthlyCounts = {};
 
