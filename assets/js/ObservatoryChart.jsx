@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { scaleOrdinal } from 'd3-scale';
 import { schemeCategory10 } from 'd3-scale-chromatic';
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer, Brush } from 'recharts';
 import * as d3 from 'd3';
 
 function InteractiveLineChart({chartData, allCategories, hiddenCategories, handleLegendClick, colorScale}) {
@@ -25,7 +25,7 @@ function InteractiveLineChart({chartData, allCategories, hiddenCategories, handl
           />
         ))}
         <CartesianGrid stroke="#ccc" />
-				<XAxis 
+        <XAxis 
           dataKey="numericDate"
           allowDataOverflow 
           type="number"
@@ -39,10 +39,12 @@ function InteractiveLineChart({chartData, allCategories, hiddenCategories, handl
         <YAxis />
         <Tooltip />
         <Legend onClick={handleLegendClick} />
+        <Brush dataKey="name" height={30} stroke="#8884d8"/>  {/* Add this */}
       </LineChart>
     </ResponsiveContainer>
   );
 }
+
 
 function App() {
   const [categories, setCategories] = useState({});
