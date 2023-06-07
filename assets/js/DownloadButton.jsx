@@ -41,6 +41,9 @@ const FetchAndDownload = ({ category_slug }) => {
     let response = await axios.get(url);
     let fetchedData = response.data.results;
     while(response.data.next !== null) {
+			if (response.data.next && response.data.next.startsWith('http://')) {
+				url = 'https://' + url.substring(7);
+			}
       response = await axios.get(response.data.next);
       fetchedData = [...fetchedData, ...response.data.results];
     }
