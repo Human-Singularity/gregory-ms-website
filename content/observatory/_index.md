@@ -28,7 +28,14 @@ disableToC: false
 disableAutoCollapse: true
 
 ---
+## Volume of research per topic and medicine for Multiple Sclerosis
+
+Click the legend to turn categories of the chart off and on, hover the chart for detailed numbers.
+
+This chart is built in real time, please visit the [Downloads Page](https://gregory-ms.com/downloads/) to retrieve the full list of articles that make up the data presented here.
+
 {{< observatory >}}
+
 <div class="col-md-12">
 
 <p class="text-center">Medication and other topics of interest for people with Multiple Sclerosis.</p>
