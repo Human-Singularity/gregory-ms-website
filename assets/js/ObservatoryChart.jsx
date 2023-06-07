@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { scaleOrdinal } from 'd3-scale';
 import { schemeCategory10 } from 'd3-scale-chromatic';
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer, Brush } from 'recharts';
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer, Brush, Label } from 'recharts';
 import * as d3 from 'd3';
 
 function InteractiveLineChart({chartData, allCategories, hiddenCategories, handleLegendClick, colorScale}) {
@@ -36,7 +36,9 @@ function InteractiveLineChart({chartData, allCategories, hiddenCategories, handl
             return `${year}-${semester}`;
           }}
         />
-        <YAxis />
+        <YAxis>
+          <Label angle={-90} value='Cumulative count of published research' position='outsideLeft' offset={-10} />
+        </YAxis>
         <Tooltip />
         <Legend onClick={handleLegendClick} />
         <Brush dataKey="name" height={30} stroke="#8884d8"/>  {/* Add this */}
@@ -57,7 +59,7 @@ function App() {
     const fetchData = async () => {
       let url = 'https://api.gregory-ms.com/categories/?format=json';
       let results = {};
-
+  
       while (url) {
         const response = await axios.get(url);
         response.data.results.forEach(result => {
@@ -65,12 +67,21 @@ function App() {
         });
         url = response.data.next;
       }
-
-      setCategories(results);
+  
+      const sortedCategories = Object.keys(results)
+      .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
+      .reduce((acc, key) => {
+        acc[key] = results[key];
+        return acc;
+      }, {});
+    
+  
+      setCategories(sortedCategories);
     }
-
+  
     fetchData();
   }, []);
+  
 
   useEffect(() => {
     const fetchMonthlyCounts = async () => {
