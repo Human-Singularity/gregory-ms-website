@@ -1,6 +1,6 @@
 ---
 title: "Observatory"
-subtitle: This page includes searches for new medicine and therapy for Multiple Sclerosis.
+subtitle: Volume of research per topic and medicine for Multiple Sclerosis.
 date: 2021-08-12T15:33:35+01:00
 lastmod: 
 author: Bruno Amaral
@@ -28,16 +28,20 @@ disableToC: false
 disableAutoCollapse: true
 
 ---
-## Volume of research per topic and medicine for Multiple Sclerosis
 
-Click the legend to turn categories of the chart off and on, hover the chart for detailed numbers.
+<div class="col-md-10 offset-md-1">
+
+Click the legend to turn categories of the chart off and on, hover the chart for detailed numbers. Move the bottom slider to navigate the timeline.
 
 This chart is built in real time, please visit the [Downloads Page](https://gregory-ms.com/downloads/) to retrieve the full list of articles that make up the data presented here.
 
+
 {{< observatory >}}
 
-<div class="col-md-12">
 
+<div id="root"></div>
+</div>
+<div class="col-md-10">
 <p class="text-center">Medication and other topics of interest for people with Multiple Sclerosis.</p>
 <div class="list-group">
   <div class="row justify-content-center">
@@ -93,6 +97,7 @@ This chart is built in real time, please visit the [Downloads Page](https://greg
       </div>
     </div>
   </div>
+</div>
 </div>
 
 
