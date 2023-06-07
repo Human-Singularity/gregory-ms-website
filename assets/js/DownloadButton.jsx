@@ -12,7 +12,6 @@ const FetchAndDownload = ({ category_slug }) => {
     const csvData = fetchedData.map(item => ({
       'article_id': item.article_id,
       'title': item.title,
-
       'link': item.link,
       'published_date': item.published_date,
       'source': item.source,
