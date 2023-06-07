@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import fileDownload from 'js-file-download';
 
+
 const FetchAndDownload = ({ category_slug }) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -9,7 +10,22 @@ const FetchAndDownload = ({ category_slug }) => {
 
   const downloadCSV = (fetchedData) => {
     const csvData = fetchedData.map(item => ({
-      //...Your code...
+      'article_id': item.article_id,
+      'title': item.title,
+
+      'link': item.link,
+      'published_date': item.published_date,
+      'source': item.source,
+      'publisher': item.publisher,
+      'container_title': item.container_title,
+      'relevant': item.relevant,
+      'ml_prediction_gnb': item.ml_prediction_gnb,
+      'ml_prediction_lr': item.ml_prediction_lr,
+      'discovery_date': item.discovery_date,
+      'doi': item.doi,
+      'access': item.access,
+      'takeaways': item.takeaways,
+      'categories': item.categories.join(', ')
     }));
 
     const csvHeaders = Object.keys(csvData[0]);
@@ -33,6 +49,7 @@ const FetchAndDownload = ({ category_slug }) => {
     setIsLoading(false);
     setIsReady(true);
     downloadCSV(fetchedData);
+		console.log('fetchedData', fetchedData);
   };
 
   return (
