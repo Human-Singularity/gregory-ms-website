@@ -124,6 +124,7 @@ function InteractiveLineChart() {
           <Legend />
         </ComposedChart>
       </ResponsiveContainer>
+      <div className='row'><div className='col-md-12'><FetchAndDownload category_slug={category} /></div></div>
       <div className='row'>
         <div className='col-md-12'>
           <h3 className='title text-center'>Scientific research on {category}</h3>
