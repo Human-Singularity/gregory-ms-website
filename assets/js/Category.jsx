@@ -5,6 +5,8 @@ import { ComposedChart, Bar, Line, XAxis, YAxis, Tooltip, CartesianGrid, Respons
 import * as d3 from 'd3';
 import { ArticleList } from './ArticleList';
 import { BrowserRouter as Router, Route, Routes, useParams } from 'react-router-dom';
+import FetchAndDownload from './DownloadButton';
+
 
 function InteractiveLineChart() {
   const { category, page } = useParams();
@@ -122,7 +124,12 @@ function InteractiveLineChart() {
           <Legend />
         </ComposedChart>
       </ResponsiveContainer>
-      <h3 className='title text-center'>Scientific research on {category}</h3>
+      <div className='row'><div className='col-md-12'><FetchAndDownload category_slug={category} /></div></div>
+      <div className='row'>
+        <div className='col-md-12'>
+          <h3 className='title text-center'>Scientific research on {category}</h3>
+        </div>
+      </div>
       <ArticleList apiEndpoint={articleEndpoint} page_path={page_path} page={parseInt(page)} />
     </>
   );  
