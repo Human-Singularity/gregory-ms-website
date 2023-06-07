@@ -7,7 +7,6 @@ import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Responsi
 import * as d3 from 'd3';
 
 function InteractiveLineChart({chartData, allCategories, hiddenCategories, handleLegendClick, colorScale}) {
-  const [activeIndex] = useState(chartData.length - 1);
 
   return (
     <ResponsiveContainer width="100%" aspect={2}>
@@ -66,7 +65,12 @@ function App() {
           results[result.category_name] = result.category_slug;
         });
         url = response.data.next;
+      
+        if (url && url.startsWith('http://')) {
+          url = 'https://' + url.substring(7);
+        }
       }
+      
   
       const sortedCategories = Object.keys(results)
       .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
