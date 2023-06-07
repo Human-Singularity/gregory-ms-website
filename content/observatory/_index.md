@@ -28,7 +28,7 @@ disableToC: false
 disableAutoCollapse: true
 
 ---
-
+{{< observatory >}}
 <div class="col-md-12">
 
 <p class="text-center">Medication and other topics of interest for people with Multiple Sclerosis.</p>
