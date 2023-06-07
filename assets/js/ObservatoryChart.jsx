@@ -7,17 +7,11 @@ import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Responsi
 import * as d3 from 'd3';
 
 function InteractiveLineChart({chartData, allCategories, hiddenCategories, handleLegendClick, colorScale}) {
-  const [activeIndex, setActiveIndex] = useState(chartData.length - 1); // Start at the latest data point
-  
-  const handlePan = ({ startIndex, endIndex }) => {
-    if (startIndex !== endIndex) {
-      setActiveIndex(startIndex);
-    }
-  };
+  const [activeIndex] = useState(chartData.length - 1);
 
   return (
     <ResponsiveContainer width="100%" aspect={2}>
-      <LineChart data={chartData} onPan={handlePan}>
+      <LineChart data={chartData}>
         {allCategories.map((category, index) => (
           <Line 
             type="monotone" 
@@ -32,15 +26,16 @@ function InteractiveLineChart({chartData, allCategories, hiddenCategories, handl
         ))}
         <CartesianGrid stroke="#ccc" />
 				<XAxis 
-					dataKey="name" 
-					allowDataOverflow 
-					type="category" 
-					domain={[activeIndex, activeIndex + 20]} // Show a window of 20 data points
-					tickFormatter={(tickItem) => {
-						const date = new Date(tickItem);
-						return date.getFullYear();
-					}}
-				/>
+          dataKey="numericDate"
+          allowDataOverflow 
+          type="number"
+          domain={['dataMin', 'dataMax']}
+          tickFormatter={(tickItem) => {
+            const year = Math.floor(tickItem);
+            const semester = (tickItem - year) === 0 ? 'S1' : 'S2';
+            return `${year}-${semester}`;
+          }}
+        />
         <YAxis />
         <Tooltip />
         <Legend onClick={handleLegendClick} />
@@ -50,22 +45,22 @@ function InteractiveLineChart({chartData, allCategories, hiddenCategories, handl
 }
 
 function App() {
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState({});
   const [chartData, setChartData] = useState([]);
   const [allCategories, setAllCategories] = useState([]);
   const [hiddenCategories, setHiddenCategories] = useState([]);
-  
-  // Create color scale
   const colorScale = scaleOrdinal(schemeCategory10);
-  
+
   useEffect(() => {
     const fetchData = async () => {
       let url = 'https://api.gregory-ms.com/categories/?format=json';
-      let results = [];
+      let results = {};
 
       while (url) {
         const response = await axios.get(url);
-        results = [...results, ...response.data.results];
+        response.data.results.forEach(result => {
+          results[result.category_name] = result.category_slug;
+        });
         url = response.data.next;
       }
 
@@ -76,14 +71,13 @@ function App() {
   }, []);
 
   useEffect(() => {
-		// to do: add pagination of api
     const fetchMonthlyCounts = async () => {
       let categoryMonthlyCounts = {};
 
-      for (let category of categories) {
-        let url = `https://api.gregory-ms.com/categories/${category.category_slug}/monthly-counts/`;
+      for (let [name, slug] of Object.entries(categories)) {
+        let url = `https://api.gregory-ms.com/categories/${slug}/monthly-counts/`;
         const response = await axios.get(url);
-        categoryMonthlyCounts[category.category_slug] = response.data;
+        categoryMonthlyCounts[name] = response.data;
       }    
 
       formatData(categoryMonthlyCounts);
@@ -91,73 +85,69 @@ function App() {
 
     const formatData = (categoryMonthlyCounts) => {
       const format = d3.timeParse("%Y-%m-%dT%H:%M:%SZ");
-
-      const formattedData = Object.entries(categoryMonthlyCounts).reduce((acc, [slug, monthlyCounts]) => {
+      let allData = [];
+      
+      for (let [name, monthlyCounts] of Object.entries(categoryMonthlyCounts)) {
         if (!Array.isArray(monthlyCounts.monthly_article_counts)) {
           console.error('monthly_article_counts is not an array');
-          return acc;
+          continue;
         }
-      
+        
         let cumulativeArticleCount = 0;
-      
+        
         const formattedArticleCounts = monthlyCounts.monthly_article_counts.map(count => {
           cumulativeArticleCount += count.count;
           const date = count.month ? format(count.month) : null;
           return {
-            name: date ? `${date.getFullYear()}-${date.getMonth() + 1}` : null,
-            [slug]: cumulativeArticleCount,
+            name: date ? `${date.getFullYear()}-${date.getMonth() < 6 ? 'S1' : 'S2'}` : null,
+            numericDate: date ? date.getFullYear() + (date.getMonth() < 6 ? 0 : 0.5) : null,
+            [name]: cumulativeArticleCount,
           };
         });
       
-        // merge formattedArticleCounts into acc based on 'name'
-        formattedArticleCounts.forEach(item => {
-          const existingItem = acc.find(i => i.name === item.name);
-          if (existingItem) {
-            existingItem[slug] = item[slug];
-          } else {
-            acc.push(item);
-          }
-        });
+        allData = [...allData, ...formattedArticleCounts];
+      }
       
+      const groupedData = allData.reduce((acc, curr) => {
+        const existing = acc.find(item => item.numericDate === curr.numericDate);
+        if (existing) {
+          Object.assign(existing, curr);
+        } else {
+          acc.push(curr);
+        }
         return acc;
       }, []);
-
-      // filter out entries with null dates
-      const validData = formattedData.filter(item => item.name !== null);
       
-      // sort data by 'name'
-      validData.sort((a, b) => new Date(a.name) - new Date(b.name));
+      groupedData.sort((a, b) => a.numericDate - b.numericDate);
       
-      setChartData(validData);
-      setAllCategories(Object.keys(categoryMonthlyCounts));
+      setChartData(groupedData);
+      setAllCategories(Object.keys(categories));
     };
-    
-    if (categories.length) {
+  
+
+    if (Object.keys(categories).length > 0) {
       fetchMonthlyCounts();
     }
-  }, [categories]);  
+  }, [categories]);
 
   const handleLegendClick = (data) => {
-    const { dataKey } = data;
-    setHiddenCategories(prevState => {
-      if (prevState.includes(dataKey)) {
-        return prevState.filter(category => category !== dataKey);
+    setHiddenCategories(prev => {
+      if (prev.includes(data.dataKey)) {
+        return prev.filter(category => category !== data.dataKey);
       } else {
-        return [...prevState, dataKey];
+        return [...prev, data.dataKey];
       }
     });
   };
 
   return (
-		<div style={{ height: '500px' }}>
-      <InteractiveLineChart 
-        chartData={chartData} 
-        allCategories={allCategories} 
-        hiddenCategories={hiddenCategories} 
-        handleLegendClick={handleLegendClick} 
-        colorScale={colorScale} 
-      />
-    </div>
+    <InteractiveLineChart 
+      chartData={chartData} 
+      allCategories={allCategories} 
+      hiddenCategories={hiddenCategories} 
+      handleLegendClick={handleLegendClick} 
+      colorScale={colorScale} 
+    />
   );
 }
 
