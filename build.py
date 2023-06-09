@@ -176,12 +176,16 @@ def delete_temporary_files():
 	print('\n# delete temporary files')
 	excel_file = Path('content/developers/articles_' + datetime_string + '.xlsx')
 	json_file = Path('content/developers/articles_' + datetime_string + '.json')
+	csv_file = Path('content/developers/articles_' + datetime_string + '.csv')
 	Path.unlink(excel_file)
 	Path.unlink(json_file)
+	Path.unlink(csv_file)
 	excel_file = Path('content/developers/trials_' + datetime_string + '.xlsx')
 	json_file = Path('content/developers/trials_' + datetime_string + '.json')
+	csv_file = Path('content/developers/trials_' + datetime_string + '.csv')
 	Path.unlink(excel_file)
 	Path.unlink(json_file)
+	Path.unlink(csv_file)
 
 def generate_metabase_embeds():
 	print('''
