@@ -14,8 +14,10 @@ const override = css`
   border-color: red;
 `;
 
-
 function InteractiveLineChart({chartData, allCategories, hiddenCategories, handleLegendClick, colorScale}) {
+  const lastIndex = chartData.length - 1;
+  const startIndex = lastIndex - 24 > 0 ? lastIndex - 24 : 0; // prevent negative index
+
   return (
     <ResponsiveContainer width="100%" aspect={2}>
       <LineChart data={chartData}>
@@ -48,7 +50,13 @@ function InteractiveLineChart({chartData, allCategories, hiddenCategories, handl
         </YAxis>
         <Tooltip />
         <Legend onClick={handleLegendClick} />
-        <Brush dataKey="name" height={30} stroke="#8884d8"/>
+        <Brush 
+          dataKey="name" 
+          height={30} 
+          stroke="#8884d8"
+          startIndex={startIndex}
+          endIndex={lastIndex}
+        />
       </LineChart>
     </ResponsiveContainer>
   );
