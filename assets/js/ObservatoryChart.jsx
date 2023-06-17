@@ -5,9 +5,17 @@ import { scaleOrdinal } from 'd3-scale';
 import { schemeCategory10 } from 'd3-scale-chromatic';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer, Brush, Label } from 'recharts';
 import * as d3 from 'd3';
+import { BounceLoader } from 'react-spinners';
+import { css } from "@emotion/react";
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
+
 
 function InteractiveLineChart({chartData, allCategories, hiddenCategories, handleLegendClick, colorScale}) {
-
   return (
     <ResponsiveContainer width="100%" aspect={2}>
       <LineChart data={chartData}>
@@ -40,14 +48,14 @@ function InteractiveLineChart({chartData, allCategories, hiddenCategories, handl
         </YAxis>
         <Tooltip />
         <Legend onClick={handleLegendClick} />
-        <Brush dataKey="name" height={30} stroke="#8884d8"/>  {/* Add this */}
+        <Brush dataKey="name" height={30} stroke="#8884d8"/>
       </LineChart>
     </ResponsiveContainer>
   );
 }
 
-
 function App() {
+  const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState({});
   const [chartData, setChartData] = useState([]);
   const [allCategories, setAllCategories] = useState([]);
@@ -70,8 +78,7 @@ function App() {
           url = 'https://' + url.substring(7);
         }
       }
-      
-  
+
       const sortedCategories = Object.keys(results)
       .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
       .reduce((acc, key) => {
@@ -81,14 +88,15 @@ function App() {
     
   
       setCategories(sortedCategories);
+      setLoading(false);
     }
   
     fetchData();
   }, []);
-  
 
   useEffect(() => {
     const fetchMonthlyCounts = async () => {
+      setLoading(true);
       let categoryMonthlyCounts = {};
 
       for (let [name, slug] of Object.entries(categories)) {
@@ -98,6 +106,7 @@ function App() {
       }    
 
       formatData(categoryMonthlyCounts);
+      setLoading(false);
     }
 
     const formatData = (categoryMonthlyCounts) => {
@@ -158,13 +167,17 @@ function App() {
   };
 
   return (
-    <InteractiveLineChart 
-      chartData={chartData} 
-      allCategories={allCategories} 
-      hiddenCategories={hiddenCategories} 
-      handleLegendClick={handleLegendClick} 
-      colorScale={colorScale} 
-    />
+    loading ? 
+    <div className="loading-container">
+      <BounceLoader color={"#123abc"} loading={loading} css={override} size={60} />
+    </div>    : 
+      <InteractiveLineChart 
+        chartData={chartData} 
+        allCategories={allCategories} 
+        hiddenCategories={hiddenCategories} 
+        handleLegendClick={handleLegendClick} 
+        colorScale={colorScale} 
+      />
   );
 }
 
