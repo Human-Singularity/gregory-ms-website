@@ -10,10 +10,10 @@
 								<a href="{{ .Permalink }}" data-umami-event="click--{{.Params.name}}">
 									{{- with .Resources.GetMatch "avatar" -}}
 										{{- if eq .MediaType.SubType "gif" -}}
-											<img class="img img-raised rounded" src="{{- .RelPermalink -}}" alt="{{ i18n "photo_of" }}{{ .Params.name }}">
+											<img class="img img-raised rounded" src="{{- .RelPermalink -}}" alt="{{ i18n "photo_of" }}{{ .Params.name }}" loading="lazy">
 										{{- else }}
 											{{- $avatar := .Fill "400x400" -}}
-											<img class="img img-raised rounded" src="{{- $avatar.RelPermalink -}}" alt="{{ i18n "photo_of" }}{{ .Params.name }}" style="transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0px)'">											{{- end }}
+											<img class="img img-raised rounded" src="{{- $avatar.RelPermalink -}}" alt="{{ i18n "photo_of" }}{{ .Params.name }}" style="transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0px)'" loading="lazy">											{{- end }}
 									{{- end -}}
 								</a>
 							</div>
