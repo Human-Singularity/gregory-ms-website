@@ -78,7 +78,10 @@ function App() {
       while (url) {
         const response = await axios.get(url);
         response.data.results.forEach(result => {
+        // check if count_of_articles is greater than 0
+        if(result.count_of_articles > 0) {
           results[result.category_name] = result.category_slug;
+        }
         });
         url = response.data.next;
       
