@@ -107,6 +107,7 @@ cta:
 <p>Multiple Sclerosis Trials listed are retrieved from <a target="_blank" href="https://www.cuf.pt/cuf-academic-center/ensaios-clinicos?combine=&unidade=&estado=All&patologia=2346&especialidade=">CUF <i class="text-muted text-primary fas fa-external-link-square-alt"></i></a> &nbsp;
   <a target="_blank" href="https://clinicaltrials.gov/ct2/results/rss.xml?rcv_d=14&lup_d=&sel_rss=new14&cond=Multiple+Sclerosis&count=10000">ClinicalTrials.gov <i class="text-muted text-primary fas fa-external-link-square-alt"></i></a> &nbsp;
   <a target="_blank" href="https://www.novartis.com/clinicaltrials/recruiting-trials?title=multiple%20sclerosis">Novartis <i class="text-muted text-primary fas fa-external-link-square-alt"></i></a> &nbsp;
+	<a href="https://www.clinicaltrialsregister.eu/ctr-search/rest/feed/bydates?query=multiple+AND+sclerosis">Clinicaltrialsregister.eu <i class="text-muted text-primary fas fa-external-link-square-alt"></i></a>
 </p>
 
 </div>
