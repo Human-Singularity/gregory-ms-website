@@ -111,9 +111,6 @@ def save_articles_to_json(articles):
 		json_articles['published_date'] = json_articles['published_date'].dt.strftime('%Y-%m-%d')
 		json_articles['discovery_date'] = json_articles['discovery_date'].dt.strftime('%Y-%m-%d')
 
-		# Create 'slug' column from 'title' column
-		json_articles['slug'] = articles['title'].apply(lambda x: x.lower().replace(" ", "-"))
-
 		# Save the processed DataFrame to a JSON file
 		json_articles.to_json('data/articles.json', orient='records')
 	
