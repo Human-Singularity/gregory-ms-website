@@ -134,7 +134,7 @@ def save_articles_to_json(articles):
 		# Save the processed DataFrame to a JSON file
 		json_articles.to_json('content/developers/articles_' +  datetime_string + '.json', orient='records')
 		json_articles.to_csv('content/developers/articles_' +  datetime_string + '.csv')
-		json_articles.to_excel('content/developers/articles_' +  datetime_string + '.xlsx', orient='records')
+		json_articles.to_excel('content/developers/articles_' +  datetime_string + '.xlsx')
 	
 import os
 
