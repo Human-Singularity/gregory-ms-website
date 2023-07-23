@@ -174,10 +174,12 @@ def create_zip_files():
 	zipArticles = ZipFile('content/developers/articles.zip', 'w')
 	print('- content/developers/articles_' + datetime_string + '.xlsx')
 	print('- content/developers/articles_' + datetime_string + '.json')
+	print('- content/developers/articles_' + datetime_string + '.csv')
 	print('- content/developers/README.md\n')
 
 	zipArticles.write('content/developers/articles_' + datetime_string + '.xlsx')
 	zipArticles.write('content/developers/articles_' + datetime_string + '.json')
+	zipArticles.write('content/developers/articles_' + datetime_string + '.csv')
 	zipArticles.write('content/developers/README.md')
 	zipArticles.close()
 
@@ -186,10 +188,12 @@ def create_zip_files():
 	zipTrials = ZipFile('content/developers/trials.zip', 'w')
 	print('- content/developers/trials_' + datetime_string + '.xlsx')
 	print('- content/developers/trials_' + datetime_string + '.json')
+	print('- content/developers/trials_' + datetime_string + '.csv')
 	print('- content/developers/README.md\n')
 
 	zipTrials.write('content/developers/trials_' + datetime_string + '.xlsx')
 	zipTrials.write('content/developers/trials_' + datetime_string + '.json')
+	zipTrials.write('content/developers/trials_' + datetime_string + '.csv')
 	zipTrials.write('content/developers/README.md')
 	zipTrials.close()
 
