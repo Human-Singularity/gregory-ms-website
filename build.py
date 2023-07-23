@@ -97,7 +97,7 @@ def save_excel_and_json(articles, trials):
 	''')
 
 	# Process and save articles
-	process_and_save_dataframe(articles, 'articles')
+	# process_and_save_dataframe(articles, 'articles')
 
 	# Process and save trials
 	process_and_save_dataframe(trials, 'trials')
@@ -132,7 +132,7 @@ def save_articles_to_json(articles):
 		json_articles['discovery_date'] = json_articles['discovery_date'].dt.strftime('%Y-%m-%d')
 
 		# Save the processed DataFrame to a JSON file
-		json_articles.to_json('data/articles.json', orient='records')
+		json_articles.to_json('content/developers/articles_' +  datetime_string + '.json', orient='records')
 	
 import os
 
