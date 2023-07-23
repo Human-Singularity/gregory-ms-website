@@ -57,7 +57,27 @@ def get_data():
 	postgres_connection_url = 'postgresql://' + postgres_user + ':' + postgres_password + '@' + db_host + ':5432/' + postgres_db
 	engine = sqlalchemy.create_engine(postgres_connection_url)
 
-	query_articles = 'SELECT "public"."articles"."article_id" AS "article_id", "public"."articles"."title" AS "title", "public"."articles"."summary" AS "summary", "public"."articles"."link" AS "link", "public"."articles"."published_date" AS "published_date", "public"."articles"."source" AS "source", "public"."articles"."relevant" AS "relevant", "public"."articles"."ml_prediction_gnb" AS "ml_prediction_gnb", "public"."articles"."ml_prediction_lr" AS "ml_prediction_lr", "public"."articles"."discovery_date" AS "discovery_date", "public"."articles"."noun_phrases" AS "noun_phrases", "public"."articles"."doi" AS "doi", "public"."articles"."kind" AS "kind", "public"."articles"."takeaways" as "takeaways", "Sources"."source_id" AS "Sources__source_id", "Sources"."name" AS "Sources__name", "Sources"."link" AS "Sources__link", "Sources"."language" AS "Sources__language", "Sources"."source_for" AS "Sources__source_for", "Sources"."subject_id" AS "Sources__subject_id", "Articles Categories"."id" AS "Articles Categories__id", "Articles Categories"."articles_id" AS "Articles Categories__articles_id", "Articles Categories"."categories_id" AS "Articles Categories__categories_id", "Categories"."category_id" AS "Categories__category_id", "Categories"."category_name" AS "Categories__category_name" FROM "public"."articles" LEFT JOIN "public"."sources" "Sources" ON "public"."articles"."source" = "Sources"."source_id" LEFT JOIN "public"."articles_categories" "Articles Categories" ON "public"."articles"."article_id" = "Articles Categories"."articles_id" LEFT JOIN "public"."categories" "Categories" ON "Articles Categories"."categories_id" = "Categories"."category_id" ORDER BY	"public"."articles"."article_id" ASC;'
+	query_articles = '''
+	SELECT articles.article_id, articles.title, articles.summary, articles.link,
+				articles.published_date, articles.discovery_date, articles.source,
+				articles.publisher, articles.container_title, articles.relevant, 
+				articles.ml_prediction_gnb, articles.ml_prediction_lr, articles.doi, 
+				articles.access, articles.takeaways,
+				sources.source_id AS Sources__source_id, sources.name AS Sources__name,
+				sources.link AS Sources__link, sources.language AS Sources__language, 
+				sources.source_for AS Sources__source_for, sources.subject_id AS Sources__subject_id,
+				STRING_AGG(DISTINCT authors.given_name || ' ' || authors.family_name, ', ') AS authors,
+				STRING_AGG(DISTINCT categories.category_name, ', ') AS categories
+	FROM articles
+	LEFT JOIN sources ON articles.source = sources.source_id
+	LEFT JOIN articles_authors ON articles.article_id = articles_authors.articles_id
+	LEFT JOIN authors ON articles_authors.authors_id = authors.author_id
+	LEFT JOIN articles_categories ON articles.article_id = articles_categories.articles_id
+	LEFT JOIN categories ON articles_categories.categories_id = categories.category_id
+	GROUP BY articles.article_id, sources.source_id
+	ORDER BY articles.article_id ASC;
+	'''
+	
 	query_trials = 'SELECT "public"."trials"."trial_id" AS "trial_id", "public"."trials"."discovery_date" AS "discovery_date", "public"."trials"."title" AS "title", "public"."trials"."summary" AS "summary", "public"."trials"."link" AS "link", "public"."trials"."published_date" AS "published_date", "public"."trials"."source" AS "source", "public"."trials"."relevant" AS "relevant", "Sources"."source_id" AS "Sources__source_id", "Sources"."name" AS "Sources__name", "Sources"."link" AS "Sources__link" FROM "public"."trials" LEFT JOIN "public"."sources" "Sources" ON "public"."trials"."source" = "Sources"."source_id" ORDER BY trial_id DESC;'
 	query_categories = 'SELECT "public"."categories"."category_id" AS "category_id", "public"."categories"."category_name" AS "category_name", "public"."categories"."category_description" AS "category_description", "public"."categories"."category_terms" AS "category_terms" FROM "public"."categories";'
 
