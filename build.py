@@ -15,6 +15,7 @@ import pandas as pd
 import sqlalchemy
 import subprocess
 import time
+from bs4 import BeautifulSoup
 
 
 load_dotenv()
@@ -35,6 +36,10 @@ def clean_text(text):
 	# avoid null values
 	if pd.isnull(text):
 		return ''
+	# remove html
+	soup = BeautifulSoup(text, "html.parser")
+	text = soup.get_text()
+
 	# remove \n \r 
 	text = text.replace('\n', ' ')
 	text = text.replace('\r', ' ')
