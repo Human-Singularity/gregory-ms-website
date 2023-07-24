@@ -15,6 +15,7 @@ import pandas as pd
 import sqlalchemy
 import subprocess
 import time
+from bs4 import BeautifulSoup
 
 
 load_dotenv()
@@ -29,6 +30,27 @@ datetime_string = now.strftime("%d-%m-%Y_%Hh%Mm%Ss")
 METABASE_SITE_URL = os.getenv('METABASE_SITE_URL')
 METABASE_SECRET_KEY = os.getenv('METABASE_SECRET_KEY')
 
+import re
+
+def clean_text(text):
+	# avoid null values
+	if pd.isnull(text):
+		return ''
+	# remove html
+	soup = BeautifulSoup(text, "html.parser")
+	text = soup.get_text()
+
+	# remove \n \r 
+	text = text.replace('\n', ' ')
+	text = text.replace('\r', ' ')
+
+	# Remove non-alphanumeric characters
+	# text = re.sub(r'\W', ' ', text)
+	
+	# Remove extra whitespace
+	text = re.sub(r'\s+', ' ', text)
+
+	return text
 
 def pull_from_github():
 	print('''
@@ -96,9 +118,6 @@ def save_excel_and_json(articles, trials):
 ####
 	''')
 
-	# Process and save articles
-	# process_and_save_dataframe(articles, 'articles')
-
 	# Process and save trials
 	process_and_save_dataframe(trials, 'trials')
 
@@ -131,10 +150,13 @@ def save_articles_to_json(articles):
 		json_articles['published_date'] = json_articles['published_date'].dt.strftime('%Y-%m-%d')
 		json_articles['discovery_date'] = json_articles['discovery_date'].dt.strftime('%Y-%m-%d')
 
+		# Clean the summary before saving files
+		json_articles['summary'] = json_articles['summary'].apply(clean_text)
+
 		# Save the processed DataFrame to a JSON file
 		json_articles.to_json('content/developers/articles_' +  datetime_string + '.json', orient='records')
-		json_articles.to_csv('content/developers/articles_' +  datetime_string + '.csv')
 		json_articles.to_excel('content/developers/articles_' +  datetime_string + '.xlsx')
+		json_articles.to_csv('content/developers/articles_' +  datetime_string + '.csv')
 	
 import os
 
