@@ -150,11 +150,12 @@ def save_articles_to_json(articles):
 		json_articles['published_date'] = json_articles['published_date'].dt.strftime('%Y-%m-%d')
 		json_articles['discovery_date'] = json_articles['discovery_date'].dt.strftime('%Y-%m-%d')
 
+		# Clean the summary before saving files
+		json_articles['summary'] = json_articles['summary'].apply(clean_text)
+
 		# Save the processed DataFrame to a JSON file
 		json_articles.to_json('content/developers/articles_' +  datetime_string + '.json', orient='records')
 		json_articles.to_excel('content/developers/articles_' +  datetime_string + '.xlsx')
-		# Clean the summary before saving as csv
-		json_articles['summary'] = json_articles['summary'].apply(clean_text)
 		json_articles.to_csv('content/developers/articles_' +  datetime_string + '.csv')
 	
 import os
