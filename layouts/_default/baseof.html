@@ -20,7 +20,7 @@
 	<meta name="robots" content="noindex, nofollow">
 	{{- end -}}
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<!-- Fonts and icons -->
+	<!-- Fonts -->
 	{{- $montserrat := resources.Get "css/Montserrat.css" -}}
 	
 	<!-- CSS Files -->
@@ -28,19 +28,12 @@
 	<link href="{{- $print.Permalink -}}" media="print" rel="stylesheet" />
 	<!-- Preload fonts -->
 	<link rel="preload" href="/fonts/nucleo-outline.woff2" as="font" crossorigin="anonymous">
-	<link rel="preload" href="/webfonts/fa-regular-400.woff2" as="font" crossorigin="anonymous">
-	<link rel="preload" href="/webfonts/fa-brands-400.woff2" as="font" crossorigin="anonymous">
-
-	{{ $fontawesome := resources.Get "css/fontawesome/fontawesome.css"  }}
-	{{ $brands := resources.Get "css/fontawesome/brands.css"  }}
-	{{ $regular := resources.Get "css/fontawesome/regular.css"  }}
-	{{ $solid := resources.Get "css/fontawesome/solid.css"  }}
 
 	{{- $bootstrap := resources.Get "css/bootstrap.min.css" -}}
 	{{- $nowUi := resources.Get "scss/now-ui-kit.scss" | resources.ToCSS (dict "enableSourceMap" false "outputStyle" "compressed") -}}
 
-	{{ $styles := slice $bootstrap $nowUi $montserrat $fontawesome $brands $regular $solid | resources.Concat "css/style.css" | postCSS (dict "config" "./assets/css/postcss.config.js") | minify | fingerprint  -}}
-
+	{{ $styles := slice $bootstrap $nowUi $montserrat | resources.Concat "css/style.css" | postCSS (dict "config" "./assets/css/postcss.config.js") | minify | fingerprint  -}}
+	<script src="https://kit.fontawesome.com/16e8434146.js" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="{{$styles.Permalink}}">
 
 	{{- if or (.HasShortcode "youtube") (.HasShortcode "youtube") (.HasShortcode "youtube") -}}
