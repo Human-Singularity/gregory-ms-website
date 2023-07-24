@@ -32,6 +32,9 @@ METABASE_SECRET_KEY = os.getenv('METABASE_SECRET_KEY')
 import re
 
 def clean_text(text):
+	# avoid null values
+	if pd.isnull(text):
+		return ''
 	# Remove non-alphanumeric characters
 	text = re.sub(r'\W', ' ', text)
 	
