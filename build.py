@@ -35,8 +35,12 @@ def clean_text(text):
 	# avoid null values
 	if pd.isnull(text):
 		return ''
+	# remove \n \r 
+	text = text.replace('\n', ' ')
+	text = text.replace('\r', ' ')
+
 	# Remove non-alphanumeric characters
-	text = re.sub(r'\W', ' ', text)
+	# text = re.sub(r'\W', ' ', text)
 	
 	# Remove extra whitespace
 	text = re.sub(r'\s+', ' ', text)
