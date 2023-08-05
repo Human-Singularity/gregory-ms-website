@@ -1,6 +1,8 @@
 #!/usr/bin/python3
+from bs4 import BeautifulSoup
 from datetime import datetime
 from dotenv import load_dotenv
+from lxml import etree
 from pathlib import Path
 from shutil import which
 from slugify import slugify
@@ -15,8 +17,8 @@ import pandas as pd
 import sqlalchemy
 import subprocess
 import time
-from bs4 import BeautifulSoup
-
+import re
+import os
 
 load_dotenv()
 
