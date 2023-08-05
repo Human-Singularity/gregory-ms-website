@@ -218,6 +218,39 @@ def create_zip_files():
 	zipTrials.write('content/developers/README.md')
 	zipTrials.close()
 
+def generate_sitemap(articles, trials):
+	print('''
+####
+## CREATE content/articles_trials.xml
+####
+''')
+	urlset = etree.Element("urlset", xmlns="http://www.sitemaps.org/schemas/sitemap/0.9")
+
+	# Process articles
+	for _, row in articles.iterrows():
+		url = etree.SubElement(urlset, "url")
+		etree.SubElement(url, "loc").text = f"https://gregory-ms.com/articles/{row['article_id']}/"
+		etree.SubElement(url, "changefreq").text = "monthly"  # adjust as needed
+		# assuming that the 'discovery_date' column is a datetime object
+		etree.SubElement(url, "lastmod").text = row['discovery_date'].strftime("%Y-%m-%d")
+
+	# Process trials
+	for _, row in trials.iterrows():
+		url = etree.SubElement(urlset, "url")
+		etree.SubElement(url, "loc").text = f"https://gregory-ms.com/trials/{row['trial_id']}/"
+		etree.SubElement(url, "changefreq").text = "monthly"  # adjust as needed
+		# assuming that the 'discovery_date' column is a datetime object
+		etree.SubElement(url, "lastmod").text = row['discovery_date'].strftime("%Y-%m-%d")
+
+	# Write the XML to a file
+	with open("content/articles_trials.xml", "wb") as file:
+		file.write(etree.tostring(urlset, pretty_print=True, xml_declaration=True, encoding="UTF-8"))
+
+# To generate the sitemap
+articles, categories, trials = get_data()
+generate_sitemap(articles, trials)
+
+
 def delete_temporary_files():
 	print('\n# delete temporary files')
 	excel_file = Path('content/developers/articles_' + datetime_string + '.xlsx')
@@ -283,6 +316,7 @@ if __name__ == '__main__':
 	save_articles_to_json(articles)
 	create_categories(categories)
 	create_zip_files()
+	generate_sitemap(articles, trials)
 	delete_temporary_files()
 	generate_metabase_embeds()
 	build_website()
