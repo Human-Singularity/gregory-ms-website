@@ -6,6 +6,8 @@ export function generateArticleURL(article) {
 	return `/articles/${article_id}/${article_slug}`;
 }
 
+const canonicalURL = `https://gregory-ms.com/articles/${article_id}/`
+
 export function formatDate(date) {
 	if (isNaN(Date.parse(date))) {
 		throw new Error('Invalid date value');
@@ -21,6 +23,19 @@ export function formatDate(date) {
 }
 
 export function updateTitleAndMeta(article) {
+	let canonicalLinkElement = document.querySelector('link[rel="canonical"]');
+	if (canonicalLinkElement) {
+		// If a canonical link element already exists, update the href
+		canonicalLinkElement.setAttribute('href', canonicalURL);
+	} else {
+		// If no canonical link element exists, create a new one
+		canonicalLinkElement = document.createElement('link');
+		canonicalLinkElement.setAttribute('rel', 'canonical');
+		canonicalLinkElement.setAttribute('href', canonicalURL);
+
+		// Append the new canonical link element to the head
+		document.head.appendChild(canonicalLinkElement);
+	}
 	// Update the <title> tag
 	document.title = article.title;
 
