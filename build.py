@@ -32,8 +32,6 @@ datetime_string = now.strftime("%d-%m-%Y_%Hh%Mm%Ss")
 METABASE_SITE_URL = os.getenv('METABASE_SITE_URL')
 METABASE_SECRET_KEY = os.getenv('METABASE_SECRET_KEY')
 
-import re
-
 def clean_text(text):
 	# avoid null values
 	if pd.isnull(text):
@@ -160,7 +158,6 @@ def save_articles_to_json(articles):
 		json_articles.to_excel('content/developers/articles_' +  datetime_string + '.xlsx')
 		json_articles.to_csv('content/developers/articles_' +  datetime_string + '.csv')
 	
-import os
 
 def create_categories(categories):
 	print('''
