@@ -6,8 +6,6 @@ export function generateArticleURL(article) {
 	return `/articles/${article_id}/${article_slug}`;
 }
 
-const canonicalURL = `https://gregory-ms.com/articles/${article_id}/`
-
 export function formatDate(date) {
 	if (isNaN(Date.parse(date))) {
 		throw new Error('Invalid date value');
@@ -23,6 +21,7 @@ export function formatDate(date) {
 }
 
 export function updateTitleAndMeta(article) {
+	const canonicalURL = `https://gregory-ms.com/articles/${article.article_id}/`
 	let canonicalLinkElement = document.querySelector('link[rel="canonical"]');
 	if (canonicalLinkElement) {
 		// If a canonical link element already exists, update the href
