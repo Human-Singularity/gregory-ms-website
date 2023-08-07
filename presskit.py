@@ -5,8 +5,6 @@ from google.oauth2.service_account import Credentials
 import io
 import zipfile
 
-directory_name = 'gregory-ai-press-kit'
-
 # Credentials and folder ID
 credentials_path = 'gregoryai-41cd67dab7a5.json'
 folder_id = '1KuEj8mERv5FcLfmJ1hP840GMrREoJpRc'
@@ -17,9 +15,7 @@ credentials = Credentials.from_service_account_file(credentials_path, scopes=sco
 service = build('drive', 'v3', credentials=credentials)
 
 # Dictionary to hold folder ID to path mapping
-
-
-def setup_dir():
+def setup_dir(directory_name):
 	print('''
 ####
 ## Check for press kit directory
@@ -92,5 +88,5 @@ def process_folder(folder_id, path):
 # Usage
 ###
 
-# process_folder(folder_id, folder_structure[folder_id], )
+# process_folder(folder_id, directory_name )
 # create_zip_from_folder(directory_name, 'content/press-kit/press-kit.zip')
