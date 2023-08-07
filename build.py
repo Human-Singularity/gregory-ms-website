@@ -316,7 +316,7 @@ def build_website():
 
 if __name__ == '__main__':
 	pull_from_github()
-	presskit.setup_dir
+	presskit.setup_dir(directory_name)
 	presskit.process_folder(folder_id, directory_name)
 	presskit.create_zip_from_folder(directory_name, 'content/gregoryai_press.zip')
 	articles, categories, trials = get_data()
