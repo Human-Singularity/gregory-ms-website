@@ -14,12 +14,11 @@ import jwt
 import numpy as np
 import os
 import pandas as pd
+import presskit
 import re
 import sqlalchemy
 import subprocess
 import time
-
-import presskit
 
 load_dotenv()
 
@@ -317,6 +316,11 @@ def build_website():
 if __name__ == '__main__':
 	pull_from_github()
 	presskit.setup_dir(directory_name)
+	print('''
+####
+## Download press kit files
+####
+''')
 	presskit.process_folder(folder_id, directory_name)
 	presskit.create_zip_from_folder(directory_name, 'content/gregoryai_press.zip')
 	articles, categories, trials = get_data()

@@ -42,16 +42,10 @@ def create_zip_from_folder(folder_path, zip_name):
 				zipf.write(os.path.join(root, file), rel_path)
 
 # Recursive function to process folders
-def process_folder(folder_id, path):
-	print('''
-####
-## Download press kit files
-####
-''')
-
+def process_folder(folder_id, directory_name):
 	folder_structure = {folder_id: directory_name}
-	if not os.path.exists(path):
-		os.makedirs(path)
+	if not os.path.exists(directory_name):
+		os.makedirs(directory_name)
 
 	# Query for items in folder
 	query = f"'{folder_id}' in parents"
@@ -62,10 +56,10 @@ def process_folder(folder_id, path):
 		item_id = item['id']
 		item_name = item['name']
 		item_type = item['mimeType']
-		file_path = os.path.join(path, item_name)
+		file_path = os.path.join(directory_name, item_name)
 
 		if item_type == 'application/vnd.google-apps.folder':
-			folder_structure[item_id] = os.path.join(path, item_name)
+			folder_structure[item_id] = os.path.join(directory_name, item_name)
 			process_folder(item_id, folder_structure[item_id])
 		else:
 			if item_type.startswith('application/vnd.google-apps.'):
