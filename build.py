@@ -14,11 +14,11 @@ import jwt
 import numpy as np
 import os
 import pandas as pd
+import presskit
+import re
 import sqlalchemy
 import subprocess
 import time
-import re
-import os
 
 load_dotenv()
 
@@ -31,6 +31,10 @@ datetime_string = now.strftime("%d-%m-%Y_%Hh%Mm%Ss")
 # Variables to sign metabase embeds
 METABASE_SITE_URL = os.getenv('METABASE_SITE_URL')
 METABASE_SECRET_KEY = os.getenv('METABASE_SECRET_KEY')
+
+# press kit variables
+directory_name = 'gregory-ai-press-kit'
+folder_id = '1KuEj8mERv5FcLfmJ1hP840GMrREoJpRc'
 
 def clean_text(text):
 	# avoid null values
@@ -311,6 +315,14 @@ def build_website():
 
 if __name__ == '__main__':
 	pull_from_github()
+	presskit.setup_dir(directory_name)
+	print('''
+####
+## Download press kit files
+####
+''')
+	presskit.process_folder(folder_id, directory_name)
+	presskit.create_zip_from_folder(directory_name, 'content/gregoryai_press.zip')
 	articles, categories, trials = get_data()
 	save_excel_and_json(articles, trials)
 	save_articles_to_json(articles)
