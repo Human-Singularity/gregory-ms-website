@@ -45,7 +45,7 @@ menu:
     <div class="col-md-12 ml-auto mr-auto">
                 <div class="card card-contact card-raised">
                   <form role="form" id="contact-form1" method="post" action="https://api.gregory-ms.com/subscriptions/new/">
-                    <div class="card-header text-center">
+                    <div class="card-header text-center px-3">
                       <h4 class="card-title font-weight-bold">Weekly digest of relevant papers on Multiple Sclerosis</h4>
                       <p class="p-3">Every tuesday, and email with the latest research filtered by Machine Learning and human review.</p>
                     </div>
