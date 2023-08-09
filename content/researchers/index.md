@@ -30,7 +30,7 @@ options:
   header: mini
   navbar: navbar navbar-expand-lg bg-white fixed-top font-weight-bold
 scripts:
-  - '<script src="/js/mermaid.min.js"></script>'
+  - 
 menu:
   main:
     url: researchers
