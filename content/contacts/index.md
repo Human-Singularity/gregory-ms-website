@@ -21,7 +21,6 @@ scripts:
 menu:
   column_1:
     Name: Contacts
-    Weight: 2
 options:
   header: mini
   unlisted: false

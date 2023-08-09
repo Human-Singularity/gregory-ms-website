@@ -23,7 +23,6 @@ layout: only-header
 menu:
   column_1:
     Name: Downloads
-    Weight: 9
 options:
   unlisted: false
   showHeader: true

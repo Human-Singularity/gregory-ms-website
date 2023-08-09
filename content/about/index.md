@@ -21,7 +21,6 @@ scripts:
 menu:
   column_1:
     Name: About
-    Weight: 1
 options:
   header: mini
   unlisted: false
