@@ -11,51 +11,51 @@ export function Pagination({ page_path, ...props }) {
 	return (
 		<ul className="pagination pagination-primary m-4 d-flex justify-content-center">
 			<li className="page-item">
-				<a onClick={() => setPage(1)} className="page-link" aria-label="First">
+				<button onClick={() => setPage(1)} className="page-link" aria-label="Go to the first page">
 					<span aria-hidden="true"><i className="fa fa-angle-left" aria-hidden="true"></i><i className="fa fa-angle-double-left" aria-hidden="true"></i></span>
-				</a>
+				</button>
 			</li>
 			<li className="page-item">
-				<a onClick={() => setPage(props.page + 1)} className="page-link" aria-label="Previous">
+				<button onClick={() => setPage(props.page + 1)} className="page-link" aria-label="Go to previous page">
 					<span aria-hidden="true"><i className="fa fa-angle-double-left" aria-hidden="true"></i></span>
-				</a>
+				</button>
 			</li>
 			{props.page > 2 &&
 				<React.Fragment>
 					<li className="page-item">
-						<a className="page-link" onClick={() => setPage(props.page - 2)}>{props.page - 2}</a>
+						<button className="page-link" onClick={() => setPage(props.page - 2)}>{props.page - 2}</button>
 					</li>
 				</React.Fragment>}
 
 			{props.page > 1 &&
 				<React.Fragment>
 					<li className="page-item">
-						<a className="page-link" onClick={() => setPage(props.page - 1)}>{props.page - 1}</a>
+						<button className="page-link" onClick={() => setPage(props.page - 1)}>{props.page - 1}</button>
 					</li>
 				</React.Fragment>}
-			<li className="page-item active">
-				<a className="page-link" href="/relevant/page/{props.page}/">{props.page}</a>
+				<li className="page-item active">
+				<button className="page-link" href={`${page_path}/page/${props.page}/`}>{props.page}</button>
 			</li>
 			{props.page < props.last_page &&
 				<React.Fragment>
 					<li className="page-item">
-						<a className="page-link" onClick={() => setPage(props.page + 1)}>{props.page + 1}</a>
+						<button className="page-link" onClick={() => setPage(props.page + 1)}>{props.page + 1}</button>
 					</li>
 					<li className="page-item disabled">
 						<span aria-hidden="true">&nbsp;…&nbsp;</span>
 					</li>
 					<li className="page-item">
-						<a className="page-link" onClick={() => setPage(props.last_page)}>{props.last_page}</a>
+						<button className="page-link" onClick={() => setPage(props.last_page)}>{props.last_page}</button>
 					</li>
 					<li className="page-item">
-						<a onClick={() => setPage(props.page + 1)} className="page-link" aria-label="Next">
+						<button onClick={() => setPage(props.page + 1)} className="page-link" aria-label="Go to next page">
 							<span aria-hidden="true"><i className="fa fa-angle-double-right" aria-hidden="true"></i></span>
-						</a>
+						</button>
 					</li>
 					<li className="page-item">
-						<a onClick={() => setPage(props.last_page)} className="page-link" aria-label="Last">
+						<button onClick={() => setPage(props.last_page)} className="page-link" aria-label="Go to last page">
 							<span aria-hidden="true"><i className="fa fa-angle-double-right" aria-hidden="true"></i><i className="fa fa-angle-right" aria-hidden="true"></i></span>
-						</a>
+						</button>
 					</li>
 				</React.Fragment>}
 		</ul>
