@@ -1,5 +1,6 @@
 ---
-title: News and updates
+title: Our news on Multiple Sclerosis research
+description: Our efforts to push Multiple Sclerosis research forward
 menu:
   main:
     name: News
@@ -9,4 +10,5 @@ resources:
     name: header
 options:
   header: mini
+  navbar: navbar navbar-expand-lg bg-white fixed-top font-weight-bold
 ---
