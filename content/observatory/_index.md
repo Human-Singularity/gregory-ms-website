@@ -1,6 +1,6 @@
 ---
-title: "Observatory"
-subtitle: Volume of research per topic and medicine for Multiple Sclerosis.
+title: "Multiple Sclerosis Observatory"
+subtitle: Current volume of research for Multiple Sclerosis medication
 date: 2021-08-12T15:33:35+01:00
 lastmod: 
 author: Bruno Amaral
