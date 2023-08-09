@@ -44,24 +44,20 @@
 
 				<h5 class="description text-center" id="content">{{ .Content }}</h5>
 				<section id="category-list" class="card-group">
-						<div class="row">
-							{{ range (.Paginator 9).Pages }}
-								{{ .Render "summary" }}
+					{{ $authorName := .Params.name }}
+					{{ $postsByAuthor := where .Site.RegularPages "Params.author" $authorName }}
+					{{ $postsByAuthor := where $postsByAuthor "Type" "post" }}
+					{{ $paginator := .Paginate $postsByAuthor 9 }}
+					
+					<div class="row">
+							{{ range $paginator.Pages }}
+									{{ .Render "summary" }}
 							{{ end }}
 							{{ partial "pagination.html" . }}
-						</div>
+					</div>
 				</section>
 				</div>
-			<div class="separator separator-primary"></div>
-{{ $posts := slice }}
 
-			{{ range where .Site.RegularPages "Type" "post" }}
-				{{ if in .Params.tags  $name }}
-					{{ $posts = $posts | append . }}
-				{{ end }}
-			{{ end }}
-
-			{{ $paginator := .Paginate (where .Pages "Type" "posts") 5 }}
 
 			</div>
 		</div>
