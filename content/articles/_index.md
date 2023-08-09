@@ -1,6 +1,6 @@
 ---
-title: "Full Listing"
-subtitle: This is the complete list of articles in the database
+title: "MS Research Papers"
+subtitle: Multiple Sclerosis Research published since February 2021
 
 menu:
   main:
@@ -12,16 +12,17 @@ options:
   navbar: navbar navbar-expand-lg bg-white fixed-top font-weight-bold
 
 resources:
-  - src: arif-riyanto-UD9nADGj2mc-unsplash.jpeg
+  - src: ryunosuke-kikuno-FKqxZ58bVjU-unsplash.jpg
     name: "header"
 cta:
-  - label: <i class="fas fa-file-archive"></i> Download zip file
+  - label: <i class="fas fa-file-archive"></i> Download all multiple sclerosis research
     url: /developers/articles.zip
     classes: btn-sm btn-success
 ---
 
+Papers listed come from the following sites, using keyword searches for `Multiple Sclerosis, autoimmune encephalomyelitis, encephalomyelitis, immune tolerance, myelin`.
+
 <div id="sourceinfo">
-<p>Articles listed come from the following sites, using keyword searches for `Multiple Sclerosis, autoimmune encephalomyelitis, encephalomyelitis, immune tolerance, myelin`.</p>
 <ul class="list-inline">
   <li class="list-inline-item"><a target="_blank" class="btn btn-primary btn-outline-primary btn-round" href='https://www.apta.org/search?Q=&quot;Multiple+Sclerosis&quot;+OR+&quot;autoimmune+encephalomyelitis&quot;+OR+encephalomyelitis+OR+&quot;immune+tolerance&quot;+OR+myelin&amp;searcharticletypes=8834&amp;searchconditionandsymptoms=&amp;searchloc=APTA'>APTA <i class="text-muted text-primary fas fa-external-link-square-alt"></i></a> </li>
   <li class="list-inline-item"><a target="_blank" class="btn btn-primary btn-outline-primary btn-round" href='https://www.biomedcentral.com/search?searchType=publisherSearch&amp;sort=PubDate&amp;page=1&amp;query=Multiple+Sclerosis'>BioMedCentral <i class="text-muted text-primary fas fa-external-link-square-alt"></i></a> </li>
@@ -37,7 +38,8 @@ cta:
 </div>
 
 
+
 <p>
-  <a class="btn btn-info btn-round btn-lg font-weight-bold mx-auto" data-umami-event="click--relevant-articles-on-articles-page" href="/relevant/">Filter by relevant articles <i class="text-muted text-info fas fa-arrow-right" style={{ transform: ".4s", boxShadow: ".4s" }}></i></a>
+  <a class="btn btn-info btn-round btn-lg text-white font-weight-bold mx-auto" data-umami-event="click--relevant-articles-on-articles-page" href="/relevant/">All papers with positive patient outcomes for MS <i class="text-muted text-white fas fa-arrow-right" style="transform: 0.4s; boxShadow: 0.4s"></i></a>
 </p>
 {{< articles >}}
