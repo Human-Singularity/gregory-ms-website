@@ -1,6 +1,8 @@
 ---
 title: Team
-
+menu:
+  column_1:
+    Name: Team
 resources:
   - src: gregoryai_background.png
     name: "header"

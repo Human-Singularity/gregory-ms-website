@@ -31,8 +31,7 @@ scripts:
   -
 menu:
   column_3:
-    Name: How we process donations
-    Weight: 
+    Name: Donations
 
 ---
 <div class="col-md-6 mx-auto">
