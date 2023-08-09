@@ -95,7 +95,7 @@ menu:
                       <div class="row">
                         <div class="col-md-12 ml-auto mr-auto text-center">
                           <input value="2" name="list" id="list" type="hidden">
-                          <button type="submit" class="btn btn-primary btn-round mr-auto ml-auto">Subscribe</button>
+                          <button type="submit" class="btn btn-primary btn-round mr-auto ml-auto font-weight-bold">Subscribe</button>
                         </div>
                       </div>
                     </div>
