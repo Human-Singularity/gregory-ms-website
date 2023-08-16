@@ -10,14 +10,14 @@ options:
   navbar: navbar navbar-expand-lg bg-white fixed-top font-weight-bold
 
 resources:
-  - src: images/lucas-vasques-9vnACvX2748-unsplash.jpeg
+  - src: markus-winkler-IrRbSND5EUc-unsplash.jpg
     name: header
 
 layout: page
 description: Real time data on Multiple Sclerosis research by country
 categories: []
 tags: []
-draft: false
+slug: research-per-country
 enableDisqus : false
 enableMathJax: false
 disableToC: false
