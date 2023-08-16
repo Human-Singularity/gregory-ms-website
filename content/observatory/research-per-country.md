@@ -32,7 +32,9 @@ disableAutoCollapse: true
 </svg></a>
 </p>
 
-{{< metabase-embed dashboard="27" width="900" height="2000" >}}
+<div class="embed-responsive embed-responsive-4by3">
+  {{< metabase-embed dashboard="27" width="" height="" >}}
+</div>
 
 </div>
 
