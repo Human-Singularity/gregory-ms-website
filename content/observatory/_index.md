@@ -21,7 +21,7 @@ menu:
   main:
     Name: Observatory
     Weight: 7
-draft: false
+
 enableDisqus : true
 enableMathJax: false
 disableToC: false
