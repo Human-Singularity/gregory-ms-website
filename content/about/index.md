@@ -69,9 +69,7 @@ In the homepage we show articles that seem relevant to one of the following cate
 
 > Multiple Sclerosis, autoimmune encephalomyelitis, encephalomyelitis, immune tolerance, myelin
 
-
-
-### Search Sources
+### Search Sources for Multiple Sclerosis papers
 
 - [APTA](https://www.apta.org/search?Q=%22Multiple+Sclerosis%22+OR+%22autoimmune+encephalomyelitis%22+OR+encephalomyelitis+OR+%22immune+tolerance%22+OR+myelin&searcharticletypes=8834&searchconditionandsymptoms=&searchloc=APTA)
 
@@ -87,17 +85,13 @@ In the homepage we show articles that seem relevant to one of the following cate
 
 - [Scielo](https://search.scielo.org/?q=Multiple+Sclerosis&lang=en&count=15&from=0&output=site&sort=&format=summary&fb=&page=1&q=%22Multiple+Sclerosis%22+OR+%22autoimmune+encephalomyelitis%22+OR+encephalomyelitis+OR+%22immune+tolerance%22+OR+myelin&lang=en&page=1)
 
-- [TheLancet](https://www.thelancet.com/action/doSearch?text1=%22Multiple+Sclerosis%22+OR+%22autoimmune+encephalomyelitis%22+OR+encephalomyelitis+OR+%22immune+tolerance%22+OR+myelin&field1=AbstractTitleKeywordFilterField&startPage=0&sortBy=Earliest)
-
 - [MS and Related Disorders](https://www.msard-journal.com/action/doSearch?text1=Multiple+Sclerosis&field1=AbstractTitleKeywordFilterField&startPage=0&sortBy=Earliest)
 
-- [Sage](https://journals.sagepub.com/action/doSearch?AllField=multiple+sclerosis&SeriesKey=msja&content=articlesChapters&countTerms=true&target=default&sortBy=Ppub&startPage=&ContentItemType=research-article)
+### Registers of Multiple Sclerosis clinical trials used as sources
 
 - [ClinicalTrials](https://clinicaltrials.gov/ct2/results/rss.xml?rcv_d=14&lup_d=&sel_rss=new14&cond=Multiple+Sclerosis&count=10000)
 
-## Sources we would like to include
-
-https://journals.bmj.com/
+- [European Clinical Trials Register](https://www.clinicaltrialsregister.eu/ctr-search/rest/feed/bydates?query=multiple+AND+sclerosis)
 
 
 
