@@ -45,7 +45,7 @@ resources:
 <a href="mailto:bruno@gregory-ms.com" data-umami-event="click--email-bruno-contacts-page" class="click--email-bruno-contacts-page">bruno@gregory-ms.com</a>
 
 
-https://twitter.com/brunoamaral     
+https://bsky.app/profile/brunoamaral.eu     
 
 [+351 912 875 856](tel:+351912875856)
 

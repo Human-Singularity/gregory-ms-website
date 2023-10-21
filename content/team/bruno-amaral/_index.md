@@ -12,7 +12,6 @@ options:
 profiles:
   github: 'https://github.com/brunoamaral'
   linkedin: 'https://www.linkedin.com/in/brunoamaral/'
-  twitter: 'https://twitter.com/brunoamaral'
   mastodon: https://mastodon.social/@brunoamaral
 resources:
     - name: avatar
