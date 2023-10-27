@@ -16,7 +16,7 @@ export function ArticleSnippet(props) {
 						{props.article.takeaways}
 					</p>
 					<p className="author text-wrap">
-						<span className="badge badge-info text-white font-weight-normal d-block">{props.article.container_title}</span>
+						<span className="badge badge-info text-white font-weight-normal">{props.article.container_title}</span>
 						{props.article.ml_prediction_gnb === true ? <span className="ml-1 text-white badge badge-success font-weight-normal">AI prediction</span> : null}
 						{props.article.relevant === true ? <span className="ml-1 text-white badge badge-primary font-weight-normal">manual selection</span> : null}
 
