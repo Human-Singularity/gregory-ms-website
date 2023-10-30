@@ -2,10 +2,6 @@
 title: "MS Research Papers"
 subtitle: Multiple Sclerosis Research published since February 2021
 
-menu:
-  main:
-    name: Papers
-    weight: 6
 options:
   header: mini
   showHeader: true

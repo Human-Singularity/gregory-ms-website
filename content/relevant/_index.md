@@ -2,10 +2,10 @@
 title: "Current Relevant Research for MS"
 subtitle: 
 
-# menu:
-#   main:
-#     name: Relevant
-#     weight: 8
+menu:
+  main:
+    name: "Relevant Papers"
+    weight: 6
 options:
   header: mini
   showHeader: true
@@ -24,6 +24,25 @@ cta:
 ---
 
 <div id="sourceinfo">
+<p>This pages lists the research that appears to have relevant outcomes for People With Multiple Sclerosis.</p>
+    <p>To be listed below, a paper must fulfill at least one of the requirements:</p>
+    <ul>
+        <li>Indicates a new medication or immunosuppressive agent</li>
+        <li>Suggests a medication or agent that alleviates inflammation in the CNS</li>
+        <li>Promotes the production of myelin</li>
+        <li>Points out a medication or agent with neuroprotective properties</li>
+        <li>Introduces a new treatment for the symptoms of MS, particularly spasticity</li>
+        <li>Recommends a treatment or medication that encourages neurogenesis or regeneration of the CNS</li>
+        <li>Confirms the effectiveness of a drug or agent (in vitro, in vivo, or in clinical trial)</li>
+    </ul>
+    <p>The paper is not deemed relevant if it addresses:</p>
+    <ul>
+        <li>Fertility</li>
+        <li>Mental health</li>
+        <li>Challenges faced by caregivers</li>
+        <li>Physiotherapy for symptom management</li>
+        <li>Biomarkers and other diagnostic methods</li>
+    </ul>
 <p>Articles listed come from the following sites, using keyword searches for `Multiple Sclerosis, autoimmune encephalomyelitis, encephalomyelitis, immune tolerance, myelin`.</p>
 <ul class="list-inline">
   <li class="list-inline-item"><a target="_blank" class="btn btn-primary btn-outline-primary btn-round" href='https://www.apta.org/search?Q=&quot;Multiple+Sclerosis&quot;+OR+&quot;autoimmune+encephalomyelitis&quot;+OR+encephalomyelitis+OR+&quot;immune+tolerance&quot;+OR+myelin&amp;searcharticletypes=8834&amp;searchconditionandsymptoms=&amp;searchloc=APTA'>APTA <i class="text-muted text-primary fas fa-external-link-square-alt"></i></a> </li>
