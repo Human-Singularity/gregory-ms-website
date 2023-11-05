@@ -14,6 +14,8 @@ cta:
   - label: <i class="fas fa-file-archive"></i> Download all multiple sclerosis research
     url: /developers/articles.zip
     classes: btn-sm btn-success
+seo:
+  canonical: articles/
 ---
 
 Papers listed come from the following sites, using keyword searches for `Multiple Sclerosis, autoimmune encephalomyelitis, encephalomyelitis, immune tolerance, myelin`.

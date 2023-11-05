@@ -51,6 +51,10 @@
 	<link rel="alternate" href="{{- .Permalink -}}" hreflang="{{- .Lang -}}">
 		{{- end}}
 	{{- end -}}
+	{{ with $.Params.seo.canonical }}
+	<link rel="canonical" href="{{ $.Site.BaseURL}}{{.}}" />		
+	{{ end }}
+
 	<meta property="og:title" content="{{- .Title -}}" />
 	{{- block "description" . -}}
 	{{ partial "description.html" . }}
