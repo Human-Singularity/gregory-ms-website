@@ -4,23 +4,40 @@ import { useParams } from 'react-router-dom';
 import { formatDate, updateTitleAndMeta } from './utils';
 
 export function SingleArticle() {
-	const [article, setArticle] = useState(null);
-	const { articleId } = useParams();
+    const [article, setArticle] = useState(null);
+    const { articleId } = useParams();
 
-	useEffect(() => {
-		async function fetchData() {
-			const response = await axios.get(`https://api.gregory-ms.com/articles/${articleId}/?format=json`);
-			setArticle(response.data);
-			updateTitleAndMeta(response.data); // Call updateTitleAndMeta() after setting the state
-		}
-		fetchData();
-	}, [articleId]);
+    useEffect(() => {
+        async function fetchData() {
+            const response = await axios.get(`https://api.gregory-ms.com/articles/${articleId}/?format=json`);
+            setArticle(response.data);
+            updateTitleAndMeta(response.data); // Call updateTitleAndMeta() after setting the state
+        }
+        fetchData();
+    }, [articleId]);
 
-	if (!article) {
-		return <div>Loading...</div>;
-	}
+    // This effect sets the canonical link in the document head
+    useEffect(() => {
+        if (article) {
+            const canonicalLink = document.querySelector("link[rel='canonical']");
+            const shortLink = `https://gregory-ms.com/articles/${article.article_id}`;
 
-	return (
+            if (canonicalLink) {
+                canonicalLink.href = shortLink;
+            } else {
+                const linkElement = document.createElement("link");
+                linkElement.rel = "canonical";
+                linkElement.href = shortLink;
+                document.head.appendChild(linkElement);
+            }
+        }
+    }, [article]);
+
+    if (!article) {
+        return <div>Loading...</div>;
+    }
+
+    return (
 		<>
 			<span id="article" className="anchor"></span>
 			<p><strong className='text-muted'>ID</strong>: <span id="id" data-datetime={article.article_id}>{article.article_id}</span></p>
