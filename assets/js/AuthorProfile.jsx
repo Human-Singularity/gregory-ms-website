@@ -4,8 +4,8 @@ import { ArticleList } from "./ArticleList";
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import FetchAndDownload from "./DownloadButton";
 
-import { formatDate, updateTitleAndMeta } from './utils';
 
 const rootElement = document.getElementById("root");
 const root = ReactDOM.createRoot(rootElement);
@@ -56,6 +56,9 @@ export function AuthorProfile() {
       <div><strong>Author ID</strong>: {author.author_id}</div>
       <div><strong>Articles Count</strong>: {author.articles_count}</div>
       <div><strong>ORCID</strong>: <a href='{author.ORCID}'>{author.ORCID}</a></div>
+      <FetchAndDownload
+      apiEndpoint={`https://api.gregory-ms.com/articles/author/${authorId}/`}
+      />
       <ArticleList
       apiEndpoint={`https://api.gregory-ms.com/articles/author/${authorId}/`}
       page_path={`articles/author/${authorId}`}
