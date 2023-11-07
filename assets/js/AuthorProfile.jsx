@@ -53,9 +53,9 @@ export function AuthorProfile() {
 
   return (
     <>
-      <div>Author ID: {author.author_id}</div>
-      <div>Articles Count: {author.articles_count}</div>
-      <div>ORCID: {author.ORCID}</div>
+      <div><strong>Author ID</strong>: {author.author_id}</div>
+      <div><strong>Articles Count</strong>: {author.articles_count}</div>
+      <div><strong>ORCID</strong>: <a href='{author.ORCID}'>{author.ORCID}</a></div>
       <ArticleList
       apiEndpoint={`https://api.gregory-ms.com/articles/author/${authorId}/`}
       page_path={`articles/author/${authorId}`}
