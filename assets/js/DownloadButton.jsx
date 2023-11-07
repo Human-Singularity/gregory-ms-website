@@ -3,7 +3,7 @@ import axios from 'axios';
 import fileDownload from 'js-file-download';
 
 
-const FetchAndDownload = ({ category_slug }) => {
+const FetchAndDownload = ({ apiEndpoint }) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isReady, setIsReady] = useState(false);
@@ -35,9 +35,9 @@ const FetchAndDownload = ({ category_slug }) => {
     fileDownload(csvContent, 'articles.csv');
   };
 
-  const fetchAndDownload = async (slug) => {
+  const fetchAndDownload = async (apiEndpoint) => {
     setIsLoading(true);
-    let url = `https://api.gregory-ms.com/articles/category/${slug}/`;
+    let url = apiEndpoint;
     let response = await axios.get(url);
     let fetchedData = response.data.results;
     while(response.data.next !== null) {
@@ -58,7 +58,7 @@ const FetchAndDownload = ({ category_slug }) => {
     <div>
       <button 
 			className={isReady ? 'btn btn-success btn-md float-right' : 'btn btn-info btn-md float-right'}
-			onClick={fetchAndDownload.bind(this, category_slug)} 
+			onClick={fetchAndDownload.bind(this, apiEndpoint)} 
 			disabled={isLoading}>
         {isLoading ? 'Fetching articles, please wait...' : isReady ? 'Download articles in CSV' : 'Download articles'}
       </button>
