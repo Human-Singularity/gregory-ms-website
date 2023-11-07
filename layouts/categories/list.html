@@ -40,7 +40,7 @@
 
 {{ define "list-javascript" }}
 	{{ partial "comments-js.html" . }}
-	{{ $api := resources.Get "js/Category.jsx" | js.Build | babel | resources.Minify | resources.Fingerprint }}
+	{{ $api := resources.Get "js/Category.jsx" | js.Build | babel | resources.Fingerprint }}
 	<script src="{{ $api.Permalink }}"></script>
 
 {{ end }}

@@ -12,6 +12,7 @@ function InteractiveLineChart() {
   const { category, page } = useParams();
   const monthlyCountsEndpoint = `https://api.gregory-ms.com/categories/${category}/monthly-counts/`;
   const articleEndpoint = `https://api.gregory-ms.com/articles/category/${category}/`;
+  const categoryEndpoint = `https://api.gregory-ms.com/articles/category/${category}/`;
   const page_path = `/categories/${category}`;
   const [monthlyCounts, setMonthlyCounts] = useState(null);
 
@@ -124,7 +125,7 @@ function InteractiveLineChart() {
           <Legend />
         </ComposedChart>
       </ResponsiveContainer>
-      <div className='row'><div className='col-md-12'><FetchAndDownload category_slug={category} /></div></div>
+      <div className='row'><div className='col-md-12'><FetchAndDownload apiEndpoint={categoryEndpoint} /></div></div>
       <div className='row'>
         <div className='col-md-12'>
           <h3 className='title text-center'>Scientific research on {category}</h3>
