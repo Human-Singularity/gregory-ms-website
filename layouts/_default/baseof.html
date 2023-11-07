@@ -436,6 +436,10 @@
 		{{ $api := resources.Get "js/ObservatoryChart.jsx" | js.Build | babel | resources.Minify | resources.Fingerprint }}
 		<script src="{{ $api.Permalink }}"></script>
 		{{ end }}
+		{{- if .HasShortcode "authors"  -}}
+		{{ $authorProfile := resources.Get "js/AuthorProfile.jsx" | js.Build | babel }}
+		<script src="{{ $authorProfile.Permalink }}"></script>
+		{{ end }}
 
 		{{- if or (.HasShortcode "metabase-embed")  -}}
 		<script src="https://metabase.gregory-ms.com/app/iframeResizer.js"></script>
