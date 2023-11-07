@@ -31,8 +31,15 @@ export function AuthorProfile() {
         } else {
           console.log('h2 Element not found');
         }
-      
-      } catch (error) {
+        const cta = document.querySelector('#home > div.wrapper > div.page-header.page-header-mini > div.content-center > div > div > a.btn')
+        if (cta){
+          cta.parentNode.removeChild(cta)
+        }
+        const sourceInfo = document.querySelector('#sourceinfo')
+        if (sourceInfo){
+          sourceInfo.parentNode.removeChild(sourceInfo)
+        }
+       } catch (error) {
         console.error('Error fetching data:', error);
       }
     }
