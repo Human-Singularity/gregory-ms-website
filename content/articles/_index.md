@@ -38,5 +38,5 @@ Papers listed come from the following sites, using keyword searches for `Multipl
 <p>
   <a class="btn btn-info btn-round btn-lg text-white font-weight-bold mx-auto" data-umami-event="click--relevant-articles-on-articles-page" href="/relevant/">All papers with positive patient outcomes for MS <i class="text-muted text-white fas fa-arrow-right" style="transform: 0.4s; boxShadow: 0.4s"></i></a>
 </p>
-{{< articles >}}
 </div>
+{{< articles >}}

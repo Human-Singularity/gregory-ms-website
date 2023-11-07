@@ -35,10 +35,10 @@ export function AuthorProfile() {
         if (cta){
           cta.parentNode.removeChild(cta)
         }
-        // const sourceInfo = document.querySelector('#sourceinfo')
-        // if (sourceInfo){
-        //   sourceInfo.parentNode.removeChild(sourceInfo)
-        // }
+        const sourceInfo = document.querySelector('#sourceinfo')
+        if (sourceInfo){
+          sourceInfo.parentNode.removeChild(sourceInfo)
+        }
        } catch (error) {
         console.error('Error fetching data:', error);
       }
