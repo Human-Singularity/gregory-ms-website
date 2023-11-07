@@ -55,7 +55,7 @@ export function AuthorProfile() {
     <>
       <div><strong>Author ID</strong>: {author.author_id}</div>
       <div><strong>Articles Count</strong>: {author.articles_count}</div>
-      <div><strong>ORCID</strong>: <a href={author.ORCID}>{author.ORCID}</a></div>
+      <div><strong>ORCID</strong>: <a href={author.ORCID} target='_blank'>{author.ORCID}</a></div>
       <FetchAndDownload
       apiEndpoint={`https://api.gregory-ms.com/articles/author/${authorId}/`}
       />
