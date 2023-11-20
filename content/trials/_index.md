@@ -27,14 +27,13 @@ menu:
 resources:
   - src: science-in-hd-9kSTF9PvETM-unsplash.jpeg
     name: header
-cta:
-  - label: <i class="fas fa-rss"></i> RSS 
-    url: https://api.gregory-ms.com/feed/latest/trials/
-    classes: btn-dark btn-sm btn-primary
-  - label: <i class="fas fa-file-archive"></i> ZIP
-    url: /developers/trials.zip
-    classes: btn-info btn-sm
+
 ---
+<div class="row">
+<div class="col-12 justify-content-center align-self-center align-center text-center pb-5">
+<a href="https://metabase.gregory-ms.com/public/dashboard/497ab618-6921-4eab-b0c5-878deeba69d9" class="btn btn-lg btn-primary" target="_blank">Open the Dashboard of Clinical Trials for Multiple Sclerosis <i class=" text-white fas fa-external-link-square-alt" aria-hidden="true"></i></a>
+</div>
+</div>
 
 <div class="row">
 <div class="col-md-6 justify-content-center align-self-center align-right ">
