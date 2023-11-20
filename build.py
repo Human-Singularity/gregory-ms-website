@@ -251,10 +251,6 @@ def generate_sitemap(articles, trials):
 	with open("content/articles_trials.xml", "wb") as file:
 		file.write(etree.tostring(urlset, pretty_print=True, xml_declaration=True, encoding="UTF-8"))
 
-# To generate the sitemap
-articles, categories, trials = get_data()
-generate_sitemap(articles, trials)
-
 
 def delete_temporary_files():
 	print('\n# delete temporary files')
@@ -325,6 +321,7 @@ if __name__ == '__main__':
 		presskit.process_folder(folder_id, directory_name)
 		presskit.create_zip_from_folder(directory_name, 'content/gregoryai_press.zip')
 		articles, categories, trials = get_data()
+		generate_sitemap(articles, trials)
 		save_excel_and_json(articles, trials)
 		save_articles_to_json(articles)
 		create_categories(categories)
