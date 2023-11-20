@@ -13,15 +13,13 @@ layout: relevant
 resources:
   - src: robot-hand-finger-ai-background-technology-graphics.jpeg
     name: "header"
-cta:
-  - label: <i class="fas fa-rss"></i> RSS 
-    url: /relevant/index.xml
-    classes: btn-dark btn-sm btn-primary
-    targetblank: true
-  - label: <i class="fas fa-file-archive"></i> Download Database
-    url: /developers/articles.zip
-    classes: btn btn-sm btn-success font-weight-bold umami--click--downloads-page-download-articles-zip
+
 ---
+<div class="row">
+<div class="col-12 justify-content-center align-self-center align-center text-center pb-5">
+<a href="https://metabase.gregory-ms.com/public/dashboard/39cbe602-4d42-46af-bfe4-0de04ef5e5f9" class="btn btn-lg btn-primary" target="_blank">Open the Dashboard of Scientific Papers for Multiple Sclerosis <i class=" text-white fas fa-external-link-square-alt" aria-hidden="true"></i></a>
+</div>
+</div>
 
 <div id="sourceinfo">
 <p>This pages lists the research that appears to have relevant outcomes for People With Multiple Sclerosis.</p>
