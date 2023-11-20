@@ -43,6 +43,11 @@ def create_zip_from_folder(folder_path, zip_name):
 
 # Recursive function to process folders
 def process_folder(folder_id, directory_name):
+	print('''
+####
+## Download press kit files
+####
+''')
 	folder_structure = {folder_id: directory_name}
 	if not os.path.exists(directory_name):
 		os.makedirs(directory_name)

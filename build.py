@@ -19,6 +19,7 @@ import re
 import sqlalchemy
 import subprocess
 import time
+import sys
 
 load_dotenv()
 
@@ -314,21 +315,21 @@ def build_website():
 
 
 if __name__ == '__main__':
-	pull_from_github()
-	presskit.setup_dir(directory_name)
-	print('''
-####
-## Download press kit files
-####
-''')
-	presskit.process_folder(folder_id, directory_name)
-	presskit.create_zip_from_folder(directory_name, 'content/gregoryai_press.zip')
-	articles, categories, trials = get_data()
-	save_excel_and_json(articles, trials)
-	save_articles_to_json(articles)
-	create_categories(categories)
-	create_zip_files()
-	generate_sitemap(articles, trials)
-	delete_temporary_files()
-	generate_metabase_embeds()
-	build_website()
+	if '--fast' in sys.argv:
+		# If --fast is passed as a command-line argument, only run build_website
+		pull_from_github()
+		build_website()
+	else:
+		pull_from_github()
+		presskit.setup_dir(directory_name)
+		presskit.process_folder(folder_id, directory_name)
+		presskit.create_zip_from_folder(directory_name, 'content/gregoryai_press.zip')
+		articles, categories, trials = get_data()
+		save_excel_and_json(articles, trials)
+		save_articles_to_json(articles)
+		create_categories(categories)
+		create_zip_files()
+		generate_sitemap(articles, trials)
+		delete_temporary_files()
+		generate_metabase_embeds()
+		build_website()
