@@ -42,7 +42,13 @@ def create_zip_from_folder(folder_path, zip_name):
 				zipf.write(os.path.join(root, file), rel_path)
 
 # Recursive function to process folders
-def process_folder(folder_id, directory_name):
+def process_folder(folder_id, directory_name, is_first_call=True):
+	if is_first_call:
+		print('''
+####
+## Download press kit files
+####
+''')
 	folder_structure = {folder_id: directory_name}
 	if not os.path.exists(directory_name):
 		os.makedirs(directory_name)
@@ -60,16 +66,16 @@ def process_folder(folder_id, directory_name):
 
 		if item_type == 'application/vnd.google-apps.folder':
 			folder_structure[item_id] = os.path.join(directory_name, item_name)
-			process_folder(item_id, folder_structure[item_id])
+			process_folder(item_id, folder_structure[item_id], is_first_call=False)
 		else:
 			if item_type.startswith('application/vnd.google-apps.'):
 				# Export Google Docs Editors files as PDF
 				request = service.files().export_media(fileId=item_id, mimeType='application/pdf')
-				file_path += '.pdf' # Append PDF extension
+				file_path += '.pdf'  # Append PDF extension
 			else:
 				# Download binary files directly
 				request = service.files().get_media(fileId=item_id)
-			
+		
 			with io.FileIO(file_path, mode='wb') as file_handle:
 				downloader = MediaIoBaseDownload(file_handle, request)
 				done = False
