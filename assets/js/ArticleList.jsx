@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { ArticleSnippet } from "./ArticleSnippet";
 import { Pagination } from "./Pagination";
-import { formatDate } from "utils";
+import { formatDate } from "./utils";
 
 export function ArticleList({ apiEndpoint, page_path, displayAsList }) {
   const [articles, setArticles] = useState([]);
