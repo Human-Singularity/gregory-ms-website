@@ -78,8 +78,10 @@ export function removeSpecifiedNodes() {
 	} else {
 			console.log('div#sourceinfo Element not found');
 	}
-	const buttonElementToRemove = document.querySelector('#metabaseDashboard')
+	const buttonElementToRemove = document.querySelector('a#metabaseDashboard')
 	if (buttonElementToRemove){
 		buttonElementToRemove.parentNode.removeChild(buttonElementToRemove)
+	}else{
+		console.log('no ', buttonElementToRemove)
 	}
 }
