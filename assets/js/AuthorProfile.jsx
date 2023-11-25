@@ -61,7 +61,7 @@ export function AuthorProfile() {
       />
       <ArticleList
       apiEndpoint={`https://api.gregory-ms.com/articles/author/${authorId}/`}
-      page_path={`articles/author/${authorId}`}
+      page_path={`/articles/author/${authorId}`}
       />
     </>
   );
@@ -72,6 +72,7 @@ root.render(
     <Router>
       <Routes>
         <Route path="/articles/author/:authorId" element={<AuthorProfile />} />
+        <Route path="/articles/author/:authorId/page/:pageNumber" element={<AuthorProfile />} />
         <Route path="/articles/author/" element={<AuthorProfile />} />
       </Routes>
     </Router>
