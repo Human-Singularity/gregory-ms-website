@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { ArticleSnippet } from "./ArticleSnippet";
 import { Pagination } from "./Pagination";
+import { formatDate } from "./utils";
 
 export function ArticleList({ apiEndpoint, page_path, displayAsList }) {
   const [articles, setArticles] = useState([]);
@@ -26,7 +27,7 @@ export function ArticleList({ apiEndpoint, page_path, displayAsList }) {
     <ol start={page * 10 - 9}>
       {articles.map((article) => (
         <li key={article.article_id}>
-          <Link to={`/articles/${article.article_id}/`}>{article.title}</Link>
+          <Link to={`/articles/${article.article_id}/`}>{article.title}</Link> {formatDate(article.published_date)}
         </li>
       ))}
     </ol>
