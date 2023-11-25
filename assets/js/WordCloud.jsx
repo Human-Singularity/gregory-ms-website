@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import WordCloud from 'react-wordcloud'; // assuming you're using 'react-wordcloud' library
 
-const WordCloudGenerator = ({ authorId, apiEndpoint }) => {
+export const WordCloudGenerator = ({ authorId, apiEndpoint }) => {
   const [nounPhrases, setNounPhrases] = useState([]);
   const [nextPage, setNextPage] = useState(apiEndpoint.replace('{authorId}', authorId));
 
@@ -38,5 +38,3 @@ const WordCloudGenerator = ({ authorId, apiEndpoint }) => {
     </div>
   );
 };
-
-export default WordCloudGenerator;
