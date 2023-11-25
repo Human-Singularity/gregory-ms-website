@@ -62,6 +62,7 @@ export function AuthorProfile() {
       <ArticleList
       apiEndpoint={`https://api.gregory-ms.com/articles/author/${authorId}/`}
       page_path={`articles/author/${authorId}`}
+      displayAsList={true}
       />
     </>
   );
