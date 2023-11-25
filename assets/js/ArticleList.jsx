@@ -23,7 +23,7 @@ export function ArticleList({ apiEndpoint, page_path, displayAsList }) {
   }, [apiEndpoint, page]);
 
   const articleContent = displayAsList ? (
-    <ol>
+    <ol start={page * 10 - 9}>
       {articles.map((article) => (
         <li key={article.article_id}>
           <Link to={`/articles/${article.article_id}/`}>{article.title}</Link>
