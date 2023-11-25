@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { ArticleSnippet } from "./ArticleSnippet";
 import { Pagination } from "./Pagination";
 
-export function ArticleList({ apiEndpoint, page_path }) {
+export function ArticleList({ apiEndpoint, page_path, displayAsList }) {
   const [articles, setArticles] = useState([]);
   const [last_page, setLastPage] = useState(null);
 
@@ -22,15 +22,27 @@ export function ArticleList({ apiEndpoint, page_path }) {
     fetchData();
   }, [apiEndpoint, page]);
 
+  const articleContent = displayAsList ? (
+    <ol>
+      {articles.map((article) => (
+        <li key={article.article_id}>
+          <Link to={`/articles/${article.article_id}/`}>{article.title}</Link>
+        </li>
+      ))}
+    </ol>
+  ) : (
+    articles.map((article) => (
+      <ArticleSnippet key={article.article_id} article={article} />
+    ))
+  );
+
   return (
     <div>
       <div className="row">
         <div className="col-md-12">
           <Pagination page={page} setPage={setPage} last_page={last_page} page_path={page_path} />
         </div>
-        {articles.map((article) => (
-          <ArticleSnippet key={article.article_id} article={article} />
-        ))}
+        {articleContent}
         <div className="col-md-12">
           <Pagination page={page} setPage={setPage} last_page={last_page} page_path={page_path} />
         </div>

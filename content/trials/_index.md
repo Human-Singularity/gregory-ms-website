@@ -31,7 +31,7 @@ resources:
 ---
 <div class="row">
 <div class="col-12 justify-content-center align-self-center align-center text-center pb-5">
-<a href="https://metabase.gregory-ms.com/public/dashboard/497ab618-6921-4eab-b0c5-878deeba69d9" data-umami-event="click--body-metabase-dashboard-trials" class="btn btn-lg btn-primary" target="_blank">Open the Dashboard of Clinical Trials for Multiple Sclerosis <i class=" text-white fas fa-external-link-square-alt" aria-hidden="true"></i></a>
+<a href="https://metabase.gregory-ms.com/public/dashboard/497ab618-6921-4eab-b0c5-878deeba69d9" id="metabaseDashboard" data-umami-event="click--body-metabase-dashboard-trials" class="btn btn-lg btn-primary" target="_blank">Open the Dashboard of Clinical Trials for Multiple Sclerosis <i class=" text-white fas fa-external-link-square-alt" aria-hidden="true"></i></a>
 </div>
 </div>
 

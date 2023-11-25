@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { formatDate, updateTitleAndMeta } from './utils';
+import { formatDate, updateTitleAndMeta, removeSpecifiedNodes } from './utils';
 
 export function SingleArticle() {
     const [article, setArticle] = useState(null);
@@ -12,6 +12,7 @@ export function SingleArticle() {
             const response = await axios.get(`https://api.gregory-ms.com/articles/${articleId}/?format=json`);
             setArticle(response.data);
             updateTitleAndMeta(response.data); // Call updateTitleAndMeta() after setting the state
+            removeSpecifiedNodes();
         }
         fetchData();
     }, [articleId]);

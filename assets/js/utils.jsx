@@ -51,30 +51,37 @@ export function updateTitleAndMeta(article) {
 	if (metaDescription) {
 		metaDescription.setAttribute('content', truncatedTakeaways);
 	}
-
-	// Remove the first specified element (h2)
-	const h2ElementToRemove = document.querySelector('#home > div.wrapper > div.page-header.page-header-mini > div.content-center > div > div > h2');
-	if (h2ElementToRemove) {
-		h2ElementToRemove.parentNode.removeChild(h2ElementToRemove);
-	} else {
-		console.log('h2 Element not found');
-	}
-
-	// Remove the second specified element (a)
-	const aElementToRemove = document.querySelector('#home > div.wrapper > div.page-header.page-header-mini > div.content-center > div > div > a');
-	if (aElementToRemove) {
-		aElementToRemove.parentNode.removeChild(aElementToRemove);
-	} else {
-		console.log('a Element not found');
-	}
-
-	// Remove the information about the source of the articles (div#sourceinfo)
-	const divElementToRemove = document.querySelector('div#sourceinfo');
-	if (divElementToRemove) {
-		divElementToRemove.parentNode.removeChild(divElementToRemove);
-	} else {
-		console.log('div#sourceinfo Element not found');
-	}
 	
 }
 
+export function removeSpecifiedNodes() {
+	// Remove h2 element
+	const h2ElementToRemove = document.querySelector('#home > div.wrapper > div.page-header.page-header-mini > div.content-center > div > div > h2');
+	if (h2ElementToRemove) {
+			h2ElementToRemove.parentNode.removeChild(h2ElementToRemove);
+	} else {
+			// console.log('h2 Element not found');
+	}
+
+	// Remove a element
+	const aElementToRemove = document.querySelector('#home > div.wrapper > div.page-header.page-header-mini > div.content-center > div > div > a');
+	if (aElementToRemove) {
+			aElementToRemove.parentNode.removeChild(aElementToRemove);
+	} else {
+			// console.log('a Element not found');
+	}
+
+	// Remove div#sourceinfo element
+	const divElementToRemove = document.querySelector('div#sourceinfo');
+	if (divElementToRemove) {
+			divElementToRemove.parentNode.removeChild(divElementToRemove);
+	} else {
+			// console.log('div#sourceinfo Element not found');
+	}
+	const buttonElementToRemove = document.querySelector('a#metabaseDashboard')
+	if (buttonElementToRemove){
+		buttonElementToRemove.parentNode.removeChild(buttonElementToRemove)
+	}else{
+		// console.log('a#metabaseDashboard not found')
+	}
+}
