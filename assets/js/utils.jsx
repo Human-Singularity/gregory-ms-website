@@ -60,7 +60,7 @@ export function removeSpecifiedNodes() {
 	if (h2ElementToRemove) {
 			h2ElementToRemove.parentNode.removeChild(h2ElementToRemove);
 	} else {
-			console.log('h2 Element not found');
+			// console.log('h2 Element not found');
 	}
 
 	// Remove a element
@@ -68,7 +68,7 @@ export function removeSpecifiedNodes() {
 	if (aElementToRemove) {
 			aElementToRemove.parentNode.removeChild(aElementToRemove);
 	} else {
-			console.log('a Element not found');
+			// console.log('a Element not found');
 	}
 
 	// Remove div#sourceinfo element
@@ -76,12 +76,12 @@ export function removeSpecifiedNodes() {
 	if (divElementToRemove) {
 			divElementToRemove.parentNode.removeChild(divElementToRemove);
 	} else {
-			console.log('div#sourceinfo Element not found');
+			// console.log('div#sourceinfo Element not found');
 	}
 	const buttonElementToRemove = document.querySelector('a#metabaseDashboard')
 	if (buttonElementToRemove){
 		buttonElementToRemove.parentNode.removeChild(buttonElementToRemove)
 	}else{
-		console.log('no ', buttonElementToRemove)
+		// console.log('a#metabaseDashboard not found')
 	}
 }
