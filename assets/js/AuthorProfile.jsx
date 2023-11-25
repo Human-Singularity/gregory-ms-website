@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import FetchAndDownload from "./DownloadButton";
 import { removeSpecifiedNodes } from './utils'; // Import the function
+import { WordCloudGenerator } from "./WordCloud";
 
 const rootElement = document.getElementById("root");
 const root = ReactDOM.createRoot(rootElement);
@@ -45,6 +46,10 @@ export function AuthorProfile() {
       <div><strong>ORCID</strong>: <a href={author.ORCID} target='_blank' rel='noreferrer'>{author.ORCID}</a></div>
       <FetchAndDownload
         apiEndpoint={`https://api.gregory-ms.com/articles/author/${authorId}/`}
+      />
+      <WordCloudGenerator
+          authorId={authorId}
+          apiEndpoint="https://api.gregory-ms.com/articles/author/{authorId}/"
       />
       <ArticleList
         apiEndpoint={`https://api.gregory-ms.com/articles/author/${authorId}/`}
