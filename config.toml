@@ -70,9 +70,6 @@ headerPhoto = ""
   [[menu.column_3]]
   name = "Website stats"
   url = "https://analytics.gregory-ms.com/share/bEuESUpF/GregoryMS"
-  [[menu.column_3]]
-  name = "Press Kit"
-  url = "https://gregory-ms.com/gregoryai_press.zip"
 
 [social]
   github = "https://github.com/brunoamaral/gregory"
