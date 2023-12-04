@@ -31,6 +31,15 @@ options:
 ---
 
 
+### Press Contacts{.title}
+
+If you have any questions, please feel free to reach out to us:
+
+- **Email**: team@gregory-ms.com
+
+- **Phone**: +351 912 875 856
+
+
 ### Press Clippings{.title}
 
 <div class="row mb-3">
