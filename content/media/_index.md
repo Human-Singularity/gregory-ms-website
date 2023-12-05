@@ -55,7 +55,7 @@ If you have any questions, please feel free to reach out to us:
 
 <div class="row mb-3">
     <div class="col-md-8">
-        <h4 class="mb-0"><a href="https://www.publico.pt/2023/05/08/ciencia/noticia/bruno-amigos-criaram-robo-esclerose-multipla-2048612" target="_blank">Bruno Amaral criou um robô <i class="fas fa-external-link-square-alt" aria-hidden="true"></i></a></h4>
+        <h4 class="mb-0"><a href="https://www.publico.pt/2023/05/08/ciencia/noticia/bruno-amigos-criaram-robo-esclerose-multipla-2048612" target="_blank">Bruno e os amigos criaram um robô que diz o que se está a fazer sobre esclerose múltipla <i class="fas fa-external-link-square-alt" aria-hidden="true"></i></a></h4>
         <p class="text-muted">08 May 2023</p>
         <p>Bruno Amaral has created Gregory MS, an artificial intelligence tool that provides information on scientific research about multiple sclerosis. The project was developed in a café in Lisbon where Amaral often works.
 </p>
@@ -79,22 +79,12 @@ If you have any questions, please feel free to reach out to us:
 
 <div class="row mb-3">
     <div class="col-md-8">
-        <h4 class="mb-0"><a href="https://www.saudemais.tv/video/282371-corpo-clinico-t11-e011-01-marco-antonio" target="_blank">Corpo Clínico T11 E011 - Part 01 <i class="fas fa-external-link-square-alt" aria-hidden="true"></i></a></h4>
+        <h4 class="mb-0">Corpo Clínico T11 E011</h4>
         <p class="text-muted">15 June 2023</p>
-        <p></p>
+        <p>Part 01: <a href="https://www.saudemais.tv/video/282371-corpo-clinico-t11-e011-01-marco-antonio">https://www.saudemais.tv/video/282371-corpo-clinico-t11-e011-01-marco-antonio</a></p>
+        <p>Part 02: <a href="https://www.saudemais.tv/video/282370-corpo-clinico-t11-e011-02-marco-antonio" target="_blank">https://www.saudemais.tv/video/282370-corpo-clinico-t11-e011-02-marco-antonio</a></p>
     </div>
     <div class="col-md-4">
         <img src="/media/www.saudemais.tv_video_282371-corpo-clinico-t11-e011-01-marco-antonio(iPad%20Mini).png" alt="Thumbnail" class="img-fluid img-thumbnail rounded">
-    </div>
-</div>
-
-<div class="row mb-3">
-    <div class="col-md-8">
-        <h4 class="mb-0"><a href="https://www.saudemais.tv/video/282370-corpo-clinico-t11-e011-02-marco-antonio" target="_blank">Corpo Clínico T11 E011 - Part 02 <i class="fas fa-external-link-square-alt" aria-hidden="true"></i></a></h4>
-        <p class="text-muted">15 June 2023</p>
-        <p></p>
-    </div>
-    <div class="col-md-4">
-        <img src="/media/www.saudemais.tv_video_282370-corpo-clinico-t11-e011-02-marco-antonio(iPad Mini).png" alt="Thumbnail" class="img-fluid img-thumbnail rounded">
     </div>
 </div>
