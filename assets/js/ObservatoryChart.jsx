@@ -75,35 +75,42 @@ function App() {
       let url = 'https://api.gregory-ms.com/categories/?format=json';
       let results = {};
   
-      while (url) {
-        const response = await axios.get(url);
-        response.data.results.forEach(result => {
-        // check if count_of_articles is greater than 0
-        if(result.count_of_articles > 0) {
-          results[result.category_name] = result.category_slug;
+      try {
+        while (url) {
+          const response = await axios.get(url);
+          response.data.results.forEach(result => {
+            // check if article_count is greater than 0
+            if (result.article_count > 0) {
+              results[result.category_name] = result.category_slug;
+            }
+          });
+          url = response.data.next;
+        
+          if (url && url.startsWith('http://')) {
+            url = 'https://' + url.substring(7);
+          }
         }
-        });
-        url = response.data.next;
-      
-        if (url && url.startsWith('http://')) {
-          url = 'https://' + url.substring(7);
-        }
-      }
-
-      const sortedCategories = Object.keys(results)
-      .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
-      .reduce((acc, key) => {
-        acc[key] = results[key];
-        return acc;
-      }, {});
-    
   
-      setCategories(sortedCategories);
-      setLoading(false);
+        const sortedCategories = Object.keys(results)
+          .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
+          .reduce((acc, key) => {
+            acc[key] = results[key];
+            return acc;
+          }, {});
+      
+        setCategories(sortedCategories);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
     }
   
     fetchData();
   }, []);
+  
+  // useEffect(() => {
+  //   console.log(categories);
+  // }, [categories]);
+  
 
   useEffect(() => {
     const fetchMonthlyCounts = async () => {
@@ -114,7 +121,7 @@ function App() {
         let url = `https://api.gregory-ms.com/categories/${slug}/monthly-counts/`;
         const response = await axios.get(url);
         categoryMonthlyCounts[name] = response.data;
-      }    
+      }
 
       formatData(categoryMonthlyCounts);
       setLoading(false);
