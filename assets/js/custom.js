@@ -13,8 +13,11 @@ window.onload = function() {
             }
         });
     } else {
-        document.querySelector('nav.bg-dynamic').classList.add('bg-primary')
-        document.querySelector('nav.bg-dynamic').classList.remove('navbar-transparent')
-        document.querySelector('nav.bg-dynamic').classList.remove('bg-dynamic')
+        const navElement = document.querySelector('nav.bg-dynamic');
+        if (navElement) {
+            navElement.classList.add('bg-primary');
+            navElement.classList.remove('navbar-transparent');
+            navElement.classList.remove('bg-dynamic');
+        }        
     }
 };
