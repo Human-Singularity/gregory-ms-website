@@ -18,7 +18,7 @@ menu:
         Name: Media
 cta:
   - label: <i class="fa fa-download" aria-hidden="true"></i> &nbsp;Download the Press Kit
-    url: https://bsky.app/profile/gregory-ms.com
+    url: https://gregory-ms.com/gregoryai_press.zip
     classes: btn btn-md btn-info
 resources:
   - src: dall-e-header.png
