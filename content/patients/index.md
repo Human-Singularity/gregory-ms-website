@@ -139,16 +139,13 @@ menu:
 <div class="w-100 mt-5 mb-5"></div>
 </div>
 <div class="row bg-grey pt-5 pb-5 mb-0 ">
-<div class="col-md-6 col-12 justify-content-center align-self-center mt-5">
-  <a href="https://ko-fi.com/gregoryms"><img src="images/Ko-fi_Logo_RGB.svg" class="d-none d-sm-block col-md-7" data-umami-event="click--patients-page-donate-logo-link float-right"/></a>
-</div>
 
-<div class="col-md-5 col-12 justify-content-center align-self-center align-left">
-  <p>If you want to contribute to the server costs, you can send your donation through the Ko-Fi page below.</p>
+<div class="col-md-5 col-12 justify-content-center align-self-center align-center mx-auto">
+  <p>If you want to contribute to the server costs, you can send your donation through the donate page below.</p>
   <p>We also encourage you to look at the <a href="/annual-review/">Annual Report</a> section where we keep track of donations and expenses.</p>
   <p>
   <a href="/annual-review/" class="btn btn-success btn-round btn-lg font-weight-bold" data-umami-event="click--patients-page-annual-reviews">Annual Reviews <i class="fas fa-arrow-circle-right"></i></a>
-  <a href="https://ko-fi.com/gregoryms" class="btn btn-info btn-round btn-lg font-weight-bold " data-umami-event="click--patients-page-donate-text-link">Donate with Ko-Fi <i class="fas fa-mug-hot ko-fi"></i></a>
+  <a href="https://donate.stripe.com/6oEeVmf1tdHIdOw7ss" target="_blank" class="btn btn-info btn-round btn-lg font-weight-bold " data-umami-event="click--patients-page-donate-text-link">Donate  </a>
   </p>
 </div>
 
