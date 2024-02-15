@@ -36,12 +36,12 @@ menu:
 ---
 <div class="col-md-6 mx-auto">
 
-Currently, our donations are processed through [Ko-Fi](https://ko-fi.com/gregoryms) using their Stripe integration. The associated Stripe account is owned by the [Lisbon Collective](https://lisboncollective.com/), which has a **Tax ID of 517 182 556**.
 
-You can view the donations received on the [Ko-Fi page for Gregory-MS](https://ko-fi.com/gregoryms). In addition to receiving donations, the Lisbon Collective covers any taxes or commissions, ensuring that 100% of the funds received help maintain the website.
+
+Currently, our donations are processed through a non profit called [Human Singularity Network](https://human-singularity.org/) using payment processing by Stripe. The Human Singularity Network is registered in Portugal with the **Tax ID 517 563 363**
+
+You can view the donations received on the [Transparency page for the Human Singularity Network](https://human-singularity.org/transparency/). 
 
 For more details on donations and the costs of maintaining the website, [please read our published Annual Activities Reports](https://gregory-ms.com/annual-review/).
-
-We are in the process of establishing a non-profit to enhance transparency in managing the website and to secure the long-term sustainability of [GregoryAI](https://gregory-ai.com/), the generic version of this Artificial Intelligence.
 
 </div>
