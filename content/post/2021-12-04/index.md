@@ -41,7 +41,7 @@ I wanted to make the most of this opportunity and bring something extra to the p
 
 If you want to explore data and share it with a team, [Metabase](https://www.metabase.com/) is the tool for you. Metabase connects to any data source you can think of and allows anyone to build dashboards with an intuitive interface.
 
-We are using it for two objectives. **First**, Metabase charts are used in some of the pages of the Observatory. One example is the page for [Ocrevus, also known as Ocrelizumab](/observatory/ocrelizumab/). 
+We are using it for two objectives. **First**, Metabase charts are used in some of the pages of the Observatory. One example is the page for [Ocrevus, also known as Ocrelizumab](/categories/ocrelizumab/). 
 
 This page now features two interactive charts where you can see the number of articles found with "ocrelizumab" in the title and how many of them seem to be relevant for People with Multiple Sclerosis and their quality of life.
 
