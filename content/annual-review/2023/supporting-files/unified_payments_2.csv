@@ -1,0 +1,2 @@
+id,Created date (UTC),Amount,Amount Refunded,Currency,Captured,Converted Amount,Converted Amount Refunded,Converted Currency,Description,Fee,Statement Descriptor,Status,Seller Message,Taxes On Fee,Card ID,Customer ID,Customer Description,Invoice ID,Transfer
+ch_3O2d4MAKzfRKCvM92koLxON2,2023-10-18 16:58:07,"3,00","0,00",eur,true,"3,00","0,00",eur,,"0,30",HUMAN SINGULARITY,Paid,Payment complete.,"0,00",pm_1O2d4LAKzfRKCvM9Rw3zXPS4,,,,po_1O37ZKAKzfRKCvM9kDK4nmKL
