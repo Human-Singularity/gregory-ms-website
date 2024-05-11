@@ -13,6 +13,10 @@ profiles:
 resources:
   - name: avatar
     src: margarida_gomes.png
+  - name: header
+    src: gregoryai_background.jpg
+
+url: /team/margarida-gomes
 ---
 
 Margarida is a designer and the newest member of the Gregory team. She studied Industrial Design at IADE — Creative University, but nowadays she applies those same design principles to different areas of the discipline, including graphic design for social media. 
