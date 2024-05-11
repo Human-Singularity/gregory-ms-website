@@ -20,6 +20,9 @@ profiles:
 resources:
   - name: avatar
     src: antonio_lopes.png
+  - name: header
+    src: gregoryai_background.jpg
+url: /team/antonio-lopes/
 ---
 
 Email: <antonio@gregory-ms.com>
