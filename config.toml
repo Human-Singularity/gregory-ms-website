@@ -77,13 +77,8 @@ headerPhoto = ""
 
 [taxonomies]
 category = "categories"
-# source = "source"
-# trial_source = "trial_source"
-article_source = "article_source"
 author = "authors"
 tag = "tags"
-trial_source = "trial_source"
-member = "team"
 
 [permalinks]
   article_source = "/articles/source/:slug"
