@@ -13,18 +13,36 @@ function InteractiveLineChart() {
   const monthlyCountsEndpoint = `https://api.gregory-ms.com/categories/${category}/monthly-counts/`;
   const articleEndpoint = `https://api.gregory-ms.com/articles/category/${category}/`;
   const categoryEndpoint = `https://api.gregory-ms.com/articles/category/${category}/`;
+  const categoryTrialsEndpoint = `https://api.gregory-ms.com/trials/category/${category}/?format=json`;
   const page_path = `/categories/${category}`;
   const [monthlyCounts, setMonthlyCounts] = useState(null);
+  const [clinicalTrials, setClinicalTrials] = useState([]);
 
   useEffect(() => {
-    async function fetchMonthlyCounts() {
-      const response = await axios.get(monthlyCountsEndpoint);
-      const data = response.data;
-      setMonthlyCounts(data);
+    async function fetchData() {
+      try {
+        // Fetch monthly counts
+        const countsResponse = await axios.get(monthlyCountsEndpoint);
+        if (countsResponse.data) {
+          setMonthlyCounts(countsResponse.data);
+        } else {
+          console.log("No data received for monthly counts");
+        }
+
+        // Fetch clinical trials
+        const trialsResponse = await axios.get(categoryTrialsEndpoint);
+        if (trialsResponse.data && trialsResponse.data.results) {
+          setClinicalTrials(trialsResponse.data.results);
+        } else {
+          console.log("No trials data received");
+        }
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+      }
     }
 
-    fetchMonthlyCounts();
-  }, [monthlyCountsEndpoint]);
+    fetchData();
+  }, [monthlyCountsEndpoint, categoryTrialsEndpoint]);
 
   const formatData = monthlyCounts => {
     if (!Array.isArray(monthlyCounts.monthly_article_counts) || !Array.isArray(monthlyCounts.monthly_trial_counts)) {
@@ -132,6 +150,12 @@ function InteractiveLineChart() {
         </div>
       </div>
       <ArticleList apiEndpoint={articleEndpoint} page_path={page_path} page={parseInt(page)} />
+      <h3 className='title text-center'>Clinical Trials for {category}</h3>
+      <ol>
+      {clinicalTrials.map(trial => (
+          <li key={trial.id}><a href={trial.link} target='_blank'>{trial.title}</a></li>
+        ))}
+      </ol>
     </>
   );  
 }
