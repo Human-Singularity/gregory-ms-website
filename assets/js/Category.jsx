@@ -150,7 +150,7 @@ function InteractiveLineChart() {
         </div>
       </div>
       <ArticleList apiEndpoint={articleEndpoint} page_path={page_path} page={parseInt(page)} />
-      <h3 className='title text-center'>Clinical Trials for {category}</h3>
+      <h3 className='title text-center'>Latest Clinical Trials for {category}</h3>
       <ol>
       {clinicalTrials.map(trial => (
           <li key={trial.id}><a href={trial.link} target='_blank'>{trial.title}</a></li>
