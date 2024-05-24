@@ -37,7 +37,7 @@ services:
     container_name: admin
     restart: always
     build: 
-      context: django/
+      context: gregory/django/
       dockerfile: Dockerfile
     # used for local development
     command: python manage.py runserver 0.0.0.0:8000
