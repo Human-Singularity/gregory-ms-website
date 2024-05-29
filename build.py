@@ -145,7 +145,7 @@ def save_articles_to_json(articles):
 ####
 		''')
 		# Keep only 'article_id', 'title' and 'published_date' columns
-		json_articles = articles[['article_id', 'title','summary','link','published_date','discovery_date','source','publisher','container_title','authors','relevant','ml_prediction_gnb','ml_prediction_lr','doi','access','takeaways','categories']]
+		json_articles = articles[['article_id', 'title','summary','link','published_date','discovery_date','source','publisher','container_title','authors','relevant','doi','access','takeaways','categories']]
 
 		# Convert the Unix timestamp (in ms) to a human-readable date format
 		json_articles['published_date'] = pd.to_datetime(json_articles['published_date'], unit='ms')
