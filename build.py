@@ -88,7 +88,7 @@ def get_data():
 	SELECT articles.article_id, articles.title, articles.summary, articles.link,
 				articles.published_date, articles.discovery_date, articles.source,
 				articles.publisher, articles.container_title, articles.relevant, 
-				articles.ml_prediction_gnb, articles.ml_prediction_lr, articles.doi, 
+				articles.doi, 
 				articles.access, articles.takeaways,
 				sources.source_id AS Sources__source_id, sources.name AS Sources__name,
 				sources.link AS Sources__link, sources.language AS Sources__language, 
