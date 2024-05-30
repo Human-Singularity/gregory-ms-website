@@ -9,8 +9,8 @@ function App() {
 		return (
 			<Router>
 				<Routes>
-					<Route path="/articles/" element={<ArticleList apiEndpoint="https://api.gregory-ms.com/articles" page_path='/articles' />} />
-					<Route path="/articles/page/:pageNumber" element={<ArticleList apiEndpoint="https://api.gregory-ms.com/articles" page_path='/articles' />} />
+					<Route path="/articles/" element={<ArticleList apiEndpoint="https://api.gregory-ms.com/teams/1/articles" page_path='/articles' />} />
+					<Route path="/articles/page/:pageNumber" element={<ArticleList apiEndpoint="https://api.gregory-ms.com/teams/1/articles" page_path='/articles' />} />
 					<Route path="/articles/:articleId/:articleSlug" element={<SingleArticle />} />
 					<Route path="/articles/:articleId" element={<SingleArticle />} />
 					<Route path="/articles/author/:authorId" element={AuthorProfile} />

@@ -9,11 +9,12 @@ import FetchAndDownload from './DownloadButton';
 
 
 function InteractiveLineChart() {
+  const API_URL = 'https://api.gregory-ms.com';
   const { category, page } = useParams();
-  const monthlyCountsEndpoint = `https://api.gregory-ms.com/categories/${category}/monthly-counts/`;
-  const articleEndpoint = `https://api.gregory-ms.com/articles/category/${category}/`;
-  const categoryEndpoint = `https://api.gregory-ms.com/articles/category/${category}/`;
-  const categoryTrialsEndpoint = `https://api.gregory-ms.com/trials/category/${category}/?format=json`;
+  const monthlyCountsEndpoint = `${API_URL}/teams/1/categories/${category}/monthly-counts/`;
+  const articleEndpoint = `${API_URL}/teams/1/articles/category/${category}/`;
+  const categoryEndpoint = `${API_URL}/teams/1/articles/category/${category}/`;
+  const categoryTrialsEndpoint = `${API_URL}/teams/1/trials/category/${category}/?format=json`;
   const page_path = `/categories/${category}`;
   const [monthlyCounts, setMonthlyCounts] = useState(null);
   const [clinicalTrials, setClinicalTrials] = useState([]);
