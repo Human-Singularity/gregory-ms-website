@@ -2,11 +2,20 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import fileDownload from 'js-file-download';
 
-
 const FetchAndDownload = ({ apiEndpoint }) => {
-  const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isReady, setIsReady] = useState(false);
+
+  const escapeCsvValue = (value) => {
+    if (value == null) {
+      return '';
+    }
+    if (typeof value === 'string' && (value.includes(',') || value.includes('"') || value.includes('\n'))) {
+      value = value.replace(/"/g, '""');
+      return `"${value}"`;
+    }
+    return value;
+  };
 
   const downloadCSV = (fetchedData) => {
     const csvData = fetchedData.map(item => ({
@@ -18,48 +27,53 @@ const FetchAndDownload = ({ apiEndpoint }) => {
       'publisher': item.publisher,
       'container_title': item.container_title,
       'relevant': item.relevant,
-      'ml_prediction_gnb': item.ml_prediction_gnb,
-      'ml_prediction_lr': item.ml_prediction_lr,
+      'ml_prediction_gnb': item.ml_predictions?.gnb,
+      'ml_prediction_lr': item.ml_predictions?.lr,
       'discovery_date': item.discovery_date,
       'doi': item.doi,
       'access': item.access,
       'takeaways': item.takeaways,
-      'categories': item.categories.join(', ')
+      'categories': item.categories?.map(category => category.category_name).join(', ')
     }));
 
     const csvHeaders = Object.keys(csvData[0]);
 
-    let csvContent = csvHeaders.join(',') + '\n';
-    csvContent += csvData.map(row => Object.values(row).join(',')).join('\n');
+    let csvContent = csvHeaders.map(escapeCsvValue).join(',') + '\n';
+    csvContent += csvData.map(row => Object.values(row).map(escapeCsvValue).join(',')).join('\n');
 
     fileDownload(csvContent, 'articles.csv');
   };
 
-  const fetchAndDownload = async (apiEndpoint) => {
+  const fetchAndDownload = async () => {
     setIsLoading(true);
     let url = apiEndpoint;
-    let response = await axios.get(url);
-    let fetchedData = response.data.results;
-    while(response.data.next !== null) {
-			if (response.data.next && response.data.next.startsWith('http://')) {
-				response.data.next = 'https://' + response.data.next.substring(7);
-			}
-      response = await axios.get(response.data.next);
-      fetchedData = [...fetchedData, ...response.data.results];
+    let fetchedData = [];
+    try {
+      let response = await axios.get(url);
+      fetchedData = response.data.results;
+      while (response.data.next !== null) {
+        if (response.data.next && response.data.next.startsWith('http://')) {
+          response.data.next = 'https://' + response.data.next.substring(7);
+        }
+        response = await axios.get(response.data.next);
+        fetchedData = [...fetchedData, ...response.data.results];
+      }
+      setIsLoading(false);
+      setIsReady(true);
+      downloadCSV(fetchedData);
+      console.log('fetchedData', fetchedData);
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+      setIsLoading(false);
     }
-    setData(fetchedData);
-    setIsLoading(false);
-    setIsReady(true);
-    downloadCSV(fetchedData);
-		console.log('fetchedData', fetchedData);
   };
 
   return (
     <div>
       <button 
-			className={isReady ? 'btn btn-success btn-md float-right' : 'btn btn-info btn-md float-right'}
-			onClick={fetchAndDownload.bind(this, apiEndpoint)} 
-			disabled={isLoading}>
+        className={isReady ? 'btn btn-success btn-md float-right' : 'btn btn-info btn-md float-right'}
+        onClick={fetchAndDownload}
+        disabled={isLoading}>
         {isLoading ? 'Fetching articles, please wait...' : isReady ? 'Download articles in CSV' : 'Download articles'}
       </button>
     </div>
