@@ -7,7 +7,6 @@ import { ArticleList } from './ArticleList';
 import { BrowserRouter as Router, Route, Routes, useParams } from 'react-router-dom';
 import FetchAndDownload from './DownloadButton';
 
-
 function InteractiveLineChart() {
   const API_URL = 'https://api.gregory-ms.com';
   const { category, page } = useParams();
@@ -45,16 +44,16 @@ function InteractiveLineChart() {
     fetchData();
   }, [monthlyCountsEndpoint, categoryTrialsEndpoint]);
 
-  const formatData = monthlyCounts => {
+  const formatData = (monthlyCounts) => {
     if (!Array.isArray(monthlyCounts.monthly_article_counts) || !Array.isArray(monthlyCounts.monthly_trial_counts)) {
       console.error('monthly_article_counts or monthly_trial_counts is not an array');
       return [];
     }
-  
+
     const format = d3.timeParse("%Y-%m-%dT%H:%M:%SZ");
     let cumulativeArticleCount = 0;
-  
-    const formattedArticleCounts = monthlyCounts.monthly_article_counts.map(count => {
+
+    const formattedArticleCounts = monthlyCounts.monthly_article_counts.map((count) => {
       cumulativeArticleCount += count.count;
       return {
         date: count.month ? format(count.month) : null,
@@ -62,26 +61,26 @@ function InteractiveLineChart() {
         cumulativeArticleCount,
       };
     });
-  
-    const formattedTrialCounts = monthlyCounts.monthly_trial_counts.map(count => {
+
+    const formattedTrialCounts = monthlyCounts.monthly_trial_counts.map((count) => {
       return {
         date: count.month ? format(count.month) : null,
         monthlyTrialCount: count.count,
       };
     });
-  
+
     // merge formattedArticleCounts and formattedTrialCounts based on 'date'
     let formattedData = [...formattedArticleCounts, ...formattedTrialCounts];
-  
+
     // filter out entries with null dates
-    formattedData = formattedData.filter(item => item.date !== null);
-  
+    formattedData = formattedData.filter((item) => item.date !== null);
+
     // sort data by 'date'
     formattedData.sort((a, b) => a.date - b.date);
-  
-    // Merge trial counts into article counts 
+
+    // Merge trial counts into article counts
     formattedData = formattedData.reduce((acc, item) => {
-      const existingItem = acc.find(i => i.date.getTime() === item.date.getTime());
+      const existingItem = acc.find((i) => i.date.getTime() === item.date.getTime());
       if (existingItem) {
         existingItem.monthlyTrialCount = item.monthlyTrialCount;
       } else {
@@ -89,32 +88,31 @@ function InteractiveLineChart() {
       }
       return acc;
     }, []);
-  
+
     // Fill missing months with zeros
-    const startDate = new Date(2021, 0);  // Start from January 2021
+    const startDate = new Date(2021, 0); // Start from January 2021
     const endDate = new Date();
     for (let dt = startDate; dt <= endDate; dt.setMonth(dt.getMonth() + 1)) {
-      const existingItem = formattedData.find(item => item.date.getTime() === dt.getTime());
+      const existingItem = formattedData.find((item) => item.date.getTime() === dt.getTime());
       if (!existingItem) {
         formattedData.push({
           date: new Date(dt),
           monthlyArticleCount: 0,
           cumulativeArticleCount: 0,
-          monthlyTrialCount: 0
+          monthlyTrialCount: 0,
         });
       }
     }
-  
+
     // sort data by 'date' again after adding missing months
     formattedData.sort((a, b) => a.date - b.date);
-  
+
     return formattedData;
   };
-    
 
   const data = monthlyCounts ? formatData(monthlyCounts) : [];
 
-  const formatDate = date => {
+  const formatDate = (date) => {
     const format = d3.timeFormat("%b %Y");
     return format(date);
   };
@@ -140,7 +138,7 @@ function InteractiveLineChart() {
           <CartesianGrid stroke="#f5f5f5" />
           <Bar yAxisId="left" dataKey="monthlyArticleCount" fill="#8884d8" name="Monthly Article Count" />
           <Bar yAxisId="left" dataKey="monthlyTrialCount" fill="#413ea0" name="Monthly Trial Count" />
-          <Line yAxisId="right" dataKey="cumulativeArticleCount" stroke="#FF0000"     type="monotone" name="Cumulative Article Count" />
+          <Line yAxisId="right" dataKey="cumulativeArticleCount" stroke="#FF0000" type="monotone" name="Cumulative Article Count" />
           <Legend />
         </ComposedChart>
       </ResponsiveContainer>
@@ -153,12 +151,12 @@ function InteractiveLineChart() {
       <ArticleList apiEndpoint={articleEndpoint} page_path={page_path} page={parseInt(page)} />
       <h3 className='title text-center'>Latest Clinical Trials for {category}</h3>
       <ol>
-      {clinicalTrials.map(trial => (
-          <li key={trial.id}><a href={trial.link} target='_blank'>{trial.title}</a></li>
+        {clinicalTrials.map((trial) => (
+          <li key={trial.trial_id}><a href={trial.link} target='_blank'>{trial.title}</a></li>
         ))}
       </ol>
     </>
-  );  
+  );
 }
 
 function App() {
