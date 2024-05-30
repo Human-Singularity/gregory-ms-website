@@ -81,40 +81,44 @@ def get_data():
 	postgres_password = os.getenv('POSTGRES_PASSWORD')
 	postgres_db = os.getenv('POSTGRES_DB')
 
-	postgres_connection_url = 'postgresql://' + postgres_user + ':' + postgres_password + '@' + db_host + ':5432/' + postgres_db
+	postgres_connection_url = f'postgresql://{postgres_user}:{postgres_password}@{db_host}:5432/{postgres_db}'
 	engine = sqlalchemy.create_engine(postgres_connection_url)
 
 	query_articles = '''
-	SELECT articles.article_id, articles.title, articles.summary, articles.link,
-				articles.published_date, articles.discovery_date, articles.source,
-				articles.publisher, articles.container_title, articles.relevant, 
-				articles.doi, 
-				articles.access, articles.takeaways,
-				sources.source_id AS Sources__source_id, sources.name AS Sources__name,
-				sources.link AS Sources__link, sources.language AS Sources__language, 
-				sources.source_for AS Sources__source_for, sources.subject_id AS Sources__subject_id,
-				STRING_AGG(DISTINCT authors.given_name || ' ' || authors.family_name, ', ') AS authors,
-				STRING_AGG(DISTINCT categories.category_name, ', ') AS categories
-	FROM articles
-	LEFT JOIN sources ON articles.source = sources.source_id
-	LEFT JOIN articles_authors ON articles.article_id = articles_authors.articles_id
-	LEFT JOIN authors ON articles_authors.authors_id = authors.author_id
-	LEFT JOIN articles_categories ON articles.article_id = articles_categories.articles_id
-	LEFT JOIN categories ON articles_categories.categories_id = categories.category_id
-	GROUP BY articles.article_id, sources.source_id
-	ORDER BY articles.article_id ASC;
+	SELECT a.article_id, a.title, a.summary, a.link, a.published_date, a.discovery_date,
+					a.source, a.publisher, a.container_title, a.relevant, a.doi, a.access, a.takeaways,
+					s.source_id AS Sources__source_id, s.name AS Sources__name, s.link AS Sources__link, s.language AS Sources__language, 
+					s.source_for AS Sources__source_for, s.subject_id AS Sources__subject_id,
+					STRING_AGG(DISTINCT au.given_name || ' ' || au.family_name, ', ') AS authors,
+					STRING_AGG(DISTINCT tc.category_name, ', ') AS categories
+	FROM articles a
+	LEFT JOIN sources s ON a.source = s.source_id
+	LEFT JOIN articles_authors aa ON a.article_id = aa.articles_id
+	LEFT JOIN authors au ON aa.authors_id = au.author_id
+	LEFT JOIN articles_team_categories atc ON a.article_id = atc.articles_id
+	LEFT JOIN team_categories tc ON atc.teamcategory_id = tc.id
+	GROUP BY a.article_id, s.source_id
+	ORDER BY a.article_id ASC;
 	'''
-	
-	query_trials = 'SELECT "public"."trials"."trial_id" AS "trial_id", "public"."trials"."discovery_date" AS "discovery_date", "public"."trials"."title" AS "title", "public"."trials"."summary" AS "summary", "public"."trials"."link" AS "link", "public"."trials"."published_date" AS "published_date", "public"."trials"."source" AS "source", "public"."trials"."relevant" AS "relevant", "Sources"."source_id" AS "Sources__source_id", "Sources"."name" AS "Sources__name", "Sources"."link" AS "Sources__link" FROM "public"."trials" LEFT JOIN "public"."sources" "Sources" ON "public"."trials"."source" = "Sources"."source_id" ORDER BY trial_id DESC;'
-	query_categories = 'SELECT "public"."categories"."category_id" AS "category_id", "public"."categories"."category_name" AS "category_name", "public"."categories"."category_description" AS "category_description", "public"."categories"."category_terms" AS "category_terms" FROM "public"."categories";'
 
+	query_trials = '''
+	SELECT t.trial_id, t.discovery_date, t.title, t.summary, t.link, t.published_date, t.source,
+					t.relevant, s.source_id AS Sources__source_id, s.name AS Sources__name, s.link AS Sources__link
+	FROM trials t
+	LEFT JOIN sources s ON t.source = s.source_id
+	ORDER BY t.trial_id DESC;
+	'''
+
+	query_categories = '''
+	SELECT tc.id AS category_id, tc.category_name, tc.category_description, tc.category_terms
+	FROM team_categories tc;
+	'''
 
 	articles = pd.read_sql_query(sql=sqlalchemy.text(query_articles), con=engine.connect())
 	categories = pd.read_sql_query(sql=sqlalchemy.text(query_categories), con=engine.connect())
 	trials = pd.read_sql_query(sql=sqlalchemy.text(query_trials), con=engine.connect())
 
 	return articles, categories, trials
-
 
 def save_excel_and_json(articles, trials):
 	print('''
@@ -125,7 +129,6 @@ def save_excel_and_json(articles, trials):
 
 	# Process and save trials
 	process_and_save_dataframe(trials, 'trials')
-
 
 def process_and_save_dataframe(df, name):
 	df['published_date'] = df['published_date'].dt.tz_localize(None)
@@ -139,30 +142,29 @@ def process_and_save_dataframe(df, name):
 	df.to_csv('content/developers/' + name + '_' + datetime_string + '.csv')
 
 def save_articles_to_json(articles):
-		print('''
+	print('''
 ####
 ## CREATE data/articles.json
 ####
-		''')
-		# Keep only 'article_id', 'title' and 'published_date' columns
-		json_articles = articles[['article_id', 'title','summary','link','published_date','discovery_date','source','publisher','container_title','authors','relevant','doi','access','takeaways','categories']]
+	''')
+	# Keep only 'article_id', 'title' and 'published_date' columns
+	json_articles = articles[['article_id', 'title','summary','link','published_date','discovery_date','source','publisher','container_title','authors','relevant','doi','access','takeaways','categories']]
 
-		# Convert the Unix timestamp (in ms) to a human-readable date format
-		json_articles['published_date'] = pd.to_datetime(json_articles['published_date'], unit='ms')
-		json_articles['discovery_date'] = pd.to_datetime(json_articles['discovery_date'],unit='ms')
+	# Convert the Unix timestamp (in ms) to a human-readable date format
+	json_articles['published_date'] = pd.to_datetime(json_articles['published_date'], unit='ms')
+	json_articles['discovery_date'] = pd.to_datetime(json_articles['discovery_date'],unit='ms')
 
-		# Format the 'published_date' column as "yyyy-mm-dd"
-		json_articles['published_date'] = json_articles['published_date'].dt.strftime('%Y-%m-%d')
-		json_articles['discovery_date'] = json_articles['discovery_date'].dt.strftime('%Y-%m-%d')
+	# Format the 'published_date' column as "yyyy-mm-dd"
+	json_articles['published_date'] = json_articles['published_date'].dt.strftime('%Y-%m-%d')
+	json_articles['discovery_date'] = json_articles['discovery_date'].dt.strftime('%Y-%m-%d')
 
-		# Clean the summary before saving files
-		json_articles['summary'] = json_articles['summary'].apply(clean_text)
+	# Clean the summary before saving files
+	json_articles['summary'] = json_articles['summary'].apply(clean_text)
 
-		# Save the processed DataFrame to a JSON file
-		json_articles.to_json('content/developers/articles_' +  datetime_string + '.json', orient='records')
-		json_articles.to_excel('content/developers/articles_' +  datetime_string + '.xlsx')
-		json_articles.to_csv('content/developers/articles_' +  datetime_string + '.csv')
-	
+	# Save the processed DataFrame to a JSON file
+	json_articles.to_json('content/developers/articles_' +  datetime_string + '.json', orient='records')
+	json_articles.to_excel('content/developers/articles_' +  datetime_string + '.xlsx')
+	json_articles.to_csv('content/developers/articles_' +  datetime_string + '.csv')
 
 def create_categories(categories):
 	print('''
@@ -179,15 +181,14 @@ def create_categories(categories):
 		os.makedirs(category_path, exist_ok=True)
 
 		if not os.path.exists(category_index_file):
-				with open(category_index_file, "w") as f:
+			with open(category_index_file, "w") as f:
 					f.write("+++\n")
 					f.write(f"title = \"{row['category_name']}\"\n")
 					f.write(f"slug = \"{category_slug}\"\n")
 					f.write("+++\n")
-				print(f"Created category '{row['category_name']}'")
+			print(f"Created category '{row['category_name']}'")
 		else:
-				print(f"Category '{row['category_name']}' already exists. File not modified.")
-
+			print(f"Category '{row['category_name']}' already exists. File not modified.")
 
 def create_zip_files():
 	print('''
@@ -233,24 +234,25 @@ def generate_sitemap(articles, trials):
 
 	# Process articles
 	for _, row in articles.iterrows():
-		url = etree.SubElement(urlset, "url")
-		etree.SubElement(url, "loc").text = f"https://gregory-ms.com/articles/{row['article_id']}/"
-		etree.SubElement(url, "changefreq").text = "monthly"  # adjust as needed
-		# assuming that the 'discovery_date' column is a datetime object
-		etree.SubElement(url, "lastmod").text = row['discovery_date'].strftime("%Y-%m-%d")
+		if pd.notnull(row['discovery_date']):
+			url = etree.SubElement(urlset, "url")
+			etree.SubElement(url, "loc").text = f"https://gregory-ms.com/articles/{row['article_id']}/"
+			etree.SubElement(url, "changefreq").text = "monthly"  # adjust as needed
+			# assuming that the 'discovery_date' column is a datetime object
+			etree.SubElement(url, "lastmod").text = row['discovery_date'].strftime("%Y-%m-%d")
 
 	# Process trials
 	for _, row in trials.iterrows():
-		url = etree.SubElement(urlset, "url")
-		etree.SubElement(url, "loc").text = f"https://gregory-ms.com/trials/{row['trial_id']}/"
-		etree.SubElement(url, "changefreq").text = "monthly"  # adjust as needed
-		# assuming that the 'discovery_date' column is a datetime object
-		etree.SubElement(url, "lastmod").text = row['discovery_date'].strftime("%Y-%m-%d")
+		if pd.notnull(row['discovery_date']):
+			url = etree.SubElement(urlset, "url")
+			etree.SubElement(url, "loc").text = f"https://gregory-ms.com/trials/{row['trial_id']}/"
+			etree.SubElement(url, "changefreq").text = "monthly"  # adjust as needed
+			# assuming that the 'discovery_date' column is a datetime object
+			etree.SubElement(url, "lastmod").text = row['discovery_date'].strftime("%Y-%m-%d")
 
 	# Write the XML to a file
 	with open("content/articles_trials.xml", "wb") as file:
 		file.write(etree.tostring(urlset, pretty_print=True, xml_declaration=True, encoding="UTF-8"))
-
 
 def delete_temporary_files():
 	print('\n# delete temporary files')
@@ -308,7 +310,6 @@ def build_website():
 	hugo_command = which("hugo")
 	website_path = os.environ.get("WEBSITE_PATH", "public")
 	subprocess.run([hugo_command, "-d", website_path])
-
 
 if __name__ == '__main__':
 	if '--fast' in sys.argv:
