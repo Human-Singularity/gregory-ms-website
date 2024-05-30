@@ -42,7 +42,7 @@ function TrialsList() {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await axios.get(`https://api.gregory-ms.com/trials/?format=json&page=${page}`);
+      const response = await axios.get(`https://api.gregory-ms.com/teams/1/trials/?format=json&page=${page}`);
       setTrials(response.data.results);
 			setLastPage(Math.ceil(response.data.count / 10));
     }

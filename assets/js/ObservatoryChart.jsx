@@ -28,8 +28,8 @@ const override = css`
 const MAX_CONCURRENT_REQUESTS = 2;
 
 const REQUEST_LIMITER = pLimit(MAX_CONCURRENT_REQUESTS);
-
-const CATEGORIES_URL = "https://api.gregory-ms.com/categories/?format=json";
+const API_URL = "https://api.gregory-ms.com/teams/1/";
+const CATEGORIES_URL = `${API_URL}categories/?format=json`;
 
 async function loadCategories(signal) {
   let finished = false;
@@ -74,7 +74,7 @@ async function loadCategories(signal) {
 }
 
 const MONTHLY_COUNTS_URL = (category) =>
-  `https://api.gregory-ms.com/categories/${encodeURIComponent(
+  `${API_URL}categories/${encodeURIComponent(
     category,
   )}/monthly-counts/`;
 
