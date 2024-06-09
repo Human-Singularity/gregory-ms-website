@@ -47,7 +47,6 @@ export function SingleArticle() {
             <p><strong className='text-muted'>Published Date</strong>: <span id="published_date" data-datetime={article.published_date}>{article.published_date ? formatDate(article.published_date) : 'Unknown'}</span></p>
             <p><strong className='text-muted'>Publisher</strong>: <span id="publisher">{article.publisher}</span></p>
             <p><strong className='text-muted'>Link</strong>: <span id="link"><a href={article.link}>{article.link}</a></span></p>
-            <p><strong className='text-muted'>Manual Selection</strong>: <span id="relevant">{article.relevant === null ? "not set" : article.relevant.toString()}</span></p>
 
             {article.ml_predictions.length > 0 && (
                 <>
