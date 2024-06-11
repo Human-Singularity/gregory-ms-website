@@ -53,7 +53,7 @@ export function SingleArticle() {
 
             {article.ml_predictions && article.ml_predictions.length > 0 && (
                 <>
-                    <p><strong className='text-muted'>Machine Learning Prediction (Gaussian Naive Bayes Model)</strong>: <span id="ml_prediction_gnb">{article.ml_predictions[0]?.gnb === null ? "not set" : article.ml_predictions[0]?.gnb?.toString()}</span></p>
+                    <p><strong className='text-muted'>Machine Learning Prediction (Gaussian Naive Bayes Model)</strong>: <span id="ml_prediction_gnb">{article.ml_predictions[0]?.gnb === null ? "not set" : article.ml_predictions[0]}</span></p>
                 </>
             )}
 
