@@ -86,13 +86,14 @@ def get_data():
 
 	query_articles = '''
 	SELECT a.article_id, a.title, a.summary, a.link, a.published_date, a.discovery_date,
-					a.source, a.publisher, a.container_title, a.relevant, a.doi, a.access, a.takeaways,
-					s.source_id AS Sources__source_id, s.name AS Sources__name, s.link AS Sources__link, 
-					s.language AS Sources__language, s.source_for AS Sources__source_for, s.subject_id AS Sources__subject_id,
-					STRING_AGG(DISTINCT au.given_name || ' ' || au.family_name, ', ') AS authors,
-					STRING_AGG(DISTINCT tc.category_name, ', ') AS categories
+      s.source_id AS source, a.publisher, a.container_title, a.relevant, a.doi, a.access, a.takeaways,
+      s.source_id AS Sources__source_id, s.name AS Sources__name, s.link AS Sources__link, 
+      s.language AS Sources__language, s.source_for AS Sources__source_for, s.subject_id AS Sources__subject_id,
+      STRING_AGG(DISTINCT au.given_name || ' ' || au.family_name, ', ') AS authors,
+      STRING_AGG(DISTINCT tc.category_name, ', ') AS categories
 	FROM articles a
-	LEFT JOIN sources s ON a.source = s.source_id
+	LEFT JOIN articles_sources aso ON a.article_id = aso.articles_id
+	LEFT JOIN sources s ON aso.sources_id = s.source_id
 	LEFT JOIN articles_author aa ON a.article_id = aa.article_id
 	LEFT JOIN authors au ON aa.author_id = au.author_id
 	LEFT JOIN articles_team_categories atc ON a.article_id = atc.article_id
