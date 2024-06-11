@@ -68,6 +68,15 @@ def pull_from_github():
 	output = g.pull()
 	print(output)
 
+def fetch_all_data(api_url):
+	data_list = []
+	while api_url:
+		response = requests.get(api_url)
+		data = response.json()
+		data_list.extend(data['results'])
+		api_url = data['next']
+	return data_list
+
 def get_data():
 	print('''
 ####
@@ -75,49 +84,20 @@ def get_data():
 ####
 	''')
 
-	# It's localhost because we are running outside the container
-	db_host = 'localhost'
-	postgres_user = os.getenv('POSTGRES_USER')
-	postgres_password = os.getenv('POSTGRES_PASSWORD')
-	postgres_db = os.getenv('POSTGRES_DB')
+	# Fetch articles from API
+	api_url_articles = 'http://localhost:8000/teams/1/articles/?format=json'
+	articles_data = fetch_all_data(api_url_articles)
+	articles = pd.json_normalize(articles_data)
+	
+	# Fetch trials from API
+	api_url_trials = 'http://localhost:8000/teams/1/trials/?format=json'
+	trials_data = fetch_all_data(api_url_trials)
+	trials = pd.json_normalize(trials_data)
 
-	postgres_connection_url = f'postgresql://{postgres_user}:{postgres_password}@{db_host}:5432/{postgres_db}'
-	engine = sqlalchemy.create_engine(postgres_connection_url)
-
-	query_articles = '''
-	SELECT a.article_id, a.title, a.summary, a.link, a.published_date, a.discovery_date,
-      s.source_id AS source, a.publisher, a.container_title, a.relevant, a.doi, a.access, a.takeaways,
-      s.source_id AS Sources__source_id, s.name AS Sources__name, s.link AS Sources__link, 
-      s.language AS Sources__language, s.source_for AS Sources__source_for, s.subject_id AS Sources__subject_id,
-      STRING_AGG(DISTINCT au.given_name || ' ' || au.family_name, ', ') AS authors,
-      STRING_AGG(DISTINCT tc.category_name, ', ') AS categories
-	FROM articles a
-	LEFT JOIN articles_sources aso ON a.article_id = aso.articles_id
-	LEFT JOIN sources s ON aso.sources_id = s.source_id
-	LEFT JOIN articles_author aa ON a.article_id = aa.article_id
-	LEFT JOIN authors au ON aa.author_id = au.author_id
-	LEFT JOIN articles_team_categories atc ON a.article_id = atc.article_id
-	LEFT JOIN team_categories tc ON atc.teamcategory_id = tc.id
-	GROUP BY a.article_id, s.source_id
-	ORDER BY a.article_id ASC;
-	'''
-
-	query_trials = '''
-	SELECT t.trial_id, t.discovery_date, t.title, t.summary, t.link, t.published_date, t.source,
-					t.relevant, s.source_id AS Sources__source_id, s.name AS Sources__name, s.link AS Sources__link
-	FROM trials t
-	LEFT JOIN sources s ON t.source = s.source_id
-	ORDER BY t.trial_id DESC;
-	'''
-
-	query_categories = '''
-	SELECT tc.id AS category_id, tc.category_name, tc.category_description, tc.category_terms
-	FROM team_categories tc;
-	'''
-
-	articles = pd.read_sql_query(sql=sqlalchemy.text(query_articles), con=engine.connect())
-	categories = pd.read_sql_query(sql=sqlalchemy.text(query_categories), con=engine.connect())
-	trials = pd.read_sql_query(sql=sqlalchemy.text(query_trials), con=engine.connect())
+	# Fetch categories from API
+	api_url_categories = 'http://localhost:8000/teams/1/categories/?format=json'
+	categories_data = fetch_all_data(api_url_categories)
+	categories = pd.json_normalize(categories_data)
 
 	return articles, categories, trials
 
