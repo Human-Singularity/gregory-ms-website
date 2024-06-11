@@ -1,8 +1,10 @@
 #!/usr/bin/python3
 from bs4 import BeautifulSoup
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
 from dotenv import load_dotenv
 from lxml import etree
+from math import ceil
 from pathlib import Path
 from shutil import which
 from slugify import slugify
@@ -16,13 +18,11 @@ import os
 import pandas as pd
 import presskit
 import re
+import requests
 import sqlalchemy
 import subprocess
-import time
 import sys
-import requests
-from concurrent.futures import ThreadPoolExecutor, as_completed
-
+import time
 load_dotenv()
 
 # Set Variables
@@ -67,15 +67,27 @@ def pull_from_github():
 	output = g.pull()
 	print(output)
 
-def fetch_data(api_url):
-	data_list = []
-	while api_url:
-		response = requests.get(api_url)
-		response.raise_for_status()
-		data = response.json()
-		data_list.extend(data['results'])
-		api_url = data['next']
-	return data_list
+def fetch_page(api_url):
+	response = requests.get(api_url)
+	response.raise_for_status()
+	return response.json()
+
+def fetch_all_data(api_url):
+	initial_data = fetch_page(api_url)
+	count = initial_data['count']
+	results = initial_data['results']
+	num_pages = ceil(count / len(results))
+
+	with ThreadPoolExecutor() as executor:
+			future_to_url = {executor.submit(fetch_page, f"{api_url}&page={page}"): page for page in range(2, num_pages + 1)}
+			for future in as_completed(future_to_url):
+				try:
+					data = future.result()
+					results.extend(data['results'])
+				except Exception as exc:
+					print(f'Page {future_to_url[future]} generated an exception: {exc}')
+					
+	return results
 
 def get_data():
 	print('''
@@ -93,7 +105,7 @@ def get_data():
 	results = {}
 
 	with ThreadPoolExecutor() as executor:
-		future_to_url = {executor.submit(fetch_data, url): name for name, url in api_urls.items()}
+		future_to_url = {executor.submit(fetch_all_data, url): name for name, url in api_urls.items()}
 		for future in as_completed(future_to_url):
 			name = future_to_url[future]
 			try:
