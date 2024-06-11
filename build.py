@@ -21,6 +21,7 @@ import subprocess
 import time
 import sys
 import requests
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 load_dotenv()
 
@@ -50,9 +51,6 @@ def clean_text(text):
 	text = text.replace('\n', ' ')
 	text = text.replace('\r', ' ')
 
-	# Remove non-alphanumeric characters
-	# text = re.sub(r'\W', ' ', text)
-	
 	# Remove extra whitespace
 	text = re.sub(r'\s+', ' ', text)
 
@@ -69,10 +67,11 @@ def pull_from_github():
 	output = g.pull()
 	print(output)
 
-def fetch_all_data(api_url):
+def fetch_data(api_url):
 	data_list = []
 	while api_url:
 		response = requests.get(api_url)
+		response.raise_for_status()
 		data = response.json()
 		data_list.extend(data['results'])
 		api_url = data['next']
@@ -85,20 +84,27 @@ def get_data():
 ####
 	''')
 
-	# Fetch articles from API
-	api_url_articles = 'http://localhost:8000/teams/1/articles/?format=json'
-	articles_data = fetch_all_data(api_url_articles)
-	articles = pd.json_normalize(articles_data)
-	
-	# Fetch trials from API
-	api_url_trials = 'http://localhost:8000/teams/1/trials/?format=json'
-	trials_data = fetch_all_data(api_url_trials)
-	trials = pd.json_normalize(trials_data)
+	api_urls = {
+		'articles': 'https://api.gregory-ms.com/teams/1/articles/?format=json',
+		'trials': 'https://api.gregory-ms.com/teams/1/trials/?format=json',
+		'categories': 'https://api.gregory-ms.com/teams/1/categories/?format=json'
+	}
 
-	# Fetch categories from API
-	api_url_categories = 'http://localhost:8000/teams/1/categories/?format=json'
-	categories_data = fetch_all_data(api_url_categories)
-	categories = pd.json_normalize(categories_data)
+	results = {}
+
+	with ThreadPoolExecutor() as executor:
+		future_to_url = {executor.submit(fetch_data, url): name for name, url in api_urls.items()}
+		for future in as_completed(future_to_url):
+			name = future_to_url[future]
+			try:
+				data = future.result()
+				results[name] = data
+			except Exception as exc:
+				print(f'{name} generated an exception: {exc}')
+
+	articles = pd.json_normalize(results['articles'])
+	trials = pd.json_normalize(results['trials'])
+	categories = pd.json_normalize(results['categories'])
 
 	return articles, categories, trials
 
@@ -113,15 +119,15 @@ def save_excel_and_json(articles, trials):
 	process_and_save_dataframe(trials, 'trials')
 
 def process_and_save_dataframe(df, name):
-	df['published_date'] = df['published_date'].dt.tz_localize(None)
-	df['discovery_date'] = df['discovery_date'].dt.tz_localize(None)
+	df['published_date'] = pd.to_datetime(df['published_date']).dt.tz_localize(None)
+	df['discovery_date'] = pd.to_datetime(df['discovery_date']).dt.tz_localize(None)
 
-	df.link = df.link.apply(html.unescape)
-	df.summary = df.summary.replace(np.nan, '', regex=True)
-	df.summary = df.summary.apply(html.unescape)
-	df.to_excel('content/developers/' + name + '_' + datetime_string + '.xlsx')
-	df.to_json('content/developers/' + name + '_' + datetime_string + '.json')
-	df.to_csv('content/developers/' + name + '_' + datetime_string + '.csv')
+	df['link'] = df['link'].apply(html.unescape)
+	df['summary'] = df['summary'].replace(np.nan, '', regex=True)
+	df['summary'] = df['summary'].apply(html.unescape)
+	df.to_excel(f'content/developers/{name}_{datetime_string}.xlsx')
+	df.to_json(f'content/developers/{name}_{datetime_string}.json')
+	df.to_csv(f'content/developers/{name}_{datetime_string}.csv')
 
 def save_articles_to_json(articles):
 	print('''
@@ -130,11 +136,11 @@ def save_articles_to_json(articles):
 ####
 	''')
 	# Keep only 'article_id', 'title' and 'published_date' columns
-	json_articles = articles[['article_id', 'title','summary','link','published_date','discovery_date','source','publisher','container_title','authors','relevant','doi','access','takeaways','categories']]
+	json_articles = articles[['article_id', 'title','summary','link','published_date','discovery_date','sources','publisher','container_title','authors','relevant','doi','access','takeaways','team_categories']]
 
 	# Convert the Unix timestamp (in ms) to a human-readable date format
 	json_articles['published_date'] = pd.to_datetime(json_articles['published_date'], unit='ms')
-	json_articles['discovery_date'] = pd.to_datetime(json_articles['discovery_date'],unit='ms')
+	json_articles['discovery_date'] = pd.to_datetime(json_articles['discovery_date'], unit='ms')
 
 	# Format the 'published_date' column as "yyyy-mm-dd"
 	json_articles['published_date'] = json_articles['published_date'].dt.strftime('%Y-%m-%d')
@@ -144,9 +150,9 @@ def save_articles_to_json(articles):
 	json_articles['summary'] = json_articles['summary'].apply(clean_text)
 
 	# Save the processed DataFrame to a JSON file
-	json_articles.to_json('content/developers/articles_' +  datetime_string + '.json', orient='records')
-	json_articles.to_excel('content/developers/articles_' +  datetime_string + '.xlsx')
-	json_articles.to_csv('content/developers/articles_' +  datetime_string + '.csv')
+	json_articles.to_json(f'content/developers/articles_{datetime_string}.json', orient='records')
+	json_articles.to_excel(f'content/developers/articles_{datetime_string}.xlsx')
+	json_articles.to_csv(f'content/developers/articles_{datetime_string}.csv')
 
 def create_categories(categories):
 	print('''
@@ -154,20 +160,20 @@ def create_categories(categories):
 ## CREATE CATEGORIES
 ####
 	''')
-	categoriesDir = GREGORY_DIR + "/content/categories/"
+	categories_dir = Path(GREGORY_DIR) / "content" / "categories"
 
-	for index, row in categories.iterrows():       
+	for _, row in categories.iterrows():       
 		category_slug = slugify(row['category_name'])
-		category_path = categoriesDir + category_slug
-		category_index_file = category_path + "/_index.md"
+		category_path = categories_dir / category_slug
+		category_index_file = category_path / "_index.md"
 		os.makedirs(category_path, exist_ok=True)
 
-		if not os.path.exists(category_index_file):
+		if not category_index_file.exists():
 			with open(category_index_file, "w") as f:
-					f.write("+++\n")
-					f.write(f"title = \"{row['category_name']}\"\n")
-					f.write(f"slug = \"{category_slug}\"\n")
-					f.write("+++\n")
+				f.write("+++\n")
+				f.write(f"title = \"{row['category_name']}\"\n")
+				f.write(f"slug = \"{category_slug}\"\n")
+				f.write("+++\n")
 			print(f"Created category '{row['category_name']}'")
 		else:
 			print(f"Category '{row['category_name']}' already exists. File not modified.")
@@ -180,31 +186,31 @@ def create_zip_files():
 
 ### Articles''')
 
-	zipArticles = ZipFile('content/developers/articles.zip', 'w')
-	print('- content/developers/articles_' + datetime_string + '.xlsx')
-	print('- content/developers/articles_' + datetime_string + '.json')
-	print('- content/developers/articles_' + datetime_string + '.csv')
+	zip_articles = ZipFile('content/developers/articles.zip', 'w')
+	print(f'- content/developers/articles_{datetime_string}.xlsx')
+	print(f'- content/developers/articles_{datetime_string}.json')
+	print(f'- content/developers/articles_{datetime_string}.csv')
 	print('- content/developers/README.md\n')
 
-	zipArticles.write('content/developers/articles_' + datetime_string + '.xlsx')
-	zipArticles.write('content/developers/articles_' + datetime_string + '.json')
-	zipArticles.write('content/developers/articles_' + datetime_string + '.csv')
-	zipArticles.write('content/developers/README.md')
-	zipArticles.close()
+	zip_articles.write(f'content/developers/articles_{datetime_string}.xlsx')
+	zip_articles.write(f'content/developers/articles_{datetime_string}.json')
+	zip_articles.write(f'content/developers/articles_{datetime_string}.csv')
+	zip_articles.write('content/developers/README.md')
+	zip_articles.close()
 
 	print('### Clinical Trials')
 
-	zipTrials = ZipFile('content/developers/trials.zip', 'w')
-	print('- content/developers/trials_' + datetime_string + '.xlsx')
-	print('- content/developers/trials_' + datetime_string + '.json')
-	print('- content/developers/trials_' + datetime_string + '.csv')
+	zip_trials = ZipFile('content/developers/trials.zip', 'w')
+	print(f'- content/developers/trials_{datetime_string}.xlsx')
+	print(f'- content/developers/trials_{datetime_string}.json')
+	print(f'- content/developers/trials_{datetime_string}.csv')
 	print('- content/developers/README.md\n')
 
-	zipTrials.write('content/developers/trials_' + datetime_string + '.xlsx')
-	zipTrials.write('content/developers/trials_' + datetime_string + '.json')
-	zipTrials.write('content/developers/trials_' + datetime_string + '.csv')
-	zipTrials.write('content/developers/README.md')
-	zipTrials.close()
+	zip_trials.write(f'content/developers/trials_{datetime_string}.xlsx')
+	zip_trials.write(f'content/developers/trials_{datetime_string}.json')
+	zip_trials.write(f'content/developers/trials_{datetime_string}.csv')
+	zip_trials.write('content/developers/README.md')
+	zip_trials.close()
 
 def generate_sitemap(articles, trials):
 	print('''
@@ -225,31 +231,24 @@ def generate_sitemap(articles, trials):
 
 	# Process trials
 	for _, row in trials.iterrows():
-		if pd.notnull(row['discovery_date']):
-			url = etree.SubElement(urlset, "url")
-			etree.SubElement(url, "loc").text = f"https://gregory-ms.com/trials/{row['trial_id']}/"
-			etree.SubElement(url, "changefreq").text = "monthly"  # adjust as needed
-			# assuming that the 'discovery_date' column is a datetime object
-			etree.SubElement(url, "lastmod").text = row['discovery_date'].strftime("%Y-%m-%d")
+			if pd.notnull(row['discovery_date']):
+				url = etree.SubElement(urlset, "url")
+				etree.SubElement(url, "loc").text = f"https://gregory-ms.com/trials/{row['trial_id']}/"
+				etree.SubElement(url, "changefreq").text = "monthly"  # adjust as needed
+				# assuming that the 'discovery_date' column is a datetime object
+				etree.SubElement(url, "lastmod").text = row['discovery_date'].strftime("%Y-%m-%d")
 
 	# Write the XML to a file
 	with open("content/articles_trials.xml", "wb") as file:
-		file.write(etree.tostring(urlset, pretty_print=True, xml_declaration=True, encoding="UTF-8"))
+			file.write(etree.tostring(urlset, pretty_print=True, xml_declaration=True, encoding="UTF-8"))
 
 def delete_temporary_files():
 	print('\n# delete temporary files')
-	excel_file = Path('content/developers/articles_' + datetime_string + '.xlsx')
-	json_file = Path('content/developers/articles_' + datetime_string + '.json')
-	csv_file = Path('content/developers/articles_' + datetime_string + '.csv')
-	Path.unlink(excel_file)
-	Path.unlink(json_file)
-	Path.unlink(csv_file)
-	excel_file = Path('content/developers/trials_' + datetime_string + '.xlsx')
-	json_file = Path('content/developers/trials_' + datetime_string + '.json')
-	csv_file = Path('content/developers/trials_' + datetime_string + '.csv')
-	Path.unlink(excel_file)
-	Path.unlink(json_file)
-	Path.unlink(csv_file)
+	for name in ['articles', 'trials']:
+			for ext in ['.xlsx', '.json', '.csv']:
+					file = Path(f'content/developers/{name}_{datetime_string}{ext}')
+					if file.exists():
+							file.unlink()
 
 def generate_metabase_embeds():
 	print('''
@@ -259,29 +258,22 @@ def generate_metabase_embeds():
 	''')
 
 	# Opening JSON file
-	f = open('data/dashboards.json')
+	with open('data/dashboards.json') as f:
+		dashboards = json.load(f)
 	
-	# returns JSON object as
-	# a dictionary
-	dashboards = json.load(f)
-	
-	# Iterating through the json list
 	metabase_json = {}
 	for i in dashboards:
-		print("Generating key for dashboard: "+ str(i))
-		payload = { "resource": {"dashboard": i}, "params": { }, "exp": round(time.time()) + (60 * 60 * 24 * 30)}
+		print(f"Generating key for dashboard: {i}")
+		payload = {"resource": {"dashboard": i}, "params": {}, "exp": round(time.time()) + (60 * 60 * 24 * 30)}
 		token = jwt.encode(payload, METABASE_SECRET_KEY, algorithm='HS256')
 		iframeUrl = METABASE_SITE_URL + 'embed/dashboard/' + token + '#bordered=true&titled=true'
-		entry = "dashboard_" + str(i) 
+		entry = "dashboard_" + str(i)
 		metabase_json[str(entry)] = iframeUrl
 
-	f.close()
+	embeds_json = GREGORY_DIR + 'data/embeds.json'
 
-	embedsJson = GREGORY_DIR + 'data/embeds.json';
-
-	with open(embedsJson, "w") as f:
-		f.write(json.dumps(metabase_json))
-		f.close()
+	with open(embeds_json, "w") as f:
+		json.dump(metabase_json, f)
 
 def build_website():
 	print('''
