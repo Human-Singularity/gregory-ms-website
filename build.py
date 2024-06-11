@@ -149,24 +149,22 @@ def save_articles_to_json(articles):
 ## CREATE data/articles.json
 ####
 	''')
-	# Keep only 'article_id', 'title' and 'published_date' columns
-	json_articles = articles[['article_id', 'title','summary','link','published_date','discovery_date','sources','publisher','container_title','authors','relevant','doi','access','takeaways','team_categories']]
 
 	# Convert the Unix timestamp (in ms) to a human-readable date format
-	json_articles['published_date'] = pd.to_datetime(json_articles['published_date'], errors='coerce').dt.tz_localize(None)
-	json_articles['discovery_date'] = pd.to_datetime(json_articles['discovery_date'], errors='coerce').dt.tz_localize(None)
+	articles['published_date'] = pd.to_datetime(articles['published_date'], errors='coerce').dt.tz_localize(None)
+	articles['discovery_date'] = pd.to_datetime(articles['discovery_date'], errors='coerce').dt.tz_localize(None)
 
 	# Format the 'published_date' column as "yyyy-mm-dd"
-	json_articles['published_date'] = json_articles['published_date'].dt.strftime('%Y-%m-%d')
-	json_articles['discovery_date'] = json_articles['discovery_date'].dt.strftime('%Y-%m-%d')
+	articles['published_date'] = articles['published_date'].dt.strftime('%Y-%m-%d')
+	articles['discovery_date'] = articles['discovery_date'].dt.strftime('%Y-%m-%d')
 
 	# Clean the summary before saving files
-	json_articles['summary'] = json_articles['summary'].apply(clean_text)
+	articles['summary'] = articles['summary'].apply(clean_text)
 
 	# Save the processed DataFrame to a JSON file
-	json_articles.to_json(f'content/developers/articles_{datetime_string}.json', orient='records')
-	json_articles.to_excel(f'content/developers/articles_{datetime_string}.xlsx')
-	json_articles.to_csv(f'content/developers/articles_{datetime_string}.csv')
+	articles.to_json(f'content/developers/articles_{datetime_string}.json', orient='records')
+	articles.to_excel(f'content/developers/articles_{datetime_string}.xlsx')
+	articles.to_csv(f'content/developers/articles_{datetime_string}.csv')
 
 def create_categories(categories):
 	print('''
