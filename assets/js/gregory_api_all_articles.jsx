@@ -26,6 +26,5 @@ if (!rootElement._reactRootContainer) {
     root.render(<App />);
 } else {
     // If the root already exists, just render the App
-    const root = ReactDOM.createRoot(rootElement);
-    root.render(<App />);
+    ReactDOM.createRoot(rootElement).render(<App />);
 }
