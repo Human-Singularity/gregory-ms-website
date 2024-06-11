@@ -20,6 +20,7 @@ import sqlalchemy
 import subprocess
 import time
 import sys
+import requests
 
 load_dotenv()
 
