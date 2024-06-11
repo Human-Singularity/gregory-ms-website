@@ -23,6 +23,8 @@ import sqlalchemy
 import subprocess
 import sys
 import time
+from tqdm import tqdm
+
 load_dotenv()
 
 # Set Variables
@@ -79,18 +81,18 @@ def fetch_all_data(api_url):
 	num_pages = ceil(count / len(results))
 
 	with ThreadPoolExecutor() as executor:
-			future_to_url = {executor.submit(fetch_page, f"{api_url}&page={page}"): page for page in range(2, num_pages + 1)}
-			for future in as_completed(future_to_url):
-				try:
-					data = future.result()
-					results.extend(data['results'])
-				except Exception as exc:
-					print(f'Page {future_to_url[future]} generated an exception: {exc}')
-					
+		futures = {executor.submit(fetch_page, f"{api_url}&page={page}"): page for page in range(2, num_pages + 1)}
+		for future in tqdm(as_completed(futures), total=num_pages - 1, desc=f"Fetching {api_url.split('/')[-2]}"):
+			try:
+				data = future.result()
+				results.extend(data['results'])
+			except Exception as exc:
+				print(f'Page {futures[future]} generated an exception: {exc}')
+	
 	return results
 
 def get_data():
-	print('''
+    print('''
 ####
 ## GET DATA
 ####
@@ -105,9 +107,9 @@ def get_data():
 	results = {}
 
 	with ThreadPoolExecutor() as executor:
-		future_to_url = {executor.submit(fetch_all_data, url): name for name, url in api_urls.items()}
-		for future in as_completed(future_to_url):
-			name = future_to_url[future]
+		futures = {executor.submit(fetch_all_data, url): name for name, url in api_urls.items()}
+		for future in tqdm(as_completed(futures), total=len(api_urls), desc="Fetching all data"):
+			name = futures[future]
 			try:
 				data = future.result()
 				results[name] = data
