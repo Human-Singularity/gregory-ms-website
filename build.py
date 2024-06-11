@@ -153,8 +153,8 @@ def save_articles_to_json(articles):
 	json_articles = articles[['article_id', 'title','summary','link','published_date','discovery_date','sources','publisher','container_title','authors','relevant','doi','access','takeaways','team_categories']]
 
 	# Convert the Unix timestamp (in ms) to a human-readable date format
-	json_articles['published_date'] = pd.to_datetime(json_articles['published_date'], unit='ms')
-	json_articles['discovery_date'] = pd.to_datetime(json_articles['discovery_date'], unit='ms')
+	json_articles['published_date'] = pd.to_datetime(json_articles['published_date'], errors='coerce').dt.tz_localize(None)
+	json_articles['discovery_date'] = pd.to_datetime(json_articles['discovery_date'], errors='coerce').dt.tz_localize(None)
 
 	# Format the 'published_date' column as "yyyy-mm-dd"
 	json_articles['published_date'] = json_articles['published_date'].dt.strftime('%Y-%m-%d')
@@ -241,7 +241,8 @@ def generate_sitemap(articles, trials):
 			etree.SubElement(url, "loc").text = f"https://gregory-ms.com/articles/{row['article_id']}/"
 			etree.SubElement(url, "changefreq").text = "monthly"  # adjust as needed
 			# assuming that the 'discovery_date' column is a datetime object
-			etree.SubElement(url, "lastmod").text = row['discovery_date'].strftime("%Y-%m-%d")
+			discovery_date = pd.to_datetime(row['discovery_date'], errors='coerce')
+			etree.SubElement(url, "lastmod").text = discovery_date.strftime("%Y-%m-%d")
 
 	# Process trials
 	for _, row in trials.iterrows():
@@ -250,7 +251,8 @@ def generate_sitemap(articles, trials):
 				etree.SubElement(url, "loc").text = f"https://gregory-ms.com/trials/{row['trial_id']}/"
 				etree.SubElement(url, "changefreq").text = "monthly"  # adjust as needed
 				# assuming that the 'discovery_date' column is a datetime object
-				etree.SubElement(url, "lastmod").text = row['discovery_date'].strftime("%Y-%m-%d")
+				discovery_date = pd.to_datetime(row['discovery_date'], errors='coerce')
+				etree.SubElement(url, "lastmod").text = discovery_date.strftime("%Y-%m-%d")
 
 	# Write the XML to a file
 	with open("content/articles_trials.xml", "wb") as file:
