@@ -92,7 +92,7 @@ def fetch_all_data(api_url):
 	return results
 
 def get_data():
-    print('''
+	print('''
 ####
 ## GET DATA
 ####
