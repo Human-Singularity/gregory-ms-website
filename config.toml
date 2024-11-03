@@ -7,7 +7,7 @@ enableInlineShortcodes = true
 enableRobotsTXT = true
 googleAnalytics = ""
 languageCode = "en"
-theme = ["NowUI-Pro"]
+theme = ["Hugo-Now-UI-Pro"]
 title = "Multiple Sclerosis research by Gregory MS"
 removePathAccents = true
 # Set the default site thumbnail
