@@ -41,7 +41,7 @@
 	{{ $solid := resources.Get "css/fontawesome/solid.css"  }}
 
 	{{- $bootstrap := resources.Get "css/bootstrap.min.css" -}}
-	{{- $nowUi := resources.Get "scss/now-ui-kit.scss" | resources.ToCSS (dict "enableSourceMap" false "outputStyle" "compressed") -}}
+	{{- $nowUi := resources.Get "scss/now-ui-kit.scss" | toCSS (dict "enableSourceMap" false "outputStyle" "compressed") -}}
 
 	{{ $styles := slice $bootstrap $nowUi $montserrat $fontawesome $brands $regular $solid | resources.Concat "css/style.css" |  minify | fingerprint  -}}
 
