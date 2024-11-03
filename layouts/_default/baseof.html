@@ -30,7 +30,7 @@
 	<link rel="preload" href="/fonts/nucleo-outline.woff2" as="font" crossorigin="anonymous">
 
 	{{- $bootstrap := resources.Get "css/bootstrap.min.css" -}}
-	{{- $nowUi := resources.Get "scss/now-ui-kit.scss" | resources.ToCSS (dict "enableSourceMap" false "outputStyle" "compressed") -}}
+	{{- $nowUi := resources.Get "scss/now-ui-kit.scss" | toCSS (dict "enableSourceMap" false "outputStyle" "compressed") -}}
 
 	{{ $styles := slice $bootstrap $nowUi $montserrat | resources.Concat "css/style.css" | postCSS (dict "config" "./assets/css/postcss.config.js") | minify | fingerprint  -}}
 	<script src="https://kit.fontawesome.com/16e8434146.js" crossorigin="anonymous"></script>
