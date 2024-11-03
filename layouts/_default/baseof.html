@@ -164,7 +164,7 @@
 
 
 	{{- with $.Site.Params.googleSiteVerification -}}<meta name="google-site-verification" content="{{- . -}}" />{{- end -}}
-	{{- if ne .Site.IsServer true -}}
+	{{- if ne hugo.IsServer true -}}
 	{{- with $.Site.Params.googleTagManager -}}
 	<!-- Google Tag Manager -->
 	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -190,7 +190,7 @@
 	{{ end }}
 </head>
 	<body class="{{ block "bodyclasses" . }}{{ end }} sidebar-collapse" id="{{ block "bodyid" . }}home{{ end }}" {{ block "data-attributes" . }}{{end}} >
-	{{- if eq .Site.IsServer false -}}
+	{{- if eq hugo.IsServer false -}}
 	<!-- Google Tag Manager (noscript) -->
 	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{- $.Site.Params.googleTagManager -}}"
 	height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -217,29 +217,6 @@
 				<li class="nav-item {{ if (or ( $.Page.IsMenuCurrent "main" .) ( $.Page.HasMenuCurrent "main" .)) }} active {{- end -}}"><a href="{{- .URL | absLangURL -}}" title="{{- .Post -}}" class="nav-link top-menu menu-click"  data-umami-event="click--topnav-{{- .Name | urlize | lower -}} ">{{- .Name | safeHTML -}}</a></li>
 			{{- end -}}  <!-- end range .Site.Menus.main -->
 
-			{{- if .Site.IsMultiLingual -}}
-
-				{{- range .Site.Languages -}}
-
-					{{- if eq . $.Site.Language -}}
-									<li class="nav-item active"><a href="#" title="{{- .LanguageName -}}" class="nav-link language">
-									{{- partial "language-icons" (dict "context" .  "active" true "lang" .Lang "hasTranslation" true) -}}
-									</a></li>
-							{{- else -}} <!-- else if not eq . $.Site.Language -->
-
-								{{- if eq (len $.Translations) 0 -}}
-									<li class="nav-item language-inactive"><a title="{{- .LanguageName -}}" class="nav-link language-inactive language">{{- partial "language-icons" (dict "context" .  "active" false "lang" .Lang "hasTranslation" false) -}}</a></li>
-									{{- else -}}
-									{{- range $.Translations -}}
-										<li class="nav-item"><a href="{{- .Permalink -}}" title="{{- .Language.LanguageName -}}" class="nav-link language">{{- partial "language-icons" (dict "context" .  "active" false "lang" .Lang "hasTranslation" true) -}}</a></li>
-									{{- end -}} <!-- end range translations -->
-							{{- end -}} <!-- if  len translation 0  -->
-
-					{{- end -}} <!-- if eq . $.Site.Language -->
-
-				{{- end -}} <!-- range site languates -->
-
-			{{- end -}} <!-- end if site is multilingual   -->
 			</ul>
 	  </div>
 	</div>
@@ -441,7 +418,7 @@
 		{{- if or (.HasShortcode "metabase-embed")  -}}
 		<script src="https://metabase.gregory-ms.com/app/iframeResizer.js"></script>
 		{{end}}
-		{{- if eq .Site.IsServer false -}}
+		{{- if eq hugo.IsServer false -}}
 		<script async src="https://analytics.gregory-ms.com/script.js" data-website-id="ba098fd5-be22-4a28-aafa-a4e9d8222496"></script>
 		{{ end }}
 	</body>
