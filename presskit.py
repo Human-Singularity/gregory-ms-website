@@ -4,6 +4,7 @@ from googleapiclient.http import MediaIoBaseDownload
 from google.oauth2.service_account import Credentials
 import io
 import zipfile
+import shutil
 
 # Credentials and folder ID
 credentials_path = 'gregoryai-41cd67dab7a5.json'
