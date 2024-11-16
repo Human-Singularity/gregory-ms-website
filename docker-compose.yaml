@@ -34,7 +34,7 @@ services:
       - ./gregory/nodered-data:/data
 
   admin:
-    container_name: admin
+    container_name: gregory 
     restart: always
     build: 
       context: gregory/django/
