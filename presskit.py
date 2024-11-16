@@ -25,8 +25,17 @@ def setup_dir(directory_name):
 		os.makedirs(directory_name)
 		print(f"The directory {directory_name} has been created.")
 	else:
-		print(f"The directory {directory_name} already exists.")
-
+		if os.listdir(directory_name):  # Check if the directory is not empty
+			print(f"The directory {directory_name} exists and is not empty. Cleaning it...")
+			for file_or_folder in os.listdir(directory_name):
+				full_path = os.path.join(directory_name, file_or_folder)
+				if os.path.isfile(full_path) or os.path.islink(full_path):
+					os.unlink(full_path)  # Remove file or symbolic link
+				elif os.path.isdir(full_path):
+					shutil.rmtree(full_path)  # Remove subdirectory
+			print(f"The directory {directory_name} has been cleaned.")
+		else:
+			print(f"The directory {directory_name} exists and is already empty.")
 def create_zip_from_folder(folder_path, zip_name):
 	print('''
 ####
