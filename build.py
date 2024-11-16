@@ -99,9 +99,9 @@ def get_data():
 	''')
 
 	api_urls = {
-		'articles': 'https://api.gregory-ms.com/teams/1/articles/?format=json',
-		'trials': 'https://api.gregory-ms.com/teams/1/trials/?format=json',
-		'categories': 'https://api.gregory-ms.com/teams/1/categories/?format=json'
+		'articles': 'http://localhost:8000/teams/1/articles/?format=json',
+		'trials': 'http://localhost:8000/teams/1/trials/?format=json',
+		'categories': 'http://localhost:8000/teams/1/categories/?format=json'
 	}
 
 	results = {}
