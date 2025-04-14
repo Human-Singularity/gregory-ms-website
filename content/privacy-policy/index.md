@@ -20,7 +20,7 @@ categories:
 
 layout: page-header
 title: "Privacy Policy"
-subtitle: "If you're a visitor I don't save any of your data.<br>If you subscribe to the email digest I save your name and email."
+subtitle: "If you're a visitor we don't save any of your data.<br>If you subscribe to the email digest we save your name, stakeholder profile, and email."
 menu:
   column_3:
     name: Privacy Policy
