@@ -104,9 +104,21 @@
 				<p><strong>Short Link: </strong> {{ range .Params.aliases }}<a rel="shortlink" href="{{ $.Site.BaseURL | replaceRE "/$" ""}}{{.}}">{{ $.Site.BaseURL | replaceRE "/$" "" }}{{.}}</a>{{ end }}
 			</ul>
 				</p>
-				<p><strong>Discovery Date</strong>: <span id="discovery_date" data-datetime="{{.Params.discovery_date}}">{{ .Params.discovery_date | dateFormat "02 January 2006, 15:04:05 MST" }}</span></p>
-				<p><strong>Published Date</strong>: <span id="published_date" data-datetime="{{.Params.published_date}}">{{ .Params.published_date }}</span></p>
-				<p><strong>Source</strong>: <span id="source">{{ .Params.article_source | safeHTML }}</span></p>
+				{{ if .Params.discovery_date }}
+				<p><strong>Discovery Date</strong>:
+					<span id="discovery_date" data-datetime="{{ .Params.discovery_date }}">
+						{{ .Params.discovery_date | dateFormat "02 January 2006, 15:04:05 MST" }}
+					</span>
+				</p>
+			{{ end }}
+			
+			{{ if .Params.published_date }}
+				<p><strong>Published Date</strong>:
+					<span id="published_date" data-datetime="{{ .Params.published_date }}">
+						{{ .Params.published_date }}
+					</span>
+				</p>
+			{{ end }}				<p><strong>Source</strong>: <span id="source">{{ .Params.article_source | safeHTML }}</span></p>
 				<p><strong>Link</strong>: <span id="link"><a href="{{ .Params.link | htmlUnescape | safeHTML }}">{{ .Params.link | safeHTML }}</a></span></p>
 				<p><strong>Manual Selection</strong>: <span id="relevant">{{ .Params.relevant }}</span></p>
 				<p><strong>Machine Learning Gaussian Naive Bayes Model</strong>: <span id="ml_prediction_gnb">{{ .Params.ml_prediction_gnb }}</span></p>
