@@ -21,7 +21,7 @@ tags:
   - Clinical Trials
 categories: 
   - Updates
-title: "Gregory AI Update"
+title: "Smarter MS Insights: Gregory AI’s Latest Upgrade"
 layout: single
 options:
   unlisted: false
