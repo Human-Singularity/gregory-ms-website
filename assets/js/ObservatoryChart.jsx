@@ -1,7 +1,7 @@
 import ReactDOM from "react-dom/client";
 import React, { useState, useEffect, useCallback } from "react";
 import { scaleOrdinal } from "d3-scale";
-import { schemeCategory10 } from "d3-scale-chromatic";
+import { schemeSet3 } from "d3-scale-chromatic";
 import {
   LineChart,
   Line,
@@ -11,7 +11,6 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-  Brush,
   Label,
 } from "recharts";
 import * as d3 from "d3";
@@ -30,6 +29,23 @@ const MAX_CONCURRENT_REQUESTS = 2;
 const REQUEST_LIMITER = pLimit(MAX_CONCURRENT_REQUESTS);
 const API_URL = "https://api.gregory-ms.com/teams/1/";
 const CATEGORIES_URL = `${API_URL}categories/?format=json`;
+
+// Excluded categories - add category slugs here to hide them
+const EXCLUDED_CATEGORIES = [
+  "uncategorized",
+  "other",
+  "physical-therapy-and-telerehabilitation",
+  "lipoic-acid",
+  "epstein-barr-virus",
+  // Add more category slugs to exclude
+];
+
+const TIME_PERIODS = {
+  "6m": { label: "6 Months", months: 6 },
+  "1y": { label: "1 Year", months: 12 },
+  "2y": { label: "2 Years", months: 24 },
+  all: { label: "All Time", months: null },
+};
 
 async function loadCategories(signal) {
   let finished = false;
@@ -62,10 +78,12 @@ async function loadCategories(signal) {
     }
 
     results = data.results.reduce((memo, entry) => {
-      if (entry.article_count > 0) {
+      if (
+        entry.article_count > 0 &&
+        !EXCLUDED_CATEGORIES.includes(entry.category_slug)
+      ) {
         memo[entry.category_name] = entry.category_slug;
       }
-
       return memo;
     }, results);
   }
@@ -98,108 +116,182 @@ async function loadMonthlyCounts(categories = {}, signal) {
   return Object.fromEntries(results);
 }
 
-function formatData(categoryMonthlyCounts) {
+function formatDataForLineChart(categoryMonthlyCounts, timePeriod) {
   const format = d3.timeParse("%Y-%m-%dT%H:%M:%SZ");
-  let allData = [];
+  const now = new Date();
+  const cutoffDate =
+    timePeriod === "all"
+      ? null
+      : new Date(now.getFullYear(), now.getMonth() - TIME_PERIODS[timePeriod].months, 1);
 
+  // First, collect all data points for each category
+  let categoryData = {};
+  
   for (const [name, monthlyCounts] of Object.entries(categoryMonthlyCounts)) {
     if (!Array.isArray(monthlyCounts.monthly_article_counts)) {
-      console.error("monthly_article_counts is not an array");
       continue;
     }
 
-    let cumulativeArticleCount = 0;
+    categoryData[name] = [];
+    let cumulativeCount = 0;
 
-    const formattedArticleCounts = monthlyCounts.monthly_article_counts.map(
-      (count) => {
-        cumulativeArticleCount += count.count;
-        const date = count.month ? format(count.month) : null;
-        return {
-          name: date
-            ? `${date.getFullYear()}-${date.getMonth() < 6 ? "S1" : "S2"}`
-            : null,
-          numericDate: date
-            ? date.getFullYear() + (date.getMonth() < 6 ? 0 : 0.5)
-            : null,
-          [name]: cumulativeArticleCount,
-        };
-      },
-    );
+    monthlyCounts.monthly_article_counts.forEach((count) => {
+      const date = count.month ? format(count.month) : null;
+      if (!date || (cutoffDate && date < cutoffDate)) return;
 
-    allData = [...allData, ...formattedArticleCounts];
+      cumulativeCount += count.count;
+      const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
+      
+      categoryData[name].push({
+        monthKey,
+        date,
+        count: cumulativeCount,
+        hasData: count.count > 0
+      });
+    });
   }
 
-  const groupedData = allData.reduce((acc, curr) => {
-    const existing = acc.find((item) => item.numericDate === curr.numericDate);
-    if (existing) {
-      Object.assign(existing, curr);
-    } else {
-      acc.push(curr);
-    }
-    return acc;
-  }, []);
+  // Create a set of all months that have data for any category
+  let allMonths = new Set();
+  Object.values(categoryData).forEach(data => {
+    data.forEach(point => allMonths.add(point.monthKey));
+  });
 
-  groupedData.sort((a, b) => a.numericDate - b.numericDate);
+  // Convert to sorted array
+  const sortedMonths = Array.from(allMonths).sort();
 
-  return groupedData;
+  // Build the final dataset
+  const result = sortedMonths.map(monthKey => {
+    const dataPoint = { month: monthKey };
+    
+    Object.entries(categoryData).forEach(([categoryName, data]) => {
+      // Find the data point for this month
+      const monthData = data.find(d => d.monthKey === monthKey);
+      
+      if (monthData) {
+        dataPoint[categoryName] = monthData.count;
+      } else {
+        // Find the last known value before this month
+        const previousData = data
+          .filter(d => d.monthKey < monthKey)
+          .sort((a, b) => b.monthKey.localeCompare(a.monthKey))[0];
+        
+        if (previousData) {
+          // Only show the line if there was activity in this category
+          // Use null to create a gap in the line
+          dataPoint[categoryName] = null;
+        }
+      }
+    });
+
+    return dataPoint;
+  });
+
+  return result;
+}
+
+function TimePeriodControls({ selectedPeriod, onPeriodChange }) {
+  return (
+    <div>
+      {Object.entries(TIME_PERIODS).map(([key, period]) => (
+        <button
+          key={key}
+          className={`btn ${
+            selectedPeriod === key ? "btn-primary" : "btn-outline-primary"
+          } time-period-btn`}
+          onClick={() => onPeriodChange(key)}
+        >
+          {period.label}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function CategoryControls({ categories, hiddenCategories, onToggleCategory, onToggleAll }) {
+  const allCategories = Object.keys(categories);
+  const allHidden = allCategories.every(cat => hiddenCategories.includes(cat));
+  const allVisible = hiddenCategories.length === 0;
+
+  return (
+    <div>
+      <div className="mb-3">
+        {Object.keys(categories).map((category) => (
+          <label key={category} className="category-checkbox">
+            <input
+              type="checkbox"
+              checked={!hiddenCategories.includes(category)}
+              onChange={() => onToggleCategory(category)}
+            />
+            <span>{category}</span>
+          </label>
+        ))}
+      </div>
+      <div>
+        <button
+          className={`btn btn-sm ${allVisible ? 'btn-outline-danger' : 'btn-outline-success'}`}
+          onClick={() => onToggleAll(allVisible)}
+        >
+          {allVisible ? 'Hide All' : 'Show All'}
+        </button>
+      </div>
+    </div>
+  );
 }
 
 function InteractiveLineChart({
   chartData,
   allCategories,
   hiddenCategories,
-  handleLegendClick,
   colorScale,
 }) {
-  const lastIndex = chartData.length - 1;
-  const startIndex = lastIndex - 24 > 0 ? lastIndex - 24 : 0; // prevent negative index
+  const visibleCategories = allCategories.filter(
+    (cat) => !hiddenCategories.includes(cat),
+  );
 
   return (
-    <ResponsiveContainer width="100%" aspect={2}>
-      <LineChart data={chartData}>
-        {allCategories.map((category, index) => (
-          <Line
-            type="monotone"
-            dataKey={category}
-            stroke={colorScale(index)}
-            key={category}
-            dot={false}
-            strokeWidth={2}
-            activeDot={{ r: 8 }}
-            hide={hiddenCategories.includes(category)}
+    <div className="chart-container">
+      <ResponsiveContainer width="100%" height={500}>
+        <LineChart
+          data={chartData}
+          margin={{ top: 20, right: 30, left: 40, bottom: 5 }}
+        >
+          {visibleCategories.map((category, index) => (
+            <Line
+              key={category}
+              type="monotone"
+              dataKey={category}
+              stroke={colorScale(index)}
+              strokeWidth={2}
+              dot={false}
+              activeDot={{ r: 6 }}
+              name={category}
+              connectNulls={false}
+            />
+          ))}
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis
+            dataKey="month"
+            angle={-45}
+            textAnchor="end"
+            height={80}
           />
-        ))}
-        <CartesianGrid stroke="#ccc" />
-        <XAxis
-          dataKey="numericDate"
-          allowDataOverflow
-          type="number"
-          domain={["dataMin", "dataMax"]}
-          tickFormatter={(tickItem) => {
-            const year = Math.floor(tickItem);
-            const semester = tickItem - year === 0 ? "S1" : "S2";
-            return `${year}-${semester}`;
-          }}
-        />
-        <YAxis>
-          <Label
-            angle={-90}
-            value="Cumulative count of published research"
-            position="outsideLeft"
-            offset={-10}
+          <YAxis>
+            <Label
+              angle={-90}
+              value="Cumulative Number of Articles"
+              position="insideLeft"
+              style={{ textAnchor: "middle" }}
+            />
+          </YAxis>
+          <Tooltip
+            formatter={(value, name) => [value === null ? "No data" : value, name]}
+            labelFormatter={(label) => `Month: ${label}`}
           />
-        </YAxis>
-        <Tooltip />
-        <Legend onClick={handleLegendClick} />
-        <Brush
-          dataKey="name"
-          height={30}
-          stroke="#8884d8"
-          startIndex={startIndex}
-          endIndex={lastIndex}
-        />
-      </LineChart>
-    </ResponsiveContainer>
+          <Legend />
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
   );
 }
 
@@ -209,7 +301,9 @@ function App() {
   const [chartData, setChartData] = useState([]);
   const [allCategories, setAllCategories] = useState([]);
   const [hiddenCategories, setHiddenCategories] = useState([]);
-  const colorScale = scaleOrdinal(schemeCategory10);
+  const [timePeriod, setTimePeriod] = useState("2y");
+  const [categoryMonthlyCounts, setCategoryMonthlyCounts] = useState({});
+  const colorScale = scaleOrdinal(schemeSet3);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -241,8 +335,8 @@ function App() {
 
     setLoading((c) => c + 1);
     loadMonthlyCounts(categories, controller.signal)
-      .then((categoryMonthtlyCounts) => {
-        setChartData(formatData(categoryMonthtlyCounts));
+      .then((data) => {
+        setCategoryMonthlyCounts(data);
         setAllCategories(Object.keys(categories));
       })
       .finally(() => setLoading((c) => c - 1))
@@ -250,6 +344,12 @@ function App() {
 
     return () => controller.abort();
   }, [categories]);
+
+  useEffect(() => {
+    if (Object.keys(categoryMonthlyCounts).length > 0) {
+      setChartData(formatDataForLineChart(categoryMonthlyCounts, timePeriod));
+    }
+  }, [categoryMonthlyCounts, timePeriod]);
 
   const handleLegendClick = useCallback((data) => {
     setHiddenCategories((prev) => {
@@ -261,10 +361,62 @@ function App() {
     });
   });
 
+  const handleToggleCategory = useCallback((category) => {
+    setHiddenCategories((prev) => {
+      if (prev.includes(category)) {
+        return prev.filter((cat) => cat !== category);
+      } else {
+        return [...prev, category];
+      }
+    });
+  });
+
+  const handlePeriodChange = useCallback((period) => {
+    setTimePeriod(period);
+  });
+
+  const handleToggleAll = useCallback((hideAll) => {
+    if (hideAll) {
+      setHiddenCategories([...allCategories]);
+    } else {
+      setHiddenCategories([]);
+    }
+  }, [allCategories]);
+
+  useEffect(() => {
+    const timePeriodContainer = document.getElementById("time-period-controls");
+    const categoryContainer = document.getElementById("category-controls");
+
+    // Clear existing content to prevent memory leaks
+    if (timePeriodContainer) {
+      timePeriodContainer.innerHTML = '';
+      const timePeriodRoot = ReactDOM.createRoot(timePeriodContainer);
+      timePeriodRoot.render(
+        <TimePeriodControls
+          selectedPeriod={timePeriod}
+          onPeriodChange={handlePeriodChange}
+        />
+      );
+    }
+
+    if (categoryContainer && Object.keys(categories).length > 0) {
+      categoryContainer.innerHTML = '';
+      const categoryRoot = ReactDOM.createRoot(categoryContainer);
+      categoryRoot.render(
+        <CategoryControls
+          categories={categories}
+          hiddenCategories={hiddenCategories}
+          onToggleCategory={handleToggleCategory}
+          onToggleAll={handleToggleAll}
+        />
+      );
+    }
+  }, [categories, hiddenCategories, timePeriod, handleToggleCategory, handlePeriodChange, handleToggleAll]);
+
   return loading ? (
     <div className="loading-container">
       <BounceLoader
-        color={"#123abc"}
+        color={"#007bff"}
         loading={loading}
         css={override}
         size={60}
@@ -275,7 +427,6 @@ function App() {
       chartData={chartData}
       allCategories={allCategories}
       hiddenCategories={hiddenCategories}
-      handleLegendClick={handleLegendClick}
       colorScale={colorScale}
     />
   );
@@ -284,4 +435,4 @@ function App() {
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(<App />);
 
-export default InteractiveLineChart;
+export default App;
