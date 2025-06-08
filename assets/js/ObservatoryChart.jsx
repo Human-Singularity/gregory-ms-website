@@ -51,7 +51,7 @@ async function loadCategories(signal) {
   let finished = false;
   let nextUrl = CATEGORIES_URL;
 
-  let results = {};
+  let results = [];
 
   if (signal.aborted) {
     return;
@@ -77,18 +77,32 @@ async function loadCategories(signal) {
       nextUrl.protocol = "https:";
     }
 
-    results = data.results.reduce((memo, entry) => {
-      if (
-        entry.article_count > 0 &&
-        !EXCLUDED_CATEGORIES.includes(entry.category_slug)
-      ) {
-        memo[entry.category_name] = entry.category_slug;
-      }
-      return memo;
-    }, results);
+    results = results.concat(
+      data.results.filter(
+        (entry) =>
+          entry.article_count > 0 &&
+          !EXCLUDED_CATEGORIES.includes(entry.category_slug)
+      )
+    );
   }
 
-  return results;
+  // Sort by article count descending, then by name ascending
+  results.sort((a, b) => {
+    if (b.article_count !== a.article_count) {
+      return b.article_count - a.article_count;
+    }
+    return a.category_name.toLowerCase().localeCompare(b.category_name.toLowerCase());
+  });
+
+  // Return both the categories object and the sorted list for top 10 selection
+  const categoriesObj = Object.fromEntries(
+    results.map(entry => [entry.category_name, entry.category_slug])
+  );
+
+  return {
+    categories: categoriesObj,
+    top10: results.slice(0, 10).map(entry => entry.category_name)
+  };
 }
 
 const MONTHLY_COUNTS_URL = (category) =>
@@ -303,7 +317,23 @@ function App() {
   const [hiddenCategories, setHiddenCategories] = useState([]);
   const [timePeriod, setTimePeriod] = useState("2y");
   const [categoryMonthlyCounts, setCategoryMonthlyCounts] = useState({});
-  const colorScale = scaleOrdinal(schemeSet3);
+  const colorScale = scaleOrdinal([
+    '#1f77b4', // Strong blue
+    '#ff7f0e', // Strong orange
+    '#2ca02c', // Strong green
+    '#d62728', // Strong red
+    '#9467bd', // Strong purple
+    '#8c564b', // Strong brown
+    '#e377c2', // Strong pink
+    '#7f7f7f', // Strong gray
+    '#bcbd22', // Strong olive
+    '#17becf', // Strong cyan
+    '#1a55FF', // Bright blue
+    '#FF6B35', // Bright orange-red
+    '#228B22', // Forest green
+    '#DC143C', // Crimson
+    '#800080', // Purple
+  ]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -311,15 +341,16 @@ function App() {
     setLoading((c) => c + 1);
 
     loadCategories(controller.signal)
-      .then((results) =>
-        setCategories(
-          Object.fromEntries(
-            Object.entries(results).sort(([a], [b]) =>
-              a.toLowerCase().localeCompare(b.toLowerCase()),
-            ),
-          ),
-        ),
-      )
+      .then((results) => {
+        setCategories(results.categories);
+        setAllCategories(Object.keys(results.categories));
+        
+        // Hide all categories except top 10
+        const categoriesToHide = Object.keys(results.categories).filter(
+          category => !results.top10.includes(category)
+        );
+        setHiddenCategories(categoriesToHide);
+      })
       .finally(() => setLoading((c) => c - 1))
       .catch(console.error.bind(console));
 
@@ -337,7 +368,6 @@ function App() {
     loadMonthlyCounts(categories, controller.signal)
       .then((data) => {
         setCategoryMonthlyCounts(data);
-        setAllCategories(Object.keys(categories));
       })
       .finally(() => setLoading((c) => c - 1))
       .catch(console.error.bind(console));
