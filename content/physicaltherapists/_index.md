@@ -21,10 +21,6 @@ tags:
 categories: 
   - 
 title: "For Physical Therapists"
-menu:
-  main:
-    weight: 4
-    name: Physical Therapists
 options:
   unlisted: false
   showHeader: true

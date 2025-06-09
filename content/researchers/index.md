@@ -31,11 +31,6 @@ options:
   navbar: navbar navbar-expand-lg bg-white fixed-top font-weight-bold
 scripts:
   - 
-menu:
-  main:
-    url: researchers
-    name: Researchers
-    weight: 3
 ---
 
 </div>
