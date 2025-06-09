@@ -42,65 +42,8 @@ menu:
 
 <div class="row justify-content-center align-self-center mb-5 mt-5 p-md-5">
   <div class="col-md-5 col-12 justify-content-center align-self-center ">
-    <div class="col-md-12 ml-auto mr-auto">
-                <div class="card card-contact card-raised">
-                  <form role="form" id="contact-form1" method="post" action="https://api.gregory-ms.com/subscriptions/new/">
-                    <div class="card-header text-center px-3">
-                      <h4 class="card-title font-weight-bold">Weekly digest of relevant papers on Multiple Sclerosis</h4>
-                      <p class="p-3">Every tuesday, and email with the latest research filtered by Machine Learning and human review.</p>
-                    </div>
-                    <div class="card-body">
-                      <div class="row">
-                        <div class="col-md-6 pr-2">
-                          <label>First name</label>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text pr-2"><i class="now-ui-icons users_circle-08"></i></span>
-                            </div>
-                            <input type="text" name="first_name" class="form-control" placeholder="First Name..." aria-label="First Name..." autocomplete="given-name">
-                          </div>
-                        </div>
-                        <div class="col-md-6 pl-2">
-                          <div class="form-group">
-                            <label>Last name</label>
-                            <div class="input-group">
-                              <div class="input-group-prepend">
-                                <span class="input-group-text pr-2"><i class="now-ui-icons text_caps-small"></i></span>
-                              </div>
-                              <input type="text" name="last_name" class="form-control" placeholder="Last Name..." aria-label="Last Name..." autocomplete="family-name">
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label>Email address</label>
-                        <div class="input-group">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text pr-2"><i class="now-ui-icons ui-1_email-85"></i></span>
-                          </div>
-                          <input type="email" name="email" id="email" class="form-control" placeholder="Email Here..." autocomplete="email">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label>I am a...</label>
-                        <div class="input-group">
-                          <select id="profile" name="profile" class="form-control">
-                            <option value="researcher">researcher</option>
-                            <option value="doctor">doctor</option>
-                            <option value="clinical centre">clinical centre</option>
-                            <option value="patient">patient</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-12 ml-auto mr-auto text-center">
-                          <input value="2" name="list" id="list" type="hidden">
-                          <button type="submit" class="btn btn-primary btn-round mr-auto ml-auto font-weight-bold">Subscribe</button>
-                        </div>
-                      </div>
-                    </div>
-                  </form>
-                </div>
+      <div class="col-md-12 ml-auto mr-auto">
+                {{< subscribe-form >}}
               </div>
   </div>
   <div class="col-md-5 col-12 justify-content-center align-self-center">
