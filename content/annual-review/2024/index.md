@@ -40,7 +40,7 @@ scripts:
 
 ---
 
-A quick clarification on what follows: although the project is still called Gregory‑MS, the software we are developing is referred to as Gregory‑AI. We understand that this can be confusing. The decision was made because the term “MS” might imply that it’s only applicable to Multiple Sclerosis, when in fact our software is designed to be flexible and adaptable to other diseases and fields of medical research.
+The project is still called Gregory‑MS, but we refer to the software as Gregory‑AI. We chose this name because "MS" might suggest it only works for Multiple Sclerosis. In fact, the software can adapt to other diseases and medical research areas.
 
 ---
 
