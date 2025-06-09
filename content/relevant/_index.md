@@ -2,10 +2,6 @@
 title: "Current Relevant Research for MS"
 subtitle: 
 
-menu:
-  main:
-    name: "Relevant Papers"
-    weight: 6
 options:
   header: mini
   showHeader: true

@@ -21,10 +21,6 @@ tags:
 categories: 
   - 
 title: "For Doctors"
-menu:
-  main:
-    weight: 2
-    name: Doctors
 options:
   unlisted: false
   showHeader: true

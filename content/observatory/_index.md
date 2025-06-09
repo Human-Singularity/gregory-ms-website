@@ -17,10 +17,6 @@ layout: page
 description: 
 categories: []
 tags: []
-menu:
-  main:
-    Name: Observatory
-    Weight: 7
 
 enableDisqus : true
 enableMathJax: false

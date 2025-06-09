@@ -1,10 +1,6 @@
 ---
 title: Updates on the Gregory-MS Project 
 description: Our efforts to push Multiple Sclerosis research forward
-menu:
-  main:
-    name: News
-    weight: 9
 resources:
   - src: pexels-brotin-biswas-518543.jpeg
     name: header
