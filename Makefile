@@ -1,10 +1,20 @@
-upgrade:
+.PHONY: update-submodule deploy upgrade build
+
+update-submodule:
 	git submodule update --remote
-	git add gregory
-	git commit -m "update submodules"
-	git push
+	@if git diff --quiet gregory; then \
+		echo "No submodule changes to commit"; \
+	else \
+		git add gregory && \
+		git commit -m "update submodules" && \
+		git push; \
+	fi
+
+deploy: update-submodule
+	ssh gregory@House 'cd /home/gregory/gregory-ms-website && git pull && git submodule update && docker exec gregory python manage.py migrate && docker restart gregory'
+
+upgrade: update-submodule
 	ssh gregory@House 'cd /home/gregory/gregory-ms-website && git pull && git submodule update && docker restart gregory'
 
-deploy:
-	git push
-	ssh gregory@House 'cd /home/gregory/gregory-ms-website && git pull && ./build.py --fast'
+build:
+	ssh gregory@House 'cd /home/gregory/gregory-ms-website && ./build.py --fast'
