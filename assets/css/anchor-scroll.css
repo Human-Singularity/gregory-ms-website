@@ -1,0 +1,23 @@
+/* Anchor scroll offset styles */
+.anchor-target {
+  display: block;
+  position: relative;
+  top: -80px; /* Fallback offset for browsers that don't support scroll-margin-top */
+  visibility: hidden;
+  height: 0;
+}
+
+/* Modern browsers will use this for better control */
+[id] {
+  scroll-margin-top: 80px; /* Height of your fixed navbar + some padding */
+}
+
+/* Add padding specifically to the subscribe form */
+#subscribe {
+  padding-top: 1rem;
+}
+
+/* Ensure the anchor target is properly positioned */
+#subscribe-anchor {
+  top: -90px; /* Slightly larger offset for the subscribe section */
+}

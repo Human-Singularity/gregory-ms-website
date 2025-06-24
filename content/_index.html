@@ -15,6 +15,9 @@ cta:
   - label: Donate
     url: /donations/
     classes: btn btn-lg font-weight-bold bg-success btn-success
+  - label: Subscribe
+    url: '#subscribe'
+    classes: btn btn-lg font-weight-bold bg-info btn-info
 ## - label: <i class="fa fa-cloud me-1" aria-hidden="true"></i> @Gregory-MS.com
 ##   url: https://bsky.app/profile/gregory-ms.com
 ##   classes: btn btn-sm btn-info umami--click--twitter-profile-header-button
@@ -142,19 +145,19 @@ options:
       <div class="col-md-4 col-12">
         <h3 class="">Annual Reports</h3>
       
-        <p class="lead font-weight-normal">We keep track of our activities and expenses for the sake of transparency. The report also includes our findings regarding Multiple Sclerosis.
+        <p class="lead font-weight-normal">We keep track of our activities and expenses for the sake of transparency. The reports also includes our findings regarding Multiple Sclerosis literature.
         </p>
       
         <a
           href='{{< ref "/annual-review/_index.md" >}}' data-umami-event="click--body-link-annual-reports"
           class="btn btn-success btn-round btn-lg font-weight-bold"
-          >2022 in Review <i class="fas fa-arrow-circle-right"></i
+          >Our accounts and activities <i class="fas fa-arrow-circle-right"></i
         ></a>
       </div>
     </div>
     <div class="row justify-content-center mt-5 pt-5 mb-5">
       <div class="col-md-4 col-12">
-          <h3 class="">Project news and development of new features</h3>
+          <h3 class="">Project news</h3>
 
           <a
             href='{{< ref "/post/_index.md" >}}' data-umami-event="click--body-link-project-news"
@@ -175,14 +178,38 @@ options:
     <div class="row justify-content-center bg-grey mt-5 pt-5 pb-5">
       <div class="col-md-4 col-12 justify-content-center align-self-center align-right">
         <a
-        href='https://www.publico.pt/2023/05/08/ciencia/noticia/bruno-amigos-criaram-robo-esclerose-multipla-2048612'
-        target="_blank"
-        title="bruno amaral and his friends created an artificial inteligence to research multiple sclerosis"
-        data-umami-event="click--body-medialink-article-publico">
+        href='{{< ref "/academia/_index.md" >}}' data-umami-event="click--body-link-academia"
+        title="Academic research and publications about GregoryAI">
+        <img
+          src="/undraw_online_articles_re_yrkj.svg" 
+          class="align-middle d-none d-md-block float-left img img-raised rounded"
+          alt="Academic publications about GregoryAI"
+          loading="lazy"
+        />
+        </a>
+      </div>
+      <div class="col-md-4 col-12">
+        <h3 class="">Academic Research</h3>
+      
+        <p class="lead font-weight-normal">Explore our scholarly publications and academic research about GregoryAI's methodology and results.
+        </p>
+      
+        <a
+          href='{{< ref "/academia/_index.md" >}}' data-umami-event="click--body-link-academia"
+          class="btn btn-success btn-round btn-lg font-weight-bold"
+          >Academic Publications <i class="fas fa-arrow-circle-right"></i
+        ></a>
+      </div>
+    </div>
+    <div class="row justify-content-center mt-5 pt-5 pb-5">
+      <div class="col-md-4 col-12 justify-content-center align-self-center align-right">
+        <a
+        href='{{< ref "/media/_index.md" >}}' data-umami-event="click--body-link-media"
+        title="GregoryAI in the media">
         <img
           src="publico_EN_lg_transparent.png" 
           class="align-middle d-none d-md-block float-left img img-raised"
-          alt="relevant articles for multiple sclerosis patients"
+          alt="GregoryAI in the media"
           loading="lazy"
           style="border-radius: 14px;"
         />
@@ -190,49 +217,16 @@ options:
       </div>
       <div class="col-md-4 col-12">
         <h3 class="mb-1">In the Media</h3>
-        <p class="small">8, May 2023. Content in Portuguese.
+        <p class="small">See media coverage of GregoryAI
         </p>
         <p class="lead font-weight-normal">
-          Público is a top-tier Portuguese newspaper, recognized for its comprehensive coverage of diverse topics. Since its launch in 1990, it's become a reliable source for national and international news. 
+          Explore our media coverage and press mentions featuring GregoryAI's work on multiple sclerosis research.
         </p>
       
         <a
-          href='https://www.publico.pt/2023/05/08/ciencia/noticia/bruno-amigos-criaram-robo-esclerose-multipla-2048612'
-          target="_blank"
-          data-umami-event="click--body-medialink-article-publico"
+          href='{{< ref "/media/_index.md" >}}' data-umami-event="click--body-link-media"
           class="btn btn-success btn-round btn-lg font-weight-bold"
-          >Público <i class="fas fa-external-link-square-alt"></i>
-        </a>
-      </div>
-    </div>
-
-    <div class="row justify-content-center mt-5 pt-5 pb-5">
-      <div class="col-md-3 col-12 justify-content-center align-self-center align-right">
-        <a
-        href='https://www.sciencedirect.com/science/article/pii/S1877050923004106'
-        target="_blank"
-        title="A machine learning approach for mapping and accelerating multiple sclerosis research"
-        data-umami-event="click--body-medialink-article-science-direct">
-        <img
-          src="/undraw_online_articles_re_yrkj.svg" 
-          class="align-middle d-none d-md-block float-left img img-raised rounded"
-          alt="using AI to research multiple sclerosis"
-          loading="lazy"
-        />
-        </a>
-      </div>
-      <div class="col-md-5 col-12">
-        <h3 class="mb-1">In Academia</h3>
-        <p class="small">22, March 2023
-        </p>
-        <p class="lead font-weight-normal">
-          Research by António Lopes and Bruno Amaral on the machine learning technique used for GregoryAI. Harnessing intelligent reinforcement learning, our method maps and recommends valuable research material for multiple sclerosis studies. Through rigorous testing and evaluation of various machine learning algorithms, we have identified the most promising candidate to create a comprehensive and effective model for advancing multiple sclerosis research.</p>
-          <a
-          href='https://www.sciencedirect.com/science/article/pii/S1877050923004106'
-          target="_blank"
-          data-umami-event="click--body-academiclink-article-sciencedirect"
-          class="btn btn-success btn-round btn-lg font-weight-bold"
-          >Science Direct <i class="fas fa-external-link-square-alt"></i>
+          >Media Coverage <i class="fas fa-arrow-circle-right"></i>
         </a>
       </div>
     </div>
@@ -280,6 +274,19 @@ options:
         />
       </div>
     </div>
+    
+    <!-- Horizontal Subscribe Form Section -->
+    <div class="row justify-content-center mt-5 pt-5 pb-5">
+      <div class="col-md-10">
+        <div class="text-center mb-4">
+          <h2 class="title">Subscribe to Updates</h2>
+          <p class="lead">Get the latest research on Multiple Sclerosis delivered to your inbox</p>
+        </div>
+        {{< subscribe-form-horizontal >}}
+      </div>
+    </div>
+    <!-- End Horizontal Subscribe Form Section -->
+    
   </div>
 </div>
 <style>
