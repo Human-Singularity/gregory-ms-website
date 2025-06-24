@@ -1,0 +1,16 @@
+# Configure server settings for Hugo
+[server]
+  [[server.headers]]
+    for = "/*.js"
+    [server.headers.values]
+      Content-Type = "application/javascript"
+  
+  [[server.headers]]
+    for = "/*.jsx"
+    [server.headers.values]
+      Content-Type = "application/javascript"
+
+  [[server.headers]]
+    for = "/js/*.js"
+    [server.headers.values]
+      Content-Type = "application/javascript"
