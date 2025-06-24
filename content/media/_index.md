@@ -1,5 +1,5 @@
 ---
-title: "Media"
+title: "Media Room"
 subtitle:  
 date: 2021-02-24T13:25:38Z
 lastmod: 
@@ -19,7 +19,7 @@ menu:
 cta:
   - label: <i class="fa fa-download" aria-hidden="true"></i> &nbsp;Download the Press Kit
     url: https://gregory-ms.com/gregoryai_press.zip
-    classes: btn btn-md btn-info
+    classes: btn btn-md btn-primary
 resources:
   - src: dall-e-header.png
     name: header
