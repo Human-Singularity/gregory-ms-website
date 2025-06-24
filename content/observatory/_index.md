@@ -29,13 +29,9 @@ disableAutoCollapse: true
 
 Click the legend to toggle categories of the chart. Move the bottom slider to navigate the timeline.
 
-This chart is built in real time, please visit the [Downloads Page](https://gregory-ms.com/downloads/) to retrieve the full list of articles that make up the data presented here.
-
-{{< observatory >}}
 
 <h3 class="title text-center">Detailed information and charts for each Multiple Sclerosis topic</h3>
 
-{{< categories >}}
 
 <div id="root"></div>
 
