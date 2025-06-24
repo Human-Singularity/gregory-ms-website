@@ -6,6 +6,10 @@ This is an implementation of the software found at <https://gregory-ai.com/>, co
 
 ## Documentation
 
+### React Components
+
+The website uses React for interactive components that display data from the Gregory MS API. For more information about the React component architecture, see [React Components Documentation](docs/react-components.md).
+
 ### Metabase
 
 [Metabase](https://www.metabase.com/) is a tool for business intelligence that you can use to build dashboards.

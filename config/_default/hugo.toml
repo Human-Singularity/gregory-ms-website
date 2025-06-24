@@ -83,11 +83,6 @@ headerPhoto = ""
   url = "/trials/"
   weight = 6
 
-  [[menu.main]]
-  name = 'Observatory'
-  url = "/observatory/"
-  weight = 7
-
 
   [[menu.main]]
   name = 'News'

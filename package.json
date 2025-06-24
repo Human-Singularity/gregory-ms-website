@@ -8,7 +8,8 @@
     "build:jsx": "node jsx-build.js",
     "build:hugo": "hugo --gc --minify",
     "build": "npm run build:jsx && npm run build:hugo",
-    "dev": "npm run build:jsx && hugo server --disableFastRender"
+    "dev": "npm run build:jsx && hugo server --disableFastRender",
+    "dev:watch": "concurrently \"node jsx-build.js --watch\" \"hugo server --disableFastRender\""
   },
   "repository": {
     "type": "git",

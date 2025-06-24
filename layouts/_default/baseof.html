@@ -396,24 +396,16 @@
 			{{- end -}}
 		{{- end -}}
 		{{- if .HasShortcode "relevant"  -}}
-		{{ $api := resources.Get "js/gregory_api_relevant_articles.jsx" | js.Build | babel | resources.Minify | resources.Fingerprint }}
-		<script src="{{ $api.Permalink }}"></script>
+		{{ partial "react-app-loader.html" (dict "app" "relevant") }}
 		{{ end }}
 		{{- if .HasShortcode "articles"  -}}
-		{{ $api := resources.Get "js/gregory_api_all_articles.jsx" | js.Build | babel | resources.Minify | resources.Fingerprint }}
-		<script src="{{ $api.Permalink }}"></script>
+		{{ partial "react-app-loader.html" (dict "app" "articles") }}
 		{{ end }}
 		{{- if .HasShortcode "trials"  -}}
-		{{ $api := resources.Get "js/gregory_api_trials.jsx" | js.Build | babel | resources.Minify | resources.Fingerprint }}
-		<script src="{{ $api.Permalink }}"></script>
-		{{ end }}
-		{{- if .HasShortcode "observatory"  -}}
-		{{ $api := resources.Get "js/ObservatoryChart.jsx" | js.Build | babel | resources.Minify | resources.Fingerprint }}
-		<script src="{{ $api.Permalink }}"></script>
+		{{ partial "react-app-loader.html" (dict "app" "trials") }}
 		{{ end }}
 		{{- if .HasShortcode "authors"  -}}
-		{{ $authorProfile := resources.Get "js/AuthorProfile.jsx" | js.Build | babel }}
-		<script src="{{ $authorProfile.Permalink }}"></script>
+		{{ partial "react-app-loader.html" (dict "app" "authorProfile") }}
 		{{ end }}
 
 		{{- if or (.HasShortcode "metabase-embed")  -}}

@@ -1,0 +1,14 @@
+{{/* React App Loader Partial */}}
+{{ $app := .app }}
+
+{{ if eq $app "articles" }}
+  <script src="{{ (resources.Get "js/apps/articles.jsx" | js.Build) | relURL }}"></script>
+{{ else if eq $app "trials" }}
+  <script src="{{ (resources.Get "js/apps/trials.jsx" | js.Build) | relURL }}"></script>
+{{ else if eq $app "category" }}
+  <script src="{{ (resources.Get "js/apps/category.jsx" | js.Build) | relURL }}"></script>
+{{ else if eq $app "authorProfile" }}
+  <script src="{{ (resources.Get "js/apps/authorProfile.jsx" | js.Build) | relURL }}"></script>
+{{ else if eq $app "relevant" }}
+  <script src="{{ (resources.Get "js/apps/relevant.jsx" | js.Build) | relURL }}"></script>
+{{ end }}
