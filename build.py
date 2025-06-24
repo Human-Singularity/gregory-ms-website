@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python3.11
 from bs4 import BeautifulSoup
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
@@ -91,138 +91,6 @@ def fetch_all_data(api_url):
 	
 	return results
 
-def get_data():
-	print('''
-####
-## GET DATA
-####
-	''')
-
-	api_urls = {
-		'articles': 'http://localhost:8000/teams/1/articles/?format=json',
-		'trials': 'http://localhost:8000/teams/1/trials/?format=json',
-		'categories': 'http://localhost:8000/teams/1/categories/?format=json'
-	}
-
-	results = {}
-
-	with ThreadPoolExecutor() as executor:
-		futures = {executor.submit(fetch_all_data, url): name for name, url in api_urls.items()}
-		for future in tqdm(as_completed(futures), total=len(api_urls), desc="Fetching all data"):
-			name = futures[future]
-			try:
-				data = future.result()
-				results[name] = data
-			except Exception as exc:
-				print(f'{name} generated an exception: {exc}')
-
-	articles = pd.json_normalize(results['articles'])
-	trials = pd.json_normalize(results['trials'])
-	categories = pd.json_normalize(results['categories'])
-
-	return articles, categories, trials
-
-def save_excel_and_json(articles, trials):
-	print('''
-####
-## SAVE EXCEL AND JSON VERSIONS
-####
-	''')
-
-	# Process and save trials
-	process_and_save_dataframe(trials, 'trials')
-
-def process_and_save_dataframe(df, name):
-	df['published_date'] = pd.to_datetime(df['published_date']).dt.tz_localize(None)
-	df['discovery_date'] = pd.to_datetime(df['discovery_date']).dt.tz_localize(None)
-
-	df['link'] = df['link'].apply(html.unescape)
-	df['summary'] = df['summary'].replace(np.nan, '', regex=True)
-	df['summary'] = df['summary'].apply(html.unescape)
-	df.to_excel(f'content/developers/{name}_{datetime_string}.xlsx')
-	df.to_json(f'content/developers/{name}_{datetime_string}.json')
-	df.to_csv(f'content/developers/{name}_{datetime_string}.csv')
-
-def save_articles_to_json(articles):
-	print('''
-####
-## CREATE data/articles.json
-####
-	''')
-
-	# Convert the Unix timestamp (in ms) to a human-readable date format
-	articles['published_date'] = pd.to_datetime(articles['published_date'], errors='coerce').dt.tz_localize(None)
-	articles['discovery_date'] = pd.to_datetime(articles['discovery_date'], errors='coerce').dt.tz_localize(None)
-
-	# Format the 'published_date' column as "yyyy-mm-dd"
-	articles['published_date'] = articles['published_date'].dt.strftime('%Y-%m-%d')
-	articles['discovery_date'] = articles['discovery_date'].dt.strftime('%Y-%m-%d')
-
-	# Clean the summary before saving files
-	articles['summary'] = articles['summary'].apply(clean_text)
-
-	# Save the processed DataFrame to a JSON file
-	articles.to_json(f'content/developers/articles_{datetime_string}.json', orient='records')
-	articles.to_excel(f'content/developers/articles_{datetime_string}.xlsx')
-	articles.to_csv(f'content/developers/articles_{datetime_string}.csv')
-
-def create_categories(categories):
-	print('''
-####
-## CREATE CATEGORIES
-####
-	''')
-	categories_dir = Path(GREGORY_DIR) / "content" / "categories"
-
-	for _, row in categories.iterrows():       
-		category_slug = slugify(row['category_name'])
-		category_path = categories_dir / category_slug
-		category_index_file = category_path / "_index.md"
-		os.makedirs(category_path, exist_ok=True)
-
-		if not category_index_file.exists():
-			with open(category_index_file, "w") as f:
-				f.write("+++\n")
-				f.write(f"title = \"{row['category_name']}\"\n")
-				f.write(f"slug = \"{category_slug}\"\n")
-				f.write("+++\n")
-			print(f"Created category '{row['category_name']}'")
-		else:
-			print(f"Category '{row['category_name']}' already exists. File not modified.")
-
-def create_zip_files():
-	print('''
-####
-## CREATE ZIP FILES
-####
-
-### Articles''')
-
-	zip_articles = ZipFile('content/developers/articles.zip', 'w')
-	print(f'- content/developers/articles_{datetime_string}.xlsx')
-	print(f'- content/developers/articles_{datetime_string}.json')
-	print(f'- content/developers/articles_{datetime_string}.csv')
-	print('- content/developers/README.md\n')
-
-	zip_articles.write(f'content/developers/articles_{datetime_string}.xlsx')
-	zip_articles.write(f'content/developers/articles_{datetime_string}.json')
-	zip_articles.write(f'content/developers/articles_{datetime_string}.csv')
-	zip_articles.write('content/developers/README.md')
-	zip_articles.close()
-
-	print('### Clinical Trials')
-
-	zip_trials = ZipFile('content/developers/trials.zip', 'w')
-	print(f'- content/developers/trials_{datetime_string}.xlsx')
-	print(f'- content/developers/trials_{datetime_string}.json')
-	print(f'- content/developers/trials_{datetime_string}.csv')
-	print('- content/developers/README.md\n')
-
-	zip_trials.write(f'content/developers/trials_{datetime_string}.xlsx')
-	zip_trials.write(f'content/developers/trials_{datetime_string}.json')
-	zip_trials.write(f'content/developers/trials_{datetime_string}.csv')
-	zip_trials.write('content/developers/README.md')
-	zip_trials.close()
 
 def generate_sitemap(articles, trials):
 	print('''
@@ -309,13 +177,6 @@ if __name__ == '__main__':
 		presskit.setup_dir(directory_name)
 		presskit.process_folder(folder_id, directory_name)
 		presskit.create_zip_from_folder(directory_name, 'content/gregoryai_press.zip')
-		articles, categories, trials = get_data()
-		generate_sitemap(articles, trials)
-		# save_excel_and_json(articles, trials)
-		# save_articles_to_json(articles)
-		create_categories(categories)
-		# create_zip_files()
-		# generate_sitemap(articles, trials)
 		delete_temporary_files()
 		generate_metabase_embeds()
 		build_website()
