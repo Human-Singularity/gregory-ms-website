@@ -33,7 +33,7 @@
           <div class="input-group-prepend">
             <span class="input-group-text pr-2"><i class="now-ui-icons ui-1_email-85"></i></span>
           </div>
-          <input type="email" name="email" id="email" class="form-control" placeholder="Email Here..." autocomplete="email">
+          <input type="email" name="email" id="email" class="form-control" placeholder="Email Here..." autocomplete="email" required>
         </div>
       </div>
       <div class="form-group">
@@ -51,24 +51,54 @@
         <label>Send me</label>
         <div class="form-check">
           <label class="form-check-label">
-            <input class="form-check-input" type="checkbox" name="list" value="2">
+            <input class="form-check-input subscription-option-vertical" type="checkbox" name="list" value="2">
             weekly digest of articles
             <span class="form-check-sign"></span>
           </label>
         </div>
         <div class="form-check">
           <label class="form-check-label">
-            <input class="form-check-input" type="checkbox" name="list" value="1">
+            <input class="form-check-input subscription-option-vertical" type="checkbox" name="list" value="1">
             new clinical trials
             <span class="form-check-sign"></span>
           </label>
         </div>
+        <div class="invalid-feedback d-none" id="checkbox-error-vertical">
+          Please select at least one subscription option.
+        </div>
       </div>
       <div class="row">
         <div class="col-md-12 ml-auto mr-auto text-center">
-          <button type="submit" class="btn btn-primary btn-round mr-auto ml-auto font-weight-bold">Subscribe</button>
+          <button type="submit" class="btn btn-primary btn-round mr-auto ml-auto font-weight-bold">Subscribe Now</button>
         </div>
       </div>
     </div>
   </form>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const form = document.getElementById('contact-form1');
+  const checkboxes = form.querySelectorAll('.subscription-option-vertical');
+  const errorMessage = document.getElementById('checkbox-error-vertical');
+  
+  form.addEventListener('submit', function(event) {
+    let isChecked = false;
+    
+    checkboxes.forEach(function(checkbox) {
+      if (checkbox.checked) {
+        isChecked = true;
+      }
+    });
+    
+    if (!isChecked) {
+      event.preventDefault();
+      errorMessage.classList.remove('d-none');
+      errorMessage.classList.add('d-block');
+    } else {
+      errorMessage.classList.add('d-none');
+      errorMessage.classList.remove('d-block');
+    }
+  });
+});
+</script>
