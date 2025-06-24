@@ -1,8 +1,19 @@
-<div class="card card-contact card-raised">
+<div class="card card-contact card-raised" id="subscribe">
+  <div class="anchor-target" id="subscribe-anchor"></div>
   <form role="form" id="contact-form-horizontal" method="post" action="https://api.gregory-ms.com/subscriptions/new/">
     <div class="card-body">
       <div class="row align-items-center">
-        <div class="col-md-4">
+        <div class="col-md-3">
+          <div class="form-group mb-md-0">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text pr-2"><i class="now-ui-icons users_circle-08"></i></span>
+              </div>
+              <input type="text" name="first_name" class="form-control" placeholder="First Name..." aria-label="First Name..." autocomplete="given-name" required>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
           <div class="form-group mb-md-0">
             <div class="input-group">
               <div class="input-group-prepend">
@@ -12,7 +23,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
           <div class="form-group mb-md-0">
             <div class="input-group">
               <select id="profile-horizontal" name="profile" class="form-control">
@@ -25,7 +36,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-4 text-center">
+        <div class="col-md-3 text-center">
           <button type="submit" class="btn btn-primary btn-round font-weight-bold">Subscribe Now</button>
         </div>
       </div>
