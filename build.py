@@ -165,7 +165,10 @@ def build_website():
 ''')
 	hugo_command = which("hugo")
 	website_path = os.environ.get("WEBSITE_PATH", "public")
-	subprocess.run([hugo_command, "-d", website_path])
+	# Use extended version of Hugo with proper environment flags
+	env = os.environ.copy()
+	env["NODE_ENV"] = "production"  # Ensure production mode for JS builds
+	subprocess.run([hugo_command, "-d", website_path, "--gc", "--minify"], env=env)
 
 if __name__ == '__main__':
 	if '--fast' in sys.argv:
