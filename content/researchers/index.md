@@ -53,12 +53,6 @@ scripts:
   <img src="images/undraw_Online_articles_re_yrkj.svg" class="float-right w-75 align-middle d-none d-md-block" alt="medical doctors" loading="lazy"/>
   </div>
   <div class="col-md-5 col-12 justify-content-center align-self-center">
-  
-  <h3 class="title">Current Multiple Sclerosis Research</h3>
-  
-  <p class="lead font-weight-normal">You can browse the most up to date research articles, download our database, and receive a free newsletter with the most relevant articles.</p>
-      <a href='{{< ref "/articles/_index.md" >}}' class="btn btn-primary btn-round btn-lg font-weight-bold " data-umami-event="click--view-articles-researchers-page">View articles <i class="fas fa-arrow-circle-right"></i></a>
-      <a href='{{< ref "/downloads/_index.md" >}}' class="btn btn-success btn-round btn-lg font-weight-bold " data-umami-event="click--downloads-researchers-page">Download the database <i class="fas fa-download"></i></a>
   </div>
 </div>
 
