@@ -146,15 +146,37 @@ tag = "tags"
   [markup.goldmark.renderer]
     hardWraps = false
     unsafe = true
+
+# Added from hugo.toml - JSX/TSX support
+[module]
+  [module.hugoVersion]
+    extended = true
+    min = "0.147.0"
+
+# Added from hugo.toml - Ensure JSX files aren't processed as templates
+[mediaTypes]
+  [mediaTypes."text/jsx"]
+    suffixes = ["jsx"]
+    delimiter = ""
+
+[outputFormats]
+  [outputFormats.JSX]
+    mediaType = "text/jsx"
+    isPlainText = true
+    notAlternative = true
+
 [security]
   enableInlineShortcodes = false
   [security.exec]
     allow = ['^dart-sass-embedded$', '^go$', '^npx$', '^postcss$', '^babel$']
     osEnv = ['(?i)^(PATH|PATHEXT|APPDATA|TMP|TEMP|TERM|GETENV)$']
   [security.funcs]
-    getenv = ['^HUGO_|SLUG']
+    getenv = ['^HUGO_|SLUG', '^REPOSITORY_URL$', '^NODE_ENV$'] # Merged from both files
   [security.http]
     methods = ['(?i)GET|POST']
     urls = ['.*']
+
 [build]
   writeStats = true
+  # Added from hugo.toml
+  useResourceCacheWhen = "always" # fallback, always, never

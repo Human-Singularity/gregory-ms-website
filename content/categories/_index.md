@@ -10,4 +10,3 @@ options:
 
 Medication and other topics of interest for people with Multiple Sclerosis.
 
-{{< categories >}}
