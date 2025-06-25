@@ -31,11 +31,12 @@
 
 	{{- $bootstrap := resources.Get "css/bootstrap.min.css" -}}
 	{{- $nowUi := resources.Get "scss/now-ui-kit.scss" | toCSS (dict "enableSourceMap" false "outputStyle" "compressed") -}}
-
 	{{- $gregoryCustom := resources.Get "scss/gregory-custom.scss" | toCSS (dict "enableSourceMap" false "outputStyle" "compressed") -}}
+	{{- $badges := resources.Get "css/badges.css" | resources.Fingerprint -}}
 	{{ $styles := slice $bootstrap $nowUi $montserrat $gregoryCustom | resources.Concat "css/style.css" | minify | fingerprint  -}}
 	<script src="https://kit.fontawesome.com/16e8434146.js" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="{{$styles.Permalink}}">
+	<link rel="stylesheet" href="{{$badges.Permalink}}">
 
 
 
