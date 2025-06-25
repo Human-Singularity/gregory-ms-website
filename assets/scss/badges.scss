@@ -4,60 +4,88 @@
  */
 
 /* Base Badge Styles */
-.badge {
-  display: inline-flex;
-  align-items: center;
-  letter-spacing: 0.01em;
-  padding: 0.35rem 0.65rem;
-  border-radius: 0.25rem;
-  margin-right: 0.5rem;
-  font-size: 0.9rem;
-  font-weight: 700;
-  line-height: 1.2;
+.badge,
+html body .badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  letter-spacing: 0.01em !important;
+  padding: 0.35rem 0.65rem !important;
+  border-radius: 0.25rem !important;
+  margin-right: 0.5rem !important;
+  font-size: 0.9rem !important;
+  font-weight: 700 !important;
+  line-height: 1.2 !important;
+  /* Force a border for all badges to ensure visibility */
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
 }
 
 /* ML Prediction Badge Styles */
-.ml-prediction {
-  margin: 0.25rem 0.5rem 0.25rem 0;
-  padding: 0.4rem 0.7rem;
+.ml-prediction,
+html body .ml-prediction {
+  margin: 0.25rem 0.5rem 0.25rem 0 !important;
+  padding: 0.4rem 0.7rem !important;
 }
 
 /* Relevance Badge Colors */
 .badge-high-relevance,
 .relevance-high,
-.badge-success {
-  background-color: #007f5f;
-  color: #ffffff;
+.badge-success,
+html body .badge-high-relevance,
+html body .relevance-high,
+html body .badge-success,
+html body .badge.badge-high-relevance,
+html body .badge.relevance-high,
+html body .badge.badge-success {
+  background-color: #007f5f !important;
+  color: #ffffff !important;
 }
 
 .badge-medium-relevance,
 .relevance-medium,
-.badge-warning {
-  background-color: #ff9500;
-  color: #000000;
+.badge-warning,
+html body .badge-medium-relevance,
+html body .relevance-medium,
+html body .badge-warning,
+html body .badge.badge-medium-relevance,
+html body .badge.relevance-medium,
+html body .badge.badge-warning {
+  background-color: #ff9500 !important;
+  color: #000000 !important;
 }
 
 .badge-low-relevance,
 .relevance-low,
-.badge-danger {
-  background-color: #d00000;
-  color: #ffffff;
+.badge-danger,
+html body .badge-low-relevance,
+html body .relevance-low,
+html body .badge-danger,
+html body .badge.badge-low-relevance,
+html body .badge.relevance-low,
+html body .badge.badge-danger {
+  background-color: #d00000 !important;
+  color: #ffffff !important;
 }
 
 /* Other Badge Colors */
-.badge-info {
-  background-color: #457b9d;
-  color: white;
+.badge-info,
+html body .badge-info,
+html body .badge.badge-info {
+  background-color: #457b9d !important;
+  color: white !important;
 }
 
-.badge-primary {
-  background-color: #5f0f40;
-  color: white;
+.badge-primary,
+html body .badge-primary,
+html body .badge.badge-primary {
+  background-color: #5f0f40 !important;
+  color: white !important;
 }
 
-.badge-secondary {
-  background-color: #6c757d;
-  color: white;
+.badge-secondary,
+html body .badge-secondary,
+html body .badge.badge-secondary {
+  background-color: #6c757d !important;
+  color: white !important;
 }
 
 /* Algorithm-specific badges */

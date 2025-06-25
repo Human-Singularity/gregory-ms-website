@@ -98,5 +98,5 @@ export const generatePredictionBadgeClassName = (prediction) => {
   const relevanceLevel = getRelevanceLevel(prediction.probability_score);
   const algorithmSlug = prediction.algorithm.toLowerCase().replace(/_/g, '-');
   
-  return `ml-prediction relevance-${relevanceLevel} algorithm-${algorithmSlug}`;
+  return `badge ml-prediction badge-${relevanceLevel}-relevance relevance-${relevanceLevel} algorithm-${algorithmSlug}`;
 };
