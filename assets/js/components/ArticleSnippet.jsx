@@ -2,6 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { formatDate, generateArticleURL } from '../utils';
+import { 
+  getMostRecentPredictions, 
+  generatePredictionBadgeClassName, 
+  formatAlgorithmName, 
+  formatPredictionScore,
+  generateBadgeTitle
+} from '../utils/badge-utils';
 
 /**
  * ArticleSnippet component - Displays a preview of an article
@@ -16,6 +23,9 @@ export function ArticleSnippet({ article, showRelevanceIndicators = false }) {
   const date = new Date(article.published_date);
   const articleUrl = generateArticleURL(article);
   
+  // Get the most recent ML predictions for each algorithm
+  const recentPredictions = getMostRecentPredictions(article);
+  
   return (
     <div className='col-md-6'>
       <div className="card card-plain card-blog">
@@ -27,24 +37,38 @@ export function ArticleSnippet({ article, showRelevanceIndicators = false }) {
           <p className="card-description">
             {article.takeaways}
           </p>
-          <p className="author text-wrap">
-            <span className="badge badge-info text-white font-weight-normal">
-              {article.container_title}
-            </span>
+          <p className="author">
+            {article.container_title && (
+              <span className="badge badge-info text-white font-weight-normal">
+                {article.container_title}
+              </span>
+            )}
             
-            {showRelevanceIndicators && (
-              <>
-                {article.ml_prediction_gnb && (
-                  <span className="ml-1 text-white badge badge-success font-weight-normal">
-                    AI prediction
-                  </span>
-                )}
-                {article.relevant && (
-                  <span className="ml-1 text-white badge badge-primary font-weight-normal">
-                    manual selection
-                  </span>
-                )}
-              </>
+            {showRelevanceIndicators && recentPredictions.length > 0 && (
+              <span className="ml-2">
+                {recentPredictions.map((prediction, index) => {
+                  const badgeClassName = generatePredictionBadgeClassName(prediction);
+                  const badgeTitle = generateBadgeTitle(prediction);
+                  const algorithmName = formatAlgorithmName(prediction.algorithm);
+                  const score = formatPredictionScore(prediction.probability_score);
+                  
+                  return (
+                    <span 
+                      key={index}
+                      className={`badge ml-1 ${badgeClassName}`}
+                      title={badgeTitle}
+                    >
+                      <strong>{algorithmName}</strong>: {score}
+                    </span>
+                  );
+                })}
+              </span>
+            )}
+            
+            {showRelevanceIndicators && article.relevant && (
+              <span className="ml-1 text-white badge badge-primary font-weight-normal expert-selection">
+                Expert Selection
+              </span>
             )}
           </p>
         </div>
@@ -60,7 +84,15 @@ ArticleSnippet.propTypes = {
     published_date: PropTypes.string.isRequired,
     takeaways: PropTypes.string,
     container_title: PropTypes.string,
-    ml_prediction_gnb: PropTypes.bool,
+    ml_predictions: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      algorithm: PropTypes.string,
+      model_version: PropTypes.string,
+      probability_score: PropTypes.number,
+      predicted_relevant: PropTypes.bool,
+      created_date: PropTypes.string,
+      subject: PropTypes.number
+    })),
     relevant: PropTypes.bool
   }).isRequired,
   showRelevanceIndicators: PropTypes.bool
