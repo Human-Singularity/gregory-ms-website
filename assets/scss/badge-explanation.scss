@@ -1,0 +1,32 @@
+/* Badge Explanation styles */
+.badge-explanation {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.badge-explanation .card {
+  height: 100%;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.badge-explanation .card-header {
+  background-color: rgba(0, 0, 0, 0.03);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 1rem 1.25rem;
+}
+
+.badge-explanation .badge {
+  font-size: 0.9rem;
+  padding: 0.35rem 0.65rem;
+  margin-right: 0.5rem;
+}
+
+.badge-explanation ul {
+  padding-left: 1.25rem;
+}
+
+.badge-explanation li {
+  margin-bottom: 0.5rem;
+}

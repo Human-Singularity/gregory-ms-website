@@ -1,0 +1,25 @@
+/* Direct badge style overrides */
+.badge.badge-low-relevance {
+  background-color: #d00000 !important;
+  color: #ffffff !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  padding: 0.4rem 0.7rem !important;
+	list-style: None;
+}
+
+#relevance-badge-explanation-examples li .badge.badge-medium-relevance {
+  background-color: #ff9500 !important;
+  color: #000000 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  padding: 0.4rem 0.7rem !important;
+}
+
+.badge.badge-high-relevance {
+  background-color: #007f5f !important;
+  color: #ffffff !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  padding: 0.4rem 0.7rem !important;
+}
