@@ -120,7 +120,7 @@ export function SingleArticle() {
         
         article.subjects.forEach((subject, index) => {
           const subjectBadge = document.createElement('span');
-          subjectBadge.className = 'badge badge-info m-1 p-2';
+          subjectBadge.className = 'badge badge-info';
           subjectBadge.textContent = subject.subject_name;
           subjectsElement.appendChild(subjectBadge);
         });

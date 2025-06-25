@@ -1,0 +1,88 @@
+/**
+ * Gregory MS - Badge Styles
+ * Single source of truth for all badge styling in the application
+ */
+
+/* Base Badge Styles */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  letter-spacing: 0.01em;
+  padding: 0.35rem 0.65rem;
+  border-radius: 0.25rem;
+  margin-right: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* ML Prediction Badge Styles */
+.ml-prediction {
+  margin: 0.25rem 0.5rem 0.25rem 0;
+  padding: 0.4rem 0.7rem;
+}
+
+/* Relevance Badge Colors */
+.badge-high-relevance,
+.relevance-high,
+.badge-success {
+  background-color: #007f5f;
+  color: #ffffff;
+}
+
+.badge-medium-relevance,
+.relevance-medium,
+.badge-warning {
+  background-color: #ff9500;
+  color: #000000;
+}
+
+.badge-low-relevance,
+.relevance-low,
+.badge-danger {
+  background-color: #d00000;
+  color: #ffffff;
+}
+
+/* Other Badge Colors */
+.badge-info {
+  background-color: #457b9d;
+  color: white;
+}
+
+.badge-primary {
+  background-color: #5f0f40;
+  color: white;
+}
+
+.badge-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+/* Algorithm-specific badges */
+.algorithm-pubmed-bert,
+.algorithm-lgbm-tfidf,
+.algorithm-lstm {
+  font-weight: 700;
+}
+
+/* Badge Explanation Styles */
+#relevance-badge-explanation-examples {
+  list-style: none;
+}
+
+.badge-explanation .list-unstyled li .badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.4rem 0.7rem;
+  margin: 0.25rem 0.5rem 0.25rem 0;
+}
+
+/* Media Queries */
+@media (max-width: 576px) {
+  .badge {
+    font-size: 0.8rem;
+    padding: 0.3rem 0.5rem;
+  }
+}
