@@ -13,17 +13,16 @@ span.badge {
   align-items: center !important;
   
   /* Text properties */
-  font-weight: 700 !important;
-  font-size: 0.9rem !important;
+  font-size: 0.75rem !important;
   line-height: 1.2 !important;
   letter-spacing: 0.01em !important;
   
   /* Spacing properties */
-  padding: 0.35rem 0.65rem !important;
-  margin-right: 0.5rem !important;
+  padding: 0.25rem 0.5rem !important;
+  margin-right: 0.4rem !important;
   
   /* Visual properties */
-  border-radius: 0.25rem !important;
+  border-radius: 1rem !important;
   transition: all 0.2s ease-in-out;
 }
 
@@ -38,9 +37,8 @@ span.badge {
    ---------------------------------------- */
 .ml-prediction,
 .badge.ml-prediction {
-  margin: 0.25rem 0.5rem 0.25rem 0 !important;
-  padding: 0.4rem 0.7rem !important;
-  font-weight: 700 !important;
+  margin: 0.2rem 0.35rem 0.2rem 0 !important;
+  padding: 0.25rem 0.5rem !important;
 }
 
 /* ----------------------------------------
@@ -67,7 +65,7 @@ span.badge {
 .badge.badge-warning,
 [class*="relevance-medium"] {
   background-color: #ff9500 !important;
-  color: #000000 !important;
+  color: #ffffff !important;
 }
 
 /* Low relevance (red) */
@@ -103,35 +101,18 @@ span.badge {
   color: white !important;
 }
 
-/* ----------------------------------------
-   5. Algorithm-specific badges 
-   ---------------------------------------- */
-.algorithm-pubmed-bert,
-[class*="algorithm"][class*="pubmed-bert"] {
-  border-left: 4px solid #1a759f !important;
-}
-
-.algorithm-lgbm-tfidf,
-[class*="algorithm"][class*="lgbm-tfidf"] {
-  border-left: 4px solid #7209b7 !important;
-}
-
-.algorithm-lstm,
-[class*="algorithm"][class*="lstm"] {
-  border-left: 4px solid #ff6b6b !important;
-}
 
 /* ----------------------------------------
    6. Badge size variations 
    ---------------------------------------- */
 .badge-lg {
-  font-size: 1rem !important;
-  padding: 0.5rem 0.85rem !important;
+  font-size: 0.85rem !important;
+  padding: 0.3rem 0.6rem !important;
 }
 
 .badge-sm {
-  font-size: 0.8rem !important;
-  padding: 0.25rem 0.5rem !important;
+  font-size: 0.7rem !important;
+  padding: 0.15rem 0.4rem !important;
 }
 
 /* ----------------------------------------
@@ -175,10 +156,11 @@ span.badge {
 .badge-explanation .list-unstyled li .badge {
   display: inline-flex !important;
   align-items: center !important;
-  padding: 0.4rem 0.7rem !important;
-  margin: 0.25rem 0.5rem 0.25rem 0 !important;
-  font-size: 0.9rem !important;
-  font-weight: 700 !important;
+  padding: 0.25rem 0.5rem !important;
+  margin: 0.2rem 0.4rem 0.2rem 0 !important;
+  font-size: 0.75rem !important;
+  // font-weight: 600 !important;
+  border-radius: 1rem !important;
 }
 
 /* Badge colors in the explanation card */
@@ -191,7 +173,7 @@ span.badge {
 .badge-explanation .list-unstyled li .badge.badge-medium-relevance,
 .badge-explanation .list-unstyled li .badge[class*="medium-relevance"] {
   background-color: #ff9500 !important;
-  color: #000000 !important;
+  color: #fff !important;
 }
 
 .badge-explanation .list-unstyled li .badge.badge-high-relevance,
@@ -205,12 +187,12 @@ span.badge {
    ---------------------------------------- */
 @media (max-width: 576px) {
   .badge {
-    font-size: 0.8rem !important;
-    padding: 0.3rem 0.5rem !important;
+    font-size: 0.7rem !important;
+    padding: 0.2rem 0.4rem !important;
   }
   
   .badge-explanation .list-unstyled li .badge {
-    padding: 0.35rem 0.6rem !important;
+    padding: 0.2rem 0.4rem !important;
   }
 }
 
