@@ -327,9 +327,6 @@
 		<script src="{{$vibrant.Permalink }}" defer="true"></script>
 		<script src="{{ $customJs.Permalink }}" defer="true"></script>
 
-		{{ $gregJs := resources.Get "/js/gregory.js" | resources.Minify | resources.Fingerprint }} 
-		<script src="{{$gregJs.Permalink}}" defer="true"></script>
-
 		{{ block "list-javascript" . }}{{ end }}
 		<!--  Plugin for the DatePicker, full documentation here: https://github.com/uxsolutions/bootstrap-datepicker -->
 		<!-- <script src="/assets/js/plugins/bootstrap-datepicker.js" type="text/javascript"></script> -->
