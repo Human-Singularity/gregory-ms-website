@@ -13,7 +13,8 @@ resources:
 params:
   showMLPredictionsOnly: true
   showTeamsSubjects: false
-
+options:
+  navbar: navbar navbar-expand-lg bg-white fixed-top font-weight-bold
 ---
 
 <div class="row">
