@@ -1,0 +1,17 @@
+{{ define "main" }}
+  <div class="container">
+    {{ with .Content }}
+      <div class="content">
+        {{ . }}
+      </div>
+    {{ end }}
+    
+    <div class="mt-5">
+      {{ partial "source-info.html" . }}
+    </div>
+    
+    <div class="mt-5">
+      {{ partial "badge-explanation.html" . }}
+    </div>
+  </div>
+{{ end }}
