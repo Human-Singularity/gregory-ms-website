@@ -37,7 +37,7 @@ export function ArticleSnippet({ article, showRelevanceIndicators = false }) {
           <p className="card-description">
             {article.takeaways}
           </p>
-          <p className="author">
+          <p className="prediction-badges">
             {article.container_title && (
               <span className="badge badge-info text-white font-weight-normal">
                 {article.container_title}
@@ -58,7 +58,7 @@ export function ArticleSnippet({ article, showRelevanceIndicators = false }) {
                       className={`badge ml-1 ${badgeClassName}`}
                       title={badgeTitle}
                     >
-                      <strong>{algorithmName}</strong>: {score}
+                      {algorithmName}: {score}
                     </span>
                   );
                 })}

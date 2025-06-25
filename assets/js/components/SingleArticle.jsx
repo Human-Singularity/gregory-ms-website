@@ -341,7 +341,7 @@ export function SingleArticle() {
         {article.ml_predictions && article.ml_predictions.length > 0 && (
           <div className="article-ml-predictions mt-4">
             <h4><i className="fas fa-robot mr-2"></i>ML Relevance Predictions</h4>
-            <div className="d-flex flex-wrap">
+            <div className="d-flex flex-wrap prediction-badges">
               {getMostRecentPredictions(article).map((prediction, index) => {
                 const badgeClassName = generatePredictionBadgeClassName(prediction);
                 const badgeTitle = generateBadgeTitle(prediction);
@@ -354,7 +354,7 @@ export function SingleArticle() {
                     className={`badge m-1 p-2 ${badgeClassName}`} 
                     title={badgeTitle}
                   >
-                    <strong>{algorithmName}</strong>: {score}
+                  {algorithmName}: {score}
                   </span>
                 );
               })}
