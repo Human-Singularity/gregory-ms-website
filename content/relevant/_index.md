@@ -16,13 +16,13 @@ params:
 options:
   navbar: navbar navbar-expand-lg bg-white fixed-top font-weight-bold
 ---
-
-<div class="row">
-<div class="col-12 justify-content-center align-self-center align-center text-center pb-5">
-<a href="https://metabase.gregory-ms.com/public/dashboard/39cbe602-4d42-46af-bfe4-0de04ef5e5f9" id="metabaseDashboard" data-umami-event="click--body-metabase-dashboard-articles" class="btn btn-lg btn-primary" target="_blank">Open the Dashboard of Scientific Papers for Multiple Sclerosis <i class=" text-white fas fa-external-link-square-alt" aria-hidden="true"></i></a>
-</div>
-</div>
-
+<div class="container mt-5 pt-5">
+  <div class="row">
+    <div class="col-md-12">
+      <h1 class="text-center">Current Relevant Research for MS</h1>
+      <p class="text-center">This page lists current research that is relevant to Multiple Sclerosis.</p>
+    </div>
+  </div>
 {{< relevant >}}
 
 
