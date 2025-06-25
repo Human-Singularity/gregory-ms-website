@@ -33,7 +33,7 @@
 	{{- $nowUi := resources.Get "scss/now-ui-kit.scss" | toCSS (dict "enableSourceMap" false "outputStyle" "compressed") -}}
 
 	{{- $gregoryCustom := resources.Get "scss/gregory-custom.scss" | toCSS (dict "enableSourceMap" false "outputStyle" "compressed") -}}
-	{{ $styles := slice $bootstrap $nowUi $montserrat $gregoryCustom | resources.Concat "css/style.css" | postCSS (dict "config" "./assets/css/postcss.config.js") | minify | fingerprint  -}}
+	{{ $styles := slice $bootstrap $nowUi $montserrat $gregoryCustom | resources.Concat "css/style.css" | minify | fingerprint  -}}
 	<script src="https://kit.fontawesome.com/16e8434146.js" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="{{$styles.Permalink}}">
 
