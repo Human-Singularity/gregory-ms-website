@@ -110,13 +110,5 @@ document.addEventListener('DOMContentLoaded', function(event) {
         document.querySelector('nav.bg-dynamic').classList.remove('navbar-transparent')
         document.querySelector('nav.bg-dynamic').classList.remove('bg-dynamic')
     }
-})
+});
 
-// Plyr https://github.com/sampotts/plyr
-if (Plyr){
-    try {
-        const players = Plyr.setup('.player', {blankVideo: '/plyr/blank.mp4', iconUrl: '/plyr/plyr.svg'});
-      } catch (error) {
-        // Handle error silently, e.g. log to a server instead of console
-      }
-}
