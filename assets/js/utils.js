@@ -128,7 +128,10 @@ export function removeSpecifiedNodes() {
     
     // Metabase dashboard link
     'a#metabaseDashboard',
-    'a.dashboard-link'
+    'a.dashboard-link',
+
+    // Title of relevant articles section
+    '#relevant-research-title',
   ];
 
   // Remove each element if it exists
