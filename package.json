@@ -4,7 +4,12 @@
   "description": "",
   "main": "babel.config.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:jsx": "node jsx-build.js",
+    "build:hugo": "hugo --gc --minify",
+    "build": "npm run build:jsx && npm run build:hugo",
+    "dev": "npm run build:jsx && hugo server --disableFastRender",
+    "dev:watch": "concurrently \"node jsx-build.js --watch\" \"hugo server --disableFastRender\""
   },
   "repository": {
     "type": "git",
@@ -23,6 +28,7 @@
     "@babel/preset-react": "^7.18.6",
     "autoprefixer": "^10.4.13",
     "cssnano": "^5.1.14",
+    "esbuild": "^0.25.5",
     "node-red": "^3.0.2",
     "postcss-cli": "^10.1.0",
     "purgecss": "^5.0.0"
