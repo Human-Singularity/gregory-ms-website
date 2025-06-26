@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useArticle } from '../hooks/useApi';
 import { formatDate, updateTitleAndMeta, removeSpecifiedNodes } from '../utils';
+import BadgeExplanation from './BadgeExplanation';
 import { 
   getMostRecentPredictions, 
   generatePredictionBadgeClassName, 
@@ -362,6 +363,13 @@ export function SingleArticle() {
             <p className="text-muted mt-2 small">
               <i className="fas fa-info-circle mr-1"></i> Predictions represent the relevance score from our machine learning models.
             </p>
+          </div>
+        )}
+        
+        {/* Badge Explanation */}
+        {article.ml_predictions && article.ml_predictions.length > 0 && (
+          <div className="mt-5">
+            <BadgeExplanation />
           </div>
         )}
       </article>

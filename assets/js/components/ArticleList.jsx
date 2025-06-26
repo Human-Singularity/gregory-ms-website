@@ -4,6 +4,7 @@ import { useParams, Link } from 'react-router-dom';
 import { useArticles } from '../hooks/useApi';
 import ArticleSnippet from './ArticleSnippet';
 import Pagination from './Pagination';
+import BadgeExplanation from './BadgeExplanation';
 import { formatDate } from '../utils';
 
 /**
@@ -32,19 +33,6 @@ export function ArticleList({
     error, 
     pagination: { page, lastPage, setPage }
   } = useArticles(type, { ...options, initialPage });
-
-  // State to track if badge explanation has been loaded
-  const [badgeExplanation, setBadgeExplanation] = useState('');
-
-  // Load badge explanation HTML if this is the relevant articles page
-  useEffect(() => {
-    if (type === 'relevant') {
-      fetch('/partials/badge-explanation.html')
-        .then(response => response.text())
-        .then(html => setBadgeExplanation(html))
-        .catch(err => console.error('Failed to load badge explanation:', err));
-    }
-  }, [type]);
 
   if (loading) {
     return (
@@ -115,12 +103,7 @@ export function ArticleList({
         setPage={setPage}
       />
 
-      {type === 'relevant' && badgeExplanation && (
-        <div 
-          className="badge-explanation-container mt-5" 
-          dangerouslySetInnerHTML={{ __html: badgeExplanation }} 
-        />
-      )}
+      {type === 'relevant' && <BadgeExplanation />}
     </div>
   );
 }
