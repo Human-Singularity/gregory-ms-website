@@ -37,7 +37,25 @@ export function useArticles(type = 'all', options = {}) {
         }
 
         if (isMounted) {
-          setArticles(response.data.results);
+          // Filter out articles that are explicitly marked as not relevant for MS
+          const filteredArticles = response.data.results.filter(article => {
+            // Check if article has subject relevances
+            if (article.article_subject_relevances && article.article_subject_relevances.length > 0) {
+              // Look for Multiple Sclerosis subject relevance
+              const msSubjectRelevance = article.article_subject_relevances.find(
+                relevance => relevance.subject && relevance.subject.subject_name === "Multiple Sclerosis"
+              );
+              
+              // If it's explicitly marked as not relevant, exclude it
+              if (msSubjectRelevance && msSubjectRelevance.is_relevant === false) {
+                return false;
+              }
+            }
+            // Include all other articles
+            return true;
+          });
+          
+          setArticles(filteredArticles);
           setLastPage(Math.ceil(response.data.count / 10));
           setLoading(false);
         }
@@ -87,7 +105,12 @@ export function useArticle(articleId) {
         const response = await articleService.getArticleById(articleId);
         
         if (isMounted) {
-          setArticle(response.data);
+          // Check if the article is marked as not relevant for MS
+          const articleData = response.data;
+          
+          // We still show the article in the single view, as the user has explicitly navigated to it
+          // But we could add a notice or warning if needed
+          setArticle(articleData);
           setLoading(false);
         }
       } catch (err) {
