@@ -101,10 +101,10 @@ export function convertToCSV(data, type) {
     } else if (type === 'trials') {
       row = [
         `"${(item.title || '').replace(/"/g, '""')}"`,
-        item.status || '',
-        item.published_date ? formatDate(item.published_date) : '',
-        `"${item.link || ''}"`,
-        `"${stripHtml(item.summary || '').replace(/"/g, '""')}"`
+        item.status || item.overall_status || '',
+        item.published_date || item.last_update_posted ? formatDate(item.published_date || item.last_update_posted) : '',
+        `"${item.link || item.url || (item.nct_id ? `https://clinicaltrials.gov/study/${item.nct_id}` : '')}"`,
+        `"${stripHtml(item.summary || item.brief_summary || '').replace(/"/g, '""')}"`
       ];
     }
     

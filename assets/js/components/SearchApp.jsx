@@ -93,6 +93,7 @@ function SearchApp() {
         
         // Execute article search
         const articleResponse = await searchService.searchArticles(articleParams);
+        console.log('Article response:', articleResponse);
         
         // Update article results
         setArticleResults(articleResponse.data.results || []);
@@ -132,10 +133,28 @@ function SearchApp() {
         // Execute trial search
         const trialResponse = await searchService.searchTrials(trialParams);
         
-        // Update trial results
-        setTrialResults(trialResponse.data || []);
-        setTrialCount(trialResponse.data.length || 0);
-        setTrialLastPage(Math.ceil((trialResponse.data.length || 0) / 10));
+        // Update trial results - handling the structured response format
+        // The API returns an object with a results array, not directly an array
+        console.log('Trial response:', trialResponse);
+        
+        // Check if the response contains results in the expected format
+        if (trialResponse.data && trialResponse.data.results && Array.isArray(trialResponse.data.results)) {
+          // Structured response with results array
+          setTrialResults(trialResponse.data.results);
+          setTrialCount(trialResponse.data.count || trialResponse.data.results.length || 0);
+          setTrialLastPage(Math.ceil((trialResponse.data.count || trialResponse.data.results.length || 0) / 10));
+        } else if (trialResponse.data && Array.isArray(trialResponse.data)) {
+          // Direct array response
+          setTrialResults(trialResponse.data);
+          setTrialCount(trialResponse.data.length || 0);
+          setTrialLastPage(Math.ceil((trialResponse.data.length || 0) / 10));
+        } else {
+          // Fallback for unexpected format
+          setTrialResults([]);
+          setTrialCount(0);
+          setTrialLastPage(1);
+          console.error('Unexpected trial response format:', trialResponse);
+        }
         
         // Reset article results since we're only searching trials
         setArticleResults([]);
@@ -151,23 +170,101 @@ function SearchApp() {
   };
   
   // Handle article pagination
-  const handleArticlePage = (newPage) => {
+  const handleArticlePage = async (newPage) => {
     if (newPage < 1 || newPage > articleLastPage) return;
     
     setArticlePage(newPage);
+    setIsLoading(true);
     
-    // Re-execute search with new page
-    handleSearch({ preventDefault: () => {} });
+    try {
+      // Prepare article search parameters
+      const articleParams = {
+        team_id: 1, // Team Gregory
+        subject_id: 1, // Multiple Sclerosis
+        page: newPage
+      };
+      
+      // Set search fields based on selection
+      if (searchField === 'all' || searchField === 'title') {
+        articleParams.title = searchTerm;
+      }
+      
+      if (searchField === 'all' || searchField === 'summary') {
+        articleParams.summary = searchTerm;
+      }
+      
+      if (searchField === 'all') {
+        articleParams.search = searchTerm;
+        
+        // Clear specific fields when using general search
+        delete articleParams.title;
+        delete articleParams.summary;
+      }
+      
+      // Execute article search
+      const articleResponse = await searchService.searchArticles(articleParams);
+      
+      // Update article results
+      setArticleResults(articleResponse.data.results || []);
+    } catch (err) {
+      console.error('Article pagination error:', err);
+      setError('An error occurred while loading more article results. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
   
   // Handle trial pagination
-  const handleTrialPage = (newPage) => {
+  const handleTrialPage = async (newPage) => {
     if (newPage < 1 || newPage > trialLastPage) return;
     
     setTrialPage(newPage);
+    setIsLoading(true);
     
-    // Re-execute search with new page
-    handleSearch({ preventDefault: () => {} });
+    try {
+      // Prepare trial search parameters
+      const trialParams = {
+        team_id: 1, // Team Gregory
+        subject_id: 1, // Multiple Sclerosis
+        page: newPage,
+        status: trialStatus
+      };
+      
+      // Set search fields based on selection
+      if (searchField === 'all' || searchField === 'title') {
+        trialParams.title = searchTerm;
+      }
+      
+      if (searchField === 'all' || searchField === 'summary') {
+        trialParams.summary = searchTerm;
+      }
+      
+      if (searchField === 'all') {
+        trialParams.search = searchTerm;
+        
+        // Clear specific fields when using general search
+        delete trialParams.title;
+        delete trialParams.summary;
+      }
+      
+      // Execute trial search
+      const trialResponse = await searchService.searchTrials(trialParams);
+      
+      // Update trial results based on the actual response structure
+      if (trialResponse.data && trialResponse.data.results && Array.isArray(trialResponse.data.results)) {
+        setTrialResults(trialResponse.data.results);
+      } else if (trialResponse.data && Array.isArray(trialResponse.data)) {
+        setTrialResults(trialResponse.data);
+      } else {
+        setTrialResults([]);
+        console.error('Unexpected trial response format during pagination:', trialResponse);
+      }
+    } catch (err) {
+      console.error('Trial pagination error:', err);
+      setError('An error occurred while loading more trial results. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
   
   // Export results to CSV
@@ -373,37 +470,39 @@ function SearchApp() {
         {renderPagination('trials')}
         
         <div className="list-group">
-          {trialResults.map((trial) => (
-            <div key={trial.id} className="list-group-item list-group-item-action flex-column align-items-start">
+          {trialResults.map((trial) => {
+            console.log('Rendering trial:', trial);
+            return (
+            <div key={trial.id || trial.trial_id || trial.nct_id || Math.random().toString(36)} className="list-group-item list-group-item-action flex-column align-items-start">
               <div className="d-flex w-100 justify-content-between">
                 <h5 className="mb-1">
-                  <a href={trial.link} target="_blank" rel="noopener noreferrer">
-                    {trial.title}
+                  <a href={trial.link || trial.url || `https://clinicaltrials.gov/study/${trial.nct_id}`} target="_blank" rel="noopener noreferrer">
+                    {trial.title || 'Unnamed Trial'}
                   </a>
                 </h5>
-                <small>{formatDate(trial.published_date)}</small>
+                <small>{formatDate(trial.published_date || trial.last_update_posted)}</small>
               </div>
               
               <div className="mb-2">
-                <span className={`badge ${trial.status === 'Recruiting' ? 'badge-success' : 'badge-secondary'}`}>
-                  {trial.status || 'Unknown Status'}
+                <span className={`badge ${(trial.status === 'Recruiting' || trial.recruitment_status === 'Recruiting') ? 'badge-success' : 'badge-secondary'}`}>
+                  {trial.status || trial.recruitment_status || trial.overall_status || 'Unknown Status'}
                 </span>
               </div>
               
-              {trial.summary && (
-                <p className="mb-1">{truncateText(stripHtml(trial.summary), 300)}</p>
+              {(trial.summary || trial.brief_summary) && (
+                <p className="mb-1">{truncateText(stripHtml(trial.summary || trial.brief_summary), 300)}</p>
               )}
               
               <div>
                 <small>
-                  <a href={trial.link} target="_blank" rel="noopener noreferrer" className="text-muted">
+                  <a href={trial.link || trial.url || `https://clinicaltrials.gov/study/${trial.nct_id}`} target="_blank" rel="noopener noreferrer" className="text-muted">
                     <i className="fas fa-external-link-alt mr-1"></i>
                     View trial details
                   </a>
                 </small>
               </div>
             </div>
-          ))}
+          )})}
         </div>
         
         {renderPagination('trials')}
