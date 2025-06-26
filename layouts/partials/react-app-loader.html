@@ -29,9 +29,3 @@
 {{- else -}}
   <!-- WARNING: App resource not found: {{ $appPath }} -->
 {{- end -}}
-
-{{- if $fingerprint -}}
-  {{- $appResource = $appResource | resources.Fingerprint -}}
-{{- end -}}
-
-<script src="{{ $appResource.Permalink }}"></script>
