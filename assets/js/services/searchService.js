@@ -53,7 +53,10 @@ export const searchService = {
    * @returns {Promise} - Promise with search results
    */
   searchTrials: (params) => {
-    return apiClient.post('/trials/search/', {
+    console.log('Sending trial search request with params:', params);
+    
+    // Construct the request parameters
+    const requestParams = {
       team_id: params.team_id || 1, // Default to Team Gregory
       subject_id: params.subject_id || 1, // Default to Multiple Sclerosis
       search: params.search || undefined,
@@ -61,7 +64,23 @@ export const searchService = {
       summary: params.summary || undefined,
       status: params.status || undefined,
       page: params.page || 1
-    });
+    };
+    
+    // Clean up undefined values
+    Object.keys(requestParams).forEach(key => 
+      requestParams[key] === undefined && delete requestParams[key]
+    );
+    
+    // Make the API request
+    return apiClient.post('/trials/search/', requestParams)
+      .then(response => {
+        console.log('Raw trial search response:', response);
+        return response;
+      })
+      .catch(error => {
+        console.error('Trial search error:', error);
+        throw error;
+      });
   }
 };
 
