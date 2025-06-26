@@ -40,7 +40,5 @@
 
 {{ define "list-javascript" }}
 	{{ partial "comments-js.html" . }}
-	{{ $api := resources.Get "js/Category.jsx" | js.Build | babel | resources.Fingerprint }}
-	<script src="{{ $api.Permalink }}"></script>
-
+	{{ partial "react-app-loader.html" (dict "app" "category") }}
 {{ end }}

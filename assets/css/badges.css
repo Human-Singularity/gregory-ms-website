@@ -1,0 +1,211 @@
+/**
+ * Gregory MS - Consolidated Badge Styles
+ * This is the single source of truth for all badge styling in the application
+ */
+
+/* ----------------------------------------
+   1. Base Badge Styles 
+   ---------------------------------------- */
+.badge,
+span.badge {
+  /* Display properties */
+  display: inline-flex !important;
+  align-items: center !important;
+  
+  /* Text properties */
+  font-size: 0.75rem !important;
+  line-height: 1.2 !important;
+  letter-spacing: 0.01em !important;
+  font-weight: normal;
+  /* Spacing properties */
+  padding: 0.25rem 0.5rem !important;
+  margin-right: 0.4rem !important;
+  
+  /* Visual properties */
+  border-radius: 1rem !important;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Badge hover effect */
+.badge:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+/* ----------------------------------------
+   2. ML Prediction Badge Styles 
+   ---------------------------------------- */
+.ml-prediction,
+.badge.ml-prediction {
+  margin: 0.2rem 0.35rem 0.2rem 0 !important;
+  padding: 0.25rem 0.5rem !important;
+}
+
+/* ----------------------------------------
+   3. Relevance Badge Colors 
+   ---------------------------------------- */
+/* High relevance (green) */
+.badge-high-relevance,
+.relevance-high,
+.badge-success,
+.badge.badge-high-relevance,
+.badge.relevance-high,
+.badge.badge-success,
+[class*="relevance-high"] {
+  background-color: #007f5f !important;
+  color: #ffffff !important;
+}
+
+/* Medium relevance (orange) */
+.badge-medium-relevance,
+.relevance-medium,
+.badge-warning,
+.badge.badge-medium-relevance,
+.badge.relevance-medium,
+.badge.badge-warning,
+[class*="relevance-medium"] {
+  background-color: #ff9500 !important;
+  color: #ffffff !important;
+}
+
+/* Low relevance (red) */
+.badge-low-relevance,
+.relevance-low,
+.badge-danger,
+.badge.badge-low-relevance,
+.badge.relevance-low,
+.badge.badge-danger,
+[class*="relevance-low"] {
+  background-color: #d00000 !important;
+  color: #ffffff !important;
+}
+
+/* ----------------------------------------
+   4. Other Badge Colors 
+   ---------------------------------------- */
+.badge-info,
+.badge.badge-info {
+  background-color: #457b9d !important;
+  color: white !important;
+}
+
+.badge-primary,
+.badge.badge-primary {
+  background-color: #5f0f40 !important;
+  color: white !important;
+}
+
+.badge-secondary,
+.badge.badge-secondary {
+  background-color: #6c757d !important;
+  color: white !important;
+}
+
+
+/* ----------------------------------------
+   6. Badge size variations 
+   ---------------------------------------- */
+.badge-lg {
+  font-size: 0.85rem !important;
+  padding: 0.3rem 0.6rem !important;
+}
+
+.badge-sm {
+  font-size: 0.7rem !important;
+  padding: 0.15rem 0.4rem !important;
+}
+
+/* ----------------------------------------
+   7. Badge Explanation Card Styles 
+   ---------------------------------------- */
+/* Container styles */
+.badge-explanation {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Card styles */
+.badge-explanation .card {
+  height: 100%;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.badge-explanation .card-header {
+  background-color: rgba(0, 0, 0, 0.03);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 1rem 1.25rem;
+}
+
+/* List styles */
+#relevance-badge-explanation-examples {
+  list-style: none;
+}
+
+.badge-explanation ul {
+  padding-left: 1.25rem;
+}
+
+.badge-explanation li {
+  margin-bottom: 0.5rem;
+}
+
+/* Badge styles within the explanation card */
+.badge-explanation .badge,
+.badge-explanation .list-unstyled li .badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  padding: 0.25rem 0.5rem !important;
+  margin: 0.2rem 0.4rem 0.2rem 0 !important;
+  font-size: 0.75rem !important;
+  border-radius: 1rem !important;
+}
+
+/* Badge colors in the explanation card */
+.badge-explanation .list-unstyled li .badge.badge-low-relevance,
+.badge-explanation .list-unstyled li .badge[class*="low-relevance"] {
+  background-color: #d00000 !important;
+  color: #ffffff !important;
+}
+
+.badge-explanation .list-unstyled li .badge.badge-medium-relevance,
+.badge-explanation .list-unstyled li .badge[class*="medium-relevance"] {
+  background-color: #ff9500 !important;
+  color: #fff !important;
+}
+
+.badge-explanation .list-unstyled li .badge.badge-high-relevance,
+.badge-explanation .list-unstyled li .badge[class*="high-relevance"] {
+  background-color: #007f5f !important;
+  color: #ffffff !important;
+}
+
+/* ----------------------------------------
+   8. Responsive styles 
+   ---------------------------------------- */
+@media (max-width: 576px) {
+  .badge {
+    font-size: 0.7rem !important;
+    padding: 0.2rem 0.4rem !important;
+  }
+  
+  .badge-explanation .list-unstyled li .badge {
+    padding: 0.2rem 0.4rem !important;
+  }
+}
+
+/* Ensure all badges have their intended colors regardless of media queries */
+@media (min-width: 1px) {
+  .badge-explanation .list-unstyled li .badge.badge-low-relevance {
+    background-color: #d00000 !important;
+  }
+  
+  .badge-explanation .list-unstyled li .badge.badge-medium-relevance {
+    background-color: #ff9500 !important;
+  }
+  
+  .badge-explanation .list-unstyled li .badge.badge-high-relevance {
+    background-color: #007f5f !important;
+  }
+}
