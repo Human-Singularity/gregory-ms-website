@@ -397,6 +397,9 @@
 		{{- if .HasShortcode "authors"  -}}
 		{{ partial "react-app-loader.html" (dict "app" "authorProfile") }}
 		{{ end }}
+		{{- if .HasShortcode "search"  -}}
+		{{ partial "react-app-loader.html" (dict "app" "search") }}
+		{{ end }}
 
 		{{- if or (.HasShortcode "metabase-embed")  -}}
 		<script src="https://metabase.gregory-ms.com/app/iframeResizer.js"></script>
