@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { searchService } from '../services/searchService';
 import { stripHtml, truncateText, convertToCSV, downloadCSV, formatDate } from '../utils/searchUtils';
+import ArticleListItem from './ArticleListItem';
 
 // Trial status options
 const TRIAL_STATUS_OPTIONS = [
@@ -418,39 +419,14 @@ function SearchApp() {
       <div className="article-results">        
         {renderPagination('articles')}
         
-        <div className="list-group">
+        <div className="list-group article-list">
           {articleResults.map((article) => (
-            <div key={article.article_id} className="list-group-item list-group-item-action flex-column align-items-start">
-              <div className="d-flex w-100 justify-content-between">
-                <h5 className="mb-1">
-                  <a href={`/articles/${article.article_id}/`} target="_blank" rel="noopener noreferrer">
-                    {article.title}
-                  </a>
-                </h5>
-                <small>{formatDate(article.published_date)}</small>
-              </div>
-              
-              {article.authors && article.authors.length > 0 && (
-                <p className="mb-1">
-                  <small>
-                    <strong>Authors:</strong> {article.authors.map(a => `${a.given_name} ${a.family_name}`).join(', ')}
-                  </small>
-                </p>
-              )}
-              
-              {article.summary && (
-                <p className="mb-1">{truncateText(stripHtml(article.summary), 300)}</p>
-              )}
-              
-              <div>
-                <small>
-                  <a href={article.link} target="_blank" rel="noopener noreferrer" className="text-muted">
-                    <i className="fas fa-external-link-alt mr-1"></i>
-                    View original source
-                  </a>
-                </small>
-              </div>
-            </div>
+            <ArticleListItem
+              key={article.article_id}
+              article={article}
+              isSearchResult={true}
+              showRelevanceIndicators={true}
+            />
           ))}
         </div>
         
@@ -469,7 +445,7 @@ function SearchApp() {
       <div className="trial-results">        
         {renderPagination('trials')}
         
-        <div className="list-group">
+        <div className="list-group article-list">
           {trialResults.map((trial) => {
             console.log('Rendering trial:', trial);
             return (
@@ -480,22 +456,22 @@ function SearchApp() {
                     {trial.title || 'Unnamed Trial'}
                   </a>
                 </h5>
-                <small>{formatDate(trial.published_date || trial.last_update_posted)}</small>
+                <small className="text-muted publication-date">{formatDate(trial.published_date || trial.last_update_posted)}</small>
               </div>
               
-              <div className="mb-2">
-                <span className={`badge ${(trial.status === 'Recruiting' || trial.recruitment_status === 'Recruiting') ? 'badge-success' : 'badge-secondary'}`}>
+              <div className="article-metadata mb-2">
+                <span className={`badge ${(trial.status === 'Recruiting' || trial.recruitment_status === 'Recruiting') ? 'badge-success' : 'badge-secondary'} mr-2`}>
                   {trial.status || trial.recruitment_status || trial.overall_status || 'Unknown Status'}
                 </span>
               </div>
               
               {(trial.summary || trial.brief_summary) && (
-                <p className="mb-1">{truncateText(stripHtml(trial.summary || trial.brief_summary), 300)}</p>
+                <p className="article-summary">{truncateText(stripHtml(trial.summary || trial.brief_summary), 300)}</p>
               )}
               
-              <div>
+              <div className="article-links">
                 <small>
-                  <a href={trial.link || trial.url || `https://clinicaltrials.gov/study/${trial.nct_id}`} target="_blank" rel="noopener noreferrer" className="text-muted">
+                  <a href={trial.link || trial.url || `https://clinicaltrials.gov/study/${trial.nct_id}`} target="_blank" rel="noopener noreferrer" className="source-link">
                     <i className="fas fa-external-link-alt mr-1"></i>
                     View trial details
                   </a>

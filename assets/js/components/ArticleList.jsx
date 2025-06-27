@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useParams, Link } from 'react-router-dom';
 import { useArticles } from '../hooks/useApi';
-import ArticleSnippet from './ArticleSnippet';
+import ArticleListItem from './ArticleListItem';
 import Pagination from './Pagination';
 import BadgeExplanation from './BadgeExplanation';
 import { formatDate } from '../utils';
@@ -68,22 +68,25 @@ export function ArticleList({
     );
   }
 
-  // Render as list or grid
+  // Always render as a list view with ArticleListItem components for better readability
   const articlesContent = displayAsList ? (
-    <ol start={(page * 10) - 9} className="article-list">
+    <ol start={(page * 10) - 9} className="article-list-numbered" aria-label="Numbered list of articles">
       {articles.map((article) => (
         <li key={article.article_id}>
-          <Link to={`/articles/${article.article_id}/`}>
+          <Link 
+            to={`/articles/${article.article_id}/`}
+            aria-label={`${article.title}, published on ${formatDate(article.published_date)}`}
+          >
             {article.title}
           </Link> 
-          {' '}{formatDate(article.published_date)}
+          {' '}<span className="article-date" aria-hidden="true">{formatDate(article.published_date)}</span>
         </li>
       ))}
     </ol>
   ) : (
-    <div className="row">
+    <div className="list-group article-list" role="list" aria-label="Article list">
       {articles.map((article) => (
-        <ArticleSnippet 
+        <ArticleListItem
           key={article.article_id} 
           article={article} 
           showRelevanceIndicators={type === 'relevant'}
@@ -93,7 +96,7 @@ export function ArticleList({
   );
 
   return (
-    <div className="article-list-container">
+    <div className="article-list-container" role="region" aria-label={`${type} articles`}>
       <Pagination 
         pagePath={pagePath}
         page={page}
