@@ -1,4 +1,4 @@
-// Article list styling
+// Article and Trial list styling
 .article-list {
   margin-bottom: 2rem;
   
@@ -77,21 +77,31 @@
           font-weight: 500;
           border-radius: 12px;
           padding: 0.5rem 0.85rem;
-          
-          &.badge-success {
-            background-color: #198754; // Solid color instead of rgba for better contrast
-            color: white;
-          }
-          
-          &.badge-warning {
-            background-color: #cc8a00; // Darker than default warning for better contrast with white text
-            color: white; // Changed from dark text to white for better contrast
-          }
-          
-          &.badge-danger {
-            background-color: #dc3545; // Solid color instead of rgba
-            color: white;
-          }
+             &.badge-success {
+          background-color: #198754; // Solid color instead of rgba for better contrast
+          color: white;
+        }
+        
+        &.badge-warning {
+          background-color: #cc8a00; // Darker than default warning for better contrast with white text
+          color: white; // Changed from dark text to white for better contrast
+        }
+        
+        &.badge-danger {
+          background-color: #dc3545; // Solid color instead of rgba
+          color: white;
+        }
+        
+        &.badge-secondary {
+          background-color: #5a6268; // Darker for better contrast
+          color: white;
+        }
+        
+        // Trial phase badges
+        &.badge-info {
+          background-color: #0062cc; // Consistent with badge-journal
+          color: white;
+        }
         }
       }
       

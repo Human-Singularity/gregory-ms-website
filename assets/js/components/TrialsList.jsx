@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import { useTrials } from '../hooks/useApi';
 import Pagination from './Pagination';
-import Trial from './Trial';
+import TrialListItem from './TrialListItem';
 
 /**
  * TrialsList component - Displays a list of clinical trials with pagination
@@ -58,30 +58,26 @@ export function TrialsList({
   }
 
   return (
-    <div className="trials-list-container">
-      <div className="row">
-        <div className="col-md-12">
-          <Pagination 
-            pagePath={pagePath}
-            page={page}
-            lastPage={lastPage}
-            setPage={setPage}
-          />
-        </div>
-        
+    <div className="trials-list-container" role="region" aria-label="Clinical trials">
+      <Pagination 
+        pagePath={pagePath}
+        page={page}
+        lastPage={lastPage}
+        setPage={setPage}
+      />
+      
+      <div className="list-group article-list">
         {trials.map((trial) => (
-          <Trial key={trial.trial_id} trial={trial} />
+          <TrialListItem key={trial.trial_id || trial.nct_id || trial.id} trial={trial} />
         ))}
-        
-        <div className="col-md-12">
-          <Pagination 
-            pagePath={pagePath}
-            page={page}
-            lastPage={lastPage}
-            setPage={setPage}
-          />
-        </div>
       </div>
+      
+      <Pagination 
+        pagePath={pagePath}
+        page={page}
+        lastPage={lastPage}
+        setPage={setPage}
+      />
     </div>
   );
 }
