@@ -3,3 +3,38 @@
 @import "article-reading.scss";
 @import "badges.scss";
 @import "article-list.scss";
+
+.search-app {
+  .card {
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+
+    .card-header {
+      background-color: rgba(0, 0, 0, 0.03);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      padding: 1rem 1.25rem;
+
+      h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+    }
+
+    .card-body {
+      padding: 1.5rem;
+    }
+  }
+
+  .list-group-item {
+    border-left: none;
+    border-right: none;
+
+    &:first-child {
+      border-top: none;
+    }
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}

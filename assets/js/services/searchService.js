@@ -36,7 +36,8 @@ export const searchService = {
       search: params.search || undefined,
       title: params.title || undefined,
       summary: params.summary || undefined,
-      page: params.page || 1
+      page: params.page || 1,
+      page_size: params.page_size || undefined // Allow requesting all results
     });
   },
 
@@ -63,7 +64,8 @@ export const searchService = {
       title: params.title || undefined,
       summary: params.summary || undefined,
       status: params.status || undefined,
-      page: params.page || 1
+      page: params.page || 1,
+      page_size: params.page_size || undefined // Allow requesting all results
     };
     
     // Clean up undefined values

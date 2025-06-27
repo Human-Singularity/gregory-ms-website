@@ -270,20 +270,95 @@ function SearchApp() {
   };
   
   // Export results to CSV
-  const handleExport = (type) => {
-    let data;
+  const handleExport = async (type) => {
     let fileName;
     
-    if (type === 'articles') {
-      data = articleResults;
-      fileName = `gregory-ms-articles-search-${new Date().toISOString().slice(0, 10)}.csv`;
-    } else if (type === 'trials') {
-      data = trialResults;
-      fileName = `gregory-ms-trials-search-${new Date().toISOString().slice(0, 10)}.csv`;
-    }
+    // Show loading state for export
+    setIsLoading(true);
     
-    const csvContent = convertToCSV(data, type);
-    downloadCSV(csvContent, fileName);
+    try {
+      if (type === 'articles') {
+        // Prepare article search parameters for all results
+        const articleParams = {
+          team_id: 1, // Team Gregory
+          subject_id: 1, // Multiple Sclerosis
+          page: 1,
+          page_size: articleCount // Request all results in one go
+        };
+        
+        // Set search fields based on selection
+        if (searchField === 'all' || searchField === 'title') {
+          articleParams.title = searchTerm;
+        }
+        
+        if (searchField === 'all' || searchField === 'summary') {
+          articleParams.summary = searchTerm;
+        }
+        
+        if (searchField === 'all') {
+          articleParams.search = searchTerm;
+          
+          // Clear specific fields when using general search
+          delete articleParams.title;
+          delete articleParams.summary;
+        }
+        
+        // Execute article search for all results
+        const articleResponse = await searchService.searchArticles(articleParams);
+        const allArticles = articleResponse.data.results || [];
+        
+        fileName = `gregory-ms-articles-search-${new Date().toISOString().slice(0, 10)}.csv`;
+        const csvContent = convertToCSV(allArticles, type);
+        downloadCSV(csvContent, fileName);
+        
+      } else if (type === 'trials') {
+        // Prepare trial search parameters for all results
+        const trialParams = {
+          team_id: 1, // Team Gregory
+          subject_id: 1, // Multiple Sclerosis
+          page: 1,
+          page_size: trialCount, // Request all results in one go
+          status: trialStatus
+        };
+        
+        // Set search fields based on selection
+        if (searchField === 'all' || searchField === 'title') {
+          trialParams.title = searchTerm;
+        }
+        
+        if (searchField === 'all' || searchField === 'summary') {
+          trialParams.summary = searchTerm;
+        }
+        
+        if (searchField === 'all') {
+          trialParams.search = searchTerm;
+          
+          // Clear specific fields when using general search
+          delete trialParams.title;
+          delete trialParams.summary;
+        }
+        
+        // Execute trial search for all results
+        const trialResponse = await searchService.searchTrials(trialParams);
+        
+        // Handle different response formats
+        let allTrials = [];
+        if (trialResponse.data && trialResponse.data.results && Array.isArray(trialResponse.data.results)) {
+          allTrials = trialResponse.data.results;
+        } else if (trialResponse.data && Array.isArray(trialResponse.data)) {
+          allTrials = trialResponse.data;
+        }
+        
+        fileName = `gregory-ms-trials-search-${new Date().toISOString().slice(0, 10)}.csv`;
+        const csvContent = convertToCSV(allTrials, type);
+        downloadCSV(csvContent, fileName);
+      }
+    } catch (err) {
+      console.error('Export error:', err);
+      setError('An error occurred while exporting the data. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
   
   // Render result tabs - No longer needed since we're only showing one type
@@ -297,10 +372,19 @@ function SearchApp() {
         <button 
           className="btn btn-sm btn-outline-primary"
           onClick={() => handleExport(searchType)}
-          disabled={(searchType === 'articles' ? !articleResults.length : !trialResults.length)}
+          disabled={(searchType === 'articles' ? !articleResults.length : !trialResults.length) || isLoading}
         >
-          <i className="fas fa-file-download mr-1"></i>
-          Export as CSV
+          {isLoading ? (
+            <>
+              <span className="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true"></span>
+              Exporting...
+            </>
+          ) : (
+            <>
+              <i className="fas fa-file-download mr-1"></i>
+              Export as CSV
+            </>
+          )}
         </button>
       </div>
     );
@@ -508,135 +592,148 @@ function SearchApp() {
   
   return (
     <div className="search-app container mt-5">
-      {/* Search Instructions */}
-      <div className="card mb-5">
-        <div className="card-header">
-          <h3 className="mb-0">Search Instructions</h3>
-        </div>
-        <div className="card-body">
-          <p>Use this search tool to find relevant research articles or clinical trials related to Multiple Sclerosis.</p>
-          
-          <h5>Tips for effective searching:</h5>
-          <ul>
-            <li>First, select whether you want to search for research articles or clinical trials</li>
-            <li>Use specific terms related to treatments, symptoms, or research topics</li>
-            <li>Try different spellings or related terms if you don't find what you're looking for</li>
-            <li>Use the field selector to search in titles only for more specific results</li>
-            <li>For clinical trials, you can filter by recruitment status to find active research opportunities</li>
-            <li>Export your results to CSV for offline reading or sharing</li>
-          </ul>
-        </div>
-      </div>
-      
-      {/* Search Form */}
-      <div className="card mb-5">
-        <div className="card-header">
-          <h3 className="mb-0">Search</h3>
-        </div>
-        <div className="card-body">
-          <form onSubmit={handleSearch}>
-            <div className="row">
-              <div className="col-md-4 mb-3">
-                <div className="form-group">
-                  <label htmlFor="searchType">Search Type</label>
-                  <select 
-                    className="form-control"
-                    id="searchType"
-                    value={searchType}
-                    onChange={(e) => {
-                      setSearchType(e.target.value);
-                      // Update active tab to match search type
-                      setActiveTab(e.target.value);
-                    }}
-                  >
-                    {SEARCH_TYPE_OPTIONS.map(option => (
-                      <option key={option.value} value={option.value}>
-                        {option.label}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-              
-              <div className="col-md-8 mb-3">
-                <div className="form-group">
-                  <label htmlFor="searchTerm">Search Terms</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="searchTerm"
-                    placeholder="Enter search terms..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    required
-                  />
-                </div>
-              </div>
+      {/* Search Form Container - Centered */}
+      <div className="row justify-content-center">
+        <div className="col-lg-8">
+          {/* Search Form Card */}
+          <div className="card mb-4">
+            <div className="card-header bg-light">
+              <h3 className="mb-0 text-primary">Search GregoryMS Database</h3>
             </div>
-            
-            <div className="row">
-              <div className="col-md-6 mb-3">
-                <div className="form-group">
-                  <label htmlFor="searchField">Search In</label>
-                  <select 
-                    className="form-control"
-                    id="searchField"
-                    value={searchField}
-                    onChange={(e) => setSearchField(e.target.value)}
-                  >
-                    <option value="all">All Fields</option>
-                    <option value="title">Title Only</option>
-                    <option value="summary">Abstract/Summary Only</option>
-                  </select>
-                </div>
-              </div>
-              
-              {searchType === 'trials' && (
-                <div className="col-md-6 mb-3">
-                  <div className="form-group">
-                    <label htmlFor="trialStatus">Trial Status</label>
-                    <select 
-                      className="form-control"
-                      id="trialStatus"
-                      value={trialStatus}
-                      onChange={(e) => setTrialStatus(e.target.value)}
-                    >
-                      {TRIAL_STATUS_OPTIONS.map(option => (
-                        <option key={option.value} value={option.value}>
-                          {option.label}
-                        </option>
-                      ))}
-                    </select>
+            <div className="card-body">
+              <form onSubmit={handleSearch}>
+                <div className="row">
+                  <div className="col-md-4 mb-3">
+                    <div className="form-group">
+                      <label htmlFor="searchType">Search Type</label>
+                      <select 
+                        className="form-control"
+                        id="searchType"
+                        value={searchType}
+                        onChange={(e) => {
+                          setSearchType(e.target.value);
+                          // Update active tab to match search type
+                          setActiveTab(e.target.value);
+                        }}
+                      >
+                        {SEARCH_TYPE_OPTIONS.map(option => (
+                          <option key={option.value} value={option.value}>
+                            {option.label}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                  
+                  <div className="col-md-8 mb-3">
+                    <div className="form-group">
+                      <label htmlFor="searchTerm">Search Terms</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="searchTerm"
+                        placeholder="Enter search terms..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        required
+                      />
+                    </div>
                   </div>
                 </div>
-              )}
-            </div>
             
-            <div className="text-center">
-              <button 
-                type="submit" 
-                className="btn btn-primary btn-lg"
-                disabled={isLoading}
-              >
-                {isLoading ? (
-                  <>
-                    <span className="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>
-                    Searching...
-                  </>
-                ) : (
-                  <>
-                    <i className="fas fa-search mr-2"></i>
-                    Search {searchType === 'articles' ? 'Articles' : 'Clinical Trials'}
-                  </>
-                )}
-              </button>
+                <div className="row">
+                  <div className="col-md-6 mb-3">
+                    <div className="form-group">
+                      <label htmlFor="searchField">Search In</label>
+                      <select 
+                        className="form-control"
+                        id="searchField"
+                        value={searchField}
+                        onChange={(e) => setSearchField(e.target.value)}
+                      >
+                        <option value="all">All Fields</option>
+                        <option value="title">Title Only</option>
+                        <option value="summary">Abstract/Summary Only</option>
+                      </select>
+                    </div>
+                  </div>
+                  
+                  {searchType === 'trials' && (
+                    <div className="col-md-6 mb-3">
+                      <div className="form-group">
+                        <label htmlFor="trialStatus">Trial Status</label>
+                        <select 
+                          className="form-control"
+                          id="trialStatus"
+                          value={trialStatus}
+                          onChange={(e) => setTrialStatus(e.target.value)}
+                        >
+                          {TRIAL_STATUS_OPTIONS.map(option => (
+                            <option key={option.value} value={option.value}>
+                              {option.label}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                  )}
+                </div>
+            
+                <div className="text-center">
+                  <button 
+                    type="submit" 
+                    className="btn btn-primary btn-lg"
+                    disabled={isLoading}
+                  >
+                    {isLoading ? (
+                      <>
+                        <span className="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>
+                        Searching...
+                      </>
+                    ) : (
+                      <>
+                        <i className="fas fa-search mr-2"></i>
+                        Search {searchType === 'articles' ? 'Articles' : 'Clinical Trials'}
+                      </>
+                    )}
+                  </button>
+                </div>
+              </form>
             </div>
-          </form>
+          </div>
         </div>
       </div>
       
       {/* Search Results */}
-      {renderResults()}
+      <div className="row justify-content-center">
+        <div className="col-lg-10">
+          {renderResults()}
+        </div>
+      </div>
+      
+      {/* Search Tips - Now appears after results */}
+      <div className="row justify-content-center mt-4">
+        <div className="col-lg-8">
+          <div className="card mb-4">
+            <div className="card-header bg-light">
+              <h3 className="mb-0 text-primary">Search Tips</h3>
+            </div>
+            <div className="card-body">
+              <p className="lead">Use this search tool to find relevant research articles or clinical trials related to Multiple Sclerosis.</p>
+              
+              <h5>Tips for effective searching:</h5>
+              <ul className="list-group list-group-flush mb-3">
+                <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> First, select whether you want to search for research articles or clinical trials</li>
+                <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> Use specific terms related to treatments, symptoms, or research topics</li>
+                <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> Try different spellings or related terms if you don't find what you're looking for</li>
+                <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> Use the field selector to search in titles only for more specific results</li>
+                <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> For clinical trials, you can filter by recruitment status to find active research opportunities</li>
+                <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> Export your results to CSV for offline reading or sharing</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
