@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { searchService } from '../services/searchService';
 import { stripHtml, truncateText, convertToCSV, downloadCSV, formatDate } from '../utils/searchUtils';
 import ArticleListItem from './ArticleListItem';
+import TrialListItem from './TrialListItem';
 
 // Trial status options
 const TRIAL_STATUS_OPTIONS = [
@@ -446,39 +447,13 @@ function SearchApp() {
         {renderPagination('trials')}
         
         <div className="list-group article-list">
-          {trialResults.map((trial) => {
-            console.log('Rendering trial:', trial);
-            return (
-            <div key={trial.id || trial.trial_id || trial.nct_id || Math.random().toString(36)} className="list-group-item list-group-item-action flex-column align-items-start">
-              <div className="d-flex w-100 justify-content-between">
-                <h5 className="mb-1">
-                  <a href={trial.link || trial.url || `https://clinicaltrials.gov/study/${trial.nct_id}`} target="_blank" rel="noopener noreferrer">
-                    {trial.title || 'Unnamed Trial'}
-                  </a>
-                </h5>
-                <small className="text-muted publication-date">{formatDate(trial.published_date || trial.last_update_posted)}</small>
-              </div>
-              
-              <div className="article-metadata mb-2">
-                <span className={`badge ${(trial.status === 'Recruiting' || trial.recruitment_status === 'Recruiting') ? 'badge-success' : 'badge-secondary'} mr-2`}>
-                  {trial.status || trial.recruitment_status || trial.overall_status || 'Unknown Status'}
-                </span>
-              </div>
-              
-              {(trial.summary || trial.brief_summary) && (
-                <p className="article-summary">{truncateText(stripHtml(trial.summary || trial.brief_summary), 300)}</p>
-              )}
-              
-              <div className="article-links">
-                <small>
-                  <a href={trial.link || trial.url || `https://clinicaltrials.gov/study/${trial.nct_id}`} target="_blank" rel="noopener noreferrer" className="source-link">
-                    <i className="fas fa-external-link-alt mr-1"></i>
-                    View trial details
-                  </a>
-                </small>
-              </div>
-            </div>
-          )})}
+          {trialResults.map((trial) => (
+            <TrialListItem
+              key={trial.id || trial.trial_id || trial.nct_id || Math.random().toString(36)}
+              trial={trial}
+              isSearchResult={true}
+            />
+          ))}
         </div>
         
         {renderPagination('trials')}

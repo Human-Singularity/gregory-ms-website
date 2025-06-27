@@ -40,12 +40,12 @@ export const articleService = {
 };
 
 /**
- * Trial related API calls
+ * Trial related API calls /teams/<team_id>/trials/subject/<subject_id>/
  */
 export const trialService = {
   // Get all trials with pagination
   getTrials: (page = 1) => 
-    apiClient.get(`/teams/1/trials/?format=json&page=${page}`),
+    apiClient.get(`/teams/1/trials/subject/1/?format=json&page=${page}`),
   
   // Get trials by category
   getTrialsByCategory: (category, page = 1) => 
