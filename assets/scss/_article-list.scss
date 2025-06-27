@@ -1,0 +1,266 @@
+// Article list styling
+.article-list {
+  margin-bottom: 2rem;
+  
+  .list-group-item {
+    margin-bottom: 1.25rem;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease-in-out;
+    border-left: 5px solid transparent;
+    padding: 1.25rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    
+    &:hover {
+      border-left-color: var(--primary, #2CA8FF);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transform: translateY(-3px);
+    }
+    
+    // Article title
+    h5 {
+      font-size: 1.5rem; // Increased from 1.35rem for better readability
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      line-height: 1.4; // Improved line height for better readability
+      
+      a {
+        color: #0056b3; // Darker blue for better contrast than the previous variable
+        text-decoration: none;
+        
+        &:hover {
+          text-decoration: underline;
+        }
+        
+        &:focus {
+          outline: 2px solid #0056b3; // Visible focus indicator
+          outline-offset: 2px;
+        }
+      }
+    }
+    
+    // Publication date
+    .publication-date {
+      white-space: nowrap;
+      font-style: italic;
+      color: #495057; // Darker gray for better contrast
+      margin-left: 0.75rem;
+      font-size: 0.95rem; // Slightly larger
+    }
+    
+    // Article metadata
+    .article-metadata {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 1rem;
+      
+      .badge {
+        margin-right: 0.5rem;
+        margin-bottom: 0.25rem;
+        padding: 0.5rem 0.85rem; // Larger padding for better touch target
+        font-weight: normal;
+        font-size: 0.9rem; // Increased from 0.85rem
+        letter-spacing: 0.01em;
+        
+        &.badge-journal {
+          background-color: #0062cc; // Darker blue for better contrast
+          color: white;
+        }
+        
+        &.badge-expert {
+          background-color: #5a0991; // Slightly adjusted for better contrast
+          color: white;
+        }
+        
+        // ML prediction badges
+        &.prediction-badge {
+          font-weight: 500;
+          border-radius: 12px;
+          padding: 0.5rem 0.85rem;
+          
+          &.badge-success {
+            background-color: #198754; // Solid color instead of rgba for better contrast
+            color: white;
+          }
+          
+          &.badge-warning {
+            background-color: #cc8a00; // Darker than default warning for better contrast with white text
+            color: white; // Changed from dark text to white for better contrast
+          }
+          
+          &.badge-danger {
+            background-color: #dc3545; // Solid color instead of rgba
+            color: white;
+          }
+        }
+      }
+      
+      // Container for ML predictions
+      .ml-predictions-container {
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 0.25rem;
+      }
+    }
+    
+    // Authors
+    .article-authors {
+      margin-bottom: 0.75rem;
+      color: #343a40; // Darker for better contrast
+      font-size: 0.95rem; // Slightly larger
+      
+      i {
+        color: #495057; // Darker for better contrast
+      }
+    }
+    
+    // Article summary
+    .article-summary {
+      font-size: 1.05rem; // Increased from 1rem
+      line-height: 1.6;
+      color: #212529; // Darker for better contrast
+      margin-bottom: 1.25rem;
+      padding-left: 0.25rem;
+      border-left: 3px solid #dee2e6; // Slightly darker and thicker
+      padding-left: 1rem;
+    }
+    
+    // Article links
+    .article-links {
+      display: flex;
+      flex-wrap: wrap;
+      margin-top: 0.75rem;
+      border-top: 1px solid rgba(0,0,0,0.1);
+      padding-top: 0.75rem;
+      
+      small {
+        margin-right: 1.25rem;
+        margin-bottom: 0.25rem;
+        font-size: 0.95rem; // Slightly larger
+        
+        a {
+          display: inline-flex;
+          align-items: center;
+          font-weight: 500;
+          
+          &.source-link {
+            color: #495057; // Darker for better contrast
+            
+            &:hover {
+              color: #212529;
+              text-decoration: none;
+            }
+            
+            &:focus {
+              outline: 2px solid #495057;
+              outline-offset: 2px;
+            }
+          }
+          
+          &.full-article-link {
+            color: #0056b3; // Darker blue for better contrast
+            
+            &:hover {
+              text-decoration: none;
+              color: #003d7a; // Even darker on hover
+            }
+            
+            &:focus {
+              outline: 2px solid #0056b3;
+              outline-offset: 2px;
+            }
+          }
+          
+          i {
+            margin-right: 0.25rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Style for numbered list view
+.article-list-numbered {
+  padding-left: 1.5rem;
+  
+  li {
+    margin-bottom: 1rem; // Increased from 0.75rem
+    padding: 0.75rem 0; // Increased from 0.5rem
+    font-size: 1.05rem; // Explicitly set font size
+    line-height: 1.5;
+    
+    a {
+      color: #0056b3; // Darker blue for better contrast
+      text-decoration: none;
+      font-weight: 500;
+      
+      &:hover {
+        text-decoration: underline;
+      }
+      
+      &:focus {
+        outline: 2px solid #0056b3; // Visible focus indicator
+        outline-offset: 2px;
+      }
+    }
+    
+    .article-date {
+      color: #495057; // Darker for better contrast
+      font-style: italic;
+      margin-left: 0.5rem;
+    }
+  }
+}
+
+// Responsive styles
+@media (max-width: 767.98px) {
+  .article-list {
+    .list-group-item {
+      padding: 1.25rem 1rem; // Keep good padding even on mobile
+      
+      h5 {
+        font-size: 1.3rem; // Still large enough for readability on mobile
+        line-height: 1.4;
+      }
+      
+      .d-flex.w-100.justify-content-between {
+        flex-direction: column;
+        
+        small {
+          margin-top: 0.5rem; // Increased spacing
+          margin-left: 0;
+          font-size: 0.9rem; // Explicitly set for mobile
+        }
+      }
+      
+      .article-metadata {
+        .badge {
+          font-size: 0.85rem; // Keep badges readable
+          padding: 0.4rem 0.7rem; // Still good touch target size
+          margin-bottom: 0.4rem; // More space between badges when they wrap
+        }
+      }
+      
+      .article-summary {
+        font-size: 1rem; // Still good readable size
+        line-height: 1.6;
+        padding-left: 0.75rem; // Slightly reduced but still visible
+      }
+      
+      .article-authors {
+        font-size: 0.9rem; // Adjusted for mobile but still readable
+      }
+      
+      .article-links small {
+        font-size: 0.9rem; // Adjusted for mobile but still readable
+        margin-bottom: 0.5rem; // More space when links wrap
+      }
+    }
+  }
+  
+  .article-list-numbered li {
+    font-size: 1rem; // Adjusted for mobile but still readable
+    padding: 0.6rem 0;
+  }
+}
