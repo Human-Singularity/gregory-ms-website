@@ -311,31 +311,76 @@ function SearchApp() {
     }
   };
   
+  // Build a CSV download URL
+  const buildCsvDownloadUrl = (type) => {
+    // Base URL
+    const baseUrl = typeof window !== 'undefined' && window.ENV_API_URL 
+      ? window.ENV_API_URL 
+      : 'https://api.gregory-ms.com';
+      
+    // Endpoint based on type
+    const endpoint = type === 'articles' ? '/articles/search/' : '/trials/search/';
+    
+    // Build query parameters
+    const params = {
+      format: 'csv',
+      all_results: 'true',
+      team_id: 1, // Team Gregory
+      subject_id: 1, // Multiple Sclerosis
+      status: type === 'trials' ? trialStatus : undefined
+    };
+    
+    // Add search parameters based on search field selection
+    if (searchField === 'all' || searchField === 'title') {
+      params.title = searchTerm;
+    }
+    
+    if (searchField === 'all' || searchField === 'summary') {
+      params.summary = searchTerm;
+    }
+    
+    if (searchField === 'all') {
+      params.search = searchTerm;
+      
+      // Clear specific fields when using general search
+      delete params.title;
+      delete params.summary;
+    }
+    
+    // Build the URL with query parameters
+    const url = new URL(baseUrl + endpoint);
+    
+    // Add each parameter to the URL
+    Object.keys(params).forEach(key => {
+      if (params[key] !== undefined) {
+        url.searchParams.append(key, params[key]);
+      }
+    });
+    
+    return url.toString();
+  };
+  
   // Render result tabs - No longer needed since we're only showing one type
   const renderTabs = () => {
     if (!hasSearched) return null;
+    
+    // Generate the CSV download URL
+    const csvDownloadUrl = buildCsvDownloadUrl(searchType);
     
     return (
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h3>{searchType === 'articles' ? 'Research Articles' : 'Clinical Trials'} ({searchType === 'articles' ? articleCount : trialCount})</h3>
         
-        <button 
+        <a 
+          href={csvDownloadUrl}
           className="btn btn-sm btn-outline-primary"
-          onClick={() => handleExport(searchType)}
-          disabled={(searchType === 'articles' ? !articleResults.length : !trialResults.length) || isLoading}
+          target="_blank"
+          rel="noopener noreferrer"
+          disabled={(searchType === 'articles' ? !articleResults.length : !trialResults.length)}
         >
-          {isLoading ? (
-            <>
-              <span className="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true"></span>
-              Exporting...
-            </>
-          ) : (
-            <>
-              <i className="fas fa-file-download mr-1"></i>
-              Export as CSV
-            </>
-          )}
-        </button>
+          <i className="fas fa-file-download mr-1"></i>
+          Export as CSV
+        </a>
       </div>
     );
   };
