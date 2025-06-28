@@ -11,8 +11,52 @@ const apiClient = axios.create({
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json'
-  }
+  },
+  withCredentials: true // Important for CSRF - allows cookies to be sent cross-domain
 });
+
+// Function to get CSRF token from cookies
+const getCSRFToken = () => {
+  const name = 'csrftoken';
+  if (typeof document === 'undefined') return null;
+  
+  const cookieValue = document.cookie
+    .split('; ')
+    .find(row => row.startsWith(name + '='));
+    
+  return cookieValue ? cookieValue.split('=')[1] : null;
+};
+
+// Function to fetch CSRF token if not already in cookies
+const fetchCSRFToken = async () => {
+  // If we already have a CSRF token in cookies, use it
+  const existingToken = getCSRFToken();
+  if (existingToken) {
+    console.log('Using existing CSRF token from cookies');
+    return existingToken;
+  }
+  
+  // Otherwise, make a request to the server to get a CSRF token
+  console.log('Fetching CSRF token from server...');
+  try {
+    // Make a GET request to the server, which should set the CSRF cookie
+    const response = await fetch(`${API_BASE_URL}/`, {
+      method: 'GET',
+      credentials: 'include' // Important to include cookies
+    });
+    
+    if (!response.ok) {
+      console.error('Failed to fetch CSRF token:', response.status);
+      return null;
+    }
+    
+    // Now the cookie should be set, so get it again
+    return getCSRFToken();
+  } catch (error) {
+    console.error('Error fetching CSRF token:', error);
+    return null;
+  }
+};
 
 /**
  * Create a download link for CSV data
@@ -65,7 +109,7 @@ export const searchService = {
    * @param {boolean} params.exportCSV - Whether to export as CSV
    * @returns {Promise} - Promise with search results
    */
-  searchArticles: (params) => {
+  searchArticles: async (params) => {
     // Create request parameters
     const requestParams = {
       team_id: params.team_id || 1, // Default to Team Gregory
@@ -91,13 +135,56 @@ export const searchService = {
         csvParams[key] === undefined && delete csvParams[key]
       );
 
-      // APPROACH 1: Direct GET request via window.open (simplest, most reliable)
-      console.log('APPROACH 1: Trying direct window.open with GET request for articles');
-      const getUrl = buildUrlWithParams(`${API_BASE_URL}/articles/search/`, csvParams);
-      console.log('Opening URL:', getUrl);
-      window.open(getUrl, '_blank');
+      // First, make sure we have a CSRF token
+      let csrfToken = getCSRFToken();
+      if (!csrfToken) {
+        console.log('No CSRF token found in cookies, fetching one...');
+        csrfToken = await fetchCSRFToken();
+      }
+      
+      console.log('CSRF Token for articles export:', csrfToken);
+      
+      // Create a form for direct submission with CSRF token
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = `${API_BASE_URL}/articles/search/`;
+      form.target = '_blank'; 
+      
+      // Add CSRF token if available
+      if (csrfToken) {
+        const csrfInput = document.createElement('input');
+        csrfInput.type = 'hidden';
+        csrfInput.name = 'csrfmiddlewaretoken';
+        csrfInput.value = csrfToken;
+        form.appendChild(csrfInput);
+      }
+      
+      // Add all parameters to the form
+      Object.keys(csvParams).forEach(key => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = key;
+        input.value = csvParams[key];
+        form.appendChild(input);
+      });
+      
+      // Append form to the body, submit it, then remove it
+      document.body.appendChild(form);
+      form.submit();
+      document.body.removeChild(form);
       
       return Promise.resolve({ success: true });
+    }
+
+    // Get CSRF token for JSON requests
+    let csrfToken = getCSRFToken();
+    if (!csrfToken) {
+      console.log('No CSRF token found in cookies for JSON request, fetching one...');
+      csrfToken = await fetchCSRFToken();
+    }
+    
+    if (csrfToken) {
+      apiClient.defaults.headers['X-CSRFToken'] = csrfToken;
     }
 
     // Regular JSON search
@@ -127,7 +214,7 @@ export const searchService = {
    * @param {boolean} params.exportCSV - Whether to export as CSV
    * @returns {Promise} - Promise with search results
    */
-  searchTrials: (params) => {
+  searchTrials: async (params) => {
     console.log('Sending trial search request with params:', params);
     
     // Construct the request parameters
@@ -156,13 +243,56 @@ export const searchService = {
         all_results: true
       };
 
-      // APPROACH 1: Direct GET request via window.open (simplest, most reliable)
-      console.log('APPROACH 1: Trying direct window.open with GET request for trials');
-      const getUrl = buildUrlWithParams(`${API_BASE_URL}/trials/search/`, csvParams);
-      console.log('Opening URL:', getUrl);
-      window.open(getUrl, '_blank');
+      // First, make sure we have a CSRF token
+      let csrfToken = getCSRFToken();
+      if (!csrfToken) {
+        console.log('No CSRF token found in cookies, fetching one...');
+        csrfToken = await fetchCSRFToken();
+      }
+      
+      console.log('CSRF Token for trials export:', csrfToken);
+      
+      // Create a form for direct submission with CSRF token
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = `${API_BASE_URL}/trials/search/`;
+      form.target = '_blank'; 
+      
+      // Add CSRF token if available
+      if (csrfToken) {
+        const csrfInput = document.createElement('input');
+        csrfInput.type = 'hidden';
+        csrfInput.name = 'csrfmiddlewaretoken';
+        csrfInput.value = csrfToken;
+        form.appendChild(csrfInput);
+      }
+      
+      // Add all parameters to the form
+      Object.keys(csvParams).forEach(key => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = key;
+        input.value = csvParams[key];
+        form.appendChild(input);
+      });
+      
+      // Append form to the body, submit it, then remove it
+      document.body.appendChild(form);
+      form.submit();
+      document.body.removeChild(form);
       
       return Promise.resolve({ success: true });
+    }
+    
+    // Get CSRF token for JSON requests
+    let csrfToken = getCSRFToken();
+    if (!csrfToken) {
+      console.log('No CSRF token found in cookies for JSON request, fetching one...');
+      csrfToken = await fetchCSRFToken();
+    }
+    
+    if (csrfToken) {
+      apiClient.defaults.headers['X-CSRFToken'] = csrfToken;
     }
     
     // Make the API request
@@ -203,7 +333,7 @@ export const searchService = {
    * @param {string} params.status - Recruitment status (for trials)
    * @returns {Promise} - Promise that resolves when the file is downloaded
    */
-  downloadResults: (params) => {
+  downloadResults: async (params) => {
     const { type, team_id, subject_id, search, title, summary, status } = params;
     
     // Validate input parameters
@@ -231,20 +361,29 @@ export const searchService = {
     // Determine the endpoint based on the type
     const endpoint = type === 'articles' ? '/articles/search/' : '/trials/search/';
     
-    // Try three different approaches and log debug info
+    // First, make sure we have a CSRF token
+    let csrfToken = getCSRFToken();
+    if (!csrfToken) {
+      console.log('No CSRF token found in cookies, fetching one...');
+      csrfToken = await fetchCSRFToken();
+    }
     
-    // APPROACH 1: Direct GET request via window.open (simplest, most reliable)
-    console.log('APPROACH 1: Trying direct window.open with GET request');
-    const getUrl = buildUrlWithParams(`${API_BASE_URL}${endpoint}`, requestParams);
-    console.log('Opening URL:', getUrl);
-    window.open(getUrl, '_blank');
+    console.log('CSRF Token for download:', csrfToken);
     
-    // APPROACH 2: Form POST submission (backup method)
-    console.log('APPROACH 2: Also trying form POST submission as backup');
+    // Create a form for direct submission with CSRF token
     const form = document.createElement('form');
     form.method = 'POST';
     form.action = `${API_BASE_URL}${endpoint}`;
     form.target = '_blank'; 
+    
+    // Add CSRF token if available
+    if (csrfToken) {
+      const csrfInput = document.createElement('input');
+      csrfInput.type = 'hidden';
+      csrfInput.name = 'csrfmiddlewaretoken';
+      csrfInput.value = csrfToken;
+      form.appendChild(csrfInput);
+    }
     
     // Add all parameters to the form
     Object.keys(requestParams).forEach(key => {
@@ -255,14 +394,17 @@ export const searchService = {
       form.appendChild(input);
     });
     
+    // Log what we're submitting
+    console.log('Submitting form to:', form.action);
+    console.log('With parameters:', requestParams);
+    console.log('CSRF token included:', !!csrfToken);
+    
     // Append form to the body, submit it, then remove it
     document.body.appendChild(form);
     form.submit();
     document.body.removeChild(form);
     
-    // Return a resolved promise since we've tried multiple approaches
+    // Return a resolved promise
     return Promise.resolve({ success: true });
   }
 };
-
-export default searchService;
