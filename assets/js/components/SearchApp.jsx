@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { searchService } from '../services/searchService';
-import { stripHtml, truncateText, convertToCSV, downloadCSV, formatDate } from '../utils/searchUtils';
+import { stripHtml, truncateText, formatDate } from '../utils/searchUtils';
 import ArticleListItem from './ArticleListItem';
 import TrialListItem from './TrialListItem';
 
@@ -271,88 +271,38 @@ function SearchApp() {
   
   // Export results to CSV
   const handleExport = async (type) => {
-    let fileName;
-    
     // Show loading state for export
     setIsLoading(true);
     
     try {
-      if (type === 'articles') {
-        // Prepare article search parameters for all results
-        const articleParams = {
-          team_id: 1, // Team Gregory
-          subject_id: 1, // Multiple Sclerosis
-          page: 1,
-          page_size: articleCount // Request all results in one go
-        };
-        
-        // Set search fields based on selection
-        if (searchField === 'all' || searchField === 'title') {
-          articleParams.title = searchTerm;
-        }
-        
-        if (searchField === 'all' || searchField === 'summary') {
-          articleParams.summary = searchTerm;
-        }
-        
-        if (searchField === 'all') {
-          articleParams.search = searchTerm;
-          
-          // Clear specific fields when using general search
-          delete articleParams.title;
-          delete articleParams.summary;
-        }
-        
-        // Execute article search for all results
-        const articleResponse = await searchService.searchArticles(articleParams);
-        const allArticles = articleResponse.data.results || [];
-        
-        fileName = `gregory-ms-articles-search-${new Date().toISOString().slice(0, 10)}.csv`;
-        const csvContent = convertToCSV(allArticles, type);
-        downloadCSV(csvContent, fileName);
-        
-      } else if (type === 'trials') {
-        // Prepare trial search parameters for all results
-        const trialParams = {
-          team_id: 1, // Team Gregory
-          subject_id: 1, // Multiple Sclerosis
-          page: 1,
-          page_size: trialCount, // Request all results in one go
-          status: trialStatus
-        };
-        
-        // Set search fields based on selection
-        if (searchField === 'all' || searchField === 'title') {
-          trialParams.title = searchTerm;
-        }
-        
-        if (searchField === 'all' || searchField === 'summary') {
-          trialParams.summary = searchTerm;
-        }
-        
-        if (searchField === 'all') {
-          trialParams.search = searchTerm;
-          
-          // Clear specific fields when using general search
-          delete trialParams.title;
-          delete trialParams.summary;
-        }
-        
-        // Execute trial search for all results
-        const trialResponse = await searchService.searchTrials(trialParams);
-        
-        // Handle different response formats
-        let allTrials = [];
-        if (trialResponse.data && trialResponse.data.results && Array.isArray(trialResponse.data.results)) {
-          allTrials = trialResponse.data.results;
-        } else if (trialResponse.data && Array.isArray(trialResponse.data)) {
-          allTrials = trialResponse.data;
-        }
-        
-        fileName = `gregory-ms-trials-search-${new Date().toISOString().slice(0, 10)}.csv`;
-        const csvContent = convertToCSV(allTrials, type);
-        downloadCSV(csvContent, fileName);
+      // Prepare search parameters
+      const params = {
+        type: type, // 'articles' or 'trials'
+        team_id: 1, // Team Gregory
+        subject_id: 1, // Multiple Sclerosis
+        status: type === 'trials' ? trialStatus : undefined
+      };
+      
+      // Set search fields based on selection
+      if (searchField === 'all' || searchField === 'title') {
+        params.title = searchTerm;
       }
+      
+      if (searchField === 'all' || searchField === 'summary') {
+        params.summary = searchTerm;
+      }
+      
+      if (searchField === 'all') {
+        params.search = searchTerm;
+        
+        // Clear specific fields when using general search
+        delete params.title;
+        delete params.summary;
+      }
+      
+      // Use the downloadResults method from searchService to download CSV
+      await searchService.downloadResults(params);
+      
     } catch (err) {
       console.error('Export error:', err);
       setError('An error occurred while exporting the data. Please try again.');
