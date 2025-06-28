@@ -31,6 +31,25 @@ const downloadCSVFile = (blob, fileName) => {
 };
 
 /**
+ * Create a GET request URL with query parameters
+ * @param {string} baseUrl - Base URL
+ * @param {Object} params - Query parameters
+ * @returns {string} - URL with query parameters
+ */
+const buildUrlWithParams = (baseUrl, params) => {
+  const url = new URL(baseUrl);
+  
+  // Add each parameter to the URL
+  Object.keys(params).forEach(key => {
+    if (params[key] !== undefined) {
+      url.searchParams.append(key, params[key]);
+    }
+  });
+  
+  return url.toString();
+};
+
+/**
  * Search service for articles and clinical trials
  */
 export const searchService = {
@@ -60,55 +79,23 @@ export const searchService = {
 
     // If exporting as CSV, adjust the request
     if (params.exportCSV) {
-      // Create a unique ID for the iframe
-      const iframeId = `download-iframe-${Date.now()}`;
-      const iframe = document.createElement('iframe');
-      iframe.id = iframeId;
-      iframe.name = iframeId;
-      iframe.style.display = 'none';
-      document.body.appendChild(iframe);
+      // Add CSV-specific parameters
+      const csvParams = {
+        ...requestParams,
+        format: 'csv',
+        all_results: true
+      };
+      
+      // Clean up undefined values
+      Object.keys(csvParams).forEach(key => 
+        csvParams[key] === undefined && delete csvParams[key]
+      );
 
-      // Create a form that targets the iframe
-      const form = document.createElement('form');
-      form.method = 'POST';
-      form.action = `${API_BASE_URL}/articles/search/`;
-      form.target = iframeId;
-      form.style.display = 'none';
-      
-      // Add format parameter
-      const formatInput = document.createElement('input');
-      formatInput.type = 'hidden';
-      formatInput.name = 'format';
-      formatInput.value = 'csv';
-      form.appendChild(formatInput);
-      
-      // Add all_results parameter
-      const allResultsInput = document.createElement('input');
-      allResultsInput.type = 'hidden';
-      allResultsInput.name = 'all_results';
-      allResultsInput.value = 'true';
-      form.appendChild(allResultsInput);
-      
-      // Add all other parameters
-      Object.keys(requestParams).forEach(key => {
-        if (requestParams[key] !== undefined) {
-          const input = document.createElement('input');
-          input.type = 'hidden';
-          input.name = key;
-          input.value = requestParams[key];
-          form.appendChild(input);
-        }
-      });
-      
-      // Append form to the body, submit it
-      document.body.appendChild(form);
-      form.submit();
-      
-      // Clean up after a delay to ensure the request has time to process
-      setTimeout(() => {
-        document.body.removeChild(form);
-        document.body.removeChild(iframe);
-      }, 5000);
+      // APPROACH 1: Direct GET request via window.open (simplest, most reliable)
+      console.log('APPROACH 1: Trying direct window.open with GET request for articles');
+      const getUrl = buildUrlWithParams(`${API_BASE_URL}/articles/search/`, csvParams);
+      console.log('Opening URL:', getUrl);
+      window.open(getUrl, '_blank');
       
       return Promise.resolve({ success: true });
     }
@@ -162,55 +149,18 @@ export const searchService = {
     
     // If exporting as CSV, adjust the request
     if (params.exportCSV) {
-      // Create a unique ID for the iframe
-      const iframeId = `download-iframe-${Date.now()}`;
-      const iframe = document.createElement('iframe');
-      iframe.id = iframeId;
-      iframe.name = iframeId;
-      iframe.style.display = 'none';
-      document.body.appendChild(iframe);
+      // Add CSV-specific parameters
+      const csvParams = {
+        ...requestParams,
+        format: 'csv',
+        all_results: true
+      };
 
-      // Create a form that targets the iframe
-      const form = document.createElement('form');
-      form.method = 'POST';
-      form.action = `${API_BASE_URL}/trials/search/`;
-      form.target = iframeId;
-      form.style.display = 'none';
-      
-      // Add format parameter
-      const formatInput = document.createElement('input');
-      formatInput.type = 'hidden';
-      formatInput.name = 'format';
-      formatInput.value = 'csv';
-      form.appendChild(formatInput);
-      
-      // Add all_results parameter
-      const allResultsInput = document.createElement('input');
-      allResultsInput.type = 'hidden';
-      allResultsInput.name = 'all_results';
-      allResultsInput.value = 'true';
-      form.appendChild(allResultsInput);
-      
-      // Add all other parameters
-      Object.keys(requestParams).forEach(key => {
-        if (requestParams[key] !== undefined) {
-          const input = document.createElement('input');
-          input.type = 'hidden';
-          input.name = key;
-          input.value = requestParams[key];
-          form.appendChild(input);
-        }
-      });
-      
-      // Append form to the body, submit it
-      document.body.appendChild(form);
-      form.submit();
-      
-      // Clean up after a delay to ensure the request has time to process
-      setTimeout(() => {
-        document.body.removeChild(form);
-        document.body.removeChild(iframe);
-      }, 5000);
+      // APPROACH 1: Direct GET request via window.open (simplest, most reliable)
+      console.log('APPROACH 1: Trying direct window.open with GET request for trials');
+      const getUrl = buildUrlWithParams(`${API_BASE_URL}/trials/search/`, csvParams);
+      console.log('Opening URL:', getUrl);
+      window.open(getUrl, '_blank');
       
       return Promise.resolve({ success: true });
     }
@@ -280,21 +230,21 @@ export const searchService = {
     
     // Determine the endpoint based on the type
     const endpoint = type === 'articles' ? '/articles/search/' : '/trials/search/';
-
-    // Try using an iframe approach which can help with certain CORS issues
-    const iframeId = `download-iframe-${Date.now()}`;
-    const iframe = document.createElement('iframe');
-    iframe.id = iframeId;
-    iframe.name = iframeId;
-    iframe.style.display = 'none';
-    document.body.appendChild(iframe);
-
-    // Create a form that targets the iframe
+    
+    // Try three different approaches and log debug info
+    
+    // APPROACH 1: Direct GET request via window.open (simplest, most reliable)
+    console.log('APPROACH 1: Trying direct window.open with GET request');
+    const getUrl = buildUrlWithParams(`${API_BASE_URL}${endpoint}`, requestParams);
+    console.log('Opening URL:', getUrl);
+    window.open(getUrl, '_blank');
+    
+    // APPROACH 2: Form POST submission (backup method)
+    console.log('APPROACH 2: Also trying form POST submission as backup');
     const form = document.createElement('form');
     form.method = 'POST';
     form.action = `${API_BASE_URL}${endpoint}`;
-    form.target = iframeId;
-    form.style.display = 'none';
+    form.target = '_blank'; 
     
     // Add all parameters to the form
     Object.keys(requestParams).forEach(key => {
@@ -305,17 +255,12 @@ export const searchService = {
       form.appendChild(input);
     });
     
-    // Append form to the body, submit it
+    // Append form to the body, submit it, then remove it
     document.body.appendChild(form);
     form.submit();
+    document.body.removeChild(form);
     
-    // Clean up after a delay to ensure the request has time to process
-    setTimeout(() => {
-      document.body.removeChild(form);
-      document.body.removeChild(iframe);
-    }, 5000);
-    
-    // Return a resolved promise since we can't track the form submission
+    // Return a resolved promise since we've tried multiple approaches
     return Promise.resolve({ success: true });
   }
 };
