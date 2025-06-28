@@ -11,7 +11,7 @@ update-submodule:
 	fi
 
 deploy: update-submodule
-	ssh gregory@House 'cd /home/gregory/gregory-ms-website && git pull && git submodule update && docker exec gregory python manage.py migrate && docker restart gregory'
+	ssh gregory@House 'cd /home/gregory/gregory-ms-website && git pull && git submodule update && docker exec gregory python manage.py migrate && docker exec pip install -r requirements.txt && docker restart gregory'
 
 upgrade: update-submodule
 	ssh gregory@House 'cd /home/gregory/gregory-ms-website && git pull && git submodule update && docker restart gregory'
