@@ -60,28 +60,57 @@ export const searchService = {
 
     // If exporting as CSV, adjust the request
     if (params.exportCSV) {
-      // Build query parameters for the URL
-      const queryParams = new URLSearchParams();
-      queryParams.append('format', 'csv');
-      queryParams.append('all_results', 'true');
+      // Create a unique ID for the iframe
+      const iframeId = `download-iframe-${Date.now()}`;
+      const iframe = document.createElement('iframe');
+      iframe.id = iframeId;
+      iframe.name = iframeId;
+      iframe.style.display = 'none';
+      document.body.appendChild(iframe);
+
+      // Create a form that targets the iframe
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = `${API_BASE_URL}/articles/search/`;
+      form.target = iframeId;
+      form.style.display = 'none';
       
-      // Add search parameters to the URL query string
+      // Add format parameter
+      const formatInput = document.createElement('input');
+      formatInput.type = 'hidden';
+      formatInput.name = 'format';
+      formatInput.value = 'csv';
+      form.appendChild(formatInput);
+      
+      // Add all_results parameter
+      const allResultsInput = document.createElement('input');
+      allResultsInput.type = 'hidden';
+      allResultsInput.name = 'all_results';
+      allResultsInput.value = 'true';
+      form.appendChild(allResultsInput);
+      
+      // Add all other parameters
       Object.keys(requestParams).forEach(key => {
         if (requestParams[key] !== undefined) {
-          queryParams.append(key, requestParams[key]);
+          const input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = key;
+          input.value = requestParams[key];
+          form.appendChild(input);
         }
       });
       
-      return apiClient.get(`/articles/search/?${queryParams.toString()}`, {
-        responseType: 'blob',
-        headers: {
-          'Accept': 'text/csv'
-        }
-      }).then(response => {
-        const fileName = `gregory-ms-articles-search-${new Date().toISOString().slice(0, 10)}.csv`;
-        downloadCSVFile(response.data, fileName);
-        return { success: true, fileName };
-      });
+      // Append form to the body, submit it
+      document.body.appendChild(form);
+      form.submit();
+      
+      // Clean up after a delay to ensure the request has time to process
+      setTimeout(() => {
+        document.body.removeChild(form);
+        document.body.removeChild(iframe);
+      }, 5000);
+      
+      return Promise.resolve({ success: true });
     }
 
     // Regular JSON search
@@ -133,28 +162,57 @@ export const searchService = {
     
     // If exporting as CSV, adjust the request
     if (params.exportCSV) {
-      // Build query parameters for the URL
-      const queryParams = new URLSearchParams();
-      queryParams.append('format', 'csv');
-      queryParams.append('all_results', 'true');
+      // Create a unique ID for the iframe
+      const iframeId = `download-iframe-${Date.now()}`;
+      const iframe = document.createElement('iframe');
+      iframe.id = iframeId;
+      iframe.name = iframeId;
+      iframe.style.display = 'none';
+      document.body.appendChild(iframe);
+
+      // Create a form that targets the iframe
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = `${API_BASE_URL}/trials/search/`;
+      form.target = iframeId;
+      form.style.display = 'none';
       
-      // Add search parameters to the URL query string
+      // Add format parameter
+      const formatInput = document.createElement('input');
+      formatInput.type = 'hidden';
+      formatInput.name = 'format';
+      formatInput.value = 'csv';
+      form.appendChild(formatInput);
+      
+      // Add all_results parameter
+      const allResultsInput = document.createElement('input');
+      allResultsInput.type = 'hidden';
+      allResultsInput.name = 'all_results';
+      allResultsInput.value = 'true';
+      form.appendChild(allResultsInput);
+      
+      // Add all other parameters
       Object.keys(requestParams).forEach(key => {
         if (requestParams[key] !== undefined) {
-          queryParams.append(key, requestParams[key]);
+          const input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = key;
+          input.value = requestParams[key];
+          form.appendChild(input);
         }
       });
       
-      return apiClient.get(`/trials/search/?${queryParams.toString()}`, {
-        responseType: 'blob',
-        headers: {
-          'Accept': 'text/csv'
-        }
-      }).then(response => {
-        const fileName = `gregory-ms-trials-search-${new Date().toISOString().slice(0, 10)}.csv`;
-        downloadCSVFile(response.data, fileName);
-        return { success: true, fileName };
-      });
+      // Append form to the body, submit it
+      document.body.appendChild(form);
+      form.submit();
+      
+      // Clean up after a delay to ensure the request has time to process
+      setTimeout(() => {
+        document.body.removeChild(form);
+        document.body.removeChild(iframe);
+      }, 5000);
+      
+      return Promise.resolve({ success: true });
     }
     
     // Make the API request
@@ -211,6 +269,8 @@ export const searchService = {
       title: title || undefined,
       summary: summary || undefined,
       status: type === 'trials' ? status : undefined, // Only include status for trials
+      format: 'csv', // Request CSV format
+      all_results: true // Request all results
     };
     
     // Clean up undefined values
@@ -220,36 +280,43 @@ export const searchService = {
     
     // Determine the endpoint based on the type
     const endpoint = type === 'articles' ? '/articles/search/' : '/trials/search/';
+
+    // Try using an iframe approach which can help with certain CORS issues
+    const iframeId = `download-iframe-${Date.now()}`;
+    const iframe = document.createElement('iframe');
+    iframe.id = iframeId;
+    iframe.name = iframeId;
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+
+    // Create a form that targets the iframe
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = `${API_BASE_URL}${endpoint}`;
+    form.target = iframeId;
+    form.style.display = 'none';
     
-    // Build query parameters for the URL
-    const queryParams = new URLSearchParams();
-    queryParams.append('format', 'csv');
-    queryParams.append('all_results', 'true');
-    
-    // Add search parameters to the URL query string
+    // Add all parameters to the form
     Object.keys(requestParams).forEach(key => {
-      if (requestParams[key] !== undefined) {
-        queryParams.append(key, requestParams[key]);
-      }
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = key;
+      input.value = requestParams[key];
+      form.appendChild(input);
     });
     
-    // Make the API request with CSV format and all parameters in the URL
-    return apiClient.get(`${endpoint}?${queryParams.toString()}`, {
-        responseType: 'blob', // Expecting a binary file response
-        headers: {
-          'Accept': 'text/csv'
-        }
-      })
-      .then(response => {
-        // Create a blob URL and download the file
-        const fileName = `gregory-ms-${type}-search-${new Date().toISOString().slice(0, 10)}.csv`;
-        downloadCSVFile(response.data, fileName);
-        return { success: true, fileName };
-      })
-      .catch(error => {
-        console.error('Results download error:', error);
-        throw error;
-      });
+    // Append form to the body, submit it
+    document.body.appendChild(form);
+    form.submit();
+    
+    // Clean up after a delay to ensure the request has time to process
+    setTimeout(() => {
+      document.body.removeChild(form);
+      document.body.removeChild(iframe);
+    }, 5000);
+    
+    // Return a resolved promise since we can't track the form submission
+    return Promise.resolve({ success: true });
   }
 };
 
