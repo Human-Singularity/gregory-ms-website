@@ -90,5 +90,6 @@ To subscribe to the weekly digest, send an email to <bruno@gregory-ms.com>
 <div class="embed-responsive embed-responsive-16by9">
 <iframe src="/post/2021-12-04/ViewerJS/#/post/2021-12-04/Gregory_spem2021_PT.pdf" width='800' height='600' allowfullscreen webkitallowfullscreen></iframe>
 </div>
+</div>
 
 [Header photo by RawPixel](https://www.rawpixel.com/image/11935635/robot-hand-desktop-wallpaper)
