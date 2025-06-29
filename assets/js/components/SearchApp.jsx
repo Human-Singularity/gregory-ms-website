@@ -423,7 +423,7 @@ function SearchApp() {
       <div className="article-results">        
         {renderPagination('articles')}
         
-        <div className="list-group article-list">
+        <div className="list-group article-list d-flex justify-content-center flex-wrap">
           {articleResults.map((article) => (
             <ArticleListItem
               key={String(article.article_id)}
@@ -449,7 +449,7 @@ function SearchApp() {
       <div className="trial-results">        
         {renderPagination('trials')}
         
-        <div className="list-group article-list">
+        <div className="list-group article-list d-flex justify-content-center flex-wrap">
           {trialResults.map((trial) => (
             <TrialListItem
               key={trial.id || trial.trial_id || trial.nct_id || Math.random().toString(36)}
@@ -624,8 +624,8 @@ function SearchApp() {
       </div>
       
       {/* Search Results */}
-      <div className="row justify-content-center">
-        <div className="col-lg-10">
+      <div className="d-flex justify-content-center">
+        <div className="col-lg-10 mx-auto">
           {renderResults()}
         </div>
       </div>

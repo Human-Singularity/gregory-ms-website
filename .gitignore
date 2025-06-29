@@ -170,3 +170,5 @@ static/js/relevant.js.map
 static/js/mermaid.min.js
 static/js/trials.js
 static/js/trials.js.map
+nginx-production-settings/
+nginx-prod
