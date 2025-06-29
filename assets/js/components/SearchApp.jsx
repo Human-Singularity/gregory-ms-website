@@ -510,43 +510,41 @@ function SearchApp() {
   };
   
   return (
-    <div className="search-app container mt-5">
+    <div className="search-app container mx-auto">
       {/* Search Form Container - Centered */}
       <div className="row justify-content-center">
         <div className="col-lg-8">
           {/* Search Form Card */}
           <div className="card mb-4">
             <div className="card-header bg-light">
-              <h3 className="mb-0 text-primary">Search GregoryMS Database</h3>
+              <h3 className="mb-0 text-primary text-center">Search GregoryMS Database</h3>
             </div>
             <div className="card-body">
               <form onSubmit={handleSearch}>
-                <div className="row">
-                  <div className="col-md-4 mb-3">
-                    <div className="form-group">
-                      <label htmlFor="searchType">Search Type</label>
-                      <select 
-                        className="form-control"
-                        id="searchType"
-                        value={searchType}
-                        onChange={(e) => {
-                          setSearchType(e.target.value);
-                          // Update active tab to match search type
-                          setActiveTab(e.target.value);
-                        }}
-                      >
-                        {SEARCH_TYPE_OPTIONS.map(option => (
-                          <option key={option.value} value={option.value}>
-                            {option.label}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
+                <div className="form-row align-items-end">
+                  <div className="form-group col-md-4 mb-3">
+                    <label htmlFor="searchType" className="col-form-label">Search Type</label>
+                    <select
+                      className="form-control"
+                      id="searchType"
+                      value={searchType}
+                      onChange={(e) => {
+                        setSearchType(e.target.value);
+                        // Update active tab to match search type
+                        setActiveTab(e.target.value);
+                      }}
+                    >
+                      {SEARCH_TYPE_OPTIONS.map(option => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </select>
                   </div>
-                  
-                  <div className="col-md-8 mb-3">
-                    <div className="form-group">
-                      <label htmlFor="searchTerm">Search Terms</label>
+
+                  <div className="form-group col-md-8 mb-3">
+                    <label htmlFor="searchTerm" className="col-form-label">Search Terms</label>
+                    <div className="input-group search-input-group">
                       <input
                         type="text"
                         className="form-control"
@@ -556,32 +554,48 @@ function SearchApp() {
                         onChange={(e) => setSearchTerm(e.target.value)}
                         required
                       />
+                      <div className="input-group-append">
+                        <button
+                          type="submit"
+                          className="btn btn-primary btn-lg search-button"
+                          disabled={isLoading}
+                        >
+                          {isLoading ? (
+                            <>
+                              <span className="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>
+                              Searching...
+                            </>
+                          ) : (
+                            <>
+                              <i className="fas fa-search mr-2"></i>
+                              Search {searchType === 'articles' ? 'Articles' : 'Clinical Trials'}
+                            </>
+                          )}
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
             
-                <div className="row">
-                  <div className="col-md-6 mb-3">
-                    <div className="form-group">
-                      <label htmlFor="searchField">Search In</label>
-                      <select 
-                        className="form-control"
-                        id="searchField"
-                        value={searchField}
-                        onChange={(e) => setSearchField(e.target.value)}
-                      >
-                        <option value="all">All Fields</option>
-                        <option value="title">Title Only</option>
-                        <option value="summary">Abstract/Summary Only</option>
-                      </select>
-                    </div>
+                <div className="form-row">
+                  <div className="form-group col-md-6 mb-3">
+                    <label htmlFor="searchField">Search In</label>
+                    <select
+                      className="form-control"
+                      id="searchField"
+                      value={searchField}
+                      onChange={(e) => setSearchField(e.target.value)}
+                    >
+                      <option value="all">All Fields</option>
+                      <option value="title">Title Only</option>
+                      <option value="summary">Abstract/Summary Only</option>
+                    </select>
                   </div>
-                  
-                  {searchType === 'trials' && (
-                    <div className="col-md-6 mb-3">
-                      <div className="form-group">
+
+                    {searchType === 'trials' && (
+                      <div className="form-group col-md-6 mb-3">
                         <label htmlFor="trialStatus">Trial Status</label>
-                        <select 
+                        <select
                           className="form-control"
                           id="trialStatus"
                           value={trialStatus}
@@ -594,30 +608,9 @@ function SearchApp() {
                           ))}
                         </select>
                       </div>
-                    </div>
-                  )}
-                </div>
-            
-                <div className="text-center">
-                  <button 
-                    type="submit" 
-                    className="btn btn-primary btn-lg"
-                    disabled={isLoading}
-                  >
-                    {isLoading ? (
-                      <>
-                        <span className="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>
-                        Searching...
-                      </>
-                    ) : (
-                      <>
-                        <i className="fas fa-search mr-2"></i>
-                        Search {searchType === 'articles' ? 'Articles' : 'Clinical Trials'}
-                      </>
                     )}
-                  </button>
-                </div>
-              </form>
+                  </div>
+                </form>
             </div>
           </div>
         </div>
