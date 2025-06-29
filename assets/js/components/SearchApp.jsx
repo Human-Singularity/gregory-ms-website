@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { searchService } from '../services/searchService';
-import { stripHtml, truncateText, convertToCSV, downloadCSV, formatDate } from '../utils/searchUtils';
+import { stripHtml, truncateText, formatDate } from '../utils/searchUtils';
 import ArticleListItem from './ArticleListItem';
 import TrialListItem from './TrialListItem';
+import { DownloadButton } from './DownloadButton';
 
 // Trial status options
 const TRIAL_STATUS_OPTIONS = [
@@ -269,123 +270,41 @@ function SearchApp() {
     }
   };
   
-  // Export results to CSV
-  const handleExport = async (type) => {
-    let fileName;
-    
-    // Show loading state for export
-    setIsLoading(true);
-    
-    try {
-      if (type === 'articles') {
-        // Prepare article search parameters for all results
-        const articleParams = {
-          team_id: 1, // Team Gregory
-          subject_id: 1, // Multiple Sclerosis
-          page: 1,
-          page_size: articleCount // Request all results in one go
-        };
-        
-        // Set search fields based on selection
-        if (searchField === 'all' || searchField === 'title') {
-          articleParams.title = searchTerm;
-        }
-        
-        if (searchField === 'all' || searchField === 'summary') {
-          articleParams.summary = searchTerm;
-        }
-        
-        if (searchField === 'all') {
-          articleParams.search = searchTerm;
-          
-          // Clear specific fields when using general search
-          delete articleParams.title;
-          delete articleParams.summary;
-        }
-        
-        // Execute article search for all results
-        const articleResponse = await searchService.searchArticles(articleParams);
-        const allArticles = articleResponse.data.results || [];
-        
-        fileName = `gregory-ms-articles-search-${new Date().toISOString().slice(0, 10)}.csv`;
-        const csvContent = convertToCSV(allArticles, type);
-        downloadCSV(csvContent, fileName);
-        
-      } else if (type === 'trials') {
-        // Prepare trial search parameters for all results
-        const trialParams = {
-          team_id: 1, // Team Gregory
-          subject_id: 1, // Multiple Sclerosis
-          page: 1,
-          page_size: trialCount, // Request all results in one go
-          status: trialStatus
-        };
-        
-        // Set search fields based on selection
-        if (searchField === 'all' || searchField === 'title') {
-          trialParams.title = searchTerm;
-        }
-        
-        if (searchField === 'all' || searchField === 'summary') {
-          trialParams.summary = searchTerm;
-        }
-        
-        if (searchField === 'all') {
-          trialParams.search = searchTerm;
-          
-          // Clear specific fields when using general search
-          delete trialParams.title;
-          delete trialParams.summary;
-        }
-        
-        // Execute trial search for all results
-        const trialResponse = await searchService.searchTrials(trialParams);
-        
-        // Handle different response formats
-        let allTrials = [];
-        if (trialResponse.data && trialResponse.data.results && Array.isArray(trialResponse.data.results)) {
-          allTrials = trialResponse.data.results;
-        } else if (trialResponse.data && Array.isArray(trialResponse.data)) {
-          allTrials = trialResponse.data;
-        }
-        
-        fileName = `gregory-ms-trials-search-${new Date().toISOString().slice(0, 10)}.csv`;
-        const csvContent = convertToCSV(allTrials, type);
-        downloadCSV(csvContent, fileName);
-      }
-    } catch (err) {
-      console.error('Export error:', err);
-      setError('An error occurred while exporting the data. Please try again.');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-  
   // Render result tabs - No longer needed since we're only showing one type
   const renderTabs = () => {
     if (!hasSearched) return null;
+    
+    // Get the API base URL from the searchService
+    const API_BASE_URL = typeof window !== 'undefined' && window.ENV_API_URL 
+      ? window.ENV_API_URL 
+      : 'https://api.gregory-ms.com';
+    
+    // Prepare API endpoint and search parameters based on current search
+    const apiEndpoint = `${API_BASE_URL}${searchType === 'articles' ? '/articles/search/' : '/trials/search/'}`;
+    const searchParams = {
+      team_id: 1, // Team Gregory
+      subject_id: 1, // Multiple Sclerosis
+      ...(searchField === 'all' || searchField === 'title' ? { title: searchTerm } : {}),
+      ...(searchField === 'all' || searchField === 'summary' ? { summary: searchTerm } : {}),
+      ...(searchField === 'all' ? { search: searchTerm } : {}),
+      ...(searchType === 'trials' && trialStatus ? { status: trialStatus } : {})
+    };
+    
+    // Generate a descriptive filename based on search type and date
+    const fileName = `gregory-ms-${searchType}-search-${new Date().toISOString().slice(0, 10)}.csv`;
     
     return (
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h3>{searchType === 'articles' ? 'Research Articles' : 'Clinical Trials'} ({searchType === 'articles' ? articleCount : trialCount})</h3>
         
-        <button 
-          className="btn btn-sm btn-outline-primary"
-          onClick={() => handleExport(searchType)}
-          disabled={(searchType === 'articles' ? !articleResults.length : !trialResults.length) || isLoading}
-        >
-          {isLoading ? (
-            <>
-              <span className="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true"></span>
-              Exporting...
-            </>
-          ) : (
-            <>
-              <i className="fas fa-file-download mr-1"></i>
-              Export as CSV
-            </>
-          )}
-        </button>
+        <DownloadButton
+          apiEndpoint={apiEndpoint}
+          fileName={fileName}
+          searchParams={{
+            ...searchParams,
+            expectedCount: activeTab === 'articles' ? articleCount : trialCount,
+          }}
+        />
       </div>
     );
   };
