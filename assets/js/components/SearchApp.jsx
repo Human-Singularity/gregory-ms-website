@@ -426,8 +426,8 @@ function SearchApp() {
         <div className="list-group article-list">
           {articleResults.map((article) => (
             <ArticleListItem
-              key={article.article_id}
-              article={article}
+              key={String(article.article_id)}
+              article={{ ...article, article_id: String(article.article_id) }}
               isSearchResult={true}
               showRelevanceIndicators={true}
             />

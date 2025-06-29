@@ -86,8 +86,6 @@ export function DownloadButton({
         const allParams = {
           ...searchParams,
           all_results: true,  // This is the key parameter to bypass pagination
-          include_all: true,  // Experimental: try to ensure no records are filtered out
-          bypass_filters: true // Experimental: try to bypass any filtering logic
         };
         
         console.log('Download request URL:', apiEndpoint);
@@ -111,12 +109,25 @@ export function DownloadButton({
         };
         
         if (method === 'post') {
-          // According to the docs, we need to send the parameters in the body for POST
-          response = await axios.post(apiEndpoint, allParams, {
-            ...axiosOptions,
-            // Include format=csv in the URL for the renderer selection
-            params: { format: 'csv' }
-          });
+          // Only send the parameters used in the working curl command
+          const minimalParams = {
+            team_id: searchParams.team_id,
+            subject_id: searchParams.subject_id,
+            search: searchParams.search,
+            all_results: true
+          };
+          response = await axios.post(
+            apiEndpoint,
+            JSON.stringify(minimalParams),
+            {
+              ...axiosOptions,
+              headers: {
+                ...axiosOptions.headers,
+                'Content-Type': 'application/json', // Explicitly set
+              },
+              params: { format: 'csv' }
+            }
+          );
         } else {
           // For GET endpoints, we include all parameters in the URL
           const queryParams = new URLSearchParams({
