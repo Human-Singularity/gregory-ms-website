@@ -557,7 +557,7 @@ function SearchApp() {
                       <div className="input-group-append">
                         <button
                           type="submit"
-                          className="btn btn-primary btn-lg search-button"
+                          className="btn btn-primary search-button"
                           disabled={isLoading}
                         >
                           {isLoading ? (

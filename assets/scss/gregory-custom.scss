@@ -5,7 +5,7 @@
 @import "article-list.scss";
 
 .search-app {
-  margin: 3rem auto;
+  margin: 5rem auto;
   padding: 0 1rem;
   .card {
     border-radius: 0.5rem;
@@ -45,6 +45,6 @@
   }
 
   .search-button {
-    min-width: 10rem;
+    min-width: 8rem;
   }
 }
