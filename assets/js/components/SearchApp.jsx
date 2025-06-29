@@ -423,7 +423,7 @@ function SearchApp() {
       <div className="article-results">        
         {renderPagination('articles')}
         
-        <div className="list-group article-list">
+        <div className="list-group article-list mx-auto">
           {articleResults.map((article) => (
             <ArticleListItem
               key={String(article.article_id)}
@@ -449,7 +449,7 @@ function SearchApp() {
       <div className="trial-results">        
         {renderPagination('trials')}
         
-        <div className="list-group article-list">
+        <div className="list-group article-list mx-auto">
           {trialResults.map((trial) => (
             <TrialListItem
               key={trial.id || trial.trial_id || trial.nct_id || Math.random().toString(36)}
@@ -522,7 +522,7 @@ function SearchApp() {
             <div className="card-body">
               <form onSubmit={handleSearch}>
                 <div className="form-row align-items-end">
-                  <div className="form-group col-md-4 mb-3">
+                  <div className="form-group col-md-6 mb-3">
                     <label htmlFor="searchType" className="col-form-label">Search Type</label>
                     <select
                       className="form-control"
@@ -542,7 +542,7 @@ function SearchApp() {
                     </select>
                   </div>
 
-                  <div className="form-group col-md-8 mb-3">
+                  <div className="form-group col-md-6 mb-3">
                     <label htmlFor="searchTerm" className="col-form-label">Search Terms</label>
                     <div className="input-group search-input-group">
                       <input
@@ -618,7 +618,7 @@ function SearchApp() {
       
       {/* Search Results */}
       <div className="row justify-content-center">
-        <div className="col-lg-10">
+        <div className="col-lg-11">
           {renderResults()}
         </div>
       </div>
