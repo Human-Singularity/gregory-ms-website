@@ -260,7 +260,7 @@ export function DownloadButton({
   return (
     <div className="download-button-container mb-4">
       <button
-        className="btn btn-primary"
+        className="btn btn-success"
         onClick={handleDownload}
         disabled={isLoading}
       >

@@ -601,7 +601,7 @@ function SearchApp() {
                 <div className="text-center">
                   <button 
                     type="submit" 
-                    className="btn btn-primary btn-lg"
+                    className="btn btn-info btn-lg"
                     disabled={isLoading}
                   >
                     {isLoading ? (
