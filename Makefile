@@ -1,7 +1,7 @@
-# Gregory MS Website D	@echo "  🚀 Deployment Pipelines:"
-	@echo "    deploy-backend     - Backend: submodule → push → pull → restart container"
-	@echo "    deploy-frontend    - Frontend: submodule → push → pull → build assets"
-	@echo "    deploy-full        - Complete: backend + dependencies + migrations"oyment Pipeline
+# Gregory MS Website D	@e	@echo "  🚀 Deployment Pipelines:"
+# @echo "    deploy-backend     - Backend: submodule → push → pull → restart container"
+# @echo "    deploy-frontend    - Frontend: submodule → push → pull → build assets"
+# @echo "    deploy-full        - Complete: backend + dependencies + migrations"oyment Pipeline
 # =====================================
 # Incremental deployment targets from basic to full deployment
 
@@ -23,9 +23,10 @@ help:
 	@echo "    remote-migrate     - Run database migrations on remote"
 	@echo "    remote-restart     - Restart application container"
 	@echo ""
-	@echo "  � Deployment Pipelines:"
-	@echo "    quick-deploy       - Basic: submodule → push → pull → restart"
-	@echo "    full-deploy        - Complete: all steps including deps & migrations"
+	@echo "  🚀 Deployment Pipelines:"
+	@echo "    deploy-backend     - Backend: submodule → push → pull → restart container"
+	@echo "    deploy-frontend    - Frontend: submodule → push → pull → build assets"
+	@echo "    deploy-full        - Complete: backend + dependencies + migrations"
 	@echo ""
 	@echo "  🔨 Utilities:"
 	@echo "    build             - Run build script on remote"
