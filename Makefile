@@ -1,9 +1,12 @@
-# Gregory MS Website Deployment Pipeline
+# Gregory MS Website D	@echo "  🚀 Deployment Pipelines:"
+	@echo "    deploy-backend     - Backend: submodule → push → pull → restart container"
+	@echo "    deploy-frontend    - Frontend: submodule → push → pull → build assets"
+	@echo "    deploy-full        - Complete: backend + dependencies + migrations"oyment Pipeline
 # =====================================
 # Incremental deployment targets from basic to full deployment
 
 .PHONY: help submodule-update local-push remote-pull remote-deps remote-migrate remote-restart \
-        quick-deploy full-deploy build status
+        deploy-backend deploy-frontend deploy-full build status
 
 # Default target - show help
 help:
@@ -82,14 +85,20 @@ remote-restart:
 		docker restart gregory && \
 		echo "✅ Container restarted successfully"'
 
-# Quick deployment pipeline (for minor updates)
-quick-deploy: submodule-update local-push remote-pull remote-restart
+# Backend deployment pipeline (for application code changes)
+deploy-backend: submodule-update local-push remote-pull remote-restart
 	@echo ""
-	@echo "🎉 Quick deployment completed successfully!"
+	@echo "🎉 Backend deployment completed successfully!"
 	@echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
-# Full deployment pipeline (for major updates)
-full-deploy: submodule-update local-push remote-pull remote-deps remote-migrate remote-restart
+# Frontend deployment pipeline (for static assets and frontend changes)
+deploy-frontend: submodule-update local-push remote-pull build
+	@echo ""
+	@echo "🎉 Frontend deployment completed successfully!"
+	@echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+# Full deployment pipeline (for major updates with dependencies and migrations)
+deploy-full: submodule-update local-push remote-pull remote-deps remote-migrate remote-restart
 	@echo ""
 	@echo "🎉 Full deployment completed successfully!"
 	@echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
