@@ -17,7 +17,6 @@ function App() {
 // Initialize app when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
   console.log('AuthorRanking app loading...');
-  alert('AuthorRanking JavaScript is loading!'); // Temporary debug alert
   
   const rootElement = document.getElementById('root');
   

@@ -182,7 +182,7 @@ export function AuthorRanking() {
               {authors.map((author, index) => (
                 <tr key={author.author_id}>
                   <td>
-                    <span className="badge bg-primary fs-6">
+                    <span className="badge bg-secondary fs-6">
                       #{index + 1}
                     </span>
                   </td>
@@ -198,7 +198,7 @@ export function AuthorRanking() {
                   </td>
                   <td>
                     <a
-                      href={`/authors/${author.author_id}/`}
+                      href={`/articles/author/${author.author_id}/`}
                       className="text-decoration-none fw-medium"
                     >
                       {author.full_name || `${author.given_name} ${author.family_name}`}
