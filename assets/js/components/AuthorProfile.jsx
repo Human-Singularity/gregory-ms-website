@@ -167,7 +167,9 @@ export function AuthorProfile() {
             type="author"
             pagePath={`/articles/author/${authorId}`}
             options={{ authorId }}
-            displayAsList={true}
+            displayAsList={false}
+            isSearchResult={true}
+            showRelevanceIndicators={true}
           />
         </div>
       </div>

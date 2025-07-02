@@ -26208,7 +26208,7 @@
         onClick: () => setTimeframe("last_two_years")
       },
       "Last Two Years"
-    ))))), authors.length === 0 ? /* @__PURE__ */ import_react2.default.createElement("div", { className: "alert alert-info" }, /* @__PURE__ */ import_react2.default.createElement("h5", null, "No Authors Found"), /* @__PURE__ */ import_react2.default.createElement("p", null, "No authors found for the selected timeframe.")) : /* @__PURE__ */ import_react2.default.createElement("div", { className: "table-responsive" }, /* @__PURE__ */ import_react2.default.createElement("table", { className: "table table-striped table-hover" }, /* @__PURE__ */ import_react2.default.createElement("thead", { className: "table-dark" }, /* @__PURE__ */ import_react2.default.createElement("tr", null, /* @__PURE__ */ import_react2.default.createElement("th", { scope: "col", style: { width: "80px" } }, "Rank"), /* @__PURE__ */ import_react2.default.createElement("th", { scope: "col", style: { width: "60px" } }, "Avatar"), /* @__PURE__ */ import_react2.default.createElement("th", { scope: "col" }, "Author"), /* @__PURE__ */ import_react2.default.createElement("th", { scope: "col", style: { width: "120px" } }, "Articles"), /* @__PURE__ */ import_react2.default.createElement("th", { scope: "col", style: { width: "100px" } }, "Country"))), /* @__PURE__ */ import_react2.default.createElement("tbody", null, authors.map((author, index) => /* @__PURE__ */ import_react2.default.createElement("tr", { key: author.author_id }, /* @__PURE__ */ import_react2.default.createElement("td", null, /* @__PURE__ */ import_react2.default.createElement("span", { className: "badge bg-primary fs-6" }, "#", index + 1)), /* @__PURE__ */ import_react2.default.createElement("td", null, /* @__PURE__ */ import_react2.default.createElement(
+    ))))), authors.length === 0 ? /* @__PURE__ */ import_react2.default.createElement("div", { className: "alert alert-info" }, /* @__PURE__ */ import_react2.default.createElement("h5", null, "No Authors Found"), /* @__PURE__ */ import_react2.default.createElement("p", null, "No authors found for the selected timeframe.")) : /* @__PURE__ */ import_react2.default.createElement("div", { className: "table-responsive" }, /* @__PURE__ */ import_react2.default.createElement("table", { className: "table table-striped table-hover" }, /* @__PURE__ */ import_react2.default.createElement("thead", { className: "table-dark" }, /* @__PURE__ */ import_react2.default.createElement("tr", null, /* @__PURE__ */ import_react2.default.createElement("th", { scope: "col", style: { width: "80px" } }, "Rank"), /* @__PURE__ */ import_react2.default.createElement("th", { scope: "col", style: { width: "60px" } }, "Avatar"), /* @__PURE__ */ import_react2.default.createElement("th", { scope: "col" }, "Author"), /* @__PURE__ */ import_react2.default.createElement("th", { scope: "col", style: { width: "120px" } }, "Articles"), /* @__PURE__ */ import_react2.default.createElement("th", { scope: "col", style: { width: "100px" } }, "Country"))), /* @__PURE__ */ import_react2.default.createElement("tbody", null, authors.map((author, index) => /* @__PURE__ */ import_react2.default.createElement("tr", { key: author.author_id }, /* @__PURE__ */ import_react2.default.createElement("td", null, /* @__PURE__ */ import_react2.default.createElement("span", { className: "badge bg-secondary fs-6" }, "#", index + 1)), /* @__PURE__ */ import_react2.default.createElement("td", null, /* @__PURE__ */ import_react2.default.createElement(
       "img",
       {
         src: generateAvatarUrl(author),
@@ -26221,7 +26221,7 @@
     )), /* @__PURE__ */ import_react2.default.createElement("td", null, /* @__PURE__ */ import_react2.default.createElement(
       "a",
       {
-        href: `/authors/${author.author_id}/`,
+        href: `/articles/author/${author.author_id}/`,
         className: "text-decoration-none fw-medium"
       },
       author.full_name || `${author.given_name} ${author.family_name}`
@@ -26234,7 +26234,6 @@
   }
   document.addEventListener("DOMContentLoaded", () => {
     console.log("AuthorRanking app loading...");
-    alert("AuthorRanking JavaScript is loading!");
     const rootElement = document.getElementById("root");
     if (rootElement) {
       const root = import_client.default.createRoot(rootElement);
