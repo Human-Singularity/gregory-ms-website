@@ -1,0 +1,62 @@
+---
+date: 2025-01-02T15:00:00Z
+description: "High score ranking table of top authors by article count for Multiple Sclerosis research"
+draft: false
+slug: authors-ranking
+title: "Top Authors Ranking"
+url: /authors/ranking/
+layout: page
+options:
+  unlisted: false
+  showHeader: true
+  hideSubscribeForm: true
+  hideFooter: false
+  header: none
+  title_align: center
+  navbar: navbar navbar-expand-lg bg-white fixed-top font-weight-bold
+
+---
+
+<div id="root">
+  <div class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Loading author rankings...</span>
+    </div>
+  </div>
+</div>
+
+<style>
+.author-ranking .table th {
+  border-top: none;
+}
+
+.author-ranking .badge {
+  font-size: 0.875rem;
+}
+
+.author-ranking .table-hover tbody tr:hover {
+  background-color: rgba(0, 123, 255, 0.05);
+}
+
+.author-ranking .dropdown-menu {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.tooltip {
+  z-index: 1000;
+}
+
+.chart-container {
+  max-width: 100%;
+}
+
+@media (max-width: 768px) {
+  .author-ranking .table-responsive {
+    font-size: 0.875rem;
+  }
+  
+  .author-ranking .badge {
+    font-size: 0.75rem;
+  }
+}
+</style>

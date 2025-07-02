@@ -142,3 +142,15 @@ export function removeSpecifiedNodes() {
     }
   });
 }
+
+/**
+ * Format a number with commas for thousands separators
+ * @param {number} num - Number to format
+ * @returns {string} - Formatted number
+ */
+export function formatNumber(num) {
+  if (typeof num !== 'number') {
+    return '0';
+  }
+  return num.toLocaleString();
+}

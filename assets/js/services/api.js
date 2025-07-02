@@ -68,6 +68,32 @@ export const authorService = {
   // Get author details
   getAuthor: (authorId) => 
     apiClient.get(`/authors/${authorId}/?format=json`),
+    
+  // Get authors with filtering and sorting
+  getAuthors: (params = {}) => {
+    const queryParams = new URLSearchParams({
+      format: 'json',
+      ...params
+    });
+    return apiClient.get(`/authors/?${queryParams.toString()}`);
+  },
+  
+  // Get authors by team and subject with ranking
+  getAuthorsByTeamSubject: (teamId, subjectId, params = {}) => {
+    const queryParams = new URLSearchParams({
+      format: 'json',
+      team_id: teamId,
+      subject_id: subjectId,
+      sort_by: 'article_count',
+      order: 'desc',
+      ...params
+    });
+    return apiClient.get(`/authors/?${queryParams.toString()}`);
+  },
+  
+  // Get author's monthly article counts for chart (this endpoint may not exist)
+  getAuthorMonthlyCounts: (authorId) => 
+    apiClient.get(`/authors/${authorId}/monthly-counts/?format=json`),
 };
 
 export default {

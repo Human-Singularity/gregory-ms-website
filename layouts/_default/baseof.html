@@ -400,6 +400,9 @@
 		{{- if .HasShortcode "search"  -}}
 		{{ partial "react-app-loader.html" (dict "app" "search") }}
 		{{ end }}
+		{{- if eq .RelPermalink "/authors/ranking/" -}}
+		{{ partial "react-app-loader.html" (dict "app" "authorRanking") }}
+		{{ end }}
 
 		{{- if or (.HasShortcode "metabase-embed")  -}}
 		<script src="https://metabase.gregory-ms.com/app/iframeResizer.js"></script>

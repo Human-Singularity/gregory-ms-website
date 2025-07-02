@@ -13,6 +13,9 @@ function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/authors/:authorId" element={<AuthorProfile />} />
+        <Route path="/authors/:authorId/" element={<AuthorProfile />} />
+        <Route path="/authors/:authorId/page/:pageNumber" element={<AuthorProfile />} />
         <Route path="/articles/author/:authorId" element={<AuthorProfile />} />
         <Route path="/articles/author/:authorId/page/:pageNumber" element={<AuthorProfile />} />
       </Routes>

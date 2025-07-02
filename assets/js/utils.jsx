@@ -85,3 +85,10 @@ export function removeSpecifiedNodes() {
 		// console.log('a#metabaseDashboard not found')
 	}
 }
+
+export function formatNumber(num) {
+  if (typeof num !== 'number') {
+    return '0';
+  }
+  return num.toLocaleString();
+}
