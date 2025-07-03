@@ -7,8 +7,9 @@ import axios from 'axios';
  * AuthorArticleChart component - Line chart showing cumulative articles per month
  * @param {object} props - Component props
  * @param {number} props.authorId - The author ID to fetch data for
+ * @param {Array} props.articles - Optional array of articles to use instead of fetching
  */
-export function AuthorArticleChart({ authorId }) {
+export function AuthorArticleChart({ authorId, articles: providedArticles }) {
   const svgRef = useRef();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -17,70 +18,95 @@ export function AuthorArticleChart({ authorId }) {
   useEffect(() => {
     if (!authorId) return;
 
+    const processArticles = (articlesData) => {
+      console.log(`Processing ${articlesData.length} articles for chart`);
+      
+      if (articlesData.length === 0) {
+        setData([]);
+        setError(null);
+        setLoading(false);
+        return;
+      }
+
+      // Group articles by year-month
+      const monthlyGroups = {};
+      
+      articlesData.forEach(article => {
+        if (article.published_date) {
+          const date = new Date(article.published_date);
+          const year = date.getFullYear();
+          const month = date.getMonth(); // 0-indexed
+          const key = `${year}-${month}`;
+          
+          if (!monthlyGroups[key]) {
+            monthlyGroups[key] = {
+              year,
+              month: month + 1, // Convert to 1-indexed for display
+              count: 0,
+              date: new Date(year, month, 1)
+            };
+          }
+          monthlyGroups[key].count++;
+        }
+      });
+      
+      // Convert to array and sort by date
+      const monthlyData = Object.values(monthlyGroups).sort((a, b) => a.date - b.date);
+      
+      // Create cumulative data
+      let cumulative = 0;
+      const cumulativeData = monthlyData.map(item => {
+        cumulative += item.count;
+        return {
+          ...item,
+          cumulative: cumulative
+        };
+      });
+
+      setData(cumulativeData);
+      setError(null);
+      setLoading(false);
+    };
+
+    // If articles are provided as props, use them directly
+    if (providedArticles && providedArticles.length >= 0) {
+      processArticles(providedArticles);
+      return;
+    }
+
+    // Otherwise, fetch articles (fallback for standalone usage)
     const fetchData = async () => {
       try {
         setLoading(true);
         
-        // Fetch all articles for this author
-        const response = await axios.get(`https://api.gregory-ms.com/articles/author/${authorId}/?format=json&all_results=true`);
+        // Fetch all articles for this author by paginating through all pages
+        let allArticles = [];
+        let page = 1;
+        let hasMore = true;
         
-        // Process articles to create monthly counts
-        const articles = response.data.results || [];
-        
-        if (articles.length === 0) {
-          setData([]);
-          setError(null);
-          setLoading(false);
-          return;
+        while (hasMore) {
+          const response = await axios.get(`https://api.gregory-ms.com/articles/author/${authorId}/?format=json&page=${page}`);
+          const pageResults = response.data.results || [];
+          allArticles = [...allArticles, ...pageResults];
+          
+          // Check if there are more pages
+          hasMore = response.data.next !== null;
+          page++;
+          
+          console.log(`Fetched page ${page - 1}, got ${pageResults.length} articles, total: ${allArticles.length}`);
         }
-
-        // Group articles by year-month
-        const monthlyGroups = {};
         
-        articles.forEach(article => {
-          if (article.published_date) {
-            const date = new Date(article.published_date);
-            const year = date.getFullYear();
-            const month = date.getMonth(); // 0-indexed
-            const key = `${year}-${month}`;
-            
-            if (!monthlyGroups[key]) {
-              monthlyGroups[key] = {
-                year,
-                month: month + 1, // Convert to 1-indexed for display
-                count: 0,
-                date: new Date(year, month, 1)
-              };
-            }
-            monthlyGroups[key].count++;
-          }
-        });
-        
-        // Convert to array and sort by date
-        const monthlyData = Object.values(monthlyGroups).sort((a, b) => a.date - b.date);
-        
-        // Create cumulative data
-        let cumulative = 0;
-        const cumulativeData = monthlyData.map(item => {
-          cumulative += item.count;
-          return {
-            ...item,
-            cumulative: cumulative
-          };
-        });
-
-        setData(cumulativeData);
-        setError(null);
+        console.log(`Total articles fetched for author ${authorId}:`, allArticles.length);
+        processArticles(allArticles);
       } catch (err) {
         console.error('Error fetching author articles for chart:', err);
         setError(err);
-      } finally {
         setLoading(false);
       }
     };
 
     fetchData();
-  }, [authorId]);
+  }, [authorId, providedArticles]);
 
   useEffect(() => {
     if (!data.length || loading) return;
@@ -242,6 +268,7 @@ export function AuthorArticleChart({ authorId }) {
 
 AuthorArticleChart.propTypes = {
   authorId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  articles: PropTypes.arrayOf(PropTypes.object), // Optional array of article objects
 };
 
 export default AuthorArticleChart;

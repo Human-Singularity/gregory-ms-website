@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import ArticleList from './ArticleList';
+import ArticleListItem from './ArticleListItem';
 import AuthorArticleChart from './AuthorArticleChart';
 import DownloadButton from './DownloadButton';
 import { removeSpecifiedNodes, formatNumber } from '../utils.jsx';
@@ -12,6 +13,7 @@ import { removeSpecifiedNodes, formatNumber } from '../utils.jsx';
  */
 export function AuthorProfile() {
   const [author, setAuthor] = useState(null);
+  const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { authorId } = useParams();
@@ -22,17 +24,41 @@ export function AuthorProfile() {
 
     async function fetchData() {
       try {
-        const response = await axios.get(`https://api.gregory-ms.com/authors/${authorId}/?format=json`);
+        // Fetch author details
+        const authorResponse = await axios.get(`https://api.gregory-ms.com/authors/${authorId}/?format=json`);
+        
+        if (!isMounted) return;
+        
+        const authorData = authorResponse.data;
+        setAuthor(authorData);
+        
+        // Fetch all articles for this author by paginating through all pages
+        let allArticles = [];
+        let page = 1;
+        let hasMore = true;
+        
+        while (hasMore && isMounted) {
+          const articlesResponse = await axios.get(`https://api.gregory-ms.com/articles/author/${authorId}/?format=json&page=${page}`);
+          const pageResults = articlesResponse.data.results || [];
+          allArticles = [...allArticles, ...pageResults];
+          
+          // Check if there are more pages
+          hasMore = articlesResponse.data.next !== null;
+          page++;
+          
+          console.log(`Fetched page ${page - 1}, got ${pageResults.length} articles, total: ${allArticles.length}`);
+        }
         
         if (isMounted) {
-          setAuthor(response.data);
+          console.log(`Total articles fetched for author ${authorId}:`, allArticles.length);
+          setArticles(allArticles);
           setLoading(false);
           
           // Update document title and header
-          document.title = `${response.data.given_name} ${response.data.family_name} Multiple Sclerosis Research`;
+          document.title = `${authorData.given_name} ${authorData.family_name} Multiple Sclerosis Research`;
           const h1 = document.querySelector('h1');
           if (h1) {
-            h1.textContent = `${response.data.given_name} ${response.data.family_name}`;
+            h1.textContent = `${authorData.given_name} ${authorData.family_name}`;
           }
           
           // Remove specified nodes from the page
@@ -181,7 +207,7 @@ export function AuthorProfile() {
                     <small className="text-muted">Monthly publication activity over time</small>
                   </div>
                   <div className="card-body">
-                    <AuthorArticleChart authorId={authorId} />
+                    <AuthorArticleChart authorId={authorId} articles={articles} />
                   </div>
                 </div>
               </div>
@@ -199,20 +225,38 @@ export function AuthorProfile() {
                           Published Articles
                         </h3>
                         <small className="text-muted">
-                          {formatNumber(author.articles_count)} total articles
+                          {formatNumber(articles.length)} total articles
                         </small>
                       </div>
                     </div>
                   </div>
                   <div className="card-body p-0">
-                    <ArticleList
-                      type="author"
-                      pagePath={`/articles/author/${authorId}`}
-                      options={{ authorId }}
-                      displayAsList={false}
-                      isSearchResult={true}
-                      showRelevanceIndicators={true}
-                    />
+                    {articles.length > 0 ? (
+                      <div className="list-group list-group-flush">
+                        {articles.slice(0, 10).map(article => (
+                          <ArticleListItem 
+                            key={article.article_id}
+                            article={article}
+                            isSearchResult={true}
+                            showRelevanceIndicators={true}
+                          />
+                        ))}
+                        {articles.length > 10 && (
+                          <div className="list-group-item text-center py-3 bg-light">
+                            <small className="text-muted">
+                              Showing first 10 of {articles.length} articles. 
+                              <a href={`/articles/author/${authorId}/`} className="ms-2">
+                                View all articles →
+                              </a>
+                            </small>
+                          </div>
+                        )}
+                      </div>
+                    ) : (
+                      <div className="text-center py-4">
+                        <p className="text-muted mb-0">No articles found for this author.</p>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
