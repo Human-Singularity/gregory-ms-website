@@ -124,6 +124,31 @@
   margin-bottom: 0.25rem;
 }
 
+/* Journal badge styling */
+.search-app .badge-journal,
+.author-profile .badge-journal {
+  background-color: #6c757d;
+  color: #ffffff;
+  font-size: 0.875rem;
+  padding: 0.25rem 0.5rem;
+}
+
+/* Expert selection badge styling */
+.search-app .badge-expert,
+.author-profile .badge-expert {
+  background-color: #28a745;
+  color: #ffffff;
+  font-size: 0.875rem;
+  padding: 0.25rem 0.5rem;
+}
+
+/* Prediction badge styling */
+.search-app .prediction-badge,
+.author-profile .prediction-badge {
+  font-size: 0.875rem;
+  padding: 0.25rem 0.5rem;
+}
+
 /* Article summary */
 .search-app .article-summary,
 .author-profile .article-summary {
