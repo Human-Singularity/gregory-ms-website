@@ -146,7 +146,7 @@ export function ArticleListItem({
 
 ArticleListItem.propTypes = {
   article: PropTypes.shape({
-    article_id: PropTypes.string.isRequired,
+    article_id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     title: PropTypes.string.isRequired,
     published_date: PropTypes.string.isRequired,
     takeaways: PropTypes.string,

@@ -36,7 +36,7 @@ export const articleService = {
     
   // Get relevant articles
   getRelevantArticles: (page = 1) => 
-    apiClient.get(`/articles/relevant?format=json&page=${page}`),
+    apiClient.get(`/articles/relevant/?format=json&page=${page}`),
 };
 
 /**
