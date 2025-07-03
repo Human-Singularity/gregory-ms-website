@@ -113,9 +113,16 @@ export function AuthorArticleChart({ authorId, articles: providedArticles }) {
     const container = svg.node().parentNode;
     const containerWidth = container.offsetWidth;
     
-    const margin = { top: 20, right: 30, bottom: 60, left: 60 };
-    const width = Math.max(300, containerWidth - margin.left - margin.right);
-    const height = Math.max(250, Math.min(400, width * 0.6)); // Responsive height with min/max
+    // Mobile-first responsive margins and dimensions
+    const isMobile = window.innerWidth <= 768;
+    const margin = isMobile 
+      ? { top: 15, right: 15, bottom: 40, left: 40 }
+      : { top: 20, right: 30, bottom: 60, left: 60 };
+    
+    // Ensure width fits in container with some padding for mobile
+    const availableWidth = containerWidth - (isMobile ? 32 : 0); // Account for container padding
+    const width = Math.max(isMobile ? 280 : 300, availableWidth - margin.left - margin.right);
+    const height = Math.max(200, Math.min(400, width * (isMobile ? 0.7 : 0.6))); // Slightly taller on mobile
 
     renderChart(svg, data, width, height, margin);
   }, [data, loading]);
@@ -131,12 +138,17 @@ export function AuthorArticleChart({ authorId, articles: providedArticles }) {
             // Clear and re-render chart
             svg.selectAll('*').remove();
             
-            // Get new dimensions
+            // Get new dimensions with mobile considerations
             const container = svg.node().parentNode;
             const containerWidth = container.offsetWidth;
-            const margin = { top: 20, right: 30, bottom: 60, left: 60 };
-            const width = Math.max(300, containerWidth - margin.left - margin.right);
-            const height = Math.max(250, Math.min(400, width * 0.6));
+            const isMobile = window.innerWidth <= 768;
+            const margin = isMobile 
+              ? { top: 15, right: 15, bottom: 40, left: 40 }
+              : { top: 20, right: 30, bottom: 60, left: 60 };
+            
+            const availableWidth = containerWidth - (isMobile ? 32 : 0);
+            const width = Math.max(isMobile ? 280 : 300, availableWidth - margin.left - margin.right);
+            const height = Math.max(200, Math.min(400, width * (isMobile ? 0.7 : 0.6)));
             
             // Re-render with new dimensions
             renderChart(svg, data, width, height, margin);
@@ -285,12 +297,8 @@ export function AuthorArticleChart({ authorId, articles: providedArticles }) {
 
   return (
     <div className="author-article-chart">
-      <h4 className="mb-3">Publication Timeline</h4>
-      <p className="text-muted mb-3">
-        Cumulative number of articles published over time
-      </p>
-      <div className="chart-container" style={{ overflowX: 'auto', width: '100%' }}>
-        <svg ref={svgRef} style={{ width: '100%', height: 'auto', minHeight: '300px' }}></svg>
+      <div className="chart-container">
+        <svg ref={svgRef}></svg>
       </div>
       <div className="mt-3 text-center">
         <small className="text-muted">

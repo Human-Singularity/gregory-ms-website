@@ -9,45 +9,83 @@
 .author-article-chart {
   width: 100%;
   overflow: hidden;
+  margin: 0;
+  padding: 0;
 }
 
 .author-article-chart .chart-container {
   position: relative;
   width: 100%;
+  max-width: 100%;
   overflow-x: auto;
+  overflow-y: hidden;
   padding-bottom: 1rem;
+  box-sizing: border-box;
 }
 
 .author-article-chart svg {
-  min-width: 300px;
   max-width: 100%;
   height: auto;
+  display: block;
+  margin: 0 auto;
 }
 
 /* Chart responsive breakpoints */
 @media (max-width: 768px) {
+  .author-article-chart {
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
+  }
+  
   .author-article-chart .chart-container {
     padding-left: 0.5rem;
     padding-right: 0.5rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS/mobile */
   }
   
   .author-article-chart svg {
-    min-width: 280px;
+    min-width: 320px; /* Ensure minimum width for mobile */
+    width: 100%;
   }
 }
 
 @media (max-width: 576px) {
+  .author-article-chart {
+    margin-left: -1rem;
+    margin-right: -1rem;
+  }
+  
   .author-article-chart h4 {
     font-size: 1.1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
   
   .author-article-chart .chart-container {
-    padding-left: 0.25rem;
-    padding-right: 0.25rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
   
   .author-article-chart svg {
-    min-width: 250px;
+    min-width: 300px;
+    width: 100%;
+  }
+}
+
+/* Firefox mobile specific fixes */
+@-moz-document url-prefix() {
+  @media (max-width: 768px) {
+    .author-article-chart .chart-container {
+      overflow-x: scroll;
+      scrollbar-width: thin;
+    }
+    
+    .author-article-chart svg {
+      min-width: 320px;
+    }
   }
 }
 
