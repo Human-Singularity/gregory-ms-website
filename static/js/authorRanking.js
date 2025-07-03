@@ -26107,12 +26107,27 @@
     const [loading, setLoading] = (0, import_react2.useState)(true);
     const [error, setError] = (0, import_react2.useState)(null);
     const [timeframe, setTimeframe] = (0, import_react2.useState)("year");
+    const [dropdownOpen, setDropdownOpen] = (0, import_react2.useState)(false);
     const teamId = 1;
     const subjectId = 1;
     (0, import_react2.useEffect)(() => {
+      console.log("Timeframe changed to:", timeframe);
       fetchAuthors();
     }, [timeframe]);
+    (0, import_react2.useEffect)(() => {
+      const handleClickOutside = (event) => {
+        if (dropdownOpen && !event.target.closest(".dropdown")) {
+          setDropdownOpen(false);
+        }
+      };
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }, [dropdownOpen]);
     const fetchAuthors = async () => {
+      var _a;
+      console.log("fetchAuthors called with timeframe:", timeframe);
       setLoading(true);
       setError(null);
       try {
@@ -26125,14 +26140,34 @@
         });
         if (timeframe !== "all") {
           params.append("timeframe", timeframe);
+          console.log("Added timeframe filter:", timeframe);
         }
         console.log("Making API call to:", `https://api.gregory-ms.com/authors/?${params.toString()}`);
         const response = await axios_default.get(`https://api.gregory-ms.com/authors/?${params.toString()}`);
         const authors2 = response.data.results || [];
+        console.log(`Received ${authors2.length} authors for timeframe: ${timeframe}`);
         setAuthors(authors2.slice(0, 20));
       } catch (err) {
         console.error("Error fetching authors:", err);
-        setError(err);
+        if (timeframe !== "all" && ((_a = err.response) == null ? void 0 : _a.status) === 400) {
+          console.log("Timeframe filtering not supported, trying without it...");
+          try {
+            const params = new URLSearchParams({
+              team_id: teamId,
+              subject_id: subjectId,
+              sort_by: "article_count",
+              order: "desc",
+              format: "json"
+            });
+            const response = await axios_default.get(`https://api.gregory-ms.com/authors/?${params.toString()}`);
+            const authors2 = response.data.results || [];
+            setAuthors(authors2.slice(0, 20));
+          } catch (fallbackErr) {
+            setError(fallbackErr);
+          }
+        } else {
+          setError(err);
+        }
       } finally {
         setLoading(false);
       }
@@ -26149,6 +26184,36 @@
           return "All Time";
       }
     };
+    const getArticleCount = (author) => {
+      if (timeframe !== "all") {
+        const possibleFields = [
+          `articles_count_${timeframe}`,
+          // articles_count_year, articles_count_month, etc.
+          `${timeframe}_articles_count`,
+          // year_articles_count, month_articles_count, etc.
+          `articles_${timeframe}`,
+          // articles_year, articles_month, etc.
+          `${timeframe}_articles`,
+          // year_articles, month_articles, etc.
+          "timeframe_article_count",
+          // generic timeframe field
+          "filtered_articles_count",
+          // filtered count
+          "period_article_count",
+          // period-specific count
+          "count",
+          // simple count field
+          "article_count"
+          // alternative main field
+        ];
+        for (const field of possibleFields) {
+          if (author[field] !== void 0 && author[field] !== null) {
+            return author[field];
+          }
+        }
+      }
+      return author.articles_count || author.article_count || 0;
+    };
     const generateAvatarUrl = (author) => {
       var _a, _b;
       const initials = `${((_a = author.given_name) == null ? void 0 : _a[0]) || ""}${((_b = author.family_name) == null ? void 0 : _b[0]) || ""}`.toUpperCase();
@@ -26160,50 +26225,66 @@
     if (error) {
       return /* @__PURE__ */ import_react2.default.createElement("div", { className: "alert alert-danger text-center" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "fas fa-exclamation-triangle fa-3x" })), /* @__PURE__ */ import_react2.default.createElement("h4", null, "Error Loading Author Rankings"), /* @__PURE__ */ import_react2.default.createElement("p", null, "Unable to load author rankings. Please try again later."), /* @__PURE__ */ import_react2.default.createElement("small", { className: "text-muted" }, error.message));
     }
-    return /* @__PURE__ */ import_react2.default.createElement("div", { className: "container-fluid py-4" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "row justify-content-center" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "col-12 col-xl-10" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "author-ranking" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "row mb-4" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "col-lg-8 col-md-7 mb-3 mb-md-0" }, /* @__PURE__ */ import_react2.default.createElement("h2", { className: "mb-2 text-primary" }, "Top Authors Ranking"), /* @__PURE__ */ import_react2.default.createElement("p", { className: "text-muted mb-0 lead" }, "Top 20 authors by article count - ", getTimeframeLabel())), /* @__PURE__ */ import_react2.default.createElement("div", { className: "col-lg-4 col-md-5 d-flex justify-content-md-end" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "dropdown w-100 w-md-auto" }, /* @__PURE__ */ import_react2.default.createElement(
+    return /* @__PURE__ */ import_react2.default.createElement("div", { className: "container-fluid py-4" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "row justify-content-center" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "col-12 col-xl-10" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "author-ranking" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "row mb-4" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "col-lg-8 col-md-7 mb-3 mb-md-0" }, /* @__PURE__ */ import_react2.default.createElement("h2", { className: "mb-2 text-primary" }, "Top Authors Ranking"), /* @__PURE__ */ import_react2.default.createElement("p", { className: "text-muted mb-0 lead" }, "Top 20 authors by article count - ", getTimeframeLabel())), /* @__PURE__ */ import_react2.default.createElement("div", { className: "col-lg-4 col-md-5 d-flex justify-content-md-end" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "dropdown" }, /* @__PURE__ */ import_react2.default.createElement(
       "button",
       {
-        className: "btn btn-outline-primary dropdown-toggle w-100 w-md-auto",
+        className: "btn btn-outline-primary dropdown-toggle",
         type: "button",
-        id: "timeframeDropdown",
-        "data-bs-toggle": "dropdown",
-        "aria-expanded": "false"
+        onClick: () => setDropdownOpen(!dropdownOpen),
+        "aria-expanded": dropdownOpen,
+        style: { minWidth: "160px" }
       },
       /* @__PURE__ */ import_react2.default.createElement("i", { className: "fas fa-calendar-alt me-2" }),
       getTimeframeLabel()
-    ), /* @__PURE__ */ import_react2.default.createElement("ul", { className: "dropdown-menu dropdown-menu-end", "aria-labelledby": "timeframeDropdown" }, /* @__PURE__ */ import_react2.default.createElement("li", null, /* @__PURE__ */ import_react2.default.createElement(
+    ), /* @__PURE__ */ import_react2.default.createElement("div", { className: `dropdown-menu ${dropdownOpen ? "show" : ""}`, style: { position: "absolute", top: "100%", left: 0, zIndex: 1050 } }, /* @__PURE__ */ import_react2.default.createElement(
       "button",
       {
         className: `dropdown-item ${timeframe === "all" ? "active" : ""}`,
-        onClick: () => setTimeframe("all")
+        onClick: () => {
+          console.log("Switching to: all");
+          setTimeframe("all");
+          setDropdownOpen(false);
+        }
       },
       /* @__PURE__ */ import_react2.default.createElement("i", { className: "fas fa-infinity me-2" }),
       "All Time"
-    )), /* @__PURE__ */ import_react2.default.createElement("li", null, /* @__PURE__ */ import_react2.default.createElement(
+    ), /* @__PURE__ */ import_react2.default.createElement(
       "button",
       {
         className: `dropdown-item ${timeframe === "year" ? "active" : ""}`,
-        onClick: () => setTimeframe("year")
+        onClick: () => {
+          console.log("Switching to: year");
+          setTimeframe("year");
+          setDropdownOpen(false);
+        }
       },
       /* @__PURE__ */ import_react2.default.createElement("i", { className: "fas fa-calendar-year me-2" }),
       "This Year"
-    )), /* @__PURE__ */ import_react2.default.createElement("li", null, /* @__PURE__ */ import_react2.default.createElement(
+    ), /* @__PURE__ */ import_react2.default.createElement(
       "button",
       {
         className: `dropdown-item ${timeframe === "month" ? "active" : ""}`,
-        onClick: () => setTimeframe("month")
+        onClick: () => {
+          console.log("Switching to: month");
+          setTimeframe("month");
+          setDropdownOpen(false);
+        }
       },
       /* @__PURE__ */ import_react2.default.createElement("i", { className: "fas fa-calendar-alt me-2" }),
       "This Month"
-    )), /* @__PURE__ */ import_react2.default.createElement("li", null, /* @__PURE__ */ import_react2.default.createElement(
+    ), /* @__PURE__ */ import_react2.default.createElement(
       "button",
       {
         className: `dropdown-item ${timeframe === "week" ? "active" : ""}`,
-        onClick: () => setTimeframe("week")
+        onClick: () => {
+          console.log("Switching to: week");
+          setTimeframe("week");
+          setDropdownOpen(false);
+        }
       },
       /* @__PURE__ */ import_react2.default.createElement("i", { className: "fas fa-calendar-week me-2" }),
       "This Week"
-    )))))), authors.length === 0 ? /* @__PURE__ */ import_react2.default.createElement("div", { className: "alert alert-info text-center" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "fas fa-users fa-3x text-muted" })), /* @__PURE__ */ import_react2.default.createElement("h5", null, "No Authors Found"), /* @__PURE__ */ import_react2.default.createElement("p", null, "No authors found for the selected timeframe.")) : /* @__PURE__ */ import_react2.default.createElement(import_react2.default.Fragment, null, /* @__PURE__ */ import_react2.default.createElement("div", { className: "table-responsive d-none d-lg-block" }, /* @__PURE__ */ import_react2.default.createElement("table", { className: "table table-striped table-hover shadow-sm" }, /* @__PURE__ */ import_react2.default.createElement("thead", { className: "table-dark" }, /* @__PURE__ */ import_react2.default.createElement("tr", null, /* @__PURE__ */ import_react2.default.createElement("th", { scope: "col", style: { width: "80px" } }, "Rank"), /* @__PURE__ */ import_react2.default.createElement("th", { scope: "col", style: { width: "60px" } }, "Avatar"), /* @__PURE__ */ import_react2.default.createElement("th", { scope: "col" }, "Author"), /* @__PURE__ */ import_react2.default.createElement("th", { scope: "col", style: { width: "120px" } }, "Articles"), /* @__PURE__ */ import_react2.default.createElement("th", { scope: "col", style: { width: "120px" } }, "Country"))), /* @__PURE__ */ import_react2.default.createElement("tbody", null, authors.map((author, index) => /* @__PURE__ */ import_react2.default.createElement("tr", { key: author.author_id, className: "align-middle" }, /* @__PURE__ */ import_react2.default.createElement("td", null, /* @__PURE__ */ import_react2.default.createElement("span", { className: "badge bg-secondary fs-6 px-3 py-2" }, "#", index + 1)), /* @__PURE__ */ import_react2.default.createElement("td", null, /* @__PURE__ */ import_react2.default.createElement(
+    ))))), authors.length === 0 ? /* @__PURE__ */ import_react2.default.createElement("div", { className: "alert alert-info text-center" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "fas fa-users fa-3x text-muted" })), /* @__PURE__ */ import_react2.default.createElement("h5", null, "No Authors Found"), /* @__PURE__ */ import_react2.default.createElement("p", null, "No authors found for the selected timeframe.")) : /* @__PURE__ */ import_react2.default.createElement(import_react2.default.Fragment, null, /* @__PURE__ */ import_react2.default.createElement("div", { className: "table-responsive d-none d-lg-block" }, /* @__PURE__ */ import_react2.default.createElement("table", { className: "table table-striped table-hover shadow-sm" }, /* @__PURE__ */ import_react2.default.createElement("thead", { className: "table-dark" }, /* @__PURE__ */ import_react2.default.createElement("tr", null, /* @__PURE__ */ import_react2.default.createElement("th", { scope: "col", style: { width: "80px" } }, "Rank"), /* @__PURE__ */ import_react2.default.createElement("th", { scope: "col", style: { width: "60px" } }, "Avatar"), /* @__PURE__ */ import_react2.default.createElement("th", { scope: "col" }, "Author"), /* @__PURE__ */ import_react2.default.createElement("th", { scope: "col", style: { width: "120px" } }, "Articles", timeframe !== "all" && /* @__PURE__ */ import_react2.default.createElement("small", { className: "d-block text-muted", style: { fontWeight: "normal", fontSize: "0.75rem" } }, "(", getTimeframeLabel().toLowerCase(), ")")), /* @__PURE__ */ import_react2.default.createElement("th", { scope: "col", style: { width: "120px" } }, "Country"))), /* @__PURE__ */ import_react2.default.createElement("tbody", null, authors.map((author, index) => /* @__PURE__ */ import_react2.default.createElement("tr", { key: author.author_id, className: "align-middle" }, /* @__PURE__ */ import_react2.default.createElement("td", null, /* @__PURE__ */ import_react2.default.createElement("span", { className: "badge bg-secondary fs-6 px-3 py-2" }, "#", index + 1)), /* @__PURE__ */ import_react2.default.createElement("td", null, /* @__PURE__ */ import_react2.default.createElement(
       "img",
       {
         src: generateAvatarUrl(author),
@@ -26220,7 +26301,7 @@
         className: "text-decoration-none fw-semibold text-primary"
       },
       author.full_name || `${author.given_name} ${author.family_name}`
-    ), author.ORCID && /* @__PURE__ */ import_react2.default.createElement("div", { className: "text-muted small mt-1" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "fab fa-orcid me-2" }), "ORCID: ", author.ORCID))), /* @__PURE__ */ import_react2.default.createElement("td", null, /* @__PURE__ */ import_react2.default.createElement("span", { className: "badge bg-success fs-6 px-3 py-2" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "fas fa-file-alt me-2" }), formatNumber(author.articles_count || 0))), /* @__PURE__ */ import_react2.default.createElement("td", null, /* @__PURE__ */ import_react2.default.createElement("span", { className: "text-muted" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "fas fa-globe me-2" }), author.country || "N/A"))))))), /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-lg-none" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "row g-3" }, authors.map((author, index) => /* @__PURE__ */ import_react2.default.createElement("div", { key: author.author_id, className: "col-12" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "card h-100 shadow-sm border-0" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "card-body" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "me-3" }, /* @__PURE__ */ import_react2.default.createElement("span", { className: "badge bg-secondary fs-6 px-3 py-2 mb-2" }, "#", index + 1), /* @__PURE__ */ import_react2.default.createElement(
+    ), author.ORCID && /* @__PURE__ */ import_react2.default.createElement("div", { className: "text-muted small mt-1" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "fab fa-orcid me-2" }), "ORCID: ", author.ORCID))), /* @__PURE__ */ import_react2.default.createElement("td", null, /* @__PURE__ */ import_react2.default.createElement("span", { className: "badge bg-success fs-6 px-3 py-2" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "fas fa-file-alt me-2" }), formatNumber(getArticleCount(author)))), /* @__PURE__ */ import_react2.default.createElement("td", null, /* @__PURE__ */ import_react2.default.createElement("span", { className: "text-muted" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "fas fa-globe me-2" }), author.country || "N/A"))))))), /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-lg-none" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "row g-3" }, authors.map((author, index) => /* @__PURE__ */ import_react2.default.createElement("div", { key: author.author_id, className: "col-12" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "card h-100 shadow-sm border-0" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "card-body" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "me-3" }, /* @__PURE__ */ import_react2.default.createElement("span", { className: "badge bg-secondary fs-6 px-3 py-2 mb-2" }, "#", index + 1), /* @__PURE__ */ import_react2.default.createElement(
       "img",
       {
         src: generateAvatarUrl(author),
@@ -26237,7 +26318,7 @@
         className: "text-decoration-none fw-semibold text-primary"
       },
       author.full_name || `${author.given_name} ${author.family_name}`
-    )), /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex flex-wrap gap-2 mb-2" }, /* @__PURE__ */ import_react2.default.createElement("span", { className: "badge bg-success" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "fas fa-file-alt me-2" }), formatNumber(author.articles_count || 0), " articles"), author.country && /* @__PURE__ */ import_react2.default.createElement("span", { className: "badge bg-light text-dark" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "fas fa-globe me-2" }), author.country)), author.ORCID && /* @__PURE__ */ import_react2.default.createElement("div", { className: "text-muted small" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "fab fa-orcid me-2" }), "ORCID: ", author.ORCID)))))))))), authors.length > 0 && /* @__PURE__ */ import_react2.default.createElement("div", { className: "mt-4 text-center text-muted" }, /* @__PURE__ */ import_react2.default.createElement("small", null, "Showing top ", authors.length, " authors ranked by number of published articles", timeframe !== "all" && ` for ${getTimeframeLabel().toLowerCase()}`))))));
+    )), /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex flex-wrap gap-2 mb-2" }, /* @__PURE__ */ import_react2.default.createElement("span", { className: "badge bg-success" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "fas fa-file-alt me-2" }), formatNumber(getArticleCount(author)), " articles"), author.country && /* @__PURE__ */ import_react2.default.createElement("span", { className: "badge bg-light text-dark" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "fas fa-globe me-2" }), author.country)), author.ORCID && /* @__PURE__ */ import_react2.default.createElement("div", { className: "text-muted small" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "fab fa-orcid me-2" }), "ORCID: ", author.ORCID)))))))))), authors.length > 0 && /* @__PURE__ */ import_react2.default.createElement("div", { className: "mt-4 text-center text-muted" }, /* @__PURE__ */ import_react2.default.createElement("small", null, "Showing top ", authors.length, " authors ranked by number of published articles", timeframe !== "all" && /* @__PURE__ */ import_react2.default.createElement(import_react2.default.Fragment, null, ` for ${getTimeframeLabel().toLowerCase()}`, /* @__PURE__ */ import_react2.default.createElement("br", null), /* @__PURE__ */ import_react2.default.createElement("em", { className: "text-warning" }, "Note: Timeframe filtering may not be fully supported by the API yet. Counts shown may represent total articles."))))))));
   }
 
   // assets/js/apps/authorRanking.jsx
