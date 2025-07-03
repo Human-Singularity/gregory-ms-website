@@ -64,113 +64,160 @@ export function AuthorProfile() {
   if (loading) {
     return (
       <div className="text-center py-5">
-        <div className="spinner-border text-primary" role="status">
-          <span className="sr-only">Loading...</span>
+        <div className="mb-4">
+          <div className="spinner-border text-primary" role="status" style={{ width: '3rem', height: '3rem' }}>
+            <span className="sr-only">Loading author profile...</span>
+          </div>
         </div>
+        <h5 className="text-muted">Loading author profile...</h5>
+        <p className="text-muted mb-0">Please wait while we fetch the author information.</p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="alert alert-danger">
-        <h4>Error loading author profile</h4>
-        <p>{error.message}</p>
+      <div className="alert alert-danger text-center">
+        <div className="mb-3">
+          <i className="fas fa-exclamation-triangle fa-3x"></i>
+        </div>
+        <h4>Error Loading Author Profile</h4>
+        <p>Unable to load the author profile. Please try again later.</p>
+        <small className="text-muted">{error.message}</small>
       </div>
     );
   }
 
   if (!author) {
     return (
-      <div className="alert alert-warning">
-        Author not found.
+      <div className="alert alert-warning text-center">
+        <div className="mb-3">
+          <i className="fas fa-user-slash fa-3x"></i>
+        </div>
+        <h4>Author Not Found</h4>
+        <p>The requested author could not be found in our database.</p>
       </div>
     );
   }
 
   return (
-    <div className="author-profile">
-      {/* Author Header Section */}
-      <div className="row mb-5">
-        <div className="col-md-8">
-          <div className="d-flex align-items-center mb-4">
-            <img
-              src={generateAvatarUrl(author)}
-              alt={`${author.full_name || `${author.given_name} ${author.family_name}`} avatar`}
-              className="rounded-circle me-4"
-              width="120"
-              height="120"
-              style={{ objectFit: 'cover' }}
-            />
-            <div>
-              <h1 className="mb-2">
-                {author.full_name || `${author.given_name} ${author.family_name}`}
-              </h1>
-              <div className="author-meta">
-                <div className="d-flex flex-wrap gap-3 align-items-center mb-2">
-                  <span className="badge bg-primary fs-6">
-                    {formatNumber(author.articles_count)} Articles
-                  </span>
-                  {author.country && (
-                    <span className="text-muted">
-                      <i className="fas fa-globe me-1"></i>
-                      {author.country}
-                    </span>
-                  )}
-                </div>
-                {author.ORCID && (
-                  <div className="text-muted">
-                    <strong>ORCID:</strong>{' '}
-                    <a 
-                      href={author.ORCID.startsWith('http') ? author.ORCID : `https://orcid.org/${author.ORCID}`}
-                      target='_blank' 
-                      rel='noreferrer'
-                      className="text-decoration-none"
-                    >
-                      {author.ORCID}
-                    </a>
+    <div className="container-fluid py-4">
+      <div className="row justify-content-center">
+        <div className="col-12 col-xl-10">
+          <div className="author-profile">
+            {/* Author Header Section */}
+            <div className="row mb-5">
+              <div className="col-12">
+                <div className="card border-0 shadow-sm">
+                  <div className="card-body py-4">
+                    <div className="row align-items-center">
+                      <div className="col-lg-8 col-md-7">
+                        <div className="d-flex flex-column flex-sm-row align-items-center align-items-sm-start">
+                          <div className="mb-3 mb-sm-0 me-sm-4 text-center">
+                            <img
+                              src={generateAvatarUrl(author)}
+                              alt={`${author.full_name || `${author.given_name} ${author.family_name}`} avatar`}
+                              className="rounded-circle shadow"
+                              width="120"
+                              height="120"
+                              style={{ objectFit: 'cover' }}
+                            />
+                          </div>
+                          <div className="text-center text-sm-start flex-grow-1">
+                            <h1 className="mb-3 display-6 text-primary">
+                              {author.full_name || `${author.given_name} ${author.family_name}`}
+                            </h1>
+                            <div className="d-flex flex-wrap justify-content-center justify-content-sm-start gap-3 align-items-center mb-3">
+                              <span className="badge bg-primary fs-6 px-3 py-2">
+                                <i className="fas fa-file-alt me-2"></i>
+                                {formatNumber(author.articles_count)} Articles
+                              </span>
+                              {author.country && (
+                                <span className="text-muted fs-6">
+                                  <i className="fas fa-globe me-2"></i>
+                                  {author.country}
+                                </span>
+                              )}
+                            </div>
+                            {author.ORCID && (
+                              <div className="text-muted mb-3">
+                                <i className="fab fa-orcid me-2"></i>
+                                <a 
+                                  href={author.ORCID.startsWith('http') ? author.ORCID : `https://orcid.org/${author.ORCID}`}
+                                  target='_blank' 
+                                  rel='noreferrer'
+                                  className="text-decoration-none text-muted"
+                                >
+                                  ORCID: {author.ORCID}
+                                </a>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-lg-4 col-md-5 mt-4 mt-md-0">
+                        <div className="text-center text-md-end">
+                          <DownloadButton
+                            apiEndpoint={`https://api.gregory-ms.com/articles/author/${authorId}/`}
+                            className="btn btn-outline-primary"
+                          />
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                )}
+                </div>
+              </div>
+            </div>
+
+            {/* Publication Timeline Chart */}
+            <div className="row mb-5">
+              <div className="col-12">
+                <div className="card border-0 shadow-sm">
+                  <div className="card-header bg-light border-bottom-0">
+                    <h3 className="mb-0 text-primary">
+                      <i className="fas fa-chart-line me-2"></i>
+                      Publication Timeline
+                    </h3>
+                    <small className="text-muted">Monthly publication activity over time</small>
+                  </div>
+                  <div className="card-body">
+                    <AuthorArticleChart authorId={authorId} />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Articles Section */}
+            <div className="row">
+              <div className="col-12">
+                <div className="card border-0 shadow-sm">
+                  <div className="card-header bg-light border-bottom-0">
+                    <div className="d-flex flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between">
+                      <div>
+                        <h3 className="mb-1 text-primary">
+                          <i className="fas fa-file-alt me-2"></i>
+                          Published Articles
+                        </h3>
+                        <small className="text-muted">
+                          {formatNumber(author.articles_count)} total articles
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="card-body p-0">
+                    <ArticleList
+                      type="author"
+                      pagePath={`/articles/author/${authorId}`}
+                      options={{ authorId }}
+                      displayAsList={false}
+                      isSearchResult={true}
+                      showRelevanceIndicators={true}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className="col-md-4 text-md-end">
-          <DownloadButton
-            apiEndpoint={`https://api.gregory-ms.com/articles/author/${authorId}/`}
-          />
-        </div>
-      </div>
-
-      {/* Publication Timeline Chart */}
-      <div className="row mb-5">
-        <div className="col-12">
-          <div className="card">
-            <div className="card-body">
-              <AuthorArticleChart authorId={authorId} />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Articles Section */}
-      <div className="row">
-        <div className="col-12">
-          <div className="d-flex align-items-center justify-content-between mb-4">
-            <h3 className="mb-0">Published Articles</h3>
-            <small className="text-muted">
-              {formatNumber(author.articles_count)} total articles
-            </small>
-          </div>
-          
-          <ArticleList
-            type="author"
-            pagePath={`/articles/author/${authorId}`}
-            options={{ authorId }}
-            displayAsList={false}
-            isSearchResult={true}
-            showRelevanceIndicators={true}
-          />
         </div>
       </div>
     </div>

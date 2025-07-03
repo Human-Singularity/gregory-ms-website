@@ -88,16 +88,23 @@ export function AuthorRanking() {
   if (loading) {
     return (
       <div className="text-center py-5">
-        <div className="spinner-border text-primary" role="status">
-          <span className="sr-only">Loading author rankings...</span>
+        <div className="mb-4">
+          <div className="spinner-border text-primary" role="status" style={{ width: '3rem', height: '3rem' }}>
+            <span className="sr-only">Loading author rankings...</span>
+          </div>
         </div>
+        <h5 className="text-muted">Loading author rankings...</h5>
+        <p className="text-muted mb-0">Please wait while we fetch the top authors.</p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="alert alert-danger">
+      <div className="alert alert-danger text-center">
+        <div className="mb-3">
+          <i className="fas fa-exclamation-triangle fa-3x"></i>
+        </div>
         <h4>Error Loading Author Rankings</h4>
         <p>Unable to load author rankings. Please try again later.</p>
         <small className="text-muted">{error.message}</small>
@@ -106,124 +113,203 @@ export function AuthorRanking() {
   }
 
   return (
-    <div className="author-ranking">
-      <div className="d-flex justify-content-between align-items-center mb-4">
-        <div>
-          <h2 className="mb-1">Top Authors Ranking</h2>
-          <p className="text-muted mb-0">
-            Top 20 authors by article count - {getTimeframeLabel()}
-          </p>
-        </div>
-        <div className="dropdown">
-          <button
-            className="btn btn-outline-secondary dropdown-toggle"
-            type="button"
-            id="timeframeDropdown"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            {getTimeframeLabel()}
-          </button>
-          <ul className="dropdown-menu" aria-labelledby="timeframeDropdown">
-            <li>
-              <button
-                className={`dropdown-item ${timeframe === 'all' ? 'active' : ''}`}
-                onClick={() => setTimeframe('all')}
-              >
-                All Time
-              </button>
-            </li>
-            <li>
-              <button
-                className={`dropdown-item ${timeframe === 'this_year' ? 'active' : ''}`}
-                onClick={() => setTimeframe('this_year')}
-              >
-                This Year
-              </button>
-            </li>
-            <li>
-              <button
-                className={`dropdown-item ${timeframe === 'last_year' ? 'active' : ''}`}
-                onClick={() => setTimeframe('last_year')}
-              >
-                Last Year
-              </button>
-            </li>
-            <li>
-              <button
-                className={`dropdown-item ${timeframe === 'last_two_years' ? 'active' : ''}`}
-                onClick={() => setTimeframe('last_two_years')}
-              >
-                Last Two Years
-              </button>
-            </li>
-          </ul>
-        </div>
-      </div>
+    <div className="container-fluid py-4">
+      <div className="row justify-content-center">
+        <div className="col-12 col-xl-10">
+          <div className="author-ranking">
+            {/* Header Section */}
+            <div className="row mb-4">
+              <div className="col-lg-8 col-md-7 mb-3 mb-md-0">
+                <h2 className="mb-2 text-primary">Top Authors Ranking</h2>
+                <p className="text-muted mb-0 lead">
+                  Top 20 authors by article count - {getTimeframeLabel()}
+                </p>
+              </div>
+              <div className="col-lg-4 col-md-5 d-flex justify-content-md-end">
+                <div className="dropdown w-100 w-md-auto">
+                  <button
+                    className="btn btn-outline-primary dropdown-toggle w-100 w-md-auto"
+                    type="button"
+                    id="timeframeDropdown"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <i className="fas fa-calendar-alt me-2"></i>
+                    {getTimeframeLabel()}
+                  </button>
+                  <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="timeframeDropdown">
+                    <li>
+                      <button
+                        className={`dropdown-item ${timeframe === 'all' ? 'active' : ''}`}
+                        onClick={() => setTimeframe('all')}
+                      >
+                        <i className="fas fa-infinity me-2"></i>
+                        All Time
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        className={`dropdown-item ${timeframe === 'this_year' ? 'active' : ''}`}
+                        onClick={() => setTimeframe('this_year')}
+                      >
+                        <i className="fas fa-calendar-year me-2"></i>
+                        This Year
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        className={`dropdown-item ${timeframe === 'last_year' ? 'active' : ''}`}
+                        onClick={() => setTimeframe('last_year')}
+                      >
+                        <i className="fas fa-calendar-minus me-2"></i>
+                        Last Year
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        className={`dropdown-item ${timeframe === 'last_two_years' ? 'active' : ''}`}
+                        onClick={() => setTimeframe('last_two_years')}
+                      >
+                        <i className="fas fa-calendar-week me-2"></i>
+                        Last Two Years
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
 
       {authors.length === 0 ? (
-        <div className="alert alert-info">
+        <div className="alert alert-info text-center">
+          <div className="mb-3">
+            <i className="fas fa-users fa-3x text-muted"></i>
+          </div>
           <h5>No Authors Found</h5>
           <p>No authors found for the selected timeframe.</p>
         </div>
       ) : (
-        <div className="table-responsive">
-          <table className="table table-striped table-hover">
-            <thead className="table-dark">
-              <tr>
-                <th scope="col" style={{ width: '80px' }}>Rank</th>
-                <th scope="col" style={{ width: '60px' }}>Avatar</th>
-                <th scope="col">Author</th>
-                <th scope="col" style={{ width: '120px' }}>Articles</th>
-                <th scope="col" style={{ width: '100px' }}>Country</th>
-              </tr>
-            </thead>
-            <tbody>
-              {authors.map((author, index) => (
-                <tr key={author.author_id}>
-                  <td>
-                    <span className="badge bg-secondary fs-6">
-                      #{index + 1}
-                    </span>
-                  </td>
-                  <td>
-                    <img
-                      src={generateAvatarUrl(author)}
-                      alt={`${author.full_name} avatar`}
-                      className="rounded-circle"
-                      width="40"
-                      height="40"
-                      style={{ objectFit: 'cover' }}
-                    />
-                  </td>
-                  <td>
-                    <a
-                      href={`/articles/author/${author.author_id}/`}
-                      className="text-decoration-none fw-medium"
-                    >
-                      {author.full_name || `${author.given_name} ${author.family_name}`}
-                    </a>
-                    {author.ORCID && (
-                      <div className="text-muted small">
-                        ORCID: {author.ORCID}
-                      </div>
-                    )}
-                  </td>
-                  <td>
-                    <span className="badge bg-success fs-6">
-                      {formatNumber(author.articles_count || 0)}
-                    </span>
-                  </td>
-                  <td>
-                    <span className="text-muted">
-                      {author.country || 'N/A'}
-                    </span>
-                  </td>
+        <>
+          {/* Desktop Table View */}
+          <div className="table-responsive d-none d-lg-block">
+            <table className="table table-striped table-hover shadow-sm">
+              <thead className="table-dark">
+                <tr>
+                  <th scope="col" style={{ width: '80px' }}>Rank</th>
+                  <th scope="col" style={{ width: '60px' }}>Avatar</th>
+                  <th scope="col">Author</th>
+                  <th scope="col" style={{ width: '120px' }}>Articles</th>
+                  <th scope="col" style={{ width: '120px' }}>Country</th>
                 </tr>
+              </thead>
+              <tbody>
+                {authors.map((author, index) => (
+                  <tr key={author.author_id} className="align-middle">
+                    <td>
+                      <span className="badge bg-secondary fs-6 px-3 py-2">
+                        #{index + 1}
+                      </span>
+                    </td>
+                    <td>
+                      <img
+                        src={generateAvatarUrl(author)}
+                        alt={`${author.full_name} avatar`}
+                        className="rounded-circle shadow-sm"
+                        width="48"
+                        height="48"
+                        style={{ objectFit: 'cover' }}
+                      />
+                    </td>
+                    <td>
+                      <div>
+                        <a
+                          href={`/articles/author/${author.author_id}/`}
+                          className="text-decoration-none fw-semibold text-primary"
+                        >
+                          {author.full_name || `${author.given_name} ${author.family_name}`}
+                        </a>
+                        {author.ORCID && (
+                          <div className="text-muted small mt-1">
+                            <i className="fab fa-orcid me-1"></i>
+                            ORCID: {author.ORCID}
+                          </div>
+                        )}
+                      </div>
+                    </td>
+                    <td>
+                      <span className="badge bg-success fs-6 px-3 py-2">
+                        <i className="fas fa-file-alt me-1"></i>
+                        {formatNumber(author.articles_count || 0)}
+                      </span>
+                    </td>
+                    <td>
+                      <span className="text-muted">
+                        <i className="fas fa-globe me-1"></i>
+                        {author.country || 'N/A'}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Mobile Card View */}
+          <div className="d-lg-none">
+            <div className="row g-3">
+              {authors.map((author, index) => (
+                <div key={author.author_id} className="col-12">
+                  <div className="card h-100 shadow-sm border-0">
+                    <div className="card-body">
+                      <div className="d-flex align-items-center">
+                        <div className="me-3">
+                          <span className="badge bg-secondary fs-6 px-3 py-2 mb-2">
+                            #{index + 1}
+                          </span>
+                          <img
+                            src={generateAvatarUrl(author)}
+                            alt={`${author.full_name} avatar`}
+                            className="rounded-circle shadow-sm d-block"
+                            width="60"
+                            height="60"
+                            style={{ objectFit: 'cover' }}
+                          />
+                        </div>
+                        <div className="flex-grow-1">
+                          <h6 className="mb-2">
+                            <a
+                              href={`/articles/author/${author.author_id}/`}
+                              className="text-decoration-none fw-semibold text-primary"
+                            >
+                              {author.full_name || `${author.given_name} ${author.family_name}`}
+                            </a>
+                          </h6>
+                          <div className="d-flex flex-wrap gap-2 mb-2">
+                            <span className="badge bg-success">
+                              <i className="fas fa-file-alt me-1"></i>
+                              {formatNumber(author.articles_count || 0)} articles
+                            </span>
+                            {author.country && (
+                              <span className="badge bg-light text-dark">
+                                <i className="fas fa-globe me-1"></i>
+                                {author.country}
+                              </span>
+                            )}
+                          </div>
+                          {author.ORCID && (
+                            <div className="text-muted small">
+                              <i className="fab fa-orcid me-1"></i>
+                              ORCID: {author.ORCID}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               ))}
-            </tbody>
-          </table>
-        </div>
+            </div>
+          </div>
+        </>
       )}
 
       {authors.length > 0 && (
@@ -234,6 +320,9 @@ export function AuthorRanking() {
           </small>
         </div>
       )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
