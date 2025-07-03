@@ -26106,7 +26106,7 @@
     const [authors, setAuthors] = (0, import_react2.useState)([]);
     const [loading, setLoading] = (0, import_react2.useState)(true);
     const [error, setError] = (0, import_react2.useState)(null);
-    const [timeframe, setTimeframe] = (0, import_react2.useState)("all");
+    const [timeframe, setTimeframe] = (0, import_react2.useState)("year");
     const teamId = 1;
     const subjectId = 1;
     (0, import_react2.useEffect)(() => {
@@ -26124,17 +26124,7 @@
           format: "json"
         });
         if (timeframe !== "all") {
-          const now = /* @__PURE__ */ new Date();
-          const currentYear = now.getFullYear();
-          if (timeframe === "this_year") {
-            params.append("timeframe", "year");
-          } else if (timeframe === "last_year") {
-            params.append("date_from", `${currentYear - 1}-01-01`);
-            params.append("date_to", `${currentYear - 1}-12-31`);
-          } else if (timeframe === "last_two_years") {
-            params.append("date_from", `${currentYear - 2}-01-01`);
-            params.append("date_to", `${currentYear}-12-31`);
-          }
+          params.append("timeframe", timeframe);
         }
         console.log("Making API call to:", `https://api.gregory-ms.com/authors/?${params.toString()}`);
         const response = await axios_default.get(`https://api.gregory-ms.com/authors/?${params.toString()}`);
@@ -26149,12 +26139,12 @@
     };
     const getTimeframeLabel = () => {
       switch (timeframe) {
-        case "this_year":
+        case "year":
           return "This Year";
-        case "last_year":
-          return "Last Year";
-        case "last_two_years":
-          return "Last Two Years";
+        case "month":
+          return "This Month";
+        case "week":
+          return "This Week";
         default:
           return "All Time";
       }
@@ -26192,27 +26182,27 @@
     )), /* @__PURE__ */ import_react2.default.createElement("li", null, /* @__PURE__ */ import_react2.default.createElement(
       "button",
       {
-        className: `dropdown-item ${timeframe === "this_year" ? "active" : ""}`,
-        onClick: () => setTimeframe("this_year")
+        className: `dropdown-item ${timeframe === "year" ? "active" : ""}`,
+        onClick: () => setTimeframe("year")
       },
       /* @__PURE__ */ import_react2.default.createElement("i", { className: "fas fa-calendar-year me-2" }),
       "This Year"
     )), /* @__PURE__ */ import_react2.default.createElement("li", null, /* @__PURE__ */ import_react2.default.createElement(
       "button",
       {
-        className: `dropdown-item ${timeframe === "last_year" ? "active" : ""}`,
-        onClick: () => setTimeframe("last_year")
+        className: `dropdown-item ${timeframe === "month" ? "active" : ""}`,
+        onClick: () => setTimeframe("month")
       },
-      /* @__PURE__ */ import_react2.default.createElement("i", { className: "fas fa-calendar-minus me-2" }),
-      "Last Year"
+      /* @__PURE__ */ import_react2.default.createElement("i", { className: "fas fa-calendar-alt me-2" }),
+      "This Month"
     )), /* @__PURE__ */ import_react2.default.createElement("li", null, /* @__PURE__ */ import_react2.default.createElement(
       "button",
       {
-        className: `dropdown-item ${timeframe === "last_two_years" ? "active" : ""}`,
-        onClick: () => setTimeframe("last_two_years")
+        className: `dropdown-item ${timeframe === "week" ? "active" : ""}`,
+        onClick: () => setTimeframe("week")
       },
       /* @__PURE__ */ import_react2.default.createElement("i", { className: "fas fa-calendar-week me-2" }),
-      "Last Two Years"
+      "This Week"
     )))))), authors.length === 0 ? /* @__PURE__ */ import_react2.default.createElement("div", { className: "alert alert-info text-center" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "fas fa-users fa-3x text-muted" })), /* @__PURE__ */ import_react2.default.createElement("h5", null, "No Authors Found"), /* @__PURE__ */ import_react2.default.createElement("p", null, "No authors found for the selected timeframe.")) : /* @__PURE__ */ import_react2.default.createElement(import_react2.default.Fragment, null, /* @__PURE__ */ import_react2.default.createElement("div", { className: "table-responsive d-none d-lg-block" }, /* @__PURE__ */ import_react2.default.createElement("table", { className: "table table-striped table-hover shadow-sm" }, /* @__PURE__ */ import_react2.default.createElement("thead", { className: "table-dark" }, /* @__PURE__ */ import_react2.default.createElement("tr", null, /* @__PURE__ */ import_react2.default.createElement("th", { scope: "col", style: { width: "80px" } }, "Rank"), /* @__PURE__ */ import_react2.default.createElement("th", { scope: "col", style: { width: "60px" } }, "Avatar"), /* @__PURE__ */ import_react2.default.createElement("th", { scope: "col" }, "Author"), /* @__PURE__ */ import_react2.default.createElement("th", { scope: "col", style: { width: "120px" } }, "Articles"), /* @__PURE__ */ import_react2.default.createElement("th", { scope: "col", style: { width: "120px" } }, "Country"))), /* @__PURE__ */ import_react2.default.createElement("tbody", null, authors.map((author, index) => /* @__PURE__ */ import_react2.default.createElement("tr", { key: author.author_id, className: "align-middle" }, /* @__PURE__ */ import_react2.default.createElement("td", null, /* @__PURE__ */ import_react2.default.createElement("span", { className: "badge bg-secondary fs-6 px-3 py-2" }, "#", index + 1)), /* @__PURE__ */ import_react2.default.createElement("td", null, /* @__PURE__ */ import_react2.default.createElement(
       "img",
       {

@@ -10,7 +10,7 @@ export function AuthorRanking() {
   const [authors, setAuthors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [timeframe, setTimeframe] = useState('all'); // 'all', 'this_year', 'last_year', 'last_two_years'
+  const [timeframe, setTimeframe] = useState('year'); // 'year', 'month', 'week', 'all'
   
   // Fixed team and subject IDs as specified in requirements
   const teamId = 1;
@@ -34,20 +34,9 @@ export function AuthorRanking() {
         format: 'json'
       });
 
-      // Add timeframe filtering
+      // Add timeframe filtering using the API's timeframe parameter
       if (timeframe !== 'all') {
-        const now = new Date();
-        const currentYear = now.getFullYear();
-        
-        if (timeframe === 'this_year') {
-          params.append('timeframe', 'year');
-        } else if (timeframe === 'last_year') {
-          params.append('date_from', `${currentYear - 1}-01-01`);
-          params.append('date_to', `${currentYear - 1}-12-31`);
-        } else if (timeframe === 'last_two_years') {
-          params.append('date_from', `${currentYear - 2}-01-01`);
-          params.append('date_to', `${currentYear}-12-31`);
-        }
+        params.append('timeframe', timeframe);
       }
 
       console.log('Making API call to:', `https://api.gregory-ms.com/authors/?${params.toString()}`);
@@ -67,12 +56,12 @@ export function AuthorRanking() {
 
   const getTimeframeLabel = () => {
     switch (timeframe) {
-      case 'this_year':
+      case 'year':
         return 'This Year';
-      case 'last_year':
-        return 'Last Year';
-      case 'last_two_years':
-        return 'Last Two Years';
+      case 'month':
+        return 'This Month';
+      case 'week':
+        return 'This Week';
       default:
         return 'All Time';
     }
@@ -149,8 +138,8 @@ export function AuthorRanking() {
                     </li>
                     <li>
                       <button
-                        className={`dropdown-item ${timeframe === 'this_year' ? 'active' : ''}`}
-                        onClick={() => setTimeframe('this_year')}
+                        className={`dropdown-item ${timeframe === 'year' ? 'active' : ''}`}
+                        onClick={() => setTimeframe('year')}
                       >
                         <i className="fas fa-calendar-year me-2"></i>
                         This Year
@@ -158,20 +147,20 @@ export function AuthorRanking() {
                     </li>
                     <li>
                       <button
-                        className={`dropdown-item ${timeframe === 'last_year' ? 'active' : ''}`}
-                        onClick={() => setTimeframe('last_year')}
+                        className={`dropdown-item ${timeframe === 'month' ? 'active' : ''}`}
+                        onClick={() => setTimeframe('month')}
                       >
-                        <i className="fas fa-calendar-minus me-2"></i>
-                        Last Year
+                        <i className="fas fa-calendar-alt me-2"></i>
+                        This Month
                       </button>
                     </li>
                     <li>
                       <button
-                        className={`dropdown-item ${timeframe === 'last_two_years' ? 'active' : ''}`}
-                        onClick={() => setTimeframe('last_two_years')}
+                        className={`dropdown-item ${timeframe === 'week' ? 'active' : ''}`}
+                        onClick={() => setTimeframe('week')}
                       >
                         <i className="fas fa-calendar-week me-2"></i>
-                        Last Two Years
+                        This Week
                       </button>
                     </li>
                   </ul>
