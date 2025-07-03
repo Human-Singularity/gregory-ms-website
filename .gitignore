@@ -172,3 +172,4 @@ static/js/trials.js
 static/js/trials.js.map
 nginx-production-settings/
 nginx-prod
+static/js/*.js.map

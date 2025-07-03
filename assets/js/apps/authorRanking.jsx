@@ -23,11 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (rootElement) {
     // Create root and render app
     const root = ReactDOM.createRoot(rootElement);
-    root.render(
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
-    );
+    root.render(<App />);
   } else {
     console.error('Root element not found. Make sure there is a div with id="root" in your HTML.');
   }
