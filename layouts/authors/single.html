@@ -9,6 +9,10 @@ Author profile for {{ .Params.given_name }} {{ .Params.family_name }} - Multiple
 {{ $authorCSS := resources.Get "css/author-profile.css" | resources.Minify }}
 <link rel="stylesheet" href="{{ $authorCSS.RelPermalink }}">
 
+<!-- Search App CSS for consistent badge styling -->
+{{ $searchCSS := resources.Get "css/search-app.css" | resources.Minify }}
+<link rel="stylesheet" href="{{ $searchCSS.RelPermalink }}">
+
 <div class="wrapper">
 <div class="page-header clear-filter page-header-small" filter-color="orange">
 	<div class="container">
