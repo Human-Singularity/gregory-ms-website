@@ -4,7 +4,7 @@ import { formatNumber } from '../utils.jsx';
 
 /**
  * AuthorRanking component - Displays a high score ranking table of authors
- * Shows top 20 authors by article count for a given subject and team
+ * Shows top 10 authors by article count for a given subject and team
  */
 export function AuthorRanking() {
   const [authors, setAuthors] = useState([]);
@@ -61,7 +61,7 @@ export function AuthorRanking() {
       
       const response = await axios.get(`https://api.gregory-ms.com/authors/?${params.toString()}`);
 
-      // Take only the top 20 authors
+      // Take only the top 10 authors
       const authors = response.data.results || [];
       console.log(`Received ${authors.length} authors for timeframe: ${timeframe}`);
       
@@ -180,7 +180,7 @@ export function AuthorRanking() {
               <div className="col-lg-8 col-md-7 mb-3 mb-md-0">
                 <h2 className="mb-2 text-primary">Top Authors Ranking</h2>
                 <p className="text-muted mb-0 lead">
-                  Top 20 authors by article count - {getTimeframeLabel()}
+                  Top 10 authors by article count - {getTimeframeLabel()}
                 </p>
               </div>
               <div className="col-lg-4 col-md-5 d-flex justify-content-md-end">
