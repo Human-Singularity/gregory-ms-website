@@ -26234,7 +26234,7 @@
         "aria-expanded": dropdownOpen,
         style: { minWidth: "160px" }
       },
-      /* @__PURE__ */ import_react2.default.createElement("i", { className: "fas fa-calendar-alt me-2" }),
+      /* @__PURE__ */ import_react2.default.createElement("i", { className: "fas fa-calendar-alt mr-2" }),
       getTimeframeLabel()
     ), /* @__PURE__ */ import_react2.default.createElement("div", { className: `dropdown-menu ${dropdownOpen ? "show" : ""}`, style: { position: "absolute", top: "100%", left: 0, zIndex: 1050 } }, /* @__PURE__ */ import_react2.default.createElement(
       "button",
@@ -26246,7 +26246,7 @@
           setDropdownOpen(false);
         }
       },
-      /* @__PURE__ */ import_react2.default.createElement("i", { className: "fas fa-infinity me-2" }),
+      /* @__PURE__ */ import_react2.default.createElement("i", { className: "fas fa-infinity mr-2" }),
       "All Time"
     ), /* @__PURE__ */ import_react2.default.createElement(
       "button",
@@ -26258,7 +26258,7 @@
           setDropdownOpen(false);
         }
       },
-      /* @__PURE__ */ import_react2.default.createElement("i", { className: "fas fa-calendar-year me-2" }),
+      /* @__PURE__ */ import_react2.default.createElement("i", { className: "fas fa-calendar-year mr-2" }),
       "This Year"
     ), /* @__PURE__ */ import_react2.default.createElement(
       "button",
@@ -26270,7 +26270,7 @@
           setDropdownOpen(false);
         }
       },
-      /* @__PURE__ */ import_react2.default.createElement("i", { className: "fas fa-calendar-alt me-2" }),
+      /* @__PURE__ */ import_react2.default.createElement("i", { className: "fas fa-calendar-alt mr-2" }),
       "This Month"
     ), /* @__PURE__ */ import_react2.default.createElement(
       "button",
@@ -26282,7 +26282,7 @@
           setDropdownOpen(false);
         }
       },
-      /* @__PURE__ */ import_react2.default.createElement("i", { className: "fas fa-calendar-week me-2" }),
+      /* @__PURE__ */ import_react2.default.createElement("i", { className: "fas fa-calendar-week mr-2" }),
       "This Week"
     ))))), authors.length === 0 ? /* @__PURE__ */ import_react2.default.createElement("div", { className: "alert alert-info text-center" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "fas fa-users fa-3x text-muted" })), /* @__PURE__ */ import_react2.default.createElement("h5", null, "No Authors Found"), /* @__PURE__ */ import_react2.default.createElement("p", null, "No authors found for the selected timeframe.")) : /* @__PURE__ */ import_react2.default.createElement(import_react2.default.Fragment, null, /* @__PURE__ */ import_react2.default.createElement("div", { className: "table-responsive d-none d-lg-block" }, /* @__PURE__ */ import_react2.default.createElement("table", { className: "table table-striped table-hover shadow-sm" }, /* @__PURE__ */ import_react2.default.createElement("thead", { className: "table-dark" }, /* @__PURE__ */ import_react2.default.createElement("tr", null, /* @__PURE__ */ import_react2.default.createElement("th", { scope: "col", style: { width: "80px" } }, "Rank"), /* @__PURE__ */ import_react2.default.createElement("th", { scope: "col", style: { width: "60px" } }, "Avatar"), /* @__PURE__ */ import_react2.default.createElement("th", { scope: "col" }, "Author"), /* @__PURE__ */ import_react2.default.createElement("th", { scope: "col", style: { width: "120px" } }, "Articles", timeframe !== "all" && /* @__PURE__ */ import_react2.default.createElement("small", { className: "d-block text-muted", style: { fontWeight: "normal", fontSize: "0.75rem" } }, "(", getTimeframeLabel().toLowerCase(), ")")), /* @__PURE__ */ import_react2.default.createElement("th", { scope: "col", style: { width: "120px" } }, "Country"))), /* @__PURE__ */ import_react2.default.createElement("tbody", null, authors.map((author, index) => /* @__PURE__ */ import_react2.default.createElement("tr", { key: author.author_id, className: "align-middle" }, /* @__PURE__ */ import_react2.default.createElement("td", null, /* @__PURE__ */ import_react2.default.createElement("span", { className: "badge bg-secondary fs-6 px-3 py-2" }, "#", index + 1)), /* @__PURE__ */ import_react2.default.createElement("td", null, /* @__PURE__ */ import_react2.default.createElement(
       "img",
@@ -26301,7 +26301,7 @@
         className: "text-decoration-none fw-semibold text-primary"
       },
       author.full_name || `${author.given_name} ${author.family_name}`
-    ), author.ORCID && /* @__PURE__ */ import_react2.default.createElement("div", { className: "text-muted small mt-1" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "fab fa-orcid me-2" }), "ORCID: ", author.ORCID))), /* @__PURE__ */ import_react2.default.createElement("td", null, /* @__PURE__ */ import_react2.default.createElement("span", { className: "badge bg-success fs-6 px-3 py-2" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "fas fa-file-alt me-2" }), formatNumber(getArticleCount(author)))), /* @__PURE__ */ import_react2.default.createElement("td", null, /* @__PURE__ */ import_react2.default.createElement("span", { className: "text-muted" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "fas fa-globe me-2" }), author.country || "N/A"))))))), /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-lg-none" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "row g-3" }, authors.map((author, index) => /* @__PURE__ */ import_react2.default.createElement("div", { key: author.author_id, className: "col-12" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "card h-100 shadow-sm border-0" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "card-body" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "me-3" }, /* @__PURE__ */ import_react2.default.createElement("span", { className: "badge bg-secondary fs-6 px-3 py-2 mb-2" }, "#", index + 1), /* @__PURE__ */ import_react2.default.createElement(
+    ), author.ORCID && /* @__PURE__ */ import_react2.default.createElement("div", { className: "text-muted small mt-1" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "fab fa-orcid mr-2" }), "ORCID: ", author.ORCID))), /* @__PURE__ */ import_react2.default.createElement("td", null, /* @__PURE__ */ import_react2.default.createElement("span", { className: "badge bg-success fs-6 px-3 py-2" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "fas fa-file-alt mr-2" }), formatNumber(getArticleCount(author)))), /* @__PURE__ */ import_react2.default.createElement("td", null, /* @__PURE__ */ import_react2.default.createElement("span", { className: "text-muted" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "fas fa-globe mr-2" }), author.country || "N/A"))))))), /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-lg-none" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "row g-3" }, authors.map((author, index) => /* @__PURE__ */ import_react2.default.createElement("div", { key: author.author_id, className: "col-12" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "card h-100 shadow-sm border-0" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "card-body" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "me-3" }, /* @__PURE__ */ import_react2.default.createElement("span", { className: "badge bg-secondary fs-6 px-3 py-2 mb-2" }, "#", index + 1), /* @__PURE__ */ import_react2.default.createElement(
       "img",
       {
         src: generateAvatarUrl(author),
@@ -26318,7 +26318,7 @@
         className: "text-decoration-none fw-semibold text-primary"
       },
       author.full_name || `${author.given_name} ${author.family_name}`
-    )), /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex flex-wrap gap-2 mb-2" }, /* @__PURE__ */ import_react2.default.createElement("span", { className: "badge bg-success" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "fas fa-file-alt me-2" }), formatNumber(getArticleCount(author)), " articles"), author.country && /* @__PURE__ */ import_react2.default.createElement("span", { className: "badge bg-light text-dark" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "fas fa-globe me-2" }), author.country)), author.ORCID && /* @__PURE__ */ import_react2.default.createElement("div", { className: "text-muted small" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "fab fa-orcid me-2" }), "ORCID: ", author.ORCID)))))))))), authors.length > 0 && /* @__PURE__ */ import_react2.default.createElement("div", { className: "mt-4 text-center text-muted" }, /* @__PURE__ */ import_react2.default.createElement("small", null, "Showing top ", authors.length, " authors ranked by number of published articles", timeframe !== "all" && /* @__PURE__ */ import_react2.default.createElement(import_react2.default.Fragment, null, ` for ${getTimeframeLabel().toLowerCase()}`, /* @__PURE__ */ import_react2.default.createElement("br", null), /* @__PURE__ */ import_react2.default.createElement("em", { className: "text-warning" }, "Note: Timeframe filtering may not be fully supported by the API yet. Counts shown may represent total articles."))))))));
+    )), /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex flex-wrap gap-2 mb-2" }, /* @__PURE__ */ import_react2.default.createElement("span", { className: "badge bg-success" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "fas fa-file-alt mr-2" }), formatNumber(getArticleCount(author)), " articles"), author.country && /* @__PURE__ */ import_react2.default.createElement("span", { className: "badge bg-light text-dark" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "fas fa-globe mr-2" }), author.country)), author.ORCID && /* @__PURE__ */ import_react2.default.createElement("div", { className: "text-muted small" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "fab fa-orcid mr-2" }), "ORCID: ", author.ORCID)))))))))), authors.length > 0 && /* @__PURE__ */ import_react2.default.createElement("div", { className: "mt-4 text-center text-muted" }, /* @__PURE__ */ import_react2.default.createElement("small", null, "Showing top ", authors.length, " authors ranked by number of published articles", timeframe !== "all" && /* @__PURE__ */ import_react2.default.createElement(import_react2.default.Fragment, null, ` for ${getTimeframeLabel().toLowerCase()}`, /* @__PURE__ */ import_react2.default.createElement("br", null), /* @__PURE__ */ import_react2.default.createElement("em", { className: "text-warning" }, "Note: Timeframe filtering may not be fully supported by the API yet. Counts shown may represent total articles."))))))));
   }
 
   // assets/js/apps/authorRanking.jsx

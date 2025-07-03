@@ -129,19 +129,19 @@ export function AuthorProfile() {
                             </h1>
                             <div className="d-flex flex-wrap justify-content-center justify-content-sm-start gap-3 align-items-center mb-3">
                               <span className="badge bg-primary fs-6 px-3 py-2">
-                                <i className="fas fa-file-alt me-2"></i>
+                                <i className="fas fa-file-alt mr-2"></i>
                                 {formatNumber(author.articles_count)} Articles
                               </span>
                               {author.country && (
                                 <span className="text-muted fs-6">
-                                  <i className="fas fa-globe me-2"></i>
+                                  <i className="fas fa-globe mr-2"></i>
                                   {author.country}
                                 </span>
                               )}
                             </div>
                             {author.ORCID && (
                               <div className="text-muted mb-3">
-                                <i className="fab fa-orcid me-2"></i>
+                                <i className="fab fa-orcid mr-2"></i>
                                 <a 
                                   href={author.ORCID.startsWith('http') ? author.ORCID : `https://orcid.org/${author.ORCID}`}
                                   target='_blank' 
