@@ -26111,7 +26111,6 @@
     const teamId = 1;
     const subjectId = 1;
     (0, import_react2.useEffect)(() => {
-      console.log("Timeframe changed to:", timeframe);
       fetchAuthors();
     }, [timeframe]);
     (0, import_react2.useEffect)(() => {
@@ -26127,7 +26126,6 @@
     }, [dropdownOpen]);
     const fetchAuthors = async () => {
       var _a;
-      console.log("fetchAuthors called with timeframe:", timeframe);
       setLoading(true);
       setError(null);
       try {
@@ -26140,17 +26138,13 @@
         });
         if (timeframe !== "all") {
           params.append("timeframe", timeframe);
-          console.log("Added timeframe filter:", timeframe);
         }
-        console.log("Making API call to:", `https://api.gregory-ms.com/authors/?${params.toString()}`);
         const response = await axios_default.get(`https://api.gregory-ms.com/authors/?${params.toString()}`);
         const authors2 = response.data.results || [];
-        console.log(`Received ${authors2.length} authors for timeframe: ${timeframe}`);
         setAuthors(authors2.slice(0, 20));
       } catch (err) {
         console.error("Error fetching authors:", err);
         if (timeframe !== "all" && ((_a = err.response) == null ? void 0 : _a.status) === 400) {
-          console.log("Timeframe filtering not supported, trying without it...");
           try {
             const params = new URLSearchParams({
               team_id: teamId,
@@ -26241,7 +26235,6 @@
       {
         className: `dropdown-item ${timeframe === "all" ? "active" : ""}`,
         onClick: () => {
-          console.log("Switching to: all");
           setTimeframe("all");
           setDropdownOpen(false);
         }
@@ -26253,7 +26246,6 @@
       {
         className: `dropdown-item ${timeframe === "year" ? "active" : ""}`,
         onClick: () => {
-          console.log("Switching to: year");
           setTimeframe("year");
           setDropdownOpen(false);
         }
@@ -26265,7 +26257,6 @@
       {
         className: `dropdown-item ${timeframe === "month" ? "active" : ""}`,
         onClick: () => {
-          console.log("Switching to: month");
           setTimeframe("month");
           setDropdownOpen(false);
         }
@@ -26277,7 +26268,6 @@
       {
         className: `dropdown-item ${timeframe === "week" ? "active" : ""}`,
         onClick: () => {
-          console.log("Switching to: week");
           setTimeframe("week");
           setDropdownOpen(false);
         }

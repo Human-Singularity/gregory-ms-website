@@ -101,14 +101,14 @@
 
 .search-app .list-group-item h5 a,
 .author-profile .list-group-item h5 a {
-  color: #212529;
-  text-decoration: none;
+  color: #007bff;
+  text-decoration: underline;
   transition: color 0.15s ease-in-out;
 }
 
 .search-app .list-group-item h5 a:hover,
 .author-profile .list-group-item h5 a:hover {
-  color: #007bff;
+  color: #0056b3;
   text-decoration: underline;
 }
 
@@ -128,7 +128,7 @@
 .search-app .article-summary,
 .author-profile .article-summary {
   color: #6c757d;
-  font-size: 0.95rem;
+  font-size: 0.975rem;
   line-height: 1.5;
   margin-bottom: 0.75rem;
 }
