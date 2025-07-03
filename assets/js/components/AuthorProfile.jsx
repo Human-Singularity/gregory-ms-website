@@ -175,7 +175,7 @@ export function AuthorProfile() {
                 <div className="card border-0 shadow-sm">
                   <div className="card-header bg-light border-bottom-0">
                     <h3 className="mb-0 text-primary">
-                      <i className="fas fa-chart-line me-3"></i>
+                      <i className="fas fa-chart-line mr-3"></i>
                       Publication Timeline
                     </h3>
                     <small className="text-muted">Monthly publication activity over time</small>
@@ -195,7 +195,7 @@ export function AuthorProfile() {
                     <div className="d-flex flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between">
                       <div>
                         <h3 className="mb-1 text-primary">
-                          <i className="fas fa-file-alt me-3"></i>
+                          <i className="fas fa-file-alt mr-3"></i>
                           Published Articles
                         </h3>
                         <small className="text-muted">

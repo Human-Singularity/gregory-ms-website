@@ -334,7 +334,7 @@ export function AuthorRanking() {
                   <div className="card h-100 shadow-sm border-0">
                     <div className="card-body">
                       <div className="d-flex align-items-center">
-                        <div className="me-3">
+                        <div className="mr-3">
                           <span className="badge bg-secondary fs-6 px-3 py-2 mb-2">
                             #{index + 1}
                           </span>
