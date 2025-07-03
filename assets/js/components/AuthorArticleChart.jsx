@@ -114,17 +114,57 @@ export function AuthorArticleChart({ authorId, articles: providedArticles }) {
     const svg = d3.select(svgRef.current);
     svg.selectAll('*').remove(); // Clear previous chart
 
-    const margin = { top: 20, right: 30, bottom: 40, left: 60 };
-    const width = 800 - margin.left - margin.right;
-    const height = 400 - margin.top - margin.bottom;
+    // Get the container width for responsive sizing
+    const container = svg.node().parentNode;
+    const containerWidth = container.offsetWidth;
+    
+    const margin = { top: 20, right: 30, bottom: 60, left: 60 };
+    const width = Math.max(300, containerWidth - margin.left - margin.right);
+    const height = Math.max(250, Math.min(400, width * 0.6)); // Responsive height with min/max
 
+    renderChart(svg, data, width, height, margin);
+  }, [data, loading]);
+
+  // Add resize handler for responsive behavior
+  useEffect(() => {
+    const handleResize = () => {
+      if (data.length > 0 && !loading) {
+        // Debounce resize to avoid excessive re-renders
+        const timeoutId = setTimeout(() => {
+          const svg = d3.select(svgRef.current);
+          if (svg.node()) {
+            // Clear and re-render chart
+            svg.selectAll('*').remove();
+            
+            // Get new dimensions
+            const container = svg.node().parentNode;
+            const containerWidth = container.offsetWidth;
+            const margin = { top: 20, right: 30, bottom: 60, left: 60 };
+            const width = Math.max(300, containerWidth - margin.left - margin.right);
+            const height = Math.max(250, Math.min(400, width * 0.6));
+            
+            // Re-render with new dimensions
+            renderChart(svg, data, width, height, margin);
+          }
+        }, 250);
+        
+        return () => clearTimeout(timeoutId);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [data, loading]);
+
+  // Extract chart rendering logic to a separate function
+  const renderChart = (svg, chartData, width, height, margin) => {
     // Create scales
     const xScale = d3.scaleTime()
-      .domain(d3.extent(data, d => d.date))
+      .domain(d3.extent(chartData, d => d.date))
       .range([0, width]);
 
     const yScale = d3.scaleLinear()
-      .domain([0, d3.max(data, d => d.cumulative)])
+      .domain([0, d3.max(chartData, d => d.cumulative)])
       .nice()
       .range([height, 0]);
 
@@ -146,7 +186,7 @@ export function AuthorArticleChart({ authorId, articles: providedArticles }) {
       .attr('transform', `translate(0,${height})`)
       .call(d3.axisBottom(xScale)
         .tickFormat(d3.timeFormat('%b %Y'))
-        .ticks(d3.timeMonth.every(6)))
+        .ticks(Math.max(2, Math.min(8, Math.floor(width / 100)))))
       .selectAll('text')
       .style('text-anchor', 'end')
       .attr('dx', '-.8em')
@@ -155,7 +195,7 @@ export function AuthorArticleChart({ authorId, articles: providedArticles }) {
 
     // Add Y axis
     g.append('g')
-      .call(d3.axisLeft(yScale));
+      .call(d3.axisLeft(yScale).ticks(Math.max(3, Math.min(8, Math.floor(height / 40)))));
 
     // Add X axis label
     g.append('text')
@@ -174,20 +214,21 @@ export function AuthorArticleChart({ authorId, articles: providedArticles }) {
 
     // Add the line
     g.append('path')
-      .datum(data)
+      .datum(chartData)
       .attr('fill', 'none')
       .attr('stroke', '#007bff')
       .attr('stroke-width', 2)
       .attr('d', line);
 
     // Add dots for each data point
+    const dotRadius = Math.max(2, Math.min(5, width / 200));
     g.selectAll('.dot')
-      .data(data)
+      .data(chartData)
       .enter().append('circle')
       .attr('class', 'dot')
       .attr('cx', d => xScale(d.date))
       .attr('cy', d => yScale(d.cumulative))
-      .attr('r', 4)
+      .attr('r', dotRadius)
       .attr('fill', '#007bff')
       .on('mouseover', function(event, d) {
         // Create tooltip
@@ -217,8 +258,7 @@ export function AuthorArticleChart({ authorId, articles: providedArticles }) {
       .on('mouseout', function() {
         d3.selectAll('.tooltip').remove();
       });
-
-  }, [data, loading]);
+  };
 
   if (loading) {
     return (
@@ -254,8 +294,8 @@ export function AuthorArticleChart({ authorId, articles: providedArticles }) {
       <p className="text-muted mb-3">
         Cumulative number of articles published over time
       </p>
-      <div className="chart-container" style={{ overflowX: 'auto' }}>
-        <svg ref={svgRef}></svg>
+      <div className="chart-container" style={{ overflowX: 'auto', width: '100%' }}>
+        <svg ref={svgRef} style={{ width: '100%', height: 'auto', minHeight: '300px' }}></svg>
       </div>
       <div className="mt-3 text-center">
         <small className="text-muted">

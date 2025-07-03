@@ -5,6 +5,10 @@ Author profile for {{ .Params.given_name }} {{ .Params.family_name }} - Multiple
 {{ end }}
 
 {{ define "main" }}
+<!-- Author Profile Custom CSS -->
+{{ $authorCSS := resources.Get "css/author-profile.css" | resources.Minify }}
+<link rel="stylesheet" href="{{ $authorCSS.RelPermalink }}">
+
 <div class="wrapper">
 <div class="page-header clear-filter page-header-small" filter-color="orange">
 	<div class="container">

@@ -1,0 +1,199 @@
+/**
+ * Gregory MS - Author Profile Styles
+ * Responsive styles for author profile page components
+ */
+
+/* ----------------------------------------
+   1. Author Article Chart Responsive Styles
+   ---------------------------------------- */
+.author-article-chart {
+  width: 100%;
+  overflow: hidden;
+}
+
+.author-article-chart .chart-container {
+  position: relative;
+  width: 100%;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+}
+
+.author-article-chart svg {
+  min-width: 300px;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Chart responsive breakpoints */
+@media (max-width: 768px) {
+  .author-article-chart .chart-container {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+  
+  .author-article-chart svg {
+    min-width: 280px;
+  }
+}
+
+@media (max-width: 576px) {
+  .author-article-chart h4 {
+    font-size: 1.1rem;
+  }
+  
+  .author-article-chart .chart-container {
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+  }
+  
+  .author-article-chart svg {
+    min-width: 250px;
+  }
+}
+
+/* ----------------------------------------
+   2. Article Pagination Styles
+   ---------------------------------------- */
+.articles-section {
+  scroll-margin-top: 2rem;
+}
+
+.pagination-sm .page-link {
+  padding: 0.375rem 0.75rem;
+  font-size: 0.875rem;
+  border-radius: 0.25rem;
+}
+
+.pagination-sm .page-item.active .page-link {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.pagination-sm .page-item:not(.disabled) .page-link:hover {
+  background-color: #e9ecef;
+  border-color: #dee2e6;
+  color: #0056b3;
+}
+
+.pagination-sm .page-item.disabled .page-link {
+  color: #6c757d;
+  pointer-events: none;
+  background-color: #fff;
+  border-color: #dee2e6;
+}
+
+/* Mobile pagination adjustments */
+@media (max-width: 576px) {
+  .pagination-sm .page-link {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.8rem;
+  }
+  
+  .pagination-sm .page-item:not(.active):not(.disabled) .page-link {
+    border: 1px solid #dee2e6;
+    margin: 0 1px;
+  }
+}
+
+/* ----------------------------------------
+   3. Author Profile Card Responsive Styles
+   ---------------------------------------- */
+.author-profile .card {
+  border: 0;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  margin-bottom: 1.5rem;
+}
+
+.author-profile .card-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+  padding: 1rem 1.5rem;
+}
+
+.author-profile .card-body {
+  padding: 1.5rem;
+}
+
+/* Avatar responsive behavior */
+@media (max-width: 768px) {
+  .author-profile .rounded-circle {
+    width: 80px !important;
+    height: 80px !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .author-profile .card-header,
+  .author-profile .card-body {
+    padding: 1rem;
+  }
+  
+  .author-profile .display-6 {
+    font-size: 1.5rem;
+  }
+  
+  .author-profile .rounded-circle {
+    width: 60px !important;
+    height: 60px !important;
+  }
+}
+
+/* ----------------------------------------
+   4. Article List Item Responsive Styles
+   ---------------------------------------- */
+.list-group-item {
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 1px solid #e9ecef;
+  padding: 1rem 1.5rem;
+}
+
+.list-group-item:first-child {
+  border-top: 0;
+}
+
+.list-group-item:last-child {
+  border-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .list-group-item {
+    padding: 0.75rem 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .list-group-item {
+    padding: 0.5rem 0.75rem;
+  }
+}
+
+/* ----------------------------------------
+   5. Loading and Error States
+   ---------------------------------------- */
+.author-profile .spinner-border {
+  width: 3rem;
+  height: 3rem;
+}
+
+.author-profile .alert {
+  margin: 2rem 0;
+  text-align: center;
+}
+
+/* ----------------------------------------
+   6. Print Styles
+   ---------------------------------------- */
+@media print {
+  .author-article-chart .chart-container {
+    overflow: visible;
+  }
+  
+  .pagination {
+    display: none;
+  }
+  
+  .author-profile .btn {
+    display: none;
+  }
+}

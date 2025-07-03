@@ -26225,7 +26225,7 @@
     if (error) {
       return /* @__PURE__ */ import_react2.default.createElement("div", { className: "alert alert-danger text-center" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "fas fa-exclamation-triangle fa-3x" })), /* @__PURE__ */ import_react2.default.createElement("h4", null, "Error Loading Author Rankings"), /* @__PURE__ */ import_react2.default.createElement("p", null, "Unable to load author rankings. Please try again later."), /* @__PURE__ */ import_react2.default.createElement("small", { className: "text-muted" }, error.message));
     }
-    return /* @__PURE__ */ import_react2.default.createElement("div", { className: "container-fluid py-4" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "row justify-content-center" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "col-12 col-xl-10" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "author-ranking" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "row mb-4" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "col-lg-8 col-md-7 mb-3 mb-md-0" }, /* @__PURE__ */ import_react2.default.createElement("h2", { className: "mb-2 text-primary" }, "Top Authors Ranking"), /* @__PURE__ */ import_react2.default.createElement("p", { className: "text-muted mb-0 lead" }, "Top 20 authors by article count - ", getTimeframeLabel())), /* @__PURE__ */ import_react2.default.createElement("div", { className: "col-lg-4 col-md-5 d-flex justify-content-md-end" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "dropdown" }, /* @__PURE__ */ import_react2.default.createElement(
+    return /* @__PURE__ */ import_react2.default.createElement("div", { className: "container-fluid py-4" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "row justify-content-center" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "col-12 col-xl-10" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "author-ranking" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "row mb-4" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "col-lg-8 col-md-7 mb-3 mb-md-0" }, /* @__PURE__ */ import_react2.default.createElement("h2", { className: "mb-2 text-primary" }, "Top Authors Ranking"), /* @__PURE__ */ import_react2.default.createElement("p", { className: "text-muted mb-0 lead" }, "Top 10 authors by article count - ", getTimeframeLabel())), /* @__PURE__ */ import_react2.default.createElement("div", { className: "col-lg-4 col-md-5 d-flex justify-content-md-end" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "dropdown" }, /* @__PURE__ */ import_react2.default.createElement(
       "button",
       {
         className: "btn btn-outline-primary dropdown-toggle",
@@ -26330,9 +26330,7 @@
     const rootElement = document.getElementById("root");
     if (rootElement) {
       const root = import_client.default.createRoot(rootElement);
-      root.render(
-        /* @__PURE__ */ import_react3.default.createElement(import_react3.default.StrictMode, null, /* @__PURE__ */ import_react3.default.createElement(App, null))
-      );
+      root.render(/* @__PURE__ */ import_react3.default.createElement(App, null));
     } else {
       console.error('Root element not found. Make sure there is a div with id="root" in your HTML.');
     }

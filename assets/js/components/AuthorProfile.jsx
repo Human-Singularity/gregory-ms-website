@@ -16,6 +16,8 @@ export function AuthorProfile() {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [articlesPerPage] = useState(10);
   const { authorId } = useParams();
 
   useEffect(() => {
@@ -85,6 +87,61 @@ export function AuthorProfile() {
     // Generate a generic avatar based on initials
     const initials = `${author.given_name?.[0] || ''}${author.family_name?.[0] || ''}`.toUpperCase();
     return `https://ui-avatars.com/api/?name=${encodeURIComponent(initials)}&background=007bff&color=fff&size=120&rounded=true`;
+  };
+
+  // Pagination calculations
+  const indexOfLastArticle = currentPage * articlesPerPage;
+  const indexOfFirstArticle = indexOfLastArticle - articlesPerPage;
+  const currentArticles = articles.slice(indexOfFirstArticle, indexOfLastArticle);
+  const totalPages = Math.ceil(articles.length / articlesPerPage);
+
+  // Pagination handlers
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    // Scroll to articles section
+    const articlesSection = document.querySelector('.articles-section');
+    if (articlesSection) {
+      articlesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  const handlePrevious = () => {
+    if (currentPage > 1) {
+      handlePageChange(currentPage - 1);
+    }
+  };
+
+  const handleNext = () => {
+    if (currentPage < totalPages) {
+      handlePageChange(currentPage + 1);
+    }
+  };
+
+  // Generate pagination numbers
+  const getPaginationNumbers = () => {
+    const delta = 2;
+    const range = [];
+    const rangeWithDots = [];
+
+    for (let i = Math.max(2, currentPage - delta); i <= Math.min(totalPages - 1, currentPage + delta); i++) {
+      range.push(i);
+    }
+
+    if (currentPage - delta > 2) {
+      rangeWithDots.push(1, '...');
+    } else {
+      rangeWithDots.push(1);
+    }
+
+    rangeWithDots.push(...range);
+
+    if (currentPage + delta < totalPages - 1) {
+      rangeWithDots.push('...', totalPages);
+    } else {
+      rangeWithDots.push(totalPages);
+    }
+
+    return rangeWithDots.filter((v, i, a) => a.indexOf(v) === i);
   };
 
   if (loading) {
@@ -216,7 +273,7 @@ export function AuthorProfile() {
             {/* Articles Section */}
             <div className="row">
               <div className="col-12">
-                <div className="card border-0 shadow-sm">
+                <div className="card border-0 shadow-sm articles-section">
                   <div className="card-header bg-light border-bottom-0">
                     <div className="d-flex flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between">
                       <div>
@@ -226,32 +283,75 @@ export function AuthorProfile() {
                         </h3>
                         <small className="text-muted">
                           {formatNumber(articles.length)} total articles
+                          {articles.length > 0 && (
+                            <span className="ms-2">
+                              • Showing {indexOfFirstArticle + 1}-{Math.min(indexOfLastArticle, articles.length)} of {articles.length}
+                            </span>
+                          )}
                         </small>
                       </div>
                     </div>
                   </div>
                   <div className="card-body p-0">
                     {articles.length > 0 ? (
-                      <div className="list-group list-group-flush">
-                        {articles.slice(0, 10).map(article => (
-                          <ArticleListItem 
-                            key={article.article_id}
-                            article={article}
-                            isSearchResult={true}
-                            showRelevanceIndicators={true}
-                          />
-                        ))}
-                        {articles.length > 10 && (
-                          <div className="list-group-item text-center py-3 bg-light">
-                            <small className="text-muted">
-                              Showing first 10 of {articles.length} articles. 
-                              <a href={`/articles/author/${authorId}/`} className="ms-2">
-                                View all articles →
-                              </a>
-                            </small>
+                      <>
+                        <div className="list-group list-group-flush">
+                          {currentArticles.map(article => (
+                            <ArticleListItem 
+                              key={article.article_id}
+                              article={article}
+                              isSearchResult={true}
+                              showRelevanceIndicators={true}
+                            />
+                          ))}
+                        </div>
+                        
+                        {/* Pagination */}
+                        {totalPages > 1 && (
+                          <div className="d-flex justify-content-center py-4 bg-light border-top">
+                            <nav aria-label="Articles pagination">
+                              <ul className="pagination pagination-sm mb-0">
+                                <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                                  <button 
+                                    className="page-link" 
+                                    onClick={handlePrevious}
+                                    disabled={currentPage === 1}
+                                  >
+                                    <i className="fas fa-chevron-left"></i>
+                                    <span className="d-none d-sm-inline ms-1">Previous</span>
+                                  </button>
+                                </li>
+                                
+                                {getPaginationNumbers().map((number, index) => (
+                                  <li key={index} className={`page-item ${number === currentPage ? 'active' : ''} ${number === '...' ? 'disabled' : ''}`}>
+                                    {number === '...' ? (
+                                      <span className="page-link">...</span>
+                                    ) : (
+                                      <button 
+                                        className="page-link" 
+                                        onClick={() => handlePageChange(number)}
+                                      >
+                                        {number}
+                                      </button>
+                                    )}
+                                  </li>
+                                ))}
+                                
+                                <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+                                  <button 
+                                    className="page-link" 
+                                    onClick={handleNext}
+                                    disabled={currentPage === totalPages}
+                                  >
+                                    <span className="d-none d-sm-inline me-1">Next</span>
+                                    <i className="fas fa-chevron-right"></i>
+                                  </button>
+                                </li>
+                              </ul>
+                            </nav>
                           </div>
                         )}
-                      </div>
+                      </>
                     ) : (
                       <div className="text-center py-4">
                         <p className="text-muted mb-0">No articles found for this author.</p>
