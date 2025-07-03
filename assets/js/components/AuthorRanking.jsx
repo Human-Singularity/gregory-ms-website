@@ -229,7 +229,7 @@ export function AuthorRanking() {
                         </a>
                         {author.ORCID && (
                           <div className="text-muted small mt-1">
-                            <i className="fab fa-orcid me-1"></i>
+                            <i className="fab fa-orcid me-2"></i>
                             ORCID: {author.ORCID}
                           </div>
                         )}
@@ -237,13 +237,13 @@ export function AuthorRanking() {
                     </td>
                     <td>
                       <span className="badge bg-success fs-6 px-3 py-2">
-                        <i className="fas fa-file-alt me-1"></i>
+                        <i className="fas fa-file-alt me-2"></i>
                         {formatNumber(author.articles_count || 0)}
                       </span>
                     </td>
                     <td>
                       <span className="text-muted">
-                        <i className="fas fa-globe me-1"></i>
+                        <i className="fas fa-globe me-2"></i>
                         {author.country || 'N/A'}
                       </span>
                     </td>
@@ -285,19 +285,19 @@ export function AuthorRanking() {
                           </h6>
                           <div className="d-flex flex-wrap gap-2 mb-2">
                             <span className="badge bg-success">
-                              <i className="fas fa-file-alt me-1"></i>
+                              <i className="fas fa-file-alt me-2"></i>
                               {formatNumber(author.articles_count || 0)} articles
                             </span>
                             {author.country && (
                               <span className="badge bg-light text-dark">
-                                <i className="fas fa-globe me-1"></i>
+                                <i className="fas fa-globe me-2"></i>
                                 {author.country}
                               </span>
                             )}
                           </div>
                           {author.ORCID && (
                             <div className="text-muted small">
-                              <i className="fab fa-orcid me-1"></i>
+                              <i className="fab fa-orcid me-2"></i>
                               ORCID: {author.ORCID}
                             </div>
                           )}
