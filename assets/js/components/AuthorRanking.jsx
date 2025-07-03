@@ -18,7 +18,6 @@ export function AuthorRanking() {
   const subjectId = 1;
 
   useEffect(() => {
-    console.log('Timeframe changed to:', timeframe);
     fetchAuthors();
   }, [timeframe]);
 
@@ -37,7 +36,6 @@ export function AuthorRanking() {
   }, [dropdownOpen]);
 
   const fetchAuthors = async () => {
-    console.log('fetchAuthors called with timeframe:', timeframe);
     setLoading(true);
     setError(null);
 
@@ -54,16 +52,12 @@ export function AuthorRanking() {
       // Try adding timeframe filtering, but don't rely on it working
       if (timeframe !== 'all') {
         params.append('timeframe', timeframe);
-        console.log('Added timeframe filter:', timeframe);
       }
 
-      console.log('Making API call to:', `https://api.gregory-ms.com/authors/?${params.toString()}`);
-      
       const response = await axios.get(`https://api.gregory-ms.com/authors/?${params.toString()}`);
 
       // Take only the top 10 authors
       const authors = response.data.results || [];
-      console.log(`Received ${authors.length} authors for timeframe: ${timeframe}`);
       
       setAuthors(authors.slice(0, 20));
     } catch (err) {
@@ -71,7 +65,6 @@ export function AuthorRanking() {
       
       // If timeframe filtering fails, try without it
       if (timeframe !== 'all' && err.response?.status === 400) {
-        console.log('Timeframe filtering not supported, trying without it...');
         try {
           const params = new URLSearchParams({
             team_id: teamId,
@@ -199,7 +192,6 @@ export function AuthorRanking() {
                     <button
                       className={`dropdown-item ${timeframe === 'all' ? 'active' : ''}`}
                       onClick={() => {
-                        console.log('Switching to: all');
                         setTimeframe('all');
                         setDropdownOpen(false);
                       }}
@@ -210,7 +202,6 @@ export function AuthorRanking() {
                     <button
                       className={`dropdown-item ${timeframe === 'year' ? 'active' : ''}`}
                       onClick={() => {
-                        console.log('Switching to: year');
                         setTimeframe('year');
                         setDropdownOpen(false);
                       }}
@@ -221,7 +212,6 @@ export function AuthorRanking() {
                     <button
                       className={`dropdown-item ${timeframe === 'month' ? 'active' : ''}`}
                       onClick={() => {
-                        console.log('Switching to: month');
                         setTimeframe('month');
                         setDropdownOpen(false);
                       }}
@@ -232,7 +222,6 @@ export function AuthorRanking() {
                     <button
                       className={`dropdown-item ${timeframe === 'week' ? 'active' : ''}`}
                       onClick={() => {
-                        console.log('Switching to: week');
                         setTimeframe('week');
                         setDropdownOpen(false);
                       }}

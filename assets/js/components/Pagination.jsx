@@ -1,172 +1,124 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useNavigate } from 'react-router-dom';
 
-/**
- * Reusable pagination component
- * @param {object} props - Component props
- * @param {string} props.pagePath - Base path for pagination links
- * @param {number} props.page - Current page number
- * @param {number} props.lastPage - Last page number
- * @param {function} props.setPage - Function to set the page
- * @returns {JSX.Element} - Pagination component
- */
-export function Pagination({ pagePath, page, lastPage, setPage }) {
-  const navigate = useNavigate();
-  
-  const handlePageChange = (newPage) => {
-    if (newPage < 1 || newPage > lastPage) return;
-    
-    setPage(newPage);
-    
-    if (pagePath) {
-      navigate(`${pagePath}/page/${newPage}`);
+const Pagination = ({
+  currentPage,
+  totalPages,
+  onPageChange,
+  size = 'medium',
+  className = ''
+}) => {
+  if (totalPages <= 1) return null;
+
+  const getPageNumbers = () => {
+    const pages = [];
+    const maxVisible = 7;
+    const halfVisible = Math.floor(maxVisible / 2);
+
+    if (totalPages <= maxVisible) {
+      // Show all pages
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      // Show pages with ellipsis
+      if (currentPage <= halfVisible + 1) {
+        // Show first pages
+        for (let i = 1; i <= maxVisible - 2; i++) {
+          pages.push(i);
+        }
+        pages.push('...');
+        pages.push(totalPages);
+      } else if (currentPage >= totalPages - halfVisible) {
+        // Show last pages
+        pages.push(1);
+        pages.push('...');
+        for (let i = totalPages - maxVisible + 3; i <= totalPages; i++) {
+          pages.push(i);
+        }
+      } else {
+        // Show middle pages
+        pages.push(1);
+        pages.push('...');
+        for (let i = currentPage - halfVisible + 1; i <= currentPage + halfVisible - 1; i++) {
+          pages.push(i);
+        }
+        pages.push('...');
+        pages.push(totalPages);
+      }
     }
+
+    return pages;
   };
 
-  // Don't render pagination if there's only one page
-  if (lastPage <= 1) return null;
+  const sizeClasses = {
+    small: 'pagination-sm',
+    medium: '',
+    large: 'pagination-lg'
+  };
 
   return (
-    <nav aria-label="Page navigation">
-      <ul className="pagination pagination-primary m-4 d-flex justify-content-center">
-        {/* First page button */}
-        <li className={`page-item ${page === 1 ? 'disabled' : ''}`}>
-          <button 
-            onClick={() => handlePageChange(1)} 
-            className="page-link" 
-            aria-label="Go to the first page"
-            disabled={page === 1}
+    <nav aria-label="Pagination navigation" className={`pagination-wrapper ${className}`}>
+      <ul className={`pagination ${sizeClasses[size]}`}>
+        {/* Previous button */}
+        <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+          <button
+            className="page-link"
+            onClick={() => onPageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+            aria-label="Previous page"
           >
-            <span aria-hidden="true">
-              <i className="fa fa-angle-double-left" aria-hidden="true"></i>
-            </span>
+            <span aria-hidden="true">&laquo;</span>
+            <span className="sr-only">Previous</span>
           </button>
         </li>
-        
-        {/* Previous page button */}
-        <li className={`page-item ${page === 1 ? 'disabled' : ''}`}>
-          <button 
-            onClick={() => handlePageChange(page - 1)} 
-            className="page-link" 
-            aria-label="Go to previous page"
-            disabled={page === 1}
-          >
-            <span aria-hidden="true">
-              <i className="fa fa-angle-left" aria-hidden="true"></i>
-            </span>
-          </button>
-        </li>
-        
+
         {/* Page numbers */}
-        {page > 2 && (
-          <li className="page-item">
-            <button 
-              className="page-link" 
-              onClick={() => handlePageChange(page - 2)}
-            >
-              {page - 2}
-            </button>
-          </li>
-        )}
-        
-        {page > 1 && (
-          <li className="page-item">
-            <button 
-              className="page-link" 
-              onClick={() => handlePageChange(page - 1)}
-            >
-              {page - 1}
-            </button>
-          </li>
-        )}
-        
-        {/* Current page */}
-        <li className="page-item active">
-          <button className="page-link">
-            {page}
-          </button>
-        </li>
-        
-        {/* Next pages */}
-        {page < lastPage && (
-          <li className="page-item">
-            <button 
-              className="page-link" 
-              onClick={() => handlePageChange(page + 1)}
-            >
-              {page + 1}
-            </button>
-          </li>
-        )}
-        
-        {page < lastPage - 1 && (
-          <li className="page-item">
-            <button 
-              className="page-link" 
-              onClick={() => handlePageChange(page + 2)}
-            >
-              {page + 2}
-            </button>
-          </li>
-        )}
-        
-        {/* Ellipsis if needed */}
-        {page < lastPage - 2 && (
-          <li className="page-item disabled">
-            <span className="page-link">...</span>
-          </li>
-        )}
-        
-        {/* Last page if not already visible */}
-        {page < lastPage - 2 && (
-          <li className="page-item">
-            <button 
-              className="page-link" 
-              onClick={() => handlePageChange(lastPage)}
-            >
-              {lastPage}
-            </button>
-          </li>
-        )}
-        
-        {/* Next page button */}
-        <li className={`page-item ${page === lastPage ? 'disabled' : ''}`}>
-          <button 
-            onClick={() => handlePageChange(page + 1)} 
-            className="page-link" 
-            aria-label="Go to next page"
-            disabled={page === lastPage}
+        {getPageNumbers().map((page, index) => (
+          <li
+            key={index}
+            className={`page-item ${
+              page === currentPage ? 'active' : ''
+            } ${page === '...' ? 'disabled' : ''}`}
           >
-            <span aria-hidden="true">
-              <i className="fa fa-angle-right" aria-hidden="true"></i>
-            </span>
-          </button>
-        </li>
-        
-        {/* Last page button */}
-        <li className={`page-item ${page === lastPage ? 'disabled' : ''}`}>
-          <button 
-            onClick={() => handlePageChange(lastPage)} 
-            className="page-link" 
-            aria-label="Go to the last page"
-            disabled={page === lastPage}
+            {page === '...' ? (
+              <span className="page-link">...</span>
+            ) : (
+              <button
+                className="page-link"
+                onClick={() => onPageChange(page)}
+                aria-label={`Page ${page}`}
+                aria-current={page === currentPage ? 'page' : undefined}
+              >
+                {page}
+              </button>
+            )}
+          </li>
+        ))}
+
+        {/* Next button */}
+        <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+          <button
+            className="page-link"
+            onClick={() => onPageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            aria-label="Next page"
           >
-            <span aria-hidden="true">
-              <i className="fa fa-angle-double-right" aria-hidden="true"></i>
-            </span>
+            <span className="sr-only">Next</span>
+            <span aria-hidden="true">&raquo;</span>
           </button>
         </li>
       </ul>
     </nav>
   );
-}
+};
 
 Pagination.propTypes = {
-  pagePath: PropTypes.string,
-  page: PropTypes.number.isRequired,
-  lastPage: PropTypes.number.isRequired,
-  setPage: PropTypes.func.isRequired
+  currentPage: PropTypes.number.isRequired,
+  totalPages: PropTypes.number.isRequired,
+  onPageChange: PropTypes.func.isRequired,
+  size: PropTypes.oneOf(['small', 'medium', 'large']),
+  className: PropTypes.string
 };
 
 export default Pagination;

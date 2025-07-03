@@ -5,6 +5,7 @@ import ArticleList from './ArticleList';
 import ArticleListItem from './ArticleListItem';
 import AuthorArticleChart from './AuthorArticleChart';
 import DownloadButton from './DownloadButton';
+import Pagination from './Pagination';
 import { removeSpecifiedNodes, formatNumber } from '../utils.jsx';
 
 /**
@@ -47,12 +48,9 @@ export function AuthorProfile() {
           // Check if there are more pages
           hasMore = articlesResponse.data.next !== null;
           page++;
-          
-          console.log(`Fetched page ${page - 1}, got ${pageResults.length} articles, total: ${allArticles.length}`);
         }
         
         if (isMounted) {
-          console.log(`Total articles fetched for author ${authorId}:`, allArticles.length);
           setArticles(allArticles);
           setLoading(false);
           
@@ -103,45 +101,6 @@ export function AuthorProfile() {
     if (articlesSection) {
       articlesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-  };
-
-  const handlePrevious = () => {
-    if (currentPage > 1) {
-      handlePageChange(currentPage - 1);
-    }
-  };
-
-  const handleNext = () => {
-    if (currentPage < totalPages) {
-      handlePageChange(currentPage + 1);
-    }
-  };
-
-  // Generate pagination numbers
-  const getPaginationNumbers = () => {
-    const delta = 2;
-    const range = [];
-    const rangeWithDots = [];
-
-    for (let i = Math.max(2, currentPage - delta); i <= Math.min(totalPages - 1, currentPage + delta); i++) {
-      range.push(i);
-    }
-
-    if (currentPage - delta > 2) {
-      rangeWithDots.push(1, '...');
-    } else {
-      rangeWithDots.push(1);
-    }
-
-    rangeWithDots.push(...range);
-
-    if (currentPage + delta < totalPages - 1) {
-      rangeWithDots.push('...', totalPages);
-    } else {
-      rangeWithDots.push(totalPages);
-    }
-
-    return rangeWithDots.filter((v, i, a) => a.indexOf(v) === i);
   };
 
   if (loading) {
@@ -309,46 +268,13 @@ export function AuthorProfile() {
                         {/* Pagination */}
                         {totalPages > 1 && (
                           <div className="d-flex justify-content-center py-4 bg-light border-top">
-                            <nav aria-label="Articles pagination">
-                              <ul className="pagination pagination-sm mb-0">
-                                <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
-                                  <button 
-                                    className="page-link" 
-                                    onClick={handlePrevious}
-                                    disabled={currentPage === 1}
-                                  >
-                                    <i className="fas fa-chevron-left"></i>
-                                    <span className="d-none d-sm-inline ms-1">Previous</span>
-                                  </button>
-                                </li>
-                                
-                                {getPaginationNumbers().map((number, index) => (
-                                  <li key={index} className={`page-item ${number === currentPage ? 'active' : ''} ${number === '...' ? 'disabled' : ''}`}>
-                                    {number === '...' ? (
-                                      <span className="page-link">...</span>
-                                    ) : (
-                                      <button 
-                                        className="page-link" 
-                                        onClick={() => handlePageChange(number)}
-                                      >
-                                        {number}
-                                      </button>
-                                    )}
-                                  </li>
-                                ))}
-                                
-                                <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
-                                  <button 
-                                    className="page-link" 
-                                    onClick={handleNext}
-                                    disabled={currentPage === totalPages}
-                                  >
-                                    <span className="d-none d-sm-inline me-1">Next</span>
-                                    <i className="fas fa-chevron-right"></i>
-                                  </button>
-                                </li>
-                              </ul>
-                            </nav>
+                            <Pagination
+                              currentPage={currentPage}
+                              totalPages={totalPages}
+                              onPageChange={handlePageChange}
+                              size="small"
+                              className="mb-0"
+                            />
                           </div>
                         )}
                       </>

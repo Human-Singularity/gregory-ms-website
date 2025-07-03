@@ -1,0 +1,33 @@
+{{ define "bodyclasses" }}single page search-page{{ end }}
+
+{{ define "data-attributes" }}
+	data-contentgrouptype="{{ .Section }}" data-contentgroupname="{{ .Title }}"
+{{ end }}
+
+{{ define "description" }}
+	{{ partial "description.html" . }}
+{{ end }}
+
+{{ define "head" }}
+<!-- Search App CSS -->
+{{ $searchCSS := resources.Get "css/search-app.css" | resources.Minify }}
+<link rel="stylesheet" href="{{ $searchCSS.Permalink }}">
+{{ end }}
+
+{{ define "main" }}
+<div class="wrapper">
+	{{ if or (eq .Params.options.header "small") (eq .Params.options.header "mini") (eq .Params.options.header nil ) }}
+		{{ partial "header-small.html" . }}
+	{{ else if eq $.Params.options.header "full"  }}
+		{{ partial "header-full.html" . }}
+	{{ end }}
+	<div class="section">
+		<div class="container-fluid px-0">
+		<div class="row {{with .Params.rowclasses }}{{.}}{{end}}"></div>
+			{{ .Content }}
+		</div>
+		<div class="separator separator-primary"></div>
+		</div>
+	</div>
+</div>
+{{ end }}

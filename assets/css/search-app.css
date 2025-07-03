@@ -1,0 +1,237 @@
+/**
+ * Gregory MS - Search App Styles
+ * Consistent styles for search components and article listings
+ */
+
+/* ----------------------------------------
+   1. Search App Layout
+   ---------------------------------------- */
+.search-app {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.search-app .container {
+  max-width: 1200px;
+}
+
+/* ----------------------------------------
+   2. Search Form Styles
+   ---------------------------------------- */
+.search-form {
+  background: #f8f9fa;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.search-form .form-group {
+  margin-bottom: 1rem;
+}
+
+.search-form .btn {
+  min-width: 120px;
+}
+
+/* ----------------------------------------
+   3. Search Results Layout
+   ---------------------------------------- */
+.search-results {
+  margin-top: 2rem;
+}
+
+.search-results .nav-tabs {
+  border-bottom: 2px solid #e9ecef;
+  margin-bottom: 1.5rem;
+}
+
+.search-results .nav-tabs .nav-link {
+  border: none;
+  padding: 0.75rem 1.5rem;
+  color: #495057;
+  background: none;
+}
+
+.search-results .nav-tabs .nav-link.active {
+  color: #007bff;
+  border-bottom: 2px solid #007bff;
+  background: none;
+}
+
+.search-results .nav-tabs .nav-link:hover {
+  border-color: transparent;
+  color: #0056b3;
+}
+
+/* ----------------------------------------
+   4. Article List Consistency
+   ---------------------------------------- */
+.search-app .list-group-item,
+.author-profile .list-group-item {
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 1px solid #e9ecef;
+  padding: 1rem 1.5rem;
+  transition: background-color 0.15s ease-in-out;
+}
+
+.search-app .list-group-item:hover,
+.author-profile .list-group-item:hover {
+  background-color: #f8f9fa;
+}
+
+.search-app .list-group-item:first-child,
+.author-profile .list-group-item:first-child {
+  border-top: 0;
+}
+
+.search-app .list-group-item:last-child,
+.author-profile .list-group-item:last-child {
+  border-bottom: 0;
+}
+
+/* Article titles */
+.search-app .list-group-item h5,
+.author-profile .list-group-item h5 {
+  font-size: 1.1rem;
+  line-height: 1.4;
+  margin-bottom: 0.5rem;
+}
+
+.search-app .list-group-item h5 a,
+.author-profile .list-group-item h5 a {
+  color: #212529;
+  text-decoration: none;
+  transition: color 0.15s ease-in-out;
+}
+
+.search-app .list-group-item h5 a:hover,
+.author-profile .list-group-item h5 a:hover {
+  color: #007bff;
+  text-decoration: underline;
+}
+
+/* Article metadata */
+.search-app .article-metadata,
+.author-profile .article-metadata {
+  margin-bottom: 0.75rem;
+}
+
+.search-app .article-metadata .badge,
+.author-profile .article-metadata .badge {
+  margin-right: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+/* Article summary */
+.search-app .article-summary,
+.author-profile .article-summary {
+  color: #6c757d;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 0.75rem;
+}
+
+/* Article links */
+.search-app .article-links,
+.author-profile .article-links {
+  font-size: 0.875rem;
+}
+
+.search-app .article-links a,
+.author-profile .article-links a {
+  color: #007bff;
+  text-decoration: none;
+  margin-right: 1rem;
+}
+
+.search-app .article-links a:hover,
+.author-profile .article-links a:hover {
+  text-decoration: underline;
+}
+
+/* ----------------------------------------
+   5. Results Stats and Info
+   ---------------------------------------- */
+.search-results .results-info {
+  background: #e9ecef;
+  padding: 0.75rem 1rem;
+  border-radius: 0.25rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  color: #495057;
+}
+
+.search-results .results-count {
+  font-weight: 600;
+  color: #007bff;
+}
+
+/* ----------------------------------------
+   6. Mobile Responsive Adjustments
+   ---------------------------------------- */
+@media (max-width: 768px) {
+  .search-app .list-group-item {
+    padding: 0.75rem 1rem;
+  }
+  
+  .search-form {
+    padding: 1rem;
+  }
+  
+  .search-form .btn {
+    min-width: 100px;
+    font-size: 0.9rem;
+  }
+  
+  .search-results .nav-tabs .nav-link {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .search-app .list-group-item {
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .search-app .list-group-item h5 {
+    font-size: 1rem;
+  }
+  
+  .search-form {
+    padding: 0.75rem;
+  }
+  
+  .search-results .nav-tabs .nav-link {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* ----------------------------------------
+   7. Loading and Error States
+   ---------------------------------------- */
+.search-app .spinner-border {
+  width: 2rem;
+  height: 2rem;
+}
+
+.search-app .alert {
+  margin: 1rem 0;
+}
+
+/* ----------------------------------------
+   8. Download Button Styling
+   ---------------------------------------- */
+.search-app .download-button,
+.author-profile .download-button {
+  margin-top: 1rem;
+}
+
+.search-app .download-button .btn,
+.author-profile .download-button .btn {
+  font-size: 0.875rem;
+  padding: 0.5rem 1rem;
+}

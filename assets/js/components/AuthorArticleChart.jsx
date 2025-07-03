@@ -19,8 +19,6 @@ export function AuthorArticleChart({ authorId, articles: providedArticles }) {
     if (!authorId) return;
 
     const processArticles = (articlesData) => {
-      console.log(`Processing ${articlesData.length} articles for chart`);
-      
       if (articlesData.length === 0) {
         setData([]);
         setError(null);
@@ -92,11 +90,8 @@ export function AuthorArticleChart({ authorId, articles: providedArticles }) {
           // Check if there are more pages
           hasMore = response.data.next !== null;
           page++;
-          
-          console.log(`Fetched page ${page - 1}, got ${pageResults.length} articles, total: ${allArticles.length}`);
         }
         
-        console.log(`Total articles fetched for author ${authorId}:`, allArticles.length);
         processArticles(allArticles);
       } catch (err) {
         console.error('Error fetching author articles for chart:', err);

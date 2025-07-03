@@ -82,19 +82,6 @@
   border-color: #dee2e6;
 }
 
-/* Mobile pagination adjustments */
-@media (max-width: 576px) {
-  .pagination-sm .page-link {
-    padding: 0.25rem 0.5rem;
-    font-size: 0.8rem;
-  }
-  
-  .pagination-sm .page-item:not(.active):not(.disabled) .page-link {
-    border: 1px solid #dee2e6;
-    margin: 0 1px;
-  }
-}
-
 /* ----------------------------------------
    3. Author Profile Card Responsive Styles
    ---------------------------------------- */
@@ -195,5 +182,91 @@
   
   .author-profile .btn {
     display: none;
+  }
+}
+
+/* ----------------------------------------
+   7. Global Pagination Styles (for all components)
+   ---------------------------------------- */
+.pagination {
+  margin: 0;
+}
+
+.pagination .page-link {
+  padding: 0.375rem 0.75rem;
+  font-size: 0.875rem;
+  border-radius: 0.25rem;
+  border: 1px solid #dee2e6;
+  color: #495057;
+  background-color: #fff;
+  transition: all 0.15s ease-in-out;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: #fff;
+  z-index: 3;
+}
+
+.pagination .page-item:not(.disabled) .page-link:hover {
+  background-color: #e9ecef;
+  border-color: #dee2e6;
+  color: #0056b3;
+  text-decoration: none;
+}
+
+.pagination .page-item:not(.disabled) .page-link:focus {
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  outline: 0;
+}
+
+.pagination .page-item.disabled .page-link {
+  color: #6c757d;
+  pointer-events: none;
+  background-color: #fff;
+  border-color: #dee2e6;
+}
+
+/* Small pagination variant */
+.pagination-sm .page-link {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8rem;
+}
+
+/* Large pagination variant */
+.pagination-lg .page-link {
+  padding: 0.75rem 1.5rem;
+  font-size: 1.125rem;
+}
+
+/* Search app specific pagination improvements */
+.search-app .pagination,
+.article-results .pagination,
+.trial-results .pagination {
+  margin: 1.5rem 0;
+}
+
+/* Mobile pagination adjustments for all components */
+@media (max-width: 576px) {
+  .pagination .page-link {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.8rem;
+  }
+  
+  .pagination .page-item:not(.active):not(.disabled) .page-link {
+    border: 1px solid #dee2e6;
+    margin: 0 1px;
+  }
+  
+  .pagination .page-link i {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .pagination .page-link {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.85rem;
   }
 }
