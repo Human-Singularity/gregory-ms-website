@@ -18,6 +18,8 @@ function App() {
         <Route path="/authors/:authorId/page/:pageNumber" element={<AuthorProfile />} />
         <Route path="/articles/author/:authorId" element={<AuthorProfile />} />
         <Route path="/articles/author/:authorId/page/:pageNumber" element={<AuthorProfile />} />
+        <Route path="/author-profile/" element={<AuthorProfile />} />
+        <Route path="/author-profile" element={<AuthorProfile />} />
       </Routes>
     </Router>
   );

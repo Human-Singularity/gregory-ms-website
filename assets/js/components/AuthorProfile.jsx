@@ -94,7 +94,7 @@ export function AuthorProfile() {
       }
     }
 
-    if (authorId) {
+    if (currentAuthorId) {
       fetchData();
     }
 
@@ -245,7 +245,7 @@ export function AuthorProfile() {
                     <small className="text-muted">Monthly publication activity over time</small>
                   </div>
                   <div className="card-body">
-                    <AuthorArticleChart authorId={authorId} articles={articles} />
+                    <AuthorArticleChart authorId={currentAuthorId} articles={articles} />
                   </div>
                 </div>
               </div>
