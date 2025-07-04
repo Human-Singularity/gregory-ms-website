@@ -13,13 +13,16 @@ function App() {
   return (
     <Router>
       <Routes>
-        {/* Only match numeric author IDs */}
-        <Route path="/authors/:authorId(\d+)" element={<AuthorProfile />} />
-        <Route path="/authors/:authorId(\d+)/" element={<AuthorProfile />} />
-        <Route path="/authors/:authorId(\d+)/page/:pageNumber" element={<AuthorProfile />} />
+        {/* Author profile routes - let component validate numeric IDs */}
+        <Route path="/authors/:authorId" element={<AuthorProfile />} />
+        <Route path="/authors/:authorId/" element={<AuthorProfile />} />
+        <Route path="/authors/:authorId/page/:pageNumber" element={<AuthorProfile />} />
         {/* Legacy routes for backwards compatibility */}
         <Route path="/articles/author/:authorId" element={<AuthorProfile />} />
         <Route path="/articles/author/:authorId/page/:pageNumber" element={<AuthorProfile />} />
+        {/* Catch-all for /authors/ root */}
+        <Route path="/authors" element={<div>Authors list page</div>} />
+        <Route path="/authors/" element={<div>Authors list page</div>} />
       </Routes>
     </Router>
   );
