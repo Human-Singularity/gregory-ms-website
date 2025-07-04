@@ -553,7 +553,7 @@ function SearchApp() {
         <div className="col-lg-8">
           <div className="card mb-4">
             <div className="card-header bg-light">
-              <h3 className="mb-0 text-primary mr-3">Search Tips</h3>
+              <h3 className="mb-0 text-primary ml-3">Search Tips</h3>
             </div>
             <div className="card-body">
               <p className="lead">Use this search tool to find relevant research articles or clinical trials related to Multiple Sclerosis.</p>
