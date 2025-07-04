@@ -18,6 +18,18 @@ export function generateArticleURL(article) {
 }
 
 /**
+ * Generate a URL for an author profile
+ * @param {object} author - Author object
+ * @returns {string} - URL for the author profile
+ */
+export function generateAuthorURL(author) {
+  if (!author || !author.author_id) {
+    return '#';
+  }
+  return `/authors/${author.author_id}/`;
+}
+
+/**
  * Format a date string to a human-readable format
  * @param {string|Date} date - Date to format
  * @returns {string} - Formatted date

@@ -100,3 +100,10 @@ export function formatNumber(num) {
   }
   return num.toLocaleString();
 }
+
+export function generateAuthorURL(author) {
+	if (!author || !author.author_id) {
+		return '#';
+	}
+	return `/authors/${author.author_id}/`;
+}

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { formatDate, generateArticleURL } from '../utils';
+import { formatDate, generateArticleURL, generateAuthorURL } from '../utils';
 import { stripHtml, truncateText } from '../utils/searchUtils';
 import { 
   getMostRecentPredictions, 
@@ -96,7 +96,22 @@ export function ArticleListItem({
         <p className="article-authors mb-1" aria-label="Article authors">
           <small>
             <i className="fas fa-user-edit mr-1" aria-hidden="true"></i>
-            <strong>Authors:</strong> {article.authors.map(a => `${a.given_name || ''} ${a.family_name || ''}`).join(', ')}
+            <strong>Authors:</strong> {article.authors.map((author, index) => (
+              <span key={author.author_id || index}>
+                {author.author_id ? (
+                  <a 
+                    href={generateAuthorURL(author)} 
+                    className="author-profile-link"
+                    title={`View profile for ${author.given_name || ''} ${author.family_name || ''}`}
+                  >
+                    {`${author.given_name || ''} ${author.family_name || ''}`.trim()}
+                  </a>
+                ) : (
+                  `${author.given_name || ''} ${author.family_name || ''}`.trim()
+                )}
+                {index < article.authors.length - 1 && ', '}
+              </span>
+            ))}
           </small>
         </p>
       )}

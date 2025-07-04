@@ -122,6 +122,22 @@
       i {
         color: #495057; // Darker for better contrast
       }
+      
+      // Author profile links in article lists
+      .author-profile-link {
+        color: #007bff;
+        text-decoration: none;
+        
+        &:hover {
+          color: #0056b3;
+          text-decoration: underline;
+        }
+        
+        &:focus {
+          outline: 1px solid #007bff;
+          outline-offset: 1px;
+        }
+      }
     }
     
     // Article summary

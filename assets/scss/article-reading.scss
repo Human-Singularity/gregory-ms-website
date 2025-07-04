@@ -118,6 +118,23 @@
   opacity: 0.8;
 }
 
+/* Author profile links */
+.author-profile-link {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 500;
+  
+  &:hover {
+    color: #0056b3;
+    text-decoration: underline;
+  }
+  
+  &:focus {
+    outline: 2px solid #007bff;
+    outline-offset: 2px;
+  }
+}
+
 /* Article sidebar */
 .article-sidebar {
   position: sticky;

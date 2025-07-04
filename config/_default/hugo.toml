@@ -174,4 +174,4 @@ tag = "tags"
 [build]
   writeStats = true
   # Added from hugo.toml
-  useResourceCacheWhen = "fallback" # fallback, always, never
+  useResourceCacheWhen = "never" # fallback, always, never

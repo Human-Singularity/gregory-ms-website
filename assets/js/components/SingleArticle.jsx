@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useArticle } from '../hooks/useApi';
-import { formatDate, updateTitleAndMeta, removeSpecifiedNodes } from '../utils';
+import { formatDate, updateTitleAndMeta, removeSpecifiedNodes, generateAuthorURL } from '../utils';
 import BadgeExplanation from './BadgeExplanation';
 import { 
   getMostRecentPredictions, 
@@ -67,14 +67,24 @@ export function SingleArticle() {
         // Clear any existing content
         authorsElement.innerHTML = '';
         
-        // Create a formatted list of authors with ORCID links
+        // Create a formatted list of authors with profile and ORCID links
         article.authors.forEach((author, index) => {
           const authorSpan = document.createElement('span');
           authorSpan.className = 'author-name';
           
-          // Add author name
-          const nameText = document.createTextNode(author.full_name || `${author.given_name} ${author.family_name}`);
-          authorSpan.appendChild(nameText);
+          // Create author profile link
+          if (author.author_id) {
+            const authorLink = document.createElement('a');
+            authorLink.href = generateAuthorURL(author);
+            authorLink.className = 'author-profile-link';
+            authorLink.textContent = author.full_name || `${author.given_name} ${author.family_name}`;
+            authorLink.title = `View profile for ${author.full_name || `${author.given_name} ${author.family_name}`}`;
+            authorSpan.appendChild(authorLink);
+          } else {
+            // Fallback to plain text if no author_id
+            const nameText = document.createTextNode(author.full_name || `${author.given_name} ${author.family_name}`);
+            authorSpan.appendChild(nameText);
+          }
           
           // Add ORCID link if available
           if (author.ORCID) {
@@ -295,14 +305,24 @@ export function SingleArticle() {
           </div>
         </header>
         
-        {/* Authors section with ORCID links */}
+        {/* Authors section with profile and ORCID links */}
         {article.authors && article.authors.length > 0 && (
           <div className="article-authors">
             <h4><i className="fas fa-users mr-2"></i>Authors</h4>
             <div className="authors-list">
               {article.authors.map((author, index) => (
                 <span key={author.author_id || index} className="author-item">
-                  <span className="author-name">{author.full_name || `${author.given_name} ${author.family_name}`}</span>
+                  {author.author_id ? (
+                    <a 
+                      href={generateAuthorURL(author)} 
+                      className="author-profile-link"
+                      title={`View profile for ${author.full_name || `${author.given_name} ${author.family_name}`}`}
+                    >
+                      {author.full_name || `${author.given_name} ${author.family_name}`}
+                    </a>
+                  ) : (
+                    <span className="author-name">{author.full_name || `${author.given_name} ${author.family_name}`}</span>
+                  )}
                   {author.ORCID && (
                     <a href={author.ORCID} className="author-orcid ml-1" target="_blank" rel="noopener noreferrer" title={`ORCID: ${author.ORCID}`}>
                       <i className="fab fa-orcid"></i>
