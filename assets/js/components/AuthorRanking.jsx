@@ -273,7 +273,7 @@ export function AuthorRanking() {
                     </td>
                     <td>
                       <a
-                        href={`/author-profile/?id=${author.author_id}`}
+                        href={`/authors/${author.author_id}/`}
                         className="d-inline-block"
                         title={`View ${author.full_name || `${author.given_name} ${author.family_name}`}'s profile`}
                       >
@@ -290,7 +290,7 @@ export function AuthorRanking() {
                     <td>
                       <div>
                         <a
-                          href={`/author-profile/?id=${author.author_id}`}
+                          href={`/authors/${author.author_id}/`}
                           className="text-decoration-underline fw-semibold text-primary"
                         >
                           {author.full_name || `${author.given_name} ${author.family_name}`}
@@ -334,7 +334,7 @@ export function AuthorRanking() {
                             #{index + 1}
                           </span>
                           <a
-                            href={`/author-profile/?id=${author.author_id}`}
+                            href={`/authors/${author.author_id}/`}
                             className="d-block"
                             title={`View ${author.full_name || `${author.given_name} ${author.family_name}`}'s profile`}
                           >
@@ -351,7 +351,7 @@ export function AuthorRanking() {
                         <div className="flex-grow-1">
                           <h6 className="mb-2">
                             <a
-                              href={`/author-profile/?id=${author.author_id}`}
+                              href={`/authors/${author.author_id}/`}
                               className="text-decoration-underline fw-semibold text-primary"
                             >
                               {author.full_name || `${author.given_name} ${author.family_name}`}
