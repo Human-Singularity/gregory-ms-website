@@ -1,5 +1,6 @@
 ---
 title: "Authors"
+layout: authors-list
 options:
   header: small
 resources:
@@ -10,4 +11,4 @@ menu:
     Name: Team
 ---
 
-<div id="root"></div>
+{{< authorprofile >}}

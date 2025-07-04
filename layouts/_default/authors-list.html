@@ -1,0 +1,22 @@
+{{ define "bodyclasses" }}authors-list-page{{ end }}
+
+{{ define "description" }}
+	{{ partial "description.html" . }}
+{{ end }}
+
+{{ define "main" }}
+<div class="wrapper">
+	{{ if or (eq .Params.options.header "small") (eq .Params.options.header "mini") (eq .Params.options.header nil ) }}
+		{{ partial "header-small.html" . }}
+	{{ else if eq $.Params.options.header "full"  }}
+		{{ partial "header-full.html" . }}
+	{{ end }}
+
+	<div class="section">
+		<div class="container">
+			<a name="content"></a>
+			{{ .Content }}
+		</div>
+	</div>
+</div>
+{{ end }}

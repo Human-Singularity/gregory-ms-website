@@ -1,7 +1,11 @@
 {{ define "bodyclasses" }}profile-page author-page contentgrouptype-author {{ end }}
 
 {{ define "description" }}
+{{ if .Params.given_name }}
 Author profile for {{ .Params.given_name }} {{ .Params.family_name }} - Multiple Sclerosis research articles and publications
+{{ else }}
+Author profile - Multiple Sclerosis research articles and publications
+{{ end }}
 {{ end }}
 
 {{ define "main" }}
@@ -17,7 +21,11 @@ Author profile for {{ .Params.given_name }} {{ .Params.family_name }} - Multiple
 <div class="page-header clear-filter page-header-small" filter-color="orange">
 	<div class="container">
 		<div class="content-center">
-			<h1 class="title">{{ .Params.given_name }} {{ .Params.family_name }}</h1>
+			{{ if .Params.given_name }}
+				<h1 class="title">{{ .Params.given_name }} {{ .Params.family_name }}</h1>
+			{{ else }}
+				<h1 class="title">Author Profile</h1>
+			{{ end }}
 			{{ with .Params.subtitle }}
 				<p class="category">{{ . }}</p>			
 			{{ end }}
