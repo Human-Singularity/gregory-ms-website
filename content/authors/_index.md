@@ -1,6 +1,5 @@
 ---
-title: Gregory MS Team
-url: /team/
+title: "Authors"
 options:
   header: small
 resources:
@@ -11,4 +10,4 @@ menu:
     Name: Team
 ---
 
-Gregory MS is a patient-led project and everyone on the team is a volunteer who donates their skill and time.
+<div id="root"></div>

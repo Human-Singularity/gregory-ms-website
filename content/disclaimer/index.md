@@ -1,6 +1,4 @@
 ---
-authors:
-  - bruno-amaral
 date: 2021-10-15T19:32:14+01:00
 description: ""
 draft: false
