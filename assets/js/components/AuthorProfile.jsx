@@ -21,14 +21,36 @@ export function AuthorProfile() {
   const [articlesPerPage] = useState(10);
   const { authorId } = useParams();
 
+  // Fallback to get authorId from URL if useParams doesn't work
+  const getAuthorId = () => {
+    if (authorId) return authorId;
+    
+    // Try to get from URL path
+    const path = window.location.pathname;
+    const match = path.match(/\/articles\/author\/(\d+)/);
+    if (match) return match[1];
+    
+    // Try to get from query parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('id');
+  };
+
+  const currentAuthorId = getAuthorId();
+
   useEffect(() => {
     let isMounted = true;
     setLoading(true);
 
     async function fetchData() {
+      if (!currentAuthorId) {
+        setError(new Error('No author ID provided'));
+        setLoading(false);
+        return;
+      }
+
       try {
         // Fetch author details
-        const authorResponse = await axios.get(`https://api.gregory-ms.com/authors/${authorId}/?format=json`);
+        const authorResponse = await axios.get(`https://api.gregory-ms.com/authors/${currentAuthorId}/?format=json`);
         
         if (!isMounted) return;
         
@@ -41,7 +63,7 @@ export function AuthorProfile() {
         let hasMore = true;
         
         while (hasMore && isMounted) {
-          const articlesResponse = await axios.get(`https://api.gregory-ms.com/articles/author/${authorId}/?format=json&page=${page}`);
+          const articlesResponse = await axios.get(`https://api.gregory-ms.com/articles/author/${currentAuthorId}/?format=json&page=${page}`);
           const pageResults = articlesResponse.data.results || [];
           allArticles = [...allArticles, ...pageResults];
           
@@ -79,7 +101,7 @@ export function AuthorProfile() {
     return () => {
       isMounted = false;
     };
-  }, [authorId]);
+  }, [currentAuthorId]);
 
   const generateAvatarUrl = (author) => {
     // Generate a generic avatar based on initials
@@ -200,7 +222,7 @@ export function AuthorProfile() {
                       <div className="col-lg-4 col-md-5 mt-4 mt-md-0">
                         <div className="text-center text-md-end">
                           <DownloadButton
-                            apiEndpoint={`https://api.gregory-ms.com/articles/author/${authorId}/`}
+                            apiEndpoint={`https://api.gregory-ms.com/articles/author/${currentAuthorId}/`}
                             className="btn btn-outline-primary"
                           />
                         </div>
