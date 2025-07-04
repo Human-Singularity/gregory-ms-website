@@ -9,13 +9,11 @@ import TrialListItem from './TrialListItem';
  * TrialsList component - Displays a list of clinical trials with pagination
  * @param {object} props - Component props
  * @param {string} props.type - Type of trials to fetch ('all', 'category')
- * @param {string} props.pagePath - Base path for pagination links
  * @param {object} props.options - Additional options for the API call
  * @returns {JSX.Element} - TrialsList component
  */
 export function TrialsList({
   type = 'all',
-  pagePath = '/trials',
   options = {}
 }) {
   // Get page number from URL params
@@ -59,12 +57,17 @@ export function TrialsList({
 
   return (
     <div className="trials-list-container" role="region" aria-label="Clinical trials">
-      <Pagination 
-        pagePath={pagePath}
-        page={page}
-        lastPage={lastPage}
-        setPage={setPage}
-      />
+      {lastPage > 1 && (
+        <div className="d-flex justify-content-center my-4">
+          <Pagination 
+            currentPage={page}
+            totalPages={lastPage}
+            onPageChange={setPage}
+            size="medium"
+            className="mb-0"
+          />
+        </div>
+      )}
       
       <div className="list-group article-list">
         {trials.map((trial) => (
@@ -72,19 +75,23 @@ export function TrialsList({
         ))}
       </div>
       
-      <Pagination 
-        pagePath={pagePath}
-        page={page}
-        lastPage={lastPage}
-        setPage={setPage}
-      />
+      {lastPage > 1 && (
+        <div className="d-flex justify-content-center my-4">
+          <Pagination 
+            currentPage={page}
+            totalPages={lastPage}
+            onPageChange={setPage}
+            size="medium"
+            className="mb-0"
+          />
+        </div>
+      )}
     </div>
   );
 }
 
 TrialsList.propTypes = {
   type: PropTypes.oneOf(['all', 'category']),
-  pagePath: PropTypes.string,
   options: PropTypes.object
 };
 

@@ -238,7 +238,6 @@ function CategoryPage() {
         <h3>Clinical Trials</h3>
         <TrialsList 
           type="category"
-          pagePath={`/categories/${category}/trials`}
           options={{ category }}
         />
       </div>
