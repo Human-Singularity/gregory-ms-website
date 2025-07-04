@@ -102,21 +102,31 @@ export function ArticleList({
 
   return (
     <div className="article-list-container" role="region" aria-label={`${type} articles`}>
-      <Pagination 
-        pagePath={pagePath}
-        page={page}
-        lastPage={lastPage}
-        setPage={setPage}
-      />
+      {lastPage > 1 && (
+        <div className="d-flex justify-content-center my-4">
+          <Pagination 
+            currentPage={page}
+            totalPages={lastPage}
+            onPageChange={setPage}
+            size="medium"
+            className="mb-0"
+          />
+        </div>
+      )}
       
       {articlesContent}
       
-      <Pagination 
-        pagePath={pagePath}
-        page={page}
-        lastPage={lastPage}
-        setPage={setPage}
-      />
+      {lastPage > 1 && (
+        <div className="d-flex justify-content-center my-4">
+          <Pagination 
+            currentPage={page}
+            totalPages={lastPage}
+            onPageChange={setPage}
+            size="medium"
+            className="mb-0"
+          />
+        </div>
+      )}
 
       {type === 'relevant' && <BadgeExplanation />}
     </div>
