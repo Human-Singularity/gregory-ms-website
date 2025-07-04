@@ -23,16 +23,19 @@ export function AuthorProfile() {
 
   // Fallback to get authorId from URL if useParams doesn't work
   const getAuthorId = () => {
-    if (authorId) return authorId;
+    if (authorId && /^\d+$/.test(authorId)) return authorId;
     
-    // Try to get from URL path
+    // Try to get from URL path for /authors/123/ pattern - only numeric IDs
     const path = window.location.pathname;
-    const match = path.match(/\/articles\/author\/(\d+)/);
+    const match = path.match(/\/authors\/(\d+)\/?$/);
     if (match) return match[1];
     
-    // Try to get from query parameter
+    // Legacy: Try to get from query parameter (for backward compatibility)
     const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get('id');
+    const queryId = urlParams.get('id');
+    if (queryId && /^\d+$/.test(queryId)) return queryId;
+    
+    return null;
   };
 
   const currentAuthorId = getAuthorId();
