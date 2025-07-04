@@ -9,6 +9,9 @@ resources:
 menu:
   column_1:
     Name: Team
+
+options: 
+  navbar: navbar navbar-expand-lg bg-white fixed-top font-weight-bold
 ---
 
 {{< authorprofile >}}
