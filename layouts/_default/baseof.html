@@ -33,8 +33,27 @@
 	{{- $nowUi := resources.Get "scss/now-ui-kit.scss" | toCSS (dict "enableSourceMap" false "outputStyle" "compressed") -}}
 	{{- $gregoryCustom := resources.Get "scss/gregory-custom.scss" | toCSS (dict "enableSourceMap" false "outputStyle" "compressed") -}}
 	{{- $badges := resources.Get "css/badges.css" | resources.Fingerprint -}}
-	{{ $styles := slice $bootstrap $nowUi $montserrat $gregoryCustom | resources.Concat "css/style.css" | minify | fingerprint  -}}
+{{ $bootstrap := resources.Get "css/bootstrap.min.css" }}
+<link rel="stylesheet" href="{{ $bootstrap.Permalink }}" media="screen" />
+
+{{- if eq hugo.IsServer true -}}
+	{{- $bootstrap = $bootstrap | resources.Fingerprint -}}
+{{- end -}}
+
+{{- $nowUi := resources.Get "scss/now-ui-kit.scss" | toCSS (dict "enableSourceMap" false "outputStyle" "compressed") -}}
+{{ $nowUi := resources.Get "scss/now-ui-kit.scss" | toCSS (dict "enableSourceMap" false "outputStyle" "compressed") }}
+{{ $gregoryCustom := resources.Get "scss/gregory-custom.scss" | toCSS (dict "enableSourceMap" false "outputStyle" "compressed") }}
+<link rel="stylesheet" href="{{ $gregoryCustom.Permalink }}" media="screen" />
+
+{{ $montserrat := resources.Get "css/Montserrat.css" | resources.Fingerprint }}
+{{ $badges := resources.Get "css/badges.css" | resources.Fingerprint }}
+
+
+{{ $styles := slice $nowUi  | resources.Concat "css/style.css" | resources.Minify | resources.Fingerprint }}
+
+<link rel="stylesheet" href="{{ $styles.Permalink }}" integrity="{{ $styles.Data.Integrity }}">
 	<script src="https://kit.fontawesome.com/16e8434146.js" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="{{$montserrat.Permalink}}">
 	<link rel="stylesheet" href="{{$styles.Permalink}}">
 	<link rel="stylesheet" href="{{$badges.Permalink}}">
 
