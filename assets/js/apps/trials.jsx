@@ -19,7 +19,6 @@ function App() {
           element={
             <TrialsList 
               type="all" 
-              pagePath="/trials" 
             />
           } 
         />
@@ -28,7 +27,6 @@ function App() {
           element={
             <TrialsList 
               type="all" 
-              pagePath="/trials" 
             />
           } 
         />

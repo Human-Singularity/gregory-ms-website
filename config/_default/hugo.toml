@@ -114,7 +114,7 @@ headerPhoto = ""
 
 [taxonomies]
 category = "categories"
-author = "authors"
+team = "team-members"
 tag = "tags"
 
 [permalinks]

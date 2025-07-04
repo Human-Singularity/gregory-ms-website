@@ -1,0 +1,52 @@
+{{ define "bodyclasses" }}profile-page author-page contentgrouptype-author {{ end }}
+
+{{ define "description" }}
+{{ if .Params.given_name }}
+Author profile for {{ .Params.given_name }} {{ .Params.family_name }} - Multiple Sclerosis research articles and publications
+{{ else }}
+Author profile - Multiple Sclerosis research articles and publications
+{{ end }}
+{{ end }}
+
+{{ define "main" }}
+<!-- Author Profile Custom CSS -->
+{{ $authorCSS := resources.Get "css/author-profile.css" | resources.Minify }}
+<link rel="stylesheet" href="{{ $authorCSS.RelPermalink }}">
+
+<!-- Search App CSS for consistent badge styling -->
+{{ $searchCSS := resources.Get "css/search-app.css" | resources.Minify }}
+<link rel="stylesheet" href="{{ $searchCSS.RelPermalink }}">
+
+<div class="wrapper">
+<div class="page-header clear-filter page-header-small" filter-color="orange">
+	<div class="container">
+		<div class="content-center">
+			{{ if .Params.given_name }}
+				<h1 class="title">{{ .Params.given_name }} {{ .Params.family_name }}</h1>
+			{{ else }}
+				<h1 class="title">Author Profile</h1>
+			{{ end }}
+			{{ with .Params.subtitle }}
+				<p class="category">{{ . }}</p>			
+			{{ end }}
+		</div>
+	</div>
+</div>
+
+<div class="main main-raised">
+	<div class="container">
+		<div class="section">
+			<div id="root">
+				<div class="text-center py-5">
+					<div class="spinner-border text-primary" role="status">
+						<span class="sr-only">Loading author profile...</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+
+<script src="/js/authorProfile.js"></script>
+{{ end }}

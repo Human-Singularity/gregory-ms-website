@@ -14,3 +14,9 @@
     for = "/js/*.js"
     [server.headers.values]
       Content-Type = "application/javascript"
+
+  # Author profile routing - redirect numeric IDs only to /authors/ with the ID preserved
+  [[server.redirects]]
+    from = "/authors/([0-9]+)/?$"
+    to = "/authors/"
+    status = 200

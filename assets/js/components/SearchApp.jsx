@@ -3,6 +3,7 @@ import { searchService } from '../services/searchService';
 import { stripHtml, truncateText, formatDate } from '../utils/searchUtils';
 import ArticleListItem from './ArticleListItem';
 import TrialListItem from './TrialListItem';
+import Pagination from './Pagination';
 import { DownloadButton } from './DownloadButton';
 
 // Trial status options
@@ -96,7 +97,6 @@ function SearchApp() {
         
         // Execute article search
         const articleResponse = await searchService.searchArticles(articleParams);
-        console.log('Article response:', articleResponse);
         
         // Update article results
         setArticleResults(articleResponse.data.results || []);
@@ -138,7 +138,6 @@ function SearchApp() {
         
         // Update trial results - handling the structured response format
         // The API returns an object with a results array, not directly an array
-        console.log('Trial response:', trialResponse);
         
         // Check if the response contains results in the expected format
         if (trialResponse.data && trialResponse.data.results && Array.isArray(trialResponse.data.results)) {
@@ -318,98 +317,15 @@ function SearchApp() {
     if (lastPage <= 1) return null;
     
     return (
-      <nav aria-label="Page navigation">
-        <ul className="pagination pagination-primary d-flex justify-content-center">
-          {/* First page button */}
-          <li className={`page-item ${page === 1 ? 'disabled' : ''}`}>
-            <button 
-              onClick={() => handlePage(1)} 
-              className="page-link" 
-              aria-label="First page"
-              disabled={page === 1}
-            >
-              <span aria-hidden="true">
-                <i className="fa fa-angle-double-left" aria-hidden="true"></i>
-              </span>
-            </button>
-          </li>
-          
-          {/* Previous page button */}
-          <li className={`page-item ${page === 1 ? 'disabled' : ''}`}>
-            <button 
-              onClick={() => handlePage(page - 1)} 
-              className="page-link" 
-              aria-label="Previous page"
-              disabled={page === 1}
-            >
-              <span aria-hidden="true">
-                <i className="fa fa-angle-left" aria-hidden="true"></i>
-              </span>
-            </button>
-          </li>
-          
-          {/* Page numbers */}
-          {Array.from({ length: Math.min(5, lastPage) }, (_, i) => {
-            let pageNum;
-            
-            if (lastPage <= 5) {
-              // Show all pages if 5 or fewer
-              pageNum = i + 1;
-            } else if (page <= 3) {
-              // Near start
-              pageNum = i + 1;
-            } else if (page >= lastPage - 2) {
-              // Near end
-              pageNum = lastPage - 4 + i;
-            } else {
-              // Middle
-              pageNum = page - 2 + i;
-            }
-            
-            return (
-              <li 
-                key={pageNum} 
-                className={`page-item ${pageNum === page ? 'active' : ''}`}
-              >
-                <button 
-                  onClick={() => handlePage(pageNum)} 
-                  className="page-link"
-                >
-                  {pageNum}
-                </button>
-              </li>
-            );
-          })}
-          
-          {/* Next page button */}
-          <li className={`page-item ${page === lastPage ? 'disabled' : ''}`}>
-            <button 
-              onClick={() => handlePage(page + 1)} 
-              className="page-link" 
-              aria-label="Next page"
-              disabled={page === lastPage}
-            >
-              <span aria-hidden="true">
-                <i className="fa fa-angle-right" aria-hidden="true"></i>
-              </span>
-            </button>
-          </li>
-          
-          {/* Last page button */}
-          <li className={`page-item ${page === lastPage ? 'disabled' : ''}`}>
-            <button 
-              onClick={() => handlePage(lastPage)} 
-              className="page-link" 
-              aria-label="Last page"
-              disabled={page === lastPage}
-            >
-              <span aria-hidden="true">
-                <i className="fa fa-angle-double-right" aria-hidden="true"></i>
-              </span>
-            </button>
-          </li>
-        </ul>
-      </nav>
+      <div className="d-flex justify-content-center my-4">
+        <Pagination
+          currentPage={page}
+          totalPages={lastPage}
+          onPageChange={handlePage}
+          size="medium"
+          className="mb-0"
+        />
+      </div>
     );
   };
   
@@ -517,7 +433,7 @@ function SearchApp() {
           {/* Search Form Card */}
           <div className="card mb-4">
             <div className="card-header bg-light">
-              <h3 className="mb-0 text-primary">Search GregoryMS Database</h3>
+              <h3 className="mb-0 text-primary ml-3">Search GregoryMS Database</h3>
             </div>
             <div className="card-body">
               <form onSubmit={handleSearch}>
@@ -601,7 +517,7 @@ function SearchApp() {
                 <div className="text-center">
                   <button 
                     type="submit" 
-                    className="btn btn-info btn-lg"
+                    className="btn btn-primary btn-lg"
                     disabled={isLoading}
                   >
                     {isLoading ? (
@@ -635,7 +551,7 @@ function SearchApp() {
         <div className="col-lg-8">
           <div className="card mb-4">
             <div className="card-header bg-light">
-              <h3 className="mb-0 text-primary">Search Tips</h3>
+              <h3 className="mb-0 text-primary ml-3">Search Tips</h3>
             </div>
             <div className="card-body">
               <p className="lead">Use this search tool to find relevant research articles or clinical trials related to Multiple Sclerosis.</p>

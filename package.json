@@ -1,7 +1,7 @@
 {
   "name": "gregory-ms-website",
   "version": "1.0.0",
-  "description": "",
+  "description": "This is an implementation of the software found at <https://gregory-ai.com/>, configured to assist doctors and people with Multiple Sclerosis find the most up to date information.",
   "main": "babel.config.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -26,7 +26,7 @@
     "@babel/core": "^7.20.5",
     "@babel/preset-env": "^7.20.2",
     "@babel/preset-react": "^7.18.6",
-    "autoprefixer": "^10.4.13",
+    "autoprefixer": "^10.4.21",
     "cssnano": "^5.1.14",
     "esbuild": "^0.25.5",
     "node-red": "^3.0.2",
@@ -46,6 +46,7 @@
     "os": "^0.1.2",
     "p-limit": "^3.1.0",
     "papaparse": "^5.4.1",
+    "postcss": "^8.5.6",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.4",
     "react-csv": "^2.2.2",
@@ -55,5 +56,9 @@
     "react-spinners": "^0.13.8",
     "recharts": "^2.6.2",
     "stream": "^0.0.2"
-  }
+  },
+  "directories": {
+    "doc": "docs"
+  },
+  "keywords": []
 }

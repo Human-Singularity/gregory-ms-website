@@ -7,9 +7,17 @@ export function generateArticleURL(article) {
 }
 
 export function formatDate(date) {
-	if (isNaN(Date.parse(date))) {
-		throw new Error('Invalid date value');
+	// Handle null, undefined, or empty string
+	if (!date) {
+		return 'Date not available';
 	}
+	
+	// Check if the date is valid before parsing
+	if (isNaN(Date.parse(date))) {
+		console.warn('Invalid date value:', date);
+		return 'Invalid date';
+	}
+	
 	const options = {
 		year: 'numeric',
 		month: 'long',
@@ -84,4 +92,11 @@ export function removeSpecifiedNodes() {
 	}else{
 		// console.log('a#metabaseDashboard not found')
 	}
+}
+
+export function formatNumber(num) {
+  if (typeof num !== 'number') {
+    return '0';
+  }
+  return num.toLocaleString();
 }

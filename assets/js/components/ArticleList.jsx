@@ -14,13 +14,17 @@ import { formatDate } from '../utils';
  * @param {string} props.pagePath - Base path for pagination links
  * @param {object} props.options - Additional options for the API call
  * @param {boolean} props.displayAsList - Whether to display as a list or grid
+ * @param {boolean} props.isSearchResult - Whether to display as search results
+ * @param {boolean} props.showRelevanceIndicators - Whether to show relevance indicators
  * @returns {JSX.Element} - ArticleList component
  */
 export function ArticleList({ 
   type = 'all', 
   pagePath, 
   options = {}, 
-  displayAsList = false 
+  displayAsList = false,
+  isSearchResult = false,
+  showRelevanceIndicators = null
 }) {
   // Get page number from URL params
   const { pageNumber } = useParams();
@@ -34,12 +38,7 @@ export function ArticleList({
     pagination: { page, lastPage, setPage }
   } = useArticles(type, { ...options, initialPage });
 
-  // Add logging to see what's being filtered out
-  useEffect(() => {
-    if (type === 'relevant' && articles.length > 0) {
-      console.log(`Showing ${articles.length} articles that are relevant for MS`);
-    }
-  }, [articles, type]);
+
 
   if (loading) {
     return (
@@ -89,7 +88,8 @@ export function ArticleList({
         <ArticleListItem
           key={article.article_id} 
           article={article} 
-          showRelevanceIndicators={type === 'relevant'}
+          showRelevanceIndicators={showRelevanceIndicators !== null ? showRelevanceIndicators : type === 'relevant'}
+          isSearchResult={isSearchResult}
         />
       ))}
     </div>
@@ -97,21 +97,31 @@ export function ArticleList({
 
   return (
     <div className="article-list-container" role="region" aria-label={`${type} articles`}>
-      <Pagination 
-        pagePath={pagePath}
-        page={page}
-        lastPage={lastPage}
-        setPage={setPage}
-      />
+      {lastPage > 1 && (
+        <div className="d-flex justify-content-center my-4">
+          <Pagination 
+            currentPage={page}
+            totalPages={lastPage}
+            onPageChange={setPage}
+            size="medium"
+            className="mb-0"
+          />
+        </div>
+      )}
       
       {articlesContent}
       
-      <Pagination 
-        pagePath={pagePath}
-        page={page}
-        lastPage={lastPage}
-        setPage={setPage}
-      />
+      {lastPage > 1 && (
+        <div className="d-flex justify-content-center my-4">
+          <Pagination 
+            currentPage={page}
+            totalPages={lastPage}
+            onPageChange={setPage}
+            size="medium"
+            className="mb-0"
+          />
+        </div>
+      )}
 
       {type === 'relevant' && <BadgeExplanation />}
     </div>
@@ -122,7 +132,9 @@ ArticleList.propTypes = {
   type: PropTypes.oneOf(['all', 'relevant', 'author', 'category']),
   pagePath: PropTypes.string,
   options: PropTypes.object,
-  displayAsList: PropTypes.bool
+  displayAsList: PropTypes.bool,
+  isSearchResult: PropTypes.bool,
+  showRelevanceIndicators: PropTypes.bool
 };
 
 export default ArticleList;

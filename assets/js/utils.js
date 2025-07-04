@@ -23,8 +23,15 @@ export function generateArticleURL(article) {
  * @returns {string} - Formatted date
  */
 export function formatDate(date) {
+  // Handle null, undefined, or empty string
+  if (!date) {
+    return 'Date not available';
+  }
+  
+  // Check if the date is valid before parsing
   if (isNaN(Date.parse(date))) {
-    throw new Error('Invalid date value');
+    console.warn('Invalid date value:', date);
+    return 'Invalid date';
   }
   
   const options = {
@@ -141,4 +148,16 @@ export function removeSpecifiedNodes() {
       element.parentNode.removeChild(element);
     }
   });
+}
+
+/**
+ * Format a number with commas for thousands separators
+ * @param {number} num - Number to format
+ * @returns {string} - Formatted number
+ */
+export function formatNumber(num) {
+  if (typeof num !== 'number') {
+    return '0';
+  }
+  return num.toLocaleString();
 }

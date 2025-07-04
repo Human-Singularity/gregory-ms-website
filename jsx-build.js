@@ -11,6 +11,7 @@ const entryPoints = [
   'assets/js/apps/trials.jsx',
   'assets/js/apps/category.jsx',
   'assets/js/apps/authorProfile.jsx',
+  'assets/js/apps/authorRanking.jsx',
   'assets/js/apps/relevant.jsx',
 ];
 

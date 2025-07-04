@@ -1,0 +1,310 @@
+/**
+ * Gregory MS - Author Profile Styles
+ * Responsive styles for author profile page components
+ */
+
+/* ----------------------------------------
+   1. Author Article Chart Responsive Styles
+   ---------------------------------------- */
+.author-article-chart {
+  width: 100%;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.author-article-chart .chart-container {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 1rem;
+  box-sizing: border-box;
+}
+
+.author-article-chart svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Chart responsive breakpoints */
+@media (max-width: 768px) {
+  .author-article-chart {
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
+  }
+  
+  .author-article-chart .chart-container {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS/mobile */
+  }
+  
+  .author-article-chart svg {
+    min-width: 320px; /* Ensure minimum width for mobile */
+    width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .author-article-chart {
+    margin-left: -1rem;
+    margin-right: -1rem;
+  }
+  
+  .author-article-chart h4 {
+    font-size: 1.1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .author-article-chart .chart-container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .author-article-chart svg {
+    min-width: 300px;
+    width: 100%;
+  }
+}
+
+/* Firefox mobile specific fixes */
+@-moz-document url-prefix() {
+  @media (max-width: 768px) {
+    .author-article-chart .chart-container {
+      overflow-x: scroll;
+      scrollbar-width: thin;
+    }
+    
+    .author-article-chart svg {
+      min-width: 320px;
+    }
+  }
+}
+
+/* ----------------------------------------
+   2. Article Pagination Styles
+   ---------------------------------------- */
+.articles-section {
+  scroll-margin-top: 2rem;
+}
+
+.pagination-sm .page-link {
+  padding: 0.375rem 0.75rem;
+  font-size: 0.875rem;
+  border-radius: 0.25rem;
+}
+
+.pagination-sm .page-item.active .page-link {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.pagination-sm .page-item:not(.disabled) .page-link:hover {
+  background-color: #e9ecef;
+  border-color: #dee2e6;
+  color: #0056b3;
+}
+
+.pagination-sm .page-item.disabled .page-link {
+  color: #6c757d;
+  pointer-events: none;
+  background-color: #fff;
+  border-color: #dee2e6;
+}
+
+/* ----------------------------------------
+   3. Author Profile Card Responsive Styles
+   ---------------------------------------- */
+.author-profile .card {
+  border: 0;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  margin-bottom: 1.5rem;
+}
+
+.author-profile .card-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+  padding: 1rem 1.5rem;
+}
+
+.author-profile .card-body {
+  padding: 1.5rem;
+}
+
+/* Avatar responsive behavior */
+@media (max-width: 768px) {
+  .author-profile .rounded-circle {
+    width: 80px !important;
+    height: 80px !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .author-profile .card-header,
+  .author-profile .card-body {
+    padding: 1rem;
+  }
+  
+  .author-profile .display-6 {
+    font-size: 1.5rem;
+  }
+  
+  .author-profile .rounded-circle {
+    width: 60px !important;
+    height: 60px !important;
+  }
+}
+
+/* ----------------------------------------
+   4. Article List Item Responsive Styles
+   ---------------------------------------- */
+.list-group-item {
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 1px solid #e9ecef;
+  padding: 1rem 1.5rem;
+}
+
+.list-group-item:first-child {
+  border-top: 0;
+}
+
+.list-group-item:last-child {
+  border-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .list-group-item {
+    padding: 0.75rem 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .list-group-item {
+    padding: 0.5rem 0.75rem;
+  }
+}
+
+/* ----------------------------------------
+   5. Loading and Error States
+   ---------------------------------------- */
+.author-profile .spinner-border {
+  width: 3rem;
+  height: 3rem;
+}
+
+.author-profile .alert {
+  margin: 2rem 0;
+  text-align: center;
+}
+
+/* ----------------------------------------
+   6. Print Styles
+   ---------------------------------------- */
+@media print {
+  .author-article-chart .chart-container {
+    overflow: visible;
+  }
+  
+  .pagination {
+    display: none;
+  }
+  
+  .author-profile .btn {
+    display: none;
+  }
+}
+
+/* ----------------------------------------
+   7. Global Pagination Styles (for all components)
+   ---------------------------------------- */
+.pagination {
+  margin: 0;
+}
+
+.pagination .page-link {
+  padding: 0.375rem 0.75rem;
+  font-size: 0.875rem;
+  border-radius: 0.25rem;
+  border: 1px solid #dee2e6;
+  color: #495057;
+  background-color: #fff;
+  transition: all 0.15s ease-in-out;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: #fff;
+  z-index: 3;
+}
+
+.pagination .page-item:not(.disabled) .page-link:hover {
+  background-color: #e9ecef;
+  border-color: #dee2e6;
+  color: #0056b3;
+  text-decoration: none;
+}
+
+.pagination .page-item:not(.disabled) .page-link:focus {
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  outline: 0;
+}
+
+.pagination .page-item.disabled .page-link {
+  color: #6c757d;
+  pointer-events: none;
+  background-color: #fff;
+  border-color: #dee2e6;
+}
+
+/* Small pagination variant */
+.pagination-sm .page-link {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8rem;
+}
+
+/* Large pagination variant */
+.pagination-lg .page-link {
+  padding: 0.75rem 1.5rem;
+  font-size: 1.125rem;
+}
+
+/* Search app specific pagination improvements */
+.search-app .pagination,
+.article-results .pagination,
+.trial-results .pagination {
+  margin: 1.5rem 0;
+}
+
+/* Mobile pagination adjustments for all components */
+@media (max-width: 576px) {
+  .pagination .page-link {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.8rem;
+  }
+  
+  .pagination .page-item:not(.active):not(.disabled) .page-link {
+    border: 1px solid #dee2e6;
+    margin: 0 1px;
+  }
+  
+  .pagination .page-link i {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .pagination .page-link {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.85rem;
+  }
+}
