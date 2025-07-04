@@ -13,13 +13,13 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/authors/:authorId" element={<AuthorProfile />} />
-        <Route path="/authors/:authorId/" element={<AuthorProfile />} />
-        <Route path="/authors/:authorId/page/:pageNumber" element={<AuthorProfile />} />
+        {/* Only match numeric author IDs */}
+        <Route path="/authors/:authorId(\d+)" element={<AuthorProfile />} />
+        <Route path="/authors/:authorId(\d+)/" element={<AuthorProfile />} />
+        <Route path="/authors/:authorId(\d+)/page/:pageNumber" element={<AuthorProfile />} />
+        {/* Legacy routes for backwards compatibility */}
         <Route path="/articles/author/:authorId" element={<AuthorProfile />} />
         <Route path="/articles/author/:authorId/page/:pageNumber" element={<AuthorProfile />} />
-        <Route path="/author-profile/" element={<AuthorProfile />} />
-        <Route path="/author-profile" element={<AuthorProfile />} />
       </Routes>
     </Router>
   );
