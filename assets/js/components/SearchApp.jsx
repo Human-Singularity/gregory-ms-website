@@ -97,7 +97,6 @@ function SearchApp() {
         
         // Execute article search
         const articleResponse = await searchService.searchArticles(articleParams);
-        console.log('Article response:', articleResponse);
         
         // Update article results
         setArticleResults(articleResponse.data.results || []);
@@ -139,7 +138,6 @@ function SearchApp() {
         
         // Update trial results - handling the structured response format
         // The API returns an object with a results array, not directly an array
-        console.log('Trial response:', trialResponse);
         
         // Check if the response contains results in the expected format
         if (trialResponse.data && trialResponse.data.results && Array.isArray(trialResponse.data.results)) {

@@ -38,12 +38,7 @@ export function ArticleList({
     pagination: { page, lastPage, setPage }
   } = useArticles(type, { ...options, initialPage });
 
-  // Add logging to see what's being filtered out
-  useEffect(() => {
-    if (type === 'relevant' && articles.length > 0) {
-      console.log(`Showing ${articles.length} articles that are relevant for MS`);
-    }
-  }, [articles, type]);
+
 
   if (loading) {
     return (
