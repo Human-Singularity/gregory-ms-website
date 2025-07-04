@@ -272,20 +272,26 @@ export function AuthorRanking() {
                       </span>
                     </td>
                     <td>
-                      <img
-                        src={generateAvatarUrl(author)}
-                        alt={`${author.full_name} avatar`}
-                        className="rounded-circle shadow-sm"
-                        width="48"
-                        height="48"
-                        style={{ objectFit: 'cover' }}
-                      />
+                      <a
+                        href={`/articles/author/${author.author_id}/`}
+                        className="d-inline-block"
+                        title={`View ${author.full_name || `${author.given_name} ${author.family_name}`}'s profile`}
+                      >
+                        <img
+                          src={generateAvatarUrl(author)}
+                          alt={`${author.full_name} avatar`}
+                          className="rounded-circle shadow-sm"
+                          width="48"
+                          height="48"
+                          style={{ objectFit: 'cover', cursor: 'pointer' }}
+                        />
+                      </a>
                     </td>
                     <td>
                       <div>
                         <a
                           href={`/articles/author/${author.author_id}/`}
-                          className="text-decoration-none fw-semibold text-primary"
+                          className="text-decoration-underline fw-semibold text-primary"
                         >
                           {author.full_name || `${author.given_name} ${author.family_name}`}
                         </a>
@@ -327,20 +333,26 @@ export function AuthorRanking() {
                           <span className="badge bg-secondary fs-6 px-3 py-2 mb-2">
                             #{index + 1}
                           </span>
-                          <img
-                            src={generateAvatarUrl(author)}
-                            alt={`${author.full_name} avatar`}
-                            className="rounded-circle shadow-sm d-block"
-                            width="60"
-                            height="60"
-                            style={{ objectFit: 'cover' }}
-                          />
+                          <a
+                            href={`/articles/author/${author.author_id}/`}
+                            className="d-block"
+                            title={`View ${author.full_name || `${author.given_name} ${author.family_name}`}'s profile`}
+                          >
+                            <img
+                              src={generateAvatarUrl(author)}
+                              alt={`${author.full_name} avatar`}
+                              className="rounded-circle shadow-sm d-block"
+                              width="60"
+                              height="60"
+                              style={{ objectFit: 'cover', cursor: 'pointer' }}
+                            />
+                          </a>
                         </div>
                         <div className="flex-grow-1">
                           <h6 className="mb-2">
                             <a
                               href={`/articles/author/${author.author_id}/`}
-                              className="text-decoration-none fw-semibold text-primary"
+                              className="text-decoration-underline fw-semibold text-primary"
                             >
                               {author.full_name || `${author.given_name} ${author.family_name}`}
                             </a>
