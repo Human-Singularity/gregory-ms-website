@@ -26277,7 +26277,7 @@
     ))))), authors.length === 0 ? /* @__PURE__ */ import_react2.default.createElement("div", { className: "alert alert-info text-center" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "fas fa-users fa-3x text-muted" })), /* @__PURE__ */ import_react2.default.createElement("h5", null, "No Authors Found"), /* @__PURE__ */ import_react2.default.createElement("p", null, "No authors found for the selected timeframe.")) : /* @__PURE__ */ import_react2.default.createElement(import_react2.default.Fragment, null, /* @__PURE__ */ import_react2.default.createElement("div", { className: "table-responsive d-none d-lg-block" }, /* @__PURE__ */ import_react2.default.createElement("table", { className: "table table-striped table-hover shadow-sm" }, /* @__PURE__ */ import_react2.default.createElement("thead", { className: "table-dark" }, /* @__PURE__ */ import_react2.default.createElement("tr", null, /* @__PURE__ */ import_react2.default.createElement("th", { scope: "col", style: { width: "80px" } }, "Rank"), /* @__PURE__ */ import_react2.default.createElement("th", { scope: "col", style: { width: "60px" } }, "Avatar"), /* @__PURE__ */ import_react2.default.createElement("th", { scope: "col" }, "Author"), /* @__PURE__ */ import_react2.default.createElement("th", { scope: "col", style: { width: "120px" } }, "Articles", timeframe !== "all" && /* @__PURE__ */ import_react2.default.createElement("small", { className: "d-block text-muted", style: { fontWeight: "normal", fontSize: "0.75rem" } }, "(", getTimeframeLabel().toLowerCase(), ")")), /* @__PURE__ */ import_react2.default.createElement("th", { scope: "col", style: { width: "120px" } }, "Country"))), /* @__PURE__ */ import_react2.default.createElement("tbody", null, authors.map((author, index) => /* @__PURE__ */ import_react2.default.createElement("tr", { key: author.author_id, className: "align-middle" }, /* @__PURE__ */ import_react2.default.createElement("td", null, /* @__PURE__ */ import_react2.default.createElement("span", { className: "badge bg-secondary fs-6 px-3 py-2" }, "#", index + 1)), /* @__PURE__ */ import_react2.default.createElement("td", null, /* @__PURE__ */ import_react2.default.createElement(
       "a",
       {
-        href: `/author-profile/?id=${author.author_id}`,
+        href: `/authors/${author.author_id}/`,
         className: "d-inline-block",
         title: `View ${author.full_name || `${author.given_name} ${author.family_name}`}'s profile`
       },
@@ -26295,14 +26295,14 @@
     )), /* @__PURE__ */ import_react2.default.createElement("td", null, /* @__PURE__ */ import_react2.default.createElement("div", null, /* @__PURE__ */ import_react2.default.createElement(
       "a",
       {
-        href: `/author-profile/?id=${author.author_id}`,
+        href: `/authors/${author.author_id}/`,
         className: "text-decoration-underline fw-semibold text-primary"
       },
       author.full_name || `${author.given_name} ${author.family_name}`
     ), author.ORCID && /* @__PURE__ */ import_react2.default.createElement("div", { className: "text-muted small mt-1" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "fab fa-orcid mr-2" }), "ORCID: ", author.ORCID))), /* @__PURE__ */ import_react2.default.createElement("td", null, /* @__PURE__ */ import_react2.default.createElement("span", { className: "badge bg-success fs-6 px-3 py-2" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "fas fa-file-alt mr-2" }), formatNumber(getArticleCount(author)))), /* @__PURE__ */ import_react2.default.createElement("td", null, /* @__PURE__ */ import_react2.default.createElement("span", { className: "text-muted" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "fas fa-globe mr-2" }), author.country || "N/A"))))))), /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-lg-none" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "row g-3" }, authors.map((author, index) => /* @__PURE__ */ import_react2.default.createElement("div", { key: author.author_id, className: "col-12" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "card h-100 shadow-sm border-0" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "card-body" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "mr-3" }, /* @__PURE__ */ import_react2.default.createElement("span", { className: "badge bg-secondary fs-6 px-3 py-2 mb-2" }, "#", index + 1), /* @__PURE__ */ import_react2.default.createElement(
       "a",
       {
-        href: `/author-profile/?id=${author.author_id}`,
+        href: `/authors/${author.author_id}/`,
         className: "d-block",
         title: `View ${author.full_name || `${author.given_name} ${author.family_name}`}'s profile`
       },
@@ -26320,7 +26320,7 @@
     )), /* @__PURE__ */ import_react2.default.createElement("div", { className: "flex-grow-1" }, /* @__PURE__ */ import_react2.default.createElement("h6", { className: "mb-2" }, /* @__PURE__ */ import_react2.default.createElement(
       "a",
       {
-        href: `/author-profile/?id=${author.author_id}`,
+        href: `/authors/${author.author_id}/`,
         className: "text-decoration-underline fw-semibold text-primary"
       },
       author.full_name || `${author.given_name} ${author.family_name}`
