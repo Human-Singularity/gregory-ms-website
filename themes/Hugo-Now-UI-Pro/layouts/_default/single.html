@@ -228,10 +228,4 @@
 		{{ partial "comments-js.html" . }}
 		<script defer src="https://commento.brunoamaral.eu/js/commento.js" data-no-fonts="true"></script>
 	{{ end }}
-	<!-- Plyr for better html <video> and <audio> -->
-	{{- $plyr_js := resources.Get "/js/plyr/plyr.min.js" -}} 
-	<script src="{{- $plyr_js.Permalink }}"></script>
-	<script type="text/javascript" defer="true">
-		const players = Plyr.setup('.player', {blankVideo: '/plyr/blank.mp4', iconUrl: '/plyr/plyr.svg'});
-	</script>
 {{ end }}
