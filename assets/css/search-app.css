@@ -124,22 +124,30 @@
   margin-bottom: 0.25rem;
 }
 
-/* Journal badge styling */
+/* Override any default badge styles that might interfere */
+.search-app .article-metadata .badge.badge-journal,
+.author-profile .article-metadata .badge.badge-journal,
 .search-app .badge-journal,
 .author-profile .badge-journal {
-  background-color: #6c757d;
-  color: #ffffff;
+  background-color: #6c757d !important;
+  color: #ffffff !important;
   font-size: 0.875rem;
   padding: 0.25rem 0.5rem;
+  border: 1px solid #6c757d !important;
+  opacity: 1 !important;
 }
 
 /* Expert selection badge styling */
+.search-app .article-metadata .badge.badge-expert,
+.author-profile .article-metadata .badge.badge-expert,
 .search-app .badge-expert,
 .author-profile .badge-expert {
-  background-color: #28a745;
-  color: #ffffff;
+  background-color: #28a745 !important;
+  color: #ffffff !important;
   font-size: 0.875rem;
   padding: 0.25rem 0.5rem;
+  border: 1px solid #28a745 !important;
+  opacity: 1 !important;
 }
 
 /* Prediction badge styling */
