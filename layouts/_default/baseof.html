@@ -215,13 +215,16 @@
 		</button>
 	  </div>
 	  <div class="collapse navbar-collapse justify-content-end" id="navigation" data-nav-image="/cdn-cgi/image/width=1920,quality=50/assets/img/blurred-image-1.jpg">
+		{{- $current := . -}}
 		<ul class="navbar-nav">
-
-			{{- range .Site.Menus.main -}}
-				<li class="nav-item {{ if (or ( $.Page.IsMenuCurrent "main" .) ( $.Page.HasMenuCurrent "main" .)) }} active {{- end -}}"><a href="{{- .URL | absLangURL -}}" title="{{- .Post -}}" class="nav-link top-menu menu-click"  data-umami-event="click--topnav-{{- .Name | urlize | lower -}} ">{{- .Name | safeHTML -}}</a></li>
-			{{- end -}}  <!-- end range .Site.Menus.main -->
-
-			</ul>
+		  {{- range .Site.Menus.main -}}
+			<li class="nav-item{{ if or ($current.IsMenuCurrent "main" .) ($current.HasMenuCurrent "main" .) (eq $current.RelPermalink .URL) }} active{{ end }}">
+			  <a href="{{- .URL | absLangURL -}}" title="{{- .Post -}}" class="nav-link top-menu menu-click" data-umami-event="click--topnav-{{- .Name | urlize | lower -}}">
+				{{- .Name | safeHTML -}}
+			  </a>
+			</li>
+		  {{- end -}}
+		</ul>
 	  </div>
 	</div>
   </nav><!-- End Menu --><!-- End Navbar -->
