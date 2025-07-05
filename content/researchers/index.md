@@ -35,6 +35,14 @@ scripts:
 
 </div>
 
+<div class="row justify-content-center align-items-center  py-5 bg-light">
+  <div class="col-md-8 text-center">
+    <h2 class="font-weight-bold">Discover the Top Contributors This Year</h2>
+    <p class="lead">We keep track of who is making the biggest impact in the field of Multiple Sclerosis research.</p>
+    <a href="/authors/ranking/" class="btn btn-primary btn-lg font-weight-bold" role="button">View Author Ranking <i class="fas fa-arrow-right ml-2"></i></a>
+  </div>
+</div>
+
 <div class="row justify-content-center align-self-center mb-5 mt-5 p-md-5">
   <div class="col-md-5 col-12 justify-content-center align-self-center ">
       <div class="col-md-12 ml-auto mr-auto">
@@ -49,29 +57,32 @@ scripts:
 
 <div class="row justify-content-center align-self-center mb-5 mt-5 p-md-5 bg-grey">
 
-<div class="col-md-5 col-12 justify-content-center align-self-center align-right">
-  <img src="images/undraw_Online_articles_re_yrkj.svg" class="float-right w-75 align-middle d-none d-md-block" alt="medical doctors" loading="lazy"/>
+<div class="col-md-4 col-12 justify-content-center align-self-left align-left">
+  <img src="images/undraw_Online_articles_re_yrkj.svg" class="float-left w-75 align-middle d-none d-md-block" alt="medical doctors" loading="lazy"/>
   </div>
   <div class="col-md-5 col-12 justify-content-center align-self-center">
+  <h2>Find the most relevant research</h2>
+  <p>We use AI models to identify the papers reporting patient outcomes.<p>
+    <a href='{{< ref "/relevant/_index.md" >}}' class="btn btn-success btn-round btn-lg font-weight-bold " data-umami-event="click--observatory-researchers-page">Relevant Papers <i class="fas fa-arrow-circle-right"></i></a>
   </div>
 </div>
 
 
-
+<!-- 
 <div class="row justify-content-center align-self-center mb-5 p-md-5">
 <div class="col-md-5 col-12 justify-content-center align-self-center align-right ">
   <img src="images/undraw_medicine_b1ol.svg" class="w-50 align-middle d-none d-md-block float-left" alt="medical doctors" loading="lazy" />
   </div>
   <div class="col-md-5 col-12 justify-content-center align-self-center">
   
-  <h3 class="title">The Multiple Sclerosis observatory of current research</h3>
+  <h3 class="">The Multiple Sclerosis observatory of current research</h3>
   
-  <p class="lead font-weight-bold">On this page you will find a listing of promissing medicine and therapies with their associated articles and clinical trials.</p>
+  <p class="lead font-weight-normal">On this page you will find a listing of promissing medicine and therapies with their associated articles and clinical trials.</p>
   
-  <p>An item is added to the list based on what is identified by the MS Society Website, or when there is an associated clinical trial.</p>
   <a href='{{< ref "/observatory/_index.md" >}}' class="btn btn-success btn-round btn-lg font-weight-bold " data-umami-event="click--observatory-researchers-page">Observatory <i class="fas fa-arrow-circle-right"></i></a>
 </div>  
 </div>
+-->
 
 <div class="row justify-content-center align-self-center mb-5 p-md-5">
 <div class="col-md-12"><h3 class="title text-center">Where the papers listed come from</h3></div>
