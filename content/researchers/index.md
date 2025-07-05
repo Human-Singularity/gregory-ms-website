@@ -55,6 +55,9 @@ Our open-source machine-learning model—refined with the help of <a href="https
 				<i class="fab fa-creative-commons mr-1"></i>CC BY-4.0
 				<span class="sr-only">(Creative Commons)</span>
 			</a>
+      <a href="https://api.gregory-ms.com/sources/?subject_id=1&team_id=1" class="badge badge-pill badge-warning mx-2 my-1" rel="noopener" aria-label="API endpoint for sources">
+        <i class="fa-solid fa-book-medical mr-1"></i>Sources
+      </a>
 		</div>
   </div>
 </div>
