@@ -68,7 +68,7 @@ remote-deps:
 	@echo "📦 [4/7] Installing dependencies on remote..."
 	@ssh gregory@House 'cd /home/gregory/gregory-ms-website && \
 		echo "📦 Installing Python requirements..." && \
-		pip install -r requirements.txt && \
+		docker exec gregory pip install -r requirements.txt && \
 		echo "✅ Dependencies installed"'
 
 # Step 5: Run database migrations on remote
