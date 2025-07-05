@@ -40,12 +40,30 @@ scripts:
   <img src="images/undraw_Online_articles_re_yrkj.svg" class="float-left w-75 align-middle d-none d-md-block" alt="medical doctors" loading="lazy"/>
   </div>
   <div class="col-md-5 col-12 justify-content-center align-self-center">
-  <h2>Find the latest relevant research faster</h2>
-  <p>We use AI models trained to identify the papers reporting positive patient outcomes.</p>
+  <h2>Discover Multiple Sclerosis breakthroughs as they happen</h2>
+<p>Gregory-MS scans 19 peer-reviewed journals, preprint servers and three global trial registries every day. 
+Our open-source machine-learning model—refined with the help of <a href="https://www.novasbe.unl.pt/en/">Nova SBE</a>; scores each paper for clinically proven patient outcomes, so neurologists, researchers and People with MS (PwMS) receive only the studies that can bring us hope.</p>
     <a href='{{< ref "/relevant/_index.md" >}}' class="btn btn-success btn-round btn-lg font-weight-bold " data-umami-event="click--observatory-researchers-page">Relevant Papers <i class="fas fa-arrow-circle-right"></i></a>
+    		<div class="d-flex flex-wrap justify-content-left align-items-left">
+			<a href="https://github.com/brunoamaral/gregory-ai" class="badge badge-pill badge-success mx-2 my-1" rel="noopener" aria-label="Open-source code on GitHub (external link)">
+				<i class="fas fa-code mr-1"></i>Open-source
+			</a>
+			<a href="/about/" class="badge badge-pill badge-info mx-2 my-1" aria-label="Independent project governance">
+				<i class="fas fa-user-shield mr-1"></i>Independent
+			</a>
+			<a href="https://creativecommons.org/licenses/by/4.0/" class="badge badge-pill badge-secondary mx-2 my-1" rel="noopener" aria-label="Content licensed CC BY 4.0 (external link)">
+				<i class="fab fa-creative-commons mr-1"></i>CC BY-4.0
+				<span class="sr-only">(Creative Commons)</span>
+			</a>
+		</div>
   </div>
 </div>
-
+<!-- Trust ribbon -->
+<div class="bg-light border-top py-2">
+	<div class="container">
+	</div>
+</div>
+<!-- /Trust ribbon -->
 
 <div class="row justify-content-center align-items-center py-5 bg-light">
   <div class="col-md-8 text-center">
