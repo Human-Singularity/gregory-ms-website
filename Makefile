@@ -76,7 +76,7 @@ remote-migrate:
 	@echo "�️  [5/7] Running database migrations..."
 	@ssh gregory@House 'cd /home/gregory/gregory-ms-website && \
 		echo "🗃️  Applying database migrations..." && \
-		python manage.py migrate && \
+		docker exec gregory python manage.py migrate && \
 		echo "✅ Database migrations complete"'
 
 # Step 6: Restart application container
