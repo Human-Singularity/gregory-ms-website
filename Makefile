@@ -99,7 +99,7 @@ deploy-frontend: submodule-update local-push remote-pull build
 	@echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
 # Full deployment pipeline (for major updates with dependencies and migrations)
-deploy-full: submodule-update local-push remote-pull remote-deps remote-migrate remote-restart
+deploy-full: submodule-update local-push remote-pull remote-deps remote-migrate remote-restart build
 	@echo ""
 	@echo "🎉 Full deployment completed successfully!"
 	@echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
