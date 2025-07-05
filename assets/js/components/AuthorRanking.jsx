@@ -10,30 +10,14 @@ export function AuthorRanking() {
   const [authors, setAuthors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [timeframe, setTimeframe] = useState('year'); // 'year', 'month', 'week', 'all'
-  const [dropdownOpen, setDropdownOpen] = useState(false); // Add dropdown state
-  
+
   // Fixed team and subject IDs as specified in requirements
   const teamId = 1;
   const subjectId = 1;
 
   useEffect(() => {
     fetchAuthors();
-  }, [timeframe]);
-
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownOpen && !event.target.closest('.dropdown')) {
-        setDropdownOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [dropdownOpen]);
+  }, []);
 
   const fetchAuthors = async () => {
     setLoading(true);
@@ -46,86 +30,27 @@ export function AuthorRanking() {
         subject_id: subjectId,
         sort_by: 'article_count',
         order: 'desc',
-        format: 'json'
+        format: 'json',
+        timeframe: 'year'
       });
-
-      // Try adding timeframe filtering, but don't rely on it working
-      if (timeframe !== 'all') {
-        params.append('timeframe', timeframe);
-      }
 
       const response = await axios.get(`https://api.gregory-ms.com/authors/?${params.toString()}`);
 
       // Take only the top 10 authors
       const authors = response.data.results || [];
-      
       setAuthors(authors.slice(0, 20));
     } catch (err) {
       console.error('Error fetching authors:', err);
-      
-      // If timeframe filtering fails, try without it
-      if (timeframe !== 'all' && err.response?.status === 400) {
-        try {
-          const params = new URLSearchParams({
-            team_id: teamId,
-            subject_id: subjectId,
-            sort_by: 'article_count',
-            order: 'desc',
-            format: 'json'
-          });
-          
-          const response = await axios.get(`https://api.gregory-ms.com/authors/?${params.toString()}`);
-          const authors = response.data.results || [];
-          setAuthors(authors.slice(0, 20));
-        } catch (fallbackErr) {
-          setError(fallbackErr);
-        }
-      } else {
-        setError(err);
-      }
+      setError(err);
     } finally {
       setLoading(false);
     }
   };
 
-  const getTimeframeLabel = () => {
-    switch (timeframe) {
-      case 'year':
-        return 'This Year';
-      case 'month':
-        return 'This Month';
-      case 'week':
-        return 'This Week';
-      default:
-        return 'All Time';
-    }
-  };
+
 
   // Helper function to get the appropriate article count based on timeframe
-  const getArticleCount = (author) => {
-    // Check for timeframe-specific count fields that the API might return
-    if (timeframe !== 'all') {
-      // Common field name patterns the API might use for timeframe-specific counts
-      const possibleFields = [
-        `articles_count_${timeframe}`,        // articles_count_year, articles_count_month, etc.
-        `${timeframe}_articles_count`,        // year_articles_count, month_articles_count, etc.
-        `articles_${timeframe}`,              // articles_year, articles_month, etc.
-        `${timeframe}_articles`,              // year_articles, month_articles, etc.
-        'timeframe_article_count',            // generic timeframe field
-        'filtered_articles_count',            // filtered count
-        'period_article_count',               // period-specific count
-        'count',                              // simple count field
-        'article_count'                       // alternative main field
-      ];
-      
-      for (const field of possibleFields) {
-        if (author[field] !== undefined && author[field] !== null) {
-          return author[field];
-        }
-      }
-    }
-    
-    // Fall back to total article count
+  const getArticleCount = (author) => {    
     return author.articles_count || author.article_count || 0;
   };
 
@@ -173,64 +98,8 @@ export function AuthorRanking() {
               <div className="col-lg-8 col-md-7 mb-3 mb-md-0">
                 <h2 className="mb-2 text-primary">Top Authors Ranking</h2>
                 <p className="text-muted mb-0 lead">
-                  Top 10 authors by article count - {getTimeframeLabel()}
+                  Top 10 authors by article count - This Year
                 </p>
-              </div>
-              <div className="col-lg-4 col-md-5 d-flex justify-content-md-end">
-                <div className="dropdown">
-                  <button
-                    className="btn btn-outline-primary dropdown-toggle"
-                    type="button"
-                    onClick={() => setDropdownOpen(!dropdownOpen)}
-                    aria-expanded={dropdownOpen}
-                    style={{ minWidth: '160px' }}
-                  >
-                    <i className="fas fa-calendar-alt mr-2"></i>
-                    {getTimeframeLabel()}
-                  </button>
-                  <div className={`dropdown-menu ${dropdownOpen ? 'show' : ''}`} style={{ position: 'absolute', top: '100%', left: 0, zIndex: 1050 }}>
-                    <button
-                      className={`dropdown-item ${timeframe === 'all' ? 'active' : ''}`}
-                      onClick={() => {
-                        setTimeframe('all');
-                        setDropdownOpen(false);
-                      }}
-                    >
-                      <i className="fas fa-infinity mr-2"></i>
-                      All Time
-                    </button>
-                    <button
-                      className={`dropdown-item ${timeframe === 'year' ? 'active' : ''}`}
-                      onClick={() => {
-                        setTimeframe('year');
-                        setDropdownOpen(false);
-                      }}
-                    >
-                      <i className="fas fa-calendar-year mr-2"></i>
-                      This Year
-                    </button>
-                    <button
-                      className={`dropdown-item ${timeframe === 'month' ? 'active' : ''}`}
-                      onClick={() => {
-                        setTimeframe('month');
-                        setDropdownOpen(false);
-                      }}
-                    >
-                      <i className="fas fa-calendar-alt mr-2"></i>
-                      This Month
-                    </button>
-                    <button
-                      className={`dropdown-item ${timeframe === 'week' ? 'active' : ''}`}
-                      onClick={() => {
-                        setTimeframe('week');
-                        setDropdownOpen(false);
-                      }}
-                    >
-                      <i className="fas fa-calendar-week mr-2"></i>
-                      This Week
-                    </button>
-                  </div>
-                </div>
               </div>
             </div>
 
@@ -254,11 +123,11 @@ export function AuthorRanking() {
                   <th scope="col">Author</th>
                   <th scope="col" style={{ width: '120px' }}>
                     Articles
-                    {timeframe !== 'all' && (
+
                       <small className="d-block text-muted" style={{ fontWeight: 'normal', fontSize: '0.75rem' }}>
-                        ({getTimeframeLabel().toLowerCase()})
+                        (this year)
                       </small>
-                    )}
+
                   </th>
                   <th scope="col" style={{ width: '120px' }}>Country</th>
                 </tr>
@@ -389,16 +258,13 @@ export function AuthorRanking() {
       {authors.length > 0 && (
         <div className="mt-4 text-center text-muted">
           <small>
-            Showing top {authors.length} authors ranked by number of published articles
-            {timeframe !== 'all' && (
-              <>
-                {` for ${getTimeframeLabel().toLowerCase()}`}
+            <>
+            Showing top {authors.length} authors ranked by number of published articles for this year
                 <br />
                 <em className="text-warning">
                   Note: Total articles are based on our research keywords for Multiple Sclerosis and not the full range of publications by the authors.
                 </em>
               </>
-            )}
           </small>
         </div>
       )}
