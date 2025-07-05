@@ -395,8 +395,7 @@ export function AuthorRanking() {
                 {` for ${getTimeframeLabel().toLowerCase()}`}
                 <br />
                 <em className="text-warning">
-                  Note: Timeframe filtering may not be fully supported by the API yet. 
-                  Counts shown may represent total articles.
+                  Note: Total articles are based on our research keywords for Multiple Sclerosis and not the full range of publications by the authors.
                 </em>
               </>
             )}
