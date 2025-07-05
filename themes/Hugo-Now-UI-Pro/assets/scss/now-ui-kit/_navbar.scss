@@ -86,7 +86,8 @@
         .nav-item .nav-link:not(.btn):hover,
         .nav-item .nav-link:not(.btn):active{
             background-color: $opacity-2;
-            border-radius: $border-radius-small;
+            border-radius: none;
+            border-bottom: 3px solid #aaaaaa;
         }
     }
 
