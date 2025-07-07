@@ -55,10 +55,10 @@ local-push:
 
 # Step 3: Pull changes on remote server
 remote-pull:
-	@echo "� [3/7] Pulling changes on remote server..."
+	@echo "🔄 [3/7] Pulling changes on remote server..."
 	@ssh gregory@House 'cd /home/gregory/gregory-ms-website && \
 		echo "🔄 Pulling from GitHub..." && \
-		git pull && \
+		git pull --no-edit && \
 		echo "🔄 Updating submodules..." && \
 		git submodule update && \
 		echo "✅ Remote repository updated"'
