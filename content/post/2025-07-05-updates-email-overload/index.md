@@ -4,6 +4,8 @@ authors:
 date: 2025-07-07T10:57:50+01:00
 description: ""
 draft: false
+aliases: 
+  - /post/2025-07-05-updates-email-overload/
 resources: 
 - src: images/gregory-ms-sorting-articles.jpeg
   name: "header"
