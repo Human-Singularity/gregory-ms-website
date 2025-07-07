@@ -14,7 +14,7 @@ help:
 	@echo "🚀 Gregory MS Website Deployment Pipeline"
 	@echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 	@echo ""
-	@echo "� Available Targets:"
+	@echo "🔄 Available Targets:"
 	@echo "  🔧 Basic Operations:"
 	@echo "    submodule-update    - Update and commit submodules"
 	@echo "    local-push         - Push local changes to GitHub"
@@ -36,7 +36,7 @@ help:
 
 # Step 1: Update submodules locally
 submodule-update:
-	@echo "� [1/7] Updating submodules..."
+	@echo "🔄 [1/7] Updating submodules..."
 	@git submodule update --remote
 	@if git diff --quiet gregory; then \
 		echo "✅ No submodule changes to commit"; \
@@ -49,7 +49,7 @@ submodule-update:
 
 # Step 2: Push local changes to GitHub
 local-push:
-	@echo "� [2/7] Pushing local changes to GitHub..."
+	@echo "🔄 [2/7] Pushing local changes to GitHub..."
 	@git push
 	@echo "✅ Local changes pushed successfully"
 
@@ -73,7 +73,7 @@ remote-deps:
 
 # Step 5: Run database migrations on remote
 remote-migrate:
-	@echo "�️  [5/7] Running database migrations..."
+	@echo "🔄️  [5/7] Running database migrations..."
 	@ssh gregory@House 'cd /home/gregory/gregory-ms-website && \
 		echo "🗃️  Applying database migrations..." && \
 		docker exec gregory python manage.py migrate && \
@@ -81,7 +81,7 @@ remote-migrate:
 
 # Step 6: Restart application container
 remote-restart:
-	@echo "� [6/7] Restarting application..."
+	@echo "🔄 [6/7] Restarting application..."
 	@ssh gregory@House 'echo "🔄 Restarting application container..." && \
 		docker restart gregory && \
 		echo "✅ Container restarted successfully"'
