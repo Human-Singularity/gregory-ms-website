@@ -3,7 +3,7 @@ authors:
   - bruno-amaral
 date: 2025-07-07T10:57:50+01:00
 description: ""
-draft: true
+draft: false
 resources: 
 - src: images/gregory-ms-sorting-articles.jpeg
   name: "header"
