@@ -1,0 +1,63 @@
+{{ define "bodyclasses" }}single page author-ranking{{ end }}
+
+{{ define "data-attributes" }}
+	data-contentgrouptype="ranking" data-contentgroupname="Author Rankings"
+{{ end }}
+
+{{ define "head" }}
+	<!-- LinkedIn-optimized OpenGraph tags -->
+	<meta property="og:title" content="{{ .Title }}" />
+	<meta property="og:description" content="{{ .Params.description }}" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="{{ .Permalink }}" />
+	<meta property="og:site_name" content="{{ .Site.Title }}" />
+	<meta property="og:image" content="{{ .Site.BaseURL }}{{ .Params.image }}" />
+	<meta property="og:image:type" content="image/png" />
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="630" />
+	<meta property="og:image:alt" content="Multiple Sclerosis Research Author Rankings - Gregory MS" />
+	
+	<!-- LinkedIn-specific tags -->
+	<meta property="article:author" content="{{ .Site.Params.author }}" />
+	<meta property="article:publisher" content="{{ .Site.Title }}" />
+	<meta property="article:section" content="Multiple Sclerosis Research" />
+	{{ range .Params.keywords }}
+	<meta property="article:tag" content="{{ . }}" />
+	{{ end }}
+	
+	<!-- Twitter Card for broader social sharing -->
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content="{{ .Title }}" />
+	<meta name="twitter:description" content="{{ .Params.description }}" />
+	<meta name="twitter:image" content="{{ .Site.BaseURL }}{{ .Params.image }}" />
+	
+	<!-- Additional LinkedIn optimization -->
+	<meta name="author" content="{{ .Site.Params.author }}" />
+	<meta name="robots" content="index, follow" />
+	<meta name="googlebot" content="index, follow" />
+{{ end }}
+
+{{ define "description" }}
+	{{ partial "description.html" . }}
+{{ end }}
+
+{{ define "main" }}
+<div class="wrapper">
+	{{ if or (eq .Params.options.header "small") (eq .Params.options.header "mini") (eq .Params.options.header nil ) }}
+		{{ partial "header-small.html" . }}
+	{{ else if eq $.Params.options.header "full"  }}
+		{{ partial "header-full.html" . }}
+	{{ end }}
+	{{ if eq .Params.options.header "search" }}
+		{{ partial "header-search.html" . }}
+	{{ end }}
+	<div class="section">
+		<div class="container-fluid">
+		<div class="row">
+			{{ .Content }}
+		</div>
+		<div class="separator separator-primary"></div>
+		</div>
+	</div>
+</div>
+{{ end }}
