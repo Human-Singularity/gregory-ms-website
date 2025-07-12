@@ -544,115 +544,267 @@ function SearchApp() {
     <div className="search-app container mt-5">
       {/* Search Form Container - Centered */}
       <div className="row justify-content-center">
-        <div className="col-lg-8">
-          {/* Search Form Card */}
+        <div className="col-lg-10">
+          {/* Search Form Card with Tabs */}
           <div className="card mb-4">
             <div className="card-header bg-light">
               <h3 className="mb-0 text-primary ml-3">Search GregoryMS Database</h3>
             </div>
-            <div className="card-body">
-              <form onSubmit={handleSearch}>
-                <div className="row">
-                  <div className="col-md-4 mb-3">
-                    <div className="form-group">
-                      <label htmlFor="searchType">Search Type</label>
-                      <select 
-                        className="form-control"
-                        id="searchType"
-                        value={searchType}
-                        onChange={(e) => {
-                          setSearchType(e.target.value);
-                          // Update active tab to match search type
-                          setActiveTab(e.target.value);
-                        }}
-                      >
-                        {SEARCH_TYPE_OPTIONS.map(option => (
-                          <option key={option.value} value={option.value}>
-                            {option.label}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-                  
-                  <div className="col-md-8 mb-3">
-                    <div className="form-group">
-                      <label htmlFor="searchTerm">
-                        {searchType === 'authors' ? 'Author Name' : 'Search Terms'}
-                      </label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="searchTerm"
-                        placeholder={searchType === 'authors' ? 'Enter author name...' : 'Enter search terms...'}
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        required
-                      />
-                    </div>
-                  </div>
-                </div>
             
-                <div className="row">
-                  {searchType !== 'authors' && (
-                    <div className="col-md-6 mb-3">
-                      <div className="form-group">
-                        <label htmlFor="searchField">Search In</label>
-                        <select 
-                          className="form-control"
-                          id="searchField"
-                          value={searchField}
-                          onChange={(e) => setSearchField(e.target.value)}
-                        >
-                          <option value="all">All Fields</option>
-                          <option value="title">Title Only</option>
-                          <option value="summary">Abstract/Summary Only</option>
-                        </select>
-                      </div>
-                    </div>
-                  )}
-                  
-                  {searchType === 'trials' && (
-                    <div className="col-md-6 mb-3">
-                      <div className="form-group">
-                        <label htmlFor="trialStatus">Trial Status</label>
-                        <select 
-                          className="form-control"
-                          id="trialStatus"
-                          value={trialStatus}
-                          onChange={(e) => setTrialStatus(e.target.value)}
-                        >
-                          {TRIAL_STATUS_OPTIONS.map(option => (
-                            <option key={option.value} value={option.value}>
-                              {option.label}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
-                  )}
-                </div>
-            
-                <div className="text-center">
-                  <button 
-                    type="submit" 
-                    className="btn btn-primary btn-lg"
-                    disabled={isLoading}
+            {/* Tab Navigation */}
+            <div className="card-header p-0">
+              <ul className="nav nav-tabs card-header-tabs" role="tablist">
+                <li className="nav-item">
+                  <button
+                    className={`nav-link ${searchType === 'articles' ? 'active' : ''}`}
+                    onClick={() => setSearchType('articles')}
+                    type="button"
                   >
-                    {isLoading ? (
-                      <>
-                        <span className="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>
-                        Searching...
-                      </>
-                    ) : (
-                      <>
-                        <i className="fas fa-search mr-2"></i>
-                        Search {searchType === 'articles' ? 'Articles' : searchType === 'trials' ? 'Clinical Trials' : 'Authors'}
-                      </>
-                    )}
+                    <i className="fas fa-file-alt mr-2"></i>
+                    Research Articles
                   </button>
-                </div>
-              </form>
+                </li>
+                <li className="nav-item">
+                  <button
+                    className={`nav-link ${searchType === 'trials' ? 'active' : ''}`}
+                    onClick={() => setSearchType('trials')}
+                    type="button"
+                  >
+                    <i className="fas fa-flask mr-2"></i>
+                    Clinical Trials
+                  </button>
+                </li>
+                <li className="nav-item">
+                  <button
+                    className={`nav-link ${searchType === 'authors' ? 'active' : ''}`}
+                    onClick={() => setSearchType('authors')}
+                    type="button"
+                  >
+                    <i className="fas fa-user-graduate mr-2"></i>
+                    Authors
+                  </button>
+                </li>
+              </ul>
+            </div>
+
+            {/* Tab Content */}
+            <div className="card-body">
+              <div className="tab-content">
+                {/* Articles Tab */}
+                {searchType === 'articles' && (
+                  <div className="tab-pane fade show active">
+                    <div className="mb-3">
+                      <h5 className="text-primary mb-3">
+                        <i className="fas fa-file-alt mr-2"></i>
+                        Search Research Articles
+                      </h5>
+                      <p className="text-muted">Find peer-reviewed research articles about Multiple Sclerosis treatments, studies, and findings.</p>
+                    </div>
+                    
+                    <form onSubmit={handleSearch}>
+                      <div className="row">
+                        <div className="col-md-8 mb-3">
+                          <div className="form-group">
+                            <label htmlFor="searchTerm">Search Terms</label>
+                            <input
+                              type="text"
+                              className="form-control form-control-lg"
+                              id="searchTerm"
+                              placeholder="Enter keywords, treatments, or research topics..."
+                              value={searchTerm}
+                              onChange={(e) => setSearchTerm(e.target.value)}
+                              required
+                            />
+                          </div>
+                        </div>
+                        
+                        <div className="col-md-4 mb-3">
+                          <div className="form-group">
+                            <label htmlFor="searchField">Search In</label>
+                            <select 
+                              className="form-control"
+                              id="searchField"
+                              value={searchField}
+                              onChange={(e) => setSearchField(e.target.value)}
+                            >
+                              <option value="all">All Fields</option>
+                              <option value="title">Title Only</option>
+                              <option value="summary">Abstract/Summary Only</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="text-center">
+                        <button 
+                          type="submit" 
+                          className="btn btn-primary btn-lg px-5"
+                          disabled={isLoading}
+                        >
+                          {isLoading ? (
+                            <>
+                              <span className="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>
+                              Searching Articles...
+                            </>
+                          ) : (
+                            <>
+                              <i className="fas fa-search mr-2"></i>
+                              Search Articles
+                            </>
+                          )}
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                )}
+
+                {/* Clinical Trials Tab */}
+                {searchType === 'trials' && (
+                  <div className="tab-pane fade show active">
+                    <div className="mb-3">
+                      <h5 className="text-primary mb-3">
+                        <i className="fas fa-flask mr-2"></i>
+                        Search Clinical Trials
+                      </h5>
+                      <p className="text-muted">Find ongoing and completed clinical trials for Multiple Sclerosis treatments and research studies.</p>
+                    </div>
+                    
+                    <form onSubmit={handleSearch}>
+                      <div className="row">
+                        <div className="col-md-6 mb-3">
+                          <div className="form-group">
+                            <label htmlFor="searchTerm">Search Terms</label>
+                            <input
+                              type="text"
+                              className="form-control form-control-lg"
+                              id="searchTerm"
+                              placeholder="Enter treatment names, trial topics..."
+                              value={searchTerm}
+                              onChange={(e) => setSearchTerm(e.target.value)}
+                              required
+                            />
+                          </div>
+                        </div>
+                        
+                        <div className="col-md-3 mb-3">
+                          <div className="form-group">
+                            <label htmlFor="searchField">Search In</label>
+                            <select 
+                              className="form-control"
+                              id="searchField"
+                              value={searchField}
+                              onChange={(e) => setSearchField(e.target.value)}
+                            >
+                              <option value="all">All Fields</option>
+                              <option value="title">Title Only</option>
+                              <option value="summary">Abstract/Summary Only</option>
+                            </select>
+                          </div>
+                        </div>
+                        
+                        <div className="col-md-3 mb-3">
+                          <div className="form-group">
+                            <label htmlFor="trialStatus">Trial Status</label>
+                            <select 
+                              className="form-control"
+                              id="trialStatus"
+                              value={trialStatus}
+                              onChange={(e) => setTrialStatus(e.target.value)}
+                            >
+                              {TRIAL_STATUS_OPTIONS.map(option => (
+                                <option key={option.value} value={option.value}>
+                                  {option.label}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="text-center">
+                        <button 
+                          type="submit" 
+                          className="btn btn-primary btn-lg px-5"
+                          disabled={isLoading}
+                        >
+                          {isLoading ? (
+                            <>
+                              <span className="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>
+                              Searching Trials...
+                            </>
+                          ) : (
+                            <>
+                              <i className="fas fa-search mr-2"></i>
+                              Search Clinical Trials
+                            </>
+                          )}
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                )}
+
+                {/* Authors Tab */}
+                {searchType === 'authors' && (
+                  <div className="tab-pane fade show active">
+                    <div className="mb-3">
+                      <h5 className="text-primary mb-3">
+                        <i className="fas fa-user-graduate mr-2"></i>
+                        Search Authors
+                      </h5>
+                      <p className="text-muted">Find researchers and authors who have published Multiple Sclerosis research articles.</p>
+                    </div>
+                    
+                    <form onSubmit={handleSearch}>
+                      <div className="row">
+                        <div className="col-md-8 mb-3">
+                          <div className="form-group">
+                            <label htmlFor="searchTerm">Author Name</label>
+                            <input
+                              type="text"
+                              className="form-control form-control-lg"
+                              id="searchTerm"
+                              placeholder="Enter author's full name or partial name..."
+                              value={searchTerm}
+                              onChange={(e) => setSearchTerm(e.target.value)}
+                              required
+                            />
+                          </div>
+                        </div>
+                        
+                        <div className="col-md-4 mb-3 d-flex align-items-end">
+                          <div className="form-group w-100">
+                            <small className="text-muted">
+                              <i className="fas fa-info-circle mr-1"></i>
+                              Search by first name, last name, or full name
+                            </small>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="text-center">
+                        <button 
+                          type="submit" 
+                          className="btn btn-primary btn-lg px-5"
+                          disabled={isLoading}
+                        >
+                          {isLoading ? (
+                            <>
+                              <span className="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>
+                              Searching Authors...
+                            </>
+                          ) : (
+                            <>
+                              <i className="fas fa-search mr-2"></i>
+                              Search Authors
+                            </>
+                          )}
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
