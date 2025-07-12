@@ -166,11 +166,6 @@ function Observatory({ config = DEFAULT_CONFIG }) {
       ) : (
         <div className="row">
           <div className="col-md-12">
-            <h2 className="text-center mb-4">MS Treatment Research Observatory</h2>
-            <p className="text-center text-muted mb-4">
-              Explore research articles and clinical trials for {categories.length} different MS treatments and therapies
-            </p>
-            
             {/* Search Bar */}
             <div className="row justify-content-center mb-4">
               <div className="col-md-6">
