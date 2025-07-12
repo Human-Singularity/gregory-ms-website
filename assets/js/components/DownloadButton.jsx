@@ -79,63 +79,36 @@ export function DownloadButton({
     
     while (retryCount < maxRetries) {
       try {
-        // Special handling for search endpoints which require POST according to documentation
-        const method = apiEndpoint.includes('/search/') ? 'post' : 'get';
-      
-        // Set up parameters according to the API documentation
+        // For category downloads, use both all_results and high page_size as fallback
         const allParams = {
           ...searchParams,
-          all_results: true,  // This is the key parameter to bypass pagination
+          format: 'csv',
+          all_results: 'true', // Primary method to get all results
+          page_size: 50000, // Fallback method in case all_results doesn't work
+          page: 1
         };
         
         console.log('Download request URL:', apiEndpoint);
-        console.log('Download params:', allParams, 'Method:', method);
+        console.log('Download params:', allParams);
         console.log('Expected count from UI:', searchParams.expectedCount || 'not provided');
-        
-        // For POST endpoints, we need to send the format=csv parameter in the URL to ensure
-        // the Django REST Framework selects the correct renderer
-        let response;
         
         // Set a longer timeout to prevent connection issues with large responses
         const axiosOptions = {
-          // Use arraybuffer for direct binary access
           responseType: 'arraybuffer',
-          timeout: 180000, // 3 minutes timeout to allow for larger data transfers
-          maxContentLength: Infinity, // Allow any size response
-          maxBodyLength: Infinity, // Allow any size request body
+          timeout: 300000, // 5 minutes timeout for large datasets
+          maxContentLength: Infinity,
+          maxBodyLength: Infinity,
           headers: {
-            'Accept': 'text/csv' // Explicitly request CSV format
+            'Accept': 'text/csv'
           }
         };
         
-        if (method === 'post') {
-          // Only send the parameters used in the working curl command
-          const minimalParams = {
-            team_id: searchParams.team_id,
-            subject_id: searchParams.subject_id,
-            search: searchParams.search,
-            all_results: true
-          };
-          response = await axios.post(
-            apiEndpoint,
-            JSON.stringify(minimalParams),
-            {
-              ...axiosOptions,
-              headers: {
-                ...axiosOptions.headers,
-                'Content-Type': 'application/json', // Explicitly set
-              },
-              params: { format: 'csv' }
-            }
-          );
-        } else {
-          // For GET endpoints, we include all parameters in the URL
-          const queryParams = new URLSearchParams({
-            ...allParams,
-            format: 'csv'
-          });
-          response = await axios.get(`${apiEndpoint}?${queryParams.toString()}`, axiosOptions);
-        }
+        // For category endpoints, always use GET with query parameters
+        const queryParams = new URLSearchParams(allParams);
+        const fullUrl = `${apiEndpoint}?${queryParams.toString()}`;
+        console.log('Full download URL:', fullUrl);
+        
+        const response = await axios.get(fullUrl, axiosOptions);
         
         // Download the CSV file - now handling the arraybuffer response
         console.log('Response received. Content type:', response.headers['content-type']);

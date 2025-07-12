@@ -54096,18 +54096,21 @@
               response = await articleService.getArticles(page);
           }
           if (isMounted) {
-            const filteredArticles = response.data.results.filter((article) => {
-              if (article.article_subject_relevances && article.article_subject_relevances.length > 0) {
-                const msSubjectRelevance = article.article_subject_relevances.find(
-                  (relevance) => relevance.subject && relevance.subject.subject_name === "Multiple Sclerosis"
-                );
-                if (msSubjectRelevance && msSubjectRelevance.is_relevant === false) {
-                  return false;
+            let articlesToDisplay = response.data.results;
+            if (type === "relevant") {
+              articlesToDisplay = response.data.results.filter((article) => {
+                if (article.article_subject_relevances && article.article_subject_relevances.length > 0) {
+                  const msSubjectRelevance = article.article_subject_relevances.find(
+                    (relevance) => relevance.subject && relevance.subject.subject_name === "Multiple Sclerosis"
+                  );
+                  if (msSubjectRelevance && msSubjectRelevance.is_relevant === false) {
+                    return false;
+                  }
                 }
-              }
-              return true;
-            });
-            setArticles(filteredArticles);
+                return true;
+              });
+            }
+            setArticles(articlesToDisplay);
             setLastPage(Math.ceil(response.data.count / 10));
             setLoading(false);
           }
@@ -54699,57 +54702,32 @@
       let lastError = null;
       while (retryCount < maxRetries) {
         try {
-          const method = apiEndpoint.includes("/search/") ? "post" : "get";
           const allParams = {
             ...searchParams,
-            all_results: true
-            // This is the key parameter to bypass pagination
+            format: "csv",
+            all_results: "true",
+            // Primary method to get all results
+            page_size: 5e4,
+            // Fallback method in case all_results doesn't work
+            page: 1
           };
           console.log("Download request URL:", apiEndpoint);
-          console.log("Download params:", allParams, "Method:", method);
+          console.log("Download params:", allParams);
           console.log("Expected count from UI:", searchParams.expectedCount || "not provided");
-          let response;
           const axiosOptions = {
-            // Use arraybuffer for direct binary access
             responseType: "arraybuffer",
-            timeout: 18e4,
-            // 3 minutes timeout to allow for larger data transfers
+            timeout: 3e5,
+            // 5 minutes timeout for large datasets
             maxContentLength: Infinity,
-            // Allow any size response
             maxBodyLength: Infinity,
-            // Allow any size request body
             headers: {
               "Accept": "text/csv"
-              // Explicitly request CSV format
             }
           };
-          if (method === "post") {
-            const minimalParams = {
-              team_id: searchParams.team_id,
-              subject_id: searchParams.subject_id,
-              search: searchParams.search,
-              all_results: true
-            };
-            response = await axios_default.post(
-              apiEndpoint,
-              JSON.stringify(minimalParams),
-              {
-                ...axiosOptions,
-                headers: {
-                  ...axiosOptions.headers,
-                  "Content-Type": "application/json"
-                  // Explicitly set
-                },
-                params: { format: "csv" }
-              }
-            );
-          } else {
-            const queryParams = new URLSearchParams({
-              ...allParams,
-              format: "csv"
-            });
-            response = await axios_default.get(`${apiEndpoint}?${queryParams.toString()}`, axiosOptions);
-          }
+          const queryParams = new URLSearchParams(allParams);
+          const fullUrl = `${apiEndpoint}?${queryParams.toString()}`;
+          console.log("Full download URL:", fullUrl);
+          const response = await axios_default.get(fullUrl, axiosOptions);
           console.log("Response received. Content type:", response.headers["content-type"]);
           const buffer = new Uint8Array(response.data);
           const firstFewBytes = Array.from(buffer.slice(0, 20)).map((b) => String.fromCharCode(b)).join("");
@@ -54844,12 +54822,8 @@
   function CategoryDetail({ category, config, onBack }) {
     const [activeTab, setActiveTab] = (0, import_react47.useState)("chart");
     const [monthlyData, setMonthlyData] = (0, import_react47.useState)(null);
-    const [articles, setArticles] = (0, import_react47.useState)([]);
-    const [trials, setTrials] = (0, import_react47.useState)([]);
     const [loading, setLoading] = (0, import_react47.useState)({
-      chart: false,
-      articles: false,
-      trials: false
+      chart: false
     });
     const [error, setError] = (0, import_react47.useState)(null);
     const [dateFilter, setDateFilter] = (0, import_react47.useState)("last12months");
@@ -54873,45 +54847,8 @@
         setLoading((prev) => ({ ...prev, chart: false }));
       }
     };
-    const loadArticles = async () => {
-      if (articles.length > 0) return;
-      setLoading((prev) => ({ ...prev, articles: true }));
-      setError(null);
-      try {
-        const response = await axios_default.get(
-          `${config.API_URL}/teams/${config.TEAM_ID}/articles/category/${category.slug}/`
-        );
-        setArticles(response.data.results || []);
-      } catch (err) {
-        console.error("Error loading articles:", err);
-        setError("Failed to load articles");
-      } finally {
-        setLoading((prev) => ({ ...prev, articles: false }));
-      }
-    };
-    const loadTrials = async () => {
-      if (trials.length > 0) return;
-      setLoading((prev) => ({ ...prev, trials: true }));
-      setError(null);
-      try {
-        const response = await axios_default.get(
-          `${config.API_URL}/teams/${config.TEAM_ID}/trials/category/${category.slug}/`
-        );
-        setTrials(response.data.results || []);
-      } catch (err) {
-        console.error("Error loading trials:", err);
-        setError("Failed to load trials");
-      } finally {
-        setLoading((prev) => ({ ...prev, trials: false }));
-      }
-    };
     const handleTabChange = (tabName) => {
       setActiveTab(tabName);
-      if (tabName === "articles") {
-        loadArticles();
-      } else if (tabName === "trials") {
-        loadTrials();
-      }
     };
     const formatChartData = (data) => {
       if (!data || !Array.isArray(data.monthly_article_counts) || !Array.isArray(data.monthly_trial_counts)) {
@@ -55113,26 +55050,40 @@
     )))))) : /* @__PURE__ */ import_react47.default.createElement("div", { className: "alert alert-info" }, /* @__PURE__ */ import_react47.default.createElement("p", null, "No data available for this category."))), activeTab === "articles" && /* @__PURE__ */ import_react47.default.createElement("div", { className: "tab-pane fade show active" }, /* @__PURE__ */ import_react47.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-3" }, /* @__PURE__ */ import_react47.default.createElement("h5", null, "Research Articles"), /* @__PURE__ */ import_react47.default.createElement(
       DownloadButton_default,
       {
-        apiEndpoint: `${config.API_URL}/teams/${config.TEAM_ID}/articles/category/${category.slug}/`,
+        apiEndpoint: `${config.API_URL}/articles/search/`,
         fileName: `${category.slug}-articles.csv`,
         searchParams: {
           team_id: config.TEAM_ID,
-          category_slug: category.slug,
-          expectedCount: articles.length
+          subject_id: config.SUBJECT_ID,
+          search: category.name
+          // Search by category name
         }
       }
-    )), loading.articles ? /* @__PURE__ */ import_react47.default.createElement("div", { className: "text-center py-5" }, /* @__PURE__ */ import_react47.default.createElement("div", { className: "spinner-border text-primary", role: "status" }, /* @__PURE__ */ import_react47.default.createElement("span", { className: "sr-only" }, "Loading articles..."))) : error ? /* @__PURE__ */ import_react47.default.createElement("div", { className: "alert alert-danger" }, /* @__PURE__ */ import_react47.default.createElement("h4", null, "Error"), /* @__PURE__ */ import_react47.default.createElement("p", null, error)) : /* @__PURE__ */ import_react47.default.createElement(ArticleList_default, { articles })), activeTab === "trials" && /* @__PURE__ */ import_react47.default.createElement("div", { className: "tab-pane fade show active" }, /* @__PURE__ */ import_react47.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-3" }, /* @__PURE__ */ import_react47.default.createElement("h5", null, "Clinical Trials"), /* @__PURE__ */ import_react47.default.createElement(
+    )), /* @__PURE__ */ import_react47.default.createElement(
+      ArticleList_default,
+      {
+        type: "category",
+        options: { category: category.slug }
+      }
+    )), activeTab === "trials" && /* @__PURE__ */ import_react47.default.createElement("div", { className: "tab-pane fade show active" }, /* @__PURE__ */ import_react47.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-3" }, /* @__PURE__ */ import_react47.default.createElement("h5", null, "Clinical Trials"), /* @__PURE__ */ import_react47.default.createElement(
       DownloadButton_default,
       {
-        apiEndpoint: `${config.API_URL}/teams/${config.TEAM_ID}/trials/category/${category.slug}/`,
+        apiEndpoint: `${config.API_URL}/trials/search/`,
         fileName: `${category.slug}-trials.csv`,
         searchParams: {
           team_id: config.TEAM_ID,
-          category_slug: category.slug,
-          expectedCount: trials.length
+          subject_id: config.SUBJECT_ID,
+          search: category.name
+          // Search by category name
         }
       }
-    )), loading.trials ? /* @__PURE__ */ import_react47.default.createElement("div", { className: "text-center py-5" }, /* @__PURE__ */ import_react47.default.createElement("div", { className: "spinner-border text-primary", role: "status" }, /* @__PURE__ */ import_react47.default.createElement("span", { className: "sr-only" }, "Loading trials..."))) : error ? /* @__PURE__ */ import_react47.default.createElement("div", { className: "alert alert-danger" }, /* @__PURE__ */ import_react47.default.createElement("h4", null, "Error"), /* @__PURE__ */ import_react47.default.createElement("p", null, error)) : /* @__PURE__ */ import_react47.default.createElement(TrialsList_default, { trials })))));
+    )), /* @__PURE__ */ import_react47.default.createElement(
+      TrialsList_default,
+      {
+        type: "category",
+        options: { category: category.slug }
+      }
+    )))));
   }
   var CategoryDetail_default = CategoryDetail;
 

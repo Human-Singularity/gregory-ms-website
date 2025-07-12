@@ -34,6 +34,3 @@ disableAutoCollapse: true
 
 </div>
 
-<div class="col-md-10 offset-md-1">
-  <a href="/observatory/research-per-country/" data-umami-event="click--body-ms-research-country" class="btn btn-success btn-round btn-md font-weight-bold">MS Research per country</a>
-</div>

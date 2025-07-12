@@ -18,12 +18,8 @@ import DownloadButton from './DownloadButton';
 function CategoryDetail({ category, config, onBack }) {
   const [activeTab, setActiveTab] = useState('chart');
   const [monthlyData, setMonthlyData] = useState(null);
-  const [articles, setArticles] = useState([]);
-  const [trials, setTrials] = useState([]);
   const [loading, setLoading] = useState({
-    chart: false,
-    articles: false,
-    trials: false
+    chart: false
   });
   const [error, setError] = useState(null);
   
@@ -55,56 +51,9 @@ function CategoryDetail({ category, config, onBack }) {
     }
   };
 
-  // Load articles data
-  const loadArticles = async () => {
-    if (articles.length > 0) return; // Don't reload if already loaded
-
-    setLoading(prev => ({ ...prev, articles: true }));
-    setError(null);
-
-    try {
-      const response = await axios.get(
-        `${config.API_URL}/teams/${config.TEAM_ID}/articles/category/${category.slug}/`
-      );
-      setArticles(response.data.results || []);
-    } catch (err) {
-      console.error('Error loading articles:', err);
-      setError('Failed to load articles');
-    } finally {
-      setLoading(prev => ({ ...prev, articles: false }));
-    }
-  };
-
-  // Load trials data
-  const loadTrials = async () => {
-    if (trials.length > 0) return; // Don't reload if already loaded
-
-    setLoading(prev => ({ ...prev, trials: true }));
-    setError(null);
-
-    try {
-      const response = await axios.get(
-        `${config.API_URL}/teams/${config.TEAM_ID}/trials/category/${category.slug}/`
-      );
-      setTrials(response.data.results || []);
-    } catch (err) {
-      console.error('Error loading trials:', err);
-      setError('Failed to load trials');
-    } finally {
-      setLoading(prev => ({ ...prev, trials: false }));
-    }
-  };
-
   // Handle tab change
   const handleTabChange = (tabName) => {
     setActiveTab(tabName);
-    
-    // Load data when tab is activated
-    if (tabName === 'articles') {
-      loadArticles();
-    } else if (tabName === 'trials') {
-      loadTrials();
-    }
   };
 
   // Format data for the chart with date filtering
@@ -452,30 +401,20 @@ function CategoryDetail({ category, config, onBack }) {
               <div className="d-flex justify-content-between align-items-center mb-3">
                 <h5>Research Articles</h5>
                 <DownloadButton
-                  apiEndpoint={`${config.API_URL}/teams/${config.TEAM_ID}/articles/category/${category.slug}/`}
+                  apiEndpoint={`${config.API_URL}/articles/search/`}
                   fileName={`${category.slug}-articles.csv`}
                   searchParams={{
                     team_id: config.TEAM_ID,
-                    category_slug: category.slug,
-                    expectedCount: articles.length
+                    subject_id: config.SUBJECT_ID,
+                    search: category.name, // Search by category name
                   }}
                 />
               </div>
               
-              {loading.articles ? (
-                <div className="text-center py-5">
-                  <div className="spinner-border text-primary" role="status">
-                    <span className="sr-only">Loading articles...</span>
-                  </div>
-                </div>
-              ) : error ? (
-                <div className="alert alert-danger">
-                  <h4>Error</h4>
-                  <p>{error}</p>
-                </div>
-              ) : (
-                <ArticleList articles={articles} />
-              )}
+              <ArticleList 
+                type="category" 
+                options={{ category: category.slug }}
+              />
             </div>
           )}
 
@@ -485,30 +424,20 @@ function CategoryDetail({ category, config, onBack }) {
               <div className="d-flex justify-content-between align-items-center mb-3">
                 <h5>Clinical Trials</h5>
                 <DownloadButton
-                  apiEndpoint={`${config.API_URL}/teams/${config.TEAM_ID}/trials/category/${category.slug}/`}
+                  apiEndpoint={`${config.API_URL}/trials/search/`}
                   fileName={`${category.slug}-trials.csv`}
                   searchParams={{
                     team_id: config.TEAM_ID,
-                    category_slug: category.slug,
-                    expectedCount: trials.length
+                    subject_id: config.SUBJECT_ID,
+                    search: category.name, // Search by category name
                   }}
                 />
               </div>
               
-              {loading.trials ? (
-                <div className="text-center py-5">
-                  <div className="spinner-border text-primary" role="status">
-                    <span className="sr-only">Loading trials...</span>
-                  </div>
-                </div>
-              ) : error ? (
-                <div className="alert alert-danger">
-                  <h4>Error</h4>
-                  <p>{error}</p>
-                </div>
-              ) : (
-                <TrialsList trials={trials} />
-              )}
+              <TrialsList 
+                type="category" 
+                options={{ category: category.slug }}
+              />
             </div>
           )}
         </div>
