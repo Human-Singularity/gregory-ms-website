@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { searchService } from '../services/searchService';
 import { stripHtml, truncateText, formatDate } from '../utils/searchUtils';
+import { urlUtils } from '../utils/urlUtils';
 import ArticleListItem from './ArticleListItem';
 import TrialListItem from './TrialListItem';
 import AuthorListItem from './AuthorListItem';
@@ -32,11 +33,14 @@ const SEARCH_TYPE_OPTIONS = [
  * @returns {JSX.Element} - SearchApp component
  */
 function SearchApp() {
+  // Initialize from URL parameters
+  const initialParams = urlUtils.getSearchParams();
+  
   // Search parameters
-  const [searchTerm, setSearchTerm] = useState('');
-  const [searchField, setSearchField] = useState('all');
-  const [trialStatus, setTrialStatus] = useState('');
-  const [searchType, setSearchType] = useState('articles'); // Default to articles
+  const [searchTerm, setSearchTerm] = useState(initialParams.q);
+  const [searchField, setSearchField] = useState(initialParams.field);
+  const [trialStatus, setTrialStatus] = useState(initialParams.status);
+  const [searchType, setSearchType] = useState(initialParams.type);
   
   // Search results
   const [articleResults, setArticleResults] = useState([]);
@@ -57,11 +61,44 @@ function SearchApp() {
   // UI state
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [activeTab, setActiveTab] = useState('articles'); // Change default tab to match default search type
+  const [activeTab, setActiveTab] = useState(initialParams.type);
   const [hasSearched, setHasSearched] = useState(false);
+
+  // Auto-search on component mount if URL params exist
+  useEffect(() => {
+    if (initialParams.q) {
+      // Trigger search with URL parameters
+      setIsLoading(true);
+      setError(null);
+      setHasSearched(true);
+      setActiveTab(searchType);
+      // Continue with existing search logic...
+    }
+  }, []); // Empty dependency array to run only on mount
 
   // Handle search form submission
   const handleSearch = async (e) => {
+    e.preventDefault();
+    
+    if (!searchTerm.trim()) {
+      setError('Please enter a search term');
+      return;
+    }
+
+    // Update URL parameters
+    urlUtils.updateSearchParams({
+      type: searchType,
+      q: searchTerm,
+      field: searchField,
+      status: trialStatus,
+      page: 1
+    });
+    
+    setIsLoading(true);
+    setError(null);
+    setHasSearched(true);
+    // Set active tab to match search type
+    setActiveTab(searchType);
     e.preventDefault();
     
     if (!searchTerm.trim()) {
@@ -229,6 +266,14 @@ function SearchApp() {
     setArticlePage(newPage);
     setIsLoading(true);
     
+    // Update URL parameters for pagination
+    urlUtils.updateSearchParams({
+      type: 'articles',
+      q: searchTerm,
+      field: searchField,
+      page: newPage
+    });
+    
     try {
       // Prepare article search parameters
       const articleParams = {
@@ -273,6 +318,14 @@ function SearchApp() {
     
     setTrialPage(newPage);
     setIsLoading(true);
+    
+    // Update URL parameters for pagination
+    urlUtils.updateSearchParams({
+      type: 'trials',
+      q: searchTerm,
+      status: trialStatus,
+      page: newPage
+    });
     
     try {
       // Prepare trial search parameters
@@ -326,6 +379,14 @@ function SearchApp() {
     
     setAuthorPage(newPage);
     setIsLoading(true);
+    
+    // Update URL parameters for pagination
+    urlUtils.updateSearchParams({
+      type: 'authors',
+      q: searchTerm,
+      field: searchField,
+      page: newPage
+    });
     
     try {
       // Prepare author search parameters
@@ -557,7 +618,23 @@ function SearchApp() {
                 <li className="nav-item">
                   <button
                     className={`nav-link ${searchType === 'articles' ? 'active' : ''}`}
-                    onClick={() => setSearchType('articles')}
+                    onClick={() => {
+                      setSearchType('articles');
+                      setActiveTab('articles');
+                      // Update URL parameters for new search type
+                      urlUtils.updateSearchParams({
+                        type: 'articles',
+                        q: searchTerm,
+                        field: searchField,
+                        page: 1
+                      });
+                      // Reset results when switching tabs
+                      setResults([]);
+                      setCurrentPage(1);
+                      setTotalPages(1);
+                      setTotalCount(0);
+                      setHasSearched(false);
+                    }}
                     type="button"
                   >
                     <i className="fas fa-file-alt mr-2"></i>
@@ -567,7 +644,23 @@ function SearchApp() {
                 <li className="nav-item">
                   <button
                     className={`nav-link ${searchType === 'trials' ? 'active' : ''}`}
-                    onClick={() => setSearchType('trials')}
+                    onClick={() => {
+                      setSearchType('trials');
+                      setActiveTab('trials');
+                      // Update URL parameters for new search type
+                      urlUtils.updateSearchParams({
+                        type: 'trials',
+                        q: searchTerm,
+                        status: trialStatus,
+                        page: 1
+                      });
+                      // Reset results when switching tabs
+                      setResults([]);
+                      setCurrentPage(1);
+                      setTotalPages(1);
+                      setTotalCount(0);
+                      setHasSearched(false);
+                    }}
                     type="button"
                   >
                     <i className="fas fa-flask mr-2"></i>
@@ -577,7 +670,23 @@ function SearchApp() {
                 <li className="nav-item">
                   <button
                     className={`nav-link ${searchType === 'authors' ? 'active' : ''}`}
-                    onClick={() => setSearchType('authors')}
+                    onClick={() => {
+                      setSearchType('authors');
+                      setActiveTab('authors');
+                      // Update URL parameters for new search type
+                      urlUtils.updateSearchParams({
+                        type: 'authors',
+                        q: searchTerm,
+                        field: searchField,
+                        page: 1
+                      });
+                      // Reset results when switching tabs
+                      setResults([]);
+                      setCurrentPage(1);
+                      setTotalPages(1);
+                      setTotalCount(0);
+                      setHasSearched(false);
+                    }}
                     type="button"
                   >
                     <i className="fas fa-user-graduate mr-2"></i>
