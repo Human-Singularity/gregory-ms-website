@@ -268,3 +268,83 @@
   font-size: 0.875rem;
   padding: 0.5rem 1rem;
 }
+
+/* ----------------------------------------
+   9. Author Search Results
+   ---------------------------------------- */
+.author-item {
+  margin-bottom: 1rem;
+  border: 1px solid #e9ecef;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.author-item:hover {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.author-item .author-info h5 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.author-item .author-info h5 a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.author-item .author-info h5 a:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+.author-item .author-details {
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+.author-item .author-details i {
+  width: 16px;
+  text-align: center;
+}
+
+.author-item .author-stats .badge {
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.author-item .author-actions {
+  border-top: 1px solid #e9ecef;
+  padding-top: 1rem;
+}
+
+.author-item .author-actions .btn {
+  font-size: 0.875rem;
+}
+
+.author-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.author-list .author-item {
+  width: 100%;
+}
+
+/* ORCID styling */
+.author-item .fab.fa-orcid {
+  color: #a6ce39;
+}
+
+.author-item a[href*="orcid.org"] {
+  color: #a6ce39;
+  text-decoration: none;
+}
+
+.author-item a[href*="orcid.org"]:hover {
+  color: #8bb01a;
+  text-decoration: underline;
+}
