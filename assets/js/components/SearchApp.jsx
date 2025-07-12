@@ -3,6 +3,7 @@ import { searchService } from '../services/searchService';
 import { stripHtml, truncateText, formatDate } from '../utils/searchUtils';
 import ArticleListItem from './ArticleListItem';
 import TrialListItem from './TrialListItem';
+import AuthorListItem from './AuthorListItem';
 import Pagination from './Pagination';
 import { DownloadButton } from './DownloadButton';
 
@@ -22,7 +23,8 @@ const TRIAL_STATUS_OPTIONS = [
 // Search type options
 const SEARCH_TYPE_OPTIONS = [
   { value: 'articles', label: 'Research Articles' },
-  { value: 'trials', label: 'Clinical Trials' }
+  { value: 'trials', label: 'Clinical Trials' },
+  { value: 'authors', label: 'Authors' }
 ];
 
 /**
@@ -39,14 +41,18 @@ function SearchApp() {
   // Search results
   const [articleResults, setArticleResults] = useState([]);
   const [trialResults, setTrialResults] = useState([]);
+  const [authorResults, setAuthorResults] = useState([]);
   
   // Pagination
   const [articlePage, setArticlePage] = useState(1);
   const [trialPage, setTrialPage] = useState(1);
+  const [authorPage, setAuthorPage] = useState(1);
   const [articleCount, setArticleCount] = useState(0);
   const [trialCount, setTrialCount] = useState(0);
+  const [authorCount, setAuthorCount] = useState(0);
   const [articleLastPage, setArticleLastPage] = useState(1);
   const [trialLastPage, setTrialLastPage] = useState(1);
+  const [authorLastPage, setAuthorLastPage] = useState(1);
   
   // UI state
   const [isLoading, setIsLoading] = useState(false);
@@ -107,7 +113,12 @@ function SearchApp() {
         setTrialResults([]);
         setTrialCount(0);
         setTrialLastPage(1);
-      } else {
+        
+        // Reset author results since we're only searching articles
+        setAuthorResults([]);
+        setAuthorCount(0);
+        setAuthorLastPage(1);
+      } else if (searchType === 'trials') {
         // Prepare trial search parameters
         const trialParams = {
           team_id: 1, // Team Gregory
@@ -162,6 +173,46 @@ function SearchApp() {
         setArticleResults([]);
         setArticleCount(0);
         setArticleLastPage(1);
+        
+        // Reset author results since we're only searching trials
+        setAuthorResults([]);
+        setAuthorCount(0);
+        setAuthorLastPage(1);
+      } else if (searchType === 'authors') {
+        // Prepare author search parameters
+        const authorParams = {
+          team_id: 1, // Team Gregory
+          subject_id: 1, // Multiple Sclerosis
+          page: authorPage,
+          full_name: searchTerm // For authors, we search by full name
+        };
+        
+        // Execute author search
+        const authorResponse = await searchService.searchAuthors(authorParams);
+        
+        // Update author results
+        if (authorResponse.data && authorResponse.data.results && Array.isArray(authorResponse.data.results)) {
+          setAuthorResults(authorResponse.data.results);
+          setAuthorCount(authorResponse.data.count || authorResponse.data.results.length || 0);
+          setAuthorLastPage(Math.ceil((authorResponse.data.count || authorResponse.data.results.length || 0) / 10));
+        } else if (authorResponse.data && Array.isArray(authorResponse.data)) {
+          setAuthorResults(authorResponse.data);
+          setAuthorCount(authorResponse.data.length || 0);
+          setAuthorLastPage(Math.ceil((authorResponse.data.length || 0) / 10));
+        } else {
+          setAuthorResults([]);
+          setAuthorCount(0);
+          setAuthorLastPage(1);
+          console.error('Unexpected author response format:', authorResponse);
+        }
+        
+        // Reset other results since we're only searching authors
+        setArticleResults([]);
+        setArticleCount(0);
+        setArticleLastPage(1);
+        setTrialResults([]);
+        setTrialCount(0);
+        setTrialLastPage(1);
       }
     } catch (err) {
       console.error('Search error:', err);
@@ -269,6 +320,42 @@ function SearchApp() {
     }
   };
   
+  // Handle author pagination
+  const handleAuthorPage = async (newPage) => {
+    if (newPage < 1 || newPage > authorLastPage) return;
+    
+    setAuthorPage(newPage);
+    setIsLoading(true);
+    
+    try {
+      // Prepare author search parameters
+      const authorParams = {
+        team_id: 1, // Team Gregory
+        subject_id: 1, // Multiple Sclerosis
+        page: newPage,
+        full_name: searchTerm // For authors, we search by full name
+      };
+      
+      // Execute author search
+      const authorResponse = await searchService.searchAuthors(authorParams);
+      
+      // Update author results based on the actual response structure
+      if (authorResponse.data && authorResponse.data.results && Array.isArray(authorResponse.data.results)) {
+        setAuthorResults(authorResponse.data.results);
+      } else if (authorResponse.data && Array.isArray(authorResponse.data)) {
+        setAuthorResults(authorResponse.data);
+      } else {
+        setAuthorResults([]);
+        console.error('Unexpected author response format during pagination:', authorResponse);
+      }
+    } catch (err) {
+      console.error('Author pagination error:', err);
+      setError('An error occurred while loading more author results. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
   // Render result tabs - No longer needed since we're only showing one type
   const renderTabs = () => {
     if (!hasSearched) return null;
@@ -279,13 +366,14 @@ function SearchApp() {
       : 'https://api.gregory-ms.com';
     
     // Prepare API endpoint and search parameters based on current search
-    const apiEndpoint = `${API_BASE_URL}${searchType === 'articles' ? '/articles/search/' : '/trials/search/'}`;
+    const apiEndpoint = `${API_BASE_URL}${searchType === 'articles' ? '/articles/search/' : searchType === 'trials' ? '/trials/search/' : '/authors/search/'}`;
     const searchParams = {
       team_id: 1, // Team Gregory
       subject_id: 1, // Multiple Sclerosis
-      ...(searchField === 'all' || searchField === 'title' ? { title: searchTerm } : {}),
-      ...(searchField === 'all' || searchField === 'summary' ? { summary: searchTerm } : {}),
-      ...(searchField === 'all' ? { search: searchTerm } : {}),
+      ...(searchType === 'authors' ? { full_name: searchTerm } : {}),
+      ...(searchType !== 'authors' && (searchField === 'all' || searchField === 'title') ? { title: searchTerm } : {}),
+      ...(searchType !== 'authors' && (searchField === 'all' || searchField === 'summary') ? { summary: searchTerm } : {}),
+      ...(searchType !== 'authors' && searchField === 'all' ? { search: searchTerm } : {}),
       ...(searchType === 'trials' && trialStatus ? { status: trialStatus } : {})
     };
     
@@ -294,14 +382,14 @@ function SearchApp() {
     
     return (
       <div className="d-flex justify-content-between align-items-center mb-3">
-        <h3>{searchType === 'articles' ? 'Research Articles' : 'Clinical Trials'} ({searchType === 'articles' ? articleCount : trialCount})</h3>
+        <h3>{searchType === 'articles' ? 'Research Articles' : searchType === 'trials' ? 'Clinical Trials' : 'Authors'} ({searchType === 'articles' ? articleCount : searchType === 'trials' ? trialCount : authorCount})</h3>
         
         <DownloadButton
           apiEndpoint={apiEndpoint}
           fileName={fileName}
           searchParams={{
             ...searchParams,
-            expectedCount: activeTab === 'articles' ? articleCount : trialCount,
+            expectedCount: searchType === 'articles' ? articleCount : searchType === 'trials' ? trialCount : authorCount,
           }}
         />
       </div>
@@ -310,9 +398,9 @@ function SearchApp() {
   
   // Render pagination
   const renderPagination = (type) => {
-    const page = type === 'articles' ? articlePage : trialPage;
-    const lastPage = type === 'articles' ? articleLastPage : trialLastPage;
-    const handlePage = type === 'articles' ? handleArticlePage : handleTrialPage;
+    const page = type === 'articles' ? articlePage : type === 'trials' ? trialPage : authorPage;
+    const lastPage = type === 'articles' ? articleLastPage : type === 'trials' ? trialLastPage : authorLastPage;
+    const handlePage = type === 'articles' ? handleArticlePage : type === 'trials' ? handleTrialPage : handleAuthorPage;
     
     if (lastPage <= 1) return null;
     
@@ -380,6 +468,31 @@ function SearchApp() {
     );
   };
   
+  // Render author results
+  const renderAuthors = () => {
+    if (!authorResults.length) {
+      return <p>No authors found matching your search criteria.</p>;
+    }
+    
+    return (
+      <div className="author-results">        
+        {renderPagination('authors')}
+        
+        <div className="list-group author-list d-flex justify-content-center flex-wrap">
+          {authorResults.map((author) => (
+            <AuthorListItem
+              key={author.author_id || Math.random().toString(36)}
+              author={author}
+              isSearchResult={true}
+            />
+          ))}
+        </div>
+        
+        {renderPagination('authors')}
+      </div>
+    );
+  };
+  
   // Render search results
   const renderResults = () => {
     if (isLoading) {
@@ -407,11 +520,12 @@ function SearchApp() {
     
     // Check if there are no results for the selected type
     if ((searchType === 'articles' && articleCount === 0) || 
-        (searchType === 'trials' && trialCount === 0)) {
+        (searchType === 'trials' && trialCount === 0) ||
+        (searchType === 'authors' && authorCount === 0)) {
       return (
         <div className="alert alert-info">
           <h4>No results found</h4>
-          <p>Your search did not match any {searchType === 'articles' ? 'research articles' : 'clinical trials'}. Please try different keywords or filters.</p>
+          <p>Your search did not match any {searchType === 'articles' ? 'research articles' : searchType === 'trials' ? 'clinical trials' : 'authors'}. Please try different keywords or filters.</p>
         </div>
       );
     }
@@ -421,6 +535,7 @@ function SearchApp() {
         {renderTabs()}
         {searchType === 'articles' && renderArticles()}
         {searchType === 'trials' && renderTrials()}
+        {searchType === 'authors' && renderAuthors()}
       </div>
     );
   };
@@ -462,12 +577,14 @@ function SearchApp() {
                   
                   <div className="col-md-8 mb-3">
                     <div className="form-group">
-                      <label htmlFor="searchTerm">Search Terms</label>
+                      <label htmlFor="searchTerm">
+                        {searchType === 'authors' ? 'Author Name' : 'Search Terms'}
+                      </label>
                       <input
                         type="text"
                         className="form-control"
                         id="searchTerm"
-                        placeholder="Enter search terms..."
+                        placeholder={searchType === 'authors' ? 'Enter author name...' : 'Enter search terms...'}
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         required
@@ -477,21 +594,23 @@ function SearchApp() {
                 </div>
             
                 <div className="row">
-                  <div className="col-md-6 mb-3">
-                    <div className="form-group">
-                      <label htmlFor="searchField">Search In</label>
-                      <select 
-                        className="form-control"
-                        id="searchField"
-                        value={searchField}
-                        onChange={(e) => setSearchField(e.target.value)}
-                      >
-                        <option value="all">All Fields</option>
-                        <option value="title">Title Only</option>
-                        <option value="summary">Abstract/Summary Only</option>
-                      </select>
+                  {searchType !== 'authors' && (
+                    <div className="col-md-6 mb-3">
+                      <div className="form-group">
+                        <label htmlFor="searchField">Search In</label>
+                        <select 
+                          className="form-control"
+                          id="searchField"
+                          value={searchField}
+                          onChange={(e) => setSearchField(e.target.value)}
+                        >
+                          <option value="all">All Fields</option>
+                          <option value="title">Title Only</option>
+                          <option value="summary">Abstract/Summary Only</option>
+                        </select>
+                      </div>
                     </div>
-                  </div>
+                  )}
                   
                   {searchType === 'trials' && (
                     <div className="col-md-6 mb-3">
@@ -528,7 +647,7 @@ function SearchApp() {
                     ) : (
                       <>
                         <i className="fas fa-search mr-2"></i>
-                        Search {searchType === 'articles' ? 'Articles' : 'Clinical Trials'}
+                        Search {searchType === 'articles' ? 'Articles' : searchType === 'trials' ? 'Clinical Trials' : 'Authors'}
                       </>
                     )}
                   </button>
@@ -554,14 +673,15 @@ function SearchApp() {
               <h3 className="mb-0 text-primary ml-3">Search Tips</h3>
             </div>
             <div className="card-body">
-              <p className="lead">Use this search tool to find relevant research articles or clinical trials related to Multiple Sclerosis.</p>
+              <p className="lead">Use this search tool to find relevant research articles, clinical trials, or authors related to Multiple Sclerosis.</p>
               
               <h5>Tips for effective searching:</h5>
               <ul className="list-group list-group-flush mb-3">
-                <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> First, select whether you want to search for research articles or clinical trials</li>
+                <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> First, select whether you want to search for research articles, clinical trials, or authors</li>
                 <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> Use specific terms related to treatments, symptoms, or research topics</li>
                 <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> Try different spellings or related terms if you don't find what you're looking for</li>
-                <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> Use the field selector to search in titles only for more specific results</li>
+                <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> For articles and trials, use the field selector to search in titles only for more specific results</li>
+                <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> For authors, search by full name or partial name to find researchers</li>
                 <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> For clinical trials, you can filter by recruitment status to find active research opportunities</li>
                 <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> Export your results to CSV for offline reading or sharing</li>
               </ul>
