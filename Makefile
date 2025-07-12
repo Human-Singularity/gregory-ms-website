@@ -87,7 +87,7 @@ remote-restart:
 		echo "✅ Container restarted successfully"'
 
 # Backend deployment pipeline (for application code changes)
-deploy-backend: submodule-update local-push remote-pull remote-restart
+deploy-backend: submodule-update local-push remote-pull remote-migrate remote-restart
 	@echo ""
 	@echo "🎉 Backend deployment completed successfully!"
 	@echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
