@@ -17,6 +17,7 @@ layout: page
 description: 
 categories: []
 tags: []
+app: observatory
 
 enableDisqus : true
 enableMathJax: false
@@ -25,19 +26,11 @@ disableAutoCollapse: true
 
 ---
 
-<div class="col-md-10 offset-md-1">
-
-Click the legend to toggle categories of the chart. Move the bottom slider to navigate the timeline.
-
-
-<h3 class="title text-center">Detailed information and charts for each Multiple Sclerosis topic</h3>
-
+<div class="col-md-12">
 
 <div id="root"></div>
 
-For a more flexible analysis, use the dashboard bellow to suit your needs.
-
-Hover each chart to download the results, click each title or article id number to read more information.
+{{< react-app observatory >}}
 
 </div>
 
