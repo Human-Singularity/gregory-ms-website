@@ -61,19 +61,15 @@ function AuthorListItem({ author, isSearchResult = false }) {
                     {formatNumber(author.articles_count)} articles
                   </span>
                   
-                  {author.articles_list && (
-                    <div className="mt-2">
-                      <a 
-                        href={author.articles_list} 
-                        className="btn btn-sm btn-outline-primary"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <i className="fas fa-external-link-alt mr-1"></i>
-                        View Articles
-                      </a>
-                    </div>
-                  )}
+                  <div className="mt-2">
+                    <a 
+                      href={authorUrl} 
+                      className="btn btn-sm btn-primary"
+                    >
+                      <i className="fas fa-user-circle mr-1"></i>
+                      View Profile
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -81,15 +77,6 @@ function AuthorListItem({ author, isSearchResult = false }) {
         </div>
       </div>
       
-      <div className="author-actions mt-3">
-        <a 
-          href={authorUrl} 
-          className="btn btn-primary btn-sm"
-        >
-          <i className="fas fa-user-circle mr-2"></i>
-          View Profile
-        </a>
-      </div>
     </div>
   );
 }
