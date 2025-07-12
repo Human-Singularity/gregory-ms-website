@@ -55196,7 +55196,7 @@
         config,
         onBack: handleBackToList
       }
-    ) : /* @__PURE__ */ import_react48.default.createElement("div", { className: "row" }, /* @__PURE__ */ import_react48.default.createElement("div", { className: "col-md-12" }, /* @__PURE__ */ import_react48.default.createElement("h2", { className: "text-center mb-4" }, "MS Treatment Research Observatory"), /* @__PURE__ */ import_react48.default.createElement("p", { className: "text-center text-muted mb-4" }, "Explore research articles and clinical trials for ", categories.length, " different MS treatments and therapies"), /* @__PURE__ */ import_react48.default.createElement("div", { className: "row justify-content-center mb-4" }, /* @__PURE__ */ import_react48.default.createElement("div", { className: "col-md-6" }, /* @__PURE__ */ import_react48.default.createElement("div", { className: "input-group observatory-search" }, /* @__PURE__ */ import_react48.default.createElement(
+    ) : /* @__PURE__ */ import_react48.default.createElement("div", { className: "row" }, /* @__PURE__ */ import_react48.default.createElement("div", { className: "col-md-12" }, /* @__PURE__ */ import_react48.default.createElement("div", { className: "row justify-content-center mb-4" }, /* @__PURE__ */ import_react48.default.createElement("div", { className: "col-md-6" }, /* @__PURE__ */ import_react48.default.createElement("div", { className: "input-group observatory-search" }, /* @__PURE__ */ import_react48.default.createElement(
       "input",
       {
         type: "text",
