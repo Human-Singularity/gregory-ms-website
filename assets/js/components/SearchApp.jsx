@@ -64,18 +64,6 @@ function SearchApp() {
   const [activeTab, setActiveTab] = useState(initialParams.type);
   const [hasSearched, setHasSearched] = useState(false);
 
-  // Auto-search on component mount if URL params exist
-  useEffect(() => {
-    if (initialParams.q) {
-      // Trigger search with URL parameters
-      setIsLoading(true);
-      setError(null);
-      setHasSearched(true);
-      setActiveTab(searchType);
-      // Continue with existing search logic...
-    }
-  }, []); // Empty dependency array to run only on mount
-
   // Handle search form submission
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -416,6 +404,15 @@ function SearchApp() {
       setIsLoading(false);
     }
   };
+  
+  // Auto-search on component mount if URL params exist
+  useEffect(() => {
+    if (initialParams.q) {
+      // Create a fake event object and trigger search
+      const fakeEvent = { preventDefault: () => {} };
+      handleSearch(fakeEvent);
+    }
+  }, []); // Empty dependency array to run only on mount
   
   // Render result tabs - No longer needed since we're only showing one type
   const renderTabs = () => {
