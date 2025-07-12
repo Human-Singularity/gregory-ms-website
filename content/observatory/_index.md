@@ -33,4 +33,3 @@ disableAutoCollapse: true
 {{< react-app observatory >}}
 
 </div>
-
