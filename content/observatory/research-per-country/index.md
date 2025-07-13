@@ -8,7 +8,7 @@ options:
   unlisted: false
   header: mini
   navbar: navbar navbar-expand-lg bg-white fixed-top font-weight-bold
-
+draft: true
 resources:
   - src: markus-winkler-IrRbSND5EUc-unsplash.jpg
     name: header

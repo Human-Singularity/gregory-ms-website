@@ -83,6 +83,12 @@ headerPhoto = ""
   pageRef = "trials/_index.md"
   weight = 6
 
+  [[menu.main]]
+  name = 'Observatory'
+  pageRef = "observatory/_index.md"
+  weight = 7
+
+
 
   [[menu.main]]
   name = 'News'
