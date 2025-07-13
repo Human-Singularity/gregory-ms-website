@@ -34121,7 +34121,7 @@
     )), /* @__PURE__ */ import_react9.default.createElement("div", { className: "text-center text-sm-start flex-grow-1" }, /* @__PURE__ */ import_react9.default.createElement("h1", { className: "mb-3 display-6 text-primary" }, author.full_name || `${author.given_name} ${author.family_name}`), /* @__PURE__ */ import_react9.default.createElement("div", { className: "d-flex flex-wrap justify-content-center justify-content-sm-start gap-3 align-items-center mb-3" }, /* @__PURE__ */ import_react9.default.createElement("span", { className: "badge bg-primary fs-6 px-3 py-2" }, /* @__PURE__ */ import_react9.default.createElement("i", { className: "fas fa-file-alt mr-2" }), formatNumber(author.articles_count), " Articles"), author.country && /* @__PURE__ */ import_react9.default.createElement("span", { className: "text-muted fs-6" }, /* @__PURE__ */ import_react9.default.createElement("i", { className: "fas fa-globe mr-2" }), author.country)), author.ORCID && /* @__PURE__ */ import_react9.default.createElement("div", { className: "text-muted mb-3" }, /* @__PURE__ */ import_react9.default.createElement("i", { className: "fab fa-orcid mr-2" }), /* @__PURE__ */ import_react9.default.createElement(
       "a",
       {
-        href: author.ORCID.startsWith("http") ? author.ORCID : `https://orcid.org/${author.ORCID}`,
+        href: author.ORCID,
         target: "_blank",
         rel: "noreferrer",
         className: "text-decoration-none text-muted"
