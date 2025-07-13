@@ -37,25 +37,29 @@ export function useArticles(type = 'all', options = {}) {
         }
 
         if (isMounted) {
-          // Filter out articles that are explicitly marked as not relevant for MS
-          const filteredArticles = response.data.results.filter(article => {
-            // Check if article has subject relevances
-            if (article.article_subject_relevances && article.article_subject_relevances.length > 0) {
-              // Look for Multiple Sclerosis subject relevance
-              const msSubjectRelevance = article.article_subject_relevances.find(
-                relevance => relevance.subject && relevance.subject.subject_name === "Multiple Sclerosis"
-              );
-              
-              // If it's explicitly marked as not relevant, exclude it
-              if (msSubjectRelevance && msSubjectRelevance.is_relevant === false) {
-                return false;
-              }
-            }
-            // Include all other articles
-            return true;
-          });
+          let articlesToDisplay = response.data.results;
           
-          setArticles(filteredArticles);
+          // Only filter out irrelevant articles for the 'relevant' page
+          if (type === 'relevant') {
+            articlesToDisplay = response.data.results.filter(article => {
+              // Check if article has subject relevances
+              if (article.article_subject_relevances && article.article_subject_relevances.length > 0) {
+                // Look for Multiple Sclerosis subject relevance
+                const msSubjectRelevance = article.article_subject_relevances.find(
+                  relevance => relevance.subject && relevance.subject.subject_name === "Multiple Sclerosis"
+                );
+                
+                // If it's explicitly marked as not relevant, exclude it
+                if (msSubjectRelevance && msSubjectRelevance.is_relevant === false) {
+                  return false;
+                }
+              }
+              // Include all other articles
+              return true;
+            });
+          }
+          
+          setArticles(articlesToDisplay);
           setLastPage(Math.ceil(response.data.count / 10));
           setLoading(false);
         }

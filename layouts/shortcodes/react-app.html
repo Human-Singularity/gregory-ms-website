@@ -1,0 +1,10 @@
+{{/* React App Shortcode */}}
+{{ $app := .Get 0 }}
+{{ if $app }}
+  {{ partial "react-app.html" (dict "app" $app) }}
+{{ else }}
+  {{/* Default to app parameter from page */}}
+  {{ if .Page.Params.app }}
+    {{ partial "react-app.html" (dict "app" .Page.Params.app) }}
+  {{ end }}
+{{ end }}

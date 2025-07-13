@@ -13,6 +13,7 @@ const entryPoints = [
   'assets/js/apps/authorProfile.jsx',
   'assets/js/apps/authorRanking.jsx',
   'assets/js/apps/relevant.jsx',
+  'assets/js/apps/observatory.jsx',
 ];
 
 // Create apps directory if it doesn't exist

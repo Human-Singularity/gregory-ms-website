@@ -425,15 +425,37 @@ function SearchApp() {
     
     // Prepare API endpoint and search parameters based on current search
     const apiEndpoint = `${API_BASE_URL}${searchType === 'articles' ? '/articles/search/' : searchType === 'trials' ? '/trials/search/' : '/authors/search/'}`;
+    
+    // Build search parameters using the same logic as the actual search
     const searchParams = {
       team_id: 1, // Team Gregory
       subject_id: 1, // Multiple Sclerosis
-      ...(searchType === 'authors' ? { full_name: searchTerm } : {}),
-      ...(searchType !== 'authors' && (searchField === 'all' || searchField === 'title') ? { title: searchTerm } : {}),
-      ...(searchType !== 'authors' && (searchField === 'all' || searchField === 'summary') ? { summary: searchTerm } : {}),
-      ...(searchType !== 'authors' && searchField === 'all' ? { search: searchTerm } : {}),
-      ...(searchType === 'trials' && trialStatus ? { status: trialStatus } : {})
     };
+    
+    if (searchType === 'authors') {
+      searchParams.full_name = searchTerm;
+    } else if (searchType === 'articles' || searchType === 'trials') {
+      // Use the same parameter logic as the actual search
+      if (searchField === 'all' || searchField === 'title') {
+        searchParams.title = searchTerm;
+      }
+      
+      if (searchField === 'all' || searchField === 'summary') {
+        searchParams.summary = searchTerm;
+      }
+      
+      if (searchField === 'all') {
+        searchParams.search = searchTerm;
+        // Clear specific fields when using general search (same as actual search logic)
+        delete searchParams.title;
+        delete searchParams.summary;
+      }
+      
+      // Add trial status filter for trials
+      if (searchType === 'trials' && trialStatus) {
+        searchParams.status = trialStatus;
+      }
+    }
     
     // Generate a descriptive filename based on search type and date
     const fileName = `gregory-ms-${searchType}-search-${new Date().toISOString().slice(0, 10)}.csv`;
@@ -931,7 +953,7 @@ function SearchApp() {
               <h3 className="mb-0 text-primary ml-3">Search Tips</h3>
             </div>
             <div className="card-body">
-              <p className="lead">Use this search tool to find relevant research articles, clinical trials, or authors related to Multiple Sclerosis.</p>
+              <p className="lead">Use this search tool to find research articles, clinical trials, or authors related to Multiple Sclerosis.</p>
               
               <h5>Tips for effective searching:</h5>
               <ul className="list-group list-group-flush mb-3">

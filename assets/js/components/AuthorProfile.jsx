@@ -210,7 +210,7 @@ export function AuthorProfile() {
                               <div className="text-muted mb-3">
                                 <i className="fab fa-orcid mr-2"></i>
                                 <a 
-                                  href={author.ORCID.startsWith('http') ? author.ORCID : `https://orcid.org/${author.ORCID}`}
+                                  href={author.ORCID}
                                   target='_blank' 
                                   rel='noreferrer'
                                   className="text-decoration-none text-muted"

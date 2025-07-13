@@ -411,6 +411,9 @@
 		{{- if eq .RelPermalink "/authors/ranking/" -}}
 		{{ partial "react-app-loader.html" (dict "app" "authorRanking") }}
 		{{ end }}
+		{{- if or (eq .Params.app "observatory") (hasPrefix .RelPermalink "/observatory/") -}}
+		{{ partial "react-app-loader.html" (dict "app" "observatory") }}
+		{{ end }}
 
 		{{- if or (.HasShortcode "metabase-embed")  -}}
 		<script src="https://metabase.gregory-ms.com/app/iframeResizer.js"></script>

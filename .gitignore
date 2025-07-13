@@ -159,17 +159,5 @@ assets/.DS_Store
 uv.lock
 pyproject.toml
 scripts/
-static/js/articles.js
-static/js/articles.js.map
-static/js/authorProfile.js
-static/js/authorProfile.js.map
-static/js/category.js
-static/js/category.js.map
-static/js/relevant.js
-static/js/relevant.js.map
-static/js/mermaid.min.js
-static/js/trials.js
-static/js/trials.js.map
 nginx-production-settings/
 nginx-prod
-static/js/*.js.map

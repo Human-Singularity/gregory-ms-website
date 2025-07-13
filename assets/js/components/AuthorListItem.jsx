@@ -43,7 +43,7 @@ function AuthorListItem({ author, isSearchResult = false }) {
                   <p className="mb-1">
                     <i className="fab fa-orcid mr-2 text-success"></i>
                     <a 
-                      href={`https://orcid.org/${author.ORCID}`} 
+                      href={`${author.ORCID}`} 
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="text-success"

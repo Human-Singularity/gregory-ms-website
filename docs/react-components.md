@@ -14,13 +14,17 @@ assets/js/
 │   ├── articles.jsx     # Articles app entry point
 │   ├── authorProfile.jsx # Author profile app entry point
 │   ├── category.jsx     # Category app entry point
+│   ├── observatory.jsx  # Observatory app entry point
 │   ├── relevant.jsx     # Relevant articles app entry point
 │   └── trials.jsx       # Trials app entry point
 ├── components/          # Reusable React components
 │   ├── ArticleList.jsx  # Displays a list of articles
 │   ├── ArticleSnippet.jsx # Displays a preview of an article
 │   ├── AuthorProfile.jsx # Displays author information
+│   ├── CategoryCard.jsx # Displays a category card
+│   ├── CategoryDetail.jsx # Displays detailed category information
 │   ├── DownloadButton.jsx # Button to download data as CSV
+│   ├── Observatory.jsx  # Main observatory component
 │   ├── Pagination.jsx   # Pagination component
 │   ├── SingleArticle.jsx # Displays a single article
 │   ├── Trial.jsx        # Displays a single trial
