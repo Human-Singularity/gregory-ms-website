@@ -238,7 +238,7 @@ function CategoryDetail({ category, config, onBack }) {
             <h2 className="text-primary">{category.name}</h2>
             <p className="text-muted">{category.description}</p>
           </div>
-          <button className="btn btn-outline-secondary" onClick={onBack}>
+          <button className="btn btn-secondary" onClick={onBack}>
             <i className="fa fa-arrow-left mr-2"></i>
             Back to Categories
           </button>
