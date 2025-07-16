@@ -286,7 +286,7 @@ function Observatory({ config = DEFAULT_CONFIG }) {
                   No treatments match your 
                   {searchTerm && ` search for "${searchTerm}"`}
                   {searchTerm && selectedTags.length > 0 && ' and '}
-                  {selectedTags.length > 0 && `selected tags: ${selectedTags.join(', ')}`}
+                  {selectedTags.length > 0 && ` selected tags: ${selectedTags.join(', ')}`}
                 </p>
                 <p>Try:</p>
                 <ul className="list-unstyled">
