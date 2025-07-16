@@ -55103,8 +55103,8 @@
   var CATEGORIES = [
     { tags: ["immune reconstitution", "DMTs"], id: 30, name: "aHSCT", slug: "ahsct", description: "Autologous hematopoietic stem cell transplantation research and clinical trials." },
     { tags: ["immune reconstitution", "DMTs"], id: 1, name: "Alemtuzumab", slug: "alemtuzumab", description: "Research on Alemtuzumab (Lemtrada) for treating relapsing forms of multiple sclerosis." },
-    { tags: ["DMTs"], id: 37, name: "Teriflunomide", slug: "aubagio", description: "Studies on Aubagio (teriflunomide) for relapsing-remitting multiple sclerosis." },
-    { tags: ["DMTs", "fumarate"], id: 43, name: "Bafiertam", slug: "bafiertam", description: "Research on Bafiertam (monomethyl fumarate) for multiple sclerosis treatment." },
+    { tags: ["DMTs"], id: 37, name: "Teriflunomide", slug: "teriflunomide", description: "Studies on Aubagio (teriflunomide) for relapsing-remitting multiple sclerosis." },
+    { tags: ["DMTs", "fumarate"], id: 43, name: "Monomethyl Fumarate", slug: "monomethyl-fumarate", description: "Research on Bafiertam (monomethyl fumarate) for multiple sclerosis treatment." },
     { tags: ["remyelination"], id: 2, name: "Bexarotene", slug: "bexarotene", description: "Studies on Bexarotene as an RXR agonist for potential remyelination therapy." },
     { tags: ["remyelination"], id: 48, name: "Biotin", slug: "biotin", description: "High-dose biotin research for progressive multiple sclerosis treatment." },
     { tags: ["BTKi", "investigational"], id: 50, name: "Bruton Tyrosine Kinase", slug: "btk-inhibitors", description: "BTK inhibitors research for multiple sclerosis treatment." },
@@ -55126,7 +55126,7 @@
     { tags: ["remyelination", "investigational"], id: 4, name: "Metformin", slug: "metformin", description: "Research on Metformin as a metabolic modulator for rejuvenating oligodendrocyte precursor cells." },
     { tags: ["symptomatic"], id: 46, name: "Naltrexone", slug: "naltrexone", description: "Low-dose naltrexone research for multiple sclerosis symptom management." },
     { tags: ["DMTs", "integrin"], id: 5, name: "Natalizumab", slug: "natalizumab", description: "Studies on Natalizumab (Tysabri) for multiple sclerosis treatment." },
-    { tags: ["DMTs", "chemo"], id: 38, name: "Novantrone", slug: "novantrone", description: "Research on Novantrone (mitoxantrone) for multiple sclerosis treatment." },
+    { tags: ["DMTs", "chemo"], id: 38, name: "Mitoxantrone", slug: "mitoxantrone", description: "Research on Novantrone (mitoxantrone) for multiple sclerosis treatment." },
     { tags: ["DMTs", "anti-CD20"], id: 6, name: "Ocrelizumab", slug: "ocrelizumab", description: "Studies on Ocrelizumab anti-CD20 therapy for multiple sclerosis." },
     { tags: ["DMTs", "anti-CD20"], id: 29, name: "Ofatumumab", slug: "ofatumumab", description: "Research on Ofatumumab (Kesimpta) for multiple sclerosis treatment." },
     { tags: ["remyelination", "investigational"], id: 72, name: "Opicinumab (BIIB033)", slug: "opicinumab-biib033", description: "Studies on Opicinumab anti-LINGO-1 antibody for remyelination." },
@@ -55138,10 +55138,10 @@
     { tags: ["neuroprotection", "investigational"], id: 7, name: "Simvastatin", slug: "simvastatin", description: "Research on Simvastatin for neuroprotection in multiple sclerosis." },
     { tags: ["DMTs", "S1P"], id: 10, name: "Siponimod", slug: "siponimod", description: "Studies on Siponimod (Mayzent) for secondary progressive multiple sclerosis." },
     { tags: ["cell therapy", "immunotherapy", "investigational"], id: 8, name: "Tcelna", slug: "tcelna", description: "Research on Tcelna for multiple sclerosis treatment." },
-    { tags: ["DMTs", "fumarate"], id: 36, name: "Tecfidera", slug: "tecfidera", description: "Studies on Tecfidera (dimethyl fumarate) for relapsing-remitting multiple sclerosis." },
+    { tags: ["DMTs", "fumarate"], id: 36, name: "Dimethyl Fumarate", slug: "dimethyl-fumarate", description: "Studies on Tecfidera (dimethyl fumarate) for relapsing-remitting multiple sclerosis." },
     { tags: ["BTKi", "investigational"], id: 34, name: "Tolebrutinib", slug: "tolebrutinib", description: "Research on Tolebrutinib BTK inhibitor for multiple sclerosis treatment." },
     { tags: ["DMTs", "anti-CD20"], id: 39, name: "Ublituximab", slug: "ublituximab", description: "Studies on Ublituximab (Briumvi) for relapsing multiple sclerosis." },
-    { tags: ["DMTs", "fumarate"], id: 42, name: "Vumerity", slug: "vumerity", description: "Research on Vumerity (diroximel fumarate) for multiple sclerosis treatment." }
+    { tags: ["DMTs", "fumarate"], id: 42, name: "diroximel Fumarate", slug: "diroximel-fumarate", description: "Research on Vumerity (diroximel fumarate) for multiple sclerosis treatment." }
   ];
   function Observatory({ config = DEFAULT_CONFIG }) {
     const { categorySlug } = useParams();
@@ -55235,13 +55235,15 @@
         title: "Clear search"
       },
       /* @__PURE__ */ import_react48.default.createElement("i", { className: "fa fa-times" })
-    ) : /* @__PURE__ */ import_react48.default.createElement("span", { className: "input-group-text" }, /* @__PURE__ */ import_react48.default.createElement("i", { className: "fa fa-search" })))), (searchTerm || selectedTags.length > 0) && /* @__PURE__ */ import_react48.default.createElement("div", { className: "observatory-filters-status" }, /* @__PURE__ */ import_react48.default.createElement("small", { className: "text-muted" }, "Showing ", filteredCategories.length, " of ", categories.length, " treatments", (searchTerm || selectedTags.length > 0) && /* @__PURE__ */ import_react48.default.createElement(
+    ) : /* @__PURE__ */ import_react48.default.createElement("span", { className: "input-group-text" }, /* @__PURE__ */ import_react48.default.createElement("i", { className: "fa fa-search" })))), /* @__PURE__ */ import_react48.default.createElement("div", { className: "observatory-filters-status mt-2" }, /* @__PURE__ */ import_react48.default.createElement("div", { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react48.default.createElement("small", { className: "text-muted" }, "Showing ", filteredCategories.length, " of ", categories.length, " treatments"), /* @__PURE__ */ import_react48.default.createElement(
       "button",
       {
-        className: "btn btn-link btn-sm p-0 ml-2 observatory-clear-filters",
+        className: `btn btn-sm ${searchTerm || selectedTags.length > 0 ? "btn-outline-secondary" : "btn-outline-light"}`,
         onClick: handleClearAllFilters,
-        style: { fontSize: "0.8rem", textDecoration: "none" }
+        disabled: !searchTerm && selectedTags.length === 0,
+        title: "Clear all filters"
       },
+      /* @__PURE__ */ import_react48.default.createElement("i", { className: "fa fa-times mr-1" }),
       "Clear all filters"
     ))))), allTags.length > 0 && /* @__PURE__ */ import_react48.default.createElement("div", { className: "row justify-content-center mb-4" }, /* @__PURE__ */ import_react48.default.createElement("div", { className: "col-md-8" }, /* @__PURE__ */ import_react48.default.createElement("div", { className: "observatory-tag-filters" }, /* @__PURE__ */ import_react48.default.createElement("div", { className: "d-flex flex-wrap justify-content-center" }, /* @__PURE__ */ import_react48.default.createElement("small", { className: "text-muted align-self-center mr-2" }, "Filter by:"), allTags.map((tag) => /* @__PURE__ */ import_react48.default.createElement(
       "button",
