@@ -18,8 +18,8 @@ const DEFAULT_CONFIG = {
 const CATEGORIES = [
 	{ tags:['immune reconstitution','DMTs'], id: 30, name: 'aHSCT', slug: 'ahsct', description: 'Autologous hematopoietic stem cell transplantation research and clinical trials.' },
 	{ tags:['immune reconstitution','DMTs'], id: 1, name: 'Alemtuzumab', slug: 'alemtuzumab', description: 'Research on Alemtuzumab (Lemtrada) for treating relapsing forms of multiple sclerosis.' },
-	{ tags:['DMTs'], id: 37, name: 'Teriflunomide', slug: 'aubagio', description: 'Studies on Aubagio (teriflunomide) for relapsing-remitting multiple sclerosis.' },
-	{ tags:['DMTs','fumarate'], id: 43, name: 'Bafiertam', slug: 'bafiertam', description: 'Research on Bafiertam (monomethyl fumarate) for multiple sclerosis treatment.' },
+	{ tags:['DMTs'], id: 37, name: 'Teriflunomide', slug: 'teriflunomide', description: 'Studies on Aubagio (teriflunomide) for relapsing-remitting multiple sclerosis.' },
+	{ tags:['DMTs','fumarate'], id: 43, name: 'Monomethyl Fumarate', slug: 'monomethyl-fumarate', description: 'Research on Bafiertam (monomethyl fumarate) for multiple sclerosis treatment.' },
 	{ tags:['remyelination'], id: 2, name: 'Bexarotene', slug: 'bexarotene', description: 'Studies on Bexarotene as an RXR agonist for potential remyelination therapy.' },
 	{ tags:['remyelination'], id: 48, name: 'Biotin', slug: 'biotin', description: 'High-dose biotin research for progressive multiple sclerosis treatment.' },
 	{ tags:['BTKi','investigational'], id: 50, name: 'Bruton Tyrosine Kinase', slug: 'btk-inhibitors', description: 'BTK inhibitors research for multiple sclerosis treatment.' },
@@ -41,7 +41,7 @@ const CATEGORIES = [
 	{ tags:['remyelination','investigational'], id: 4, name: 'Metformin', slug: 'metformin', description: 'Research on Metformin as a metabolic modulator for rejuvenating oligodendrocyte precursor cells.' },
 	{ tags:['symptomatic'], id: 46, name: 'Naltrexone', slug: 'naltrexone', description: 'Low-dose naltrexone research for multiple sclerosis symptom management.' },
 	{ tags:['DMTs','integrin'], id: 5, name: 'Natalizumab', slug: 'natalizumab', description: 'Studies on Natalizumab (Tysabri) for multiple sclerosis treatment.' },
-	{ tags:['DMTs','chemo'], id: 38, name: 'Novantrone', slug: 'novantrone', description: 'Research on Novantrone (mitoxantrone) for multiple sclerosis treatment.' },
+	{ tags:['DMTs','chemo'], id: 38, name: 'Mitoxantrone', slug: 'mitoxantrone', description: 'Research on Novantrone (mitoxantrone) for multiple sclerosis treatment.' },
 	{ tags:['DMTs','anti-CD20'], id: 6, name: 'Ocrelizumab', slug: 'ocrelizumab', description: 'Studies on Ocrelizumab anti-CD20 therapy for multiple sclerosis.' },
 	{ tags:['DMTs','anti-CD20'], id: 29, name: 'Ofatumumab', slug: 'ofatumumab', description: 'Research on Ofatumumab (Kesimpta) for multiple sclerosis treatment.' },
 	{ tags:['remyelination','investigational'], id: 72, name: 'Opicinumab (BIIB033)', slug: 'opicinumab-biib033', description: 'Studies on Opicinumab anti-LINGO-1 antibody for remyelination.' },
@@ -53,10 +53,10 @@ const CATEGORIES = [
 	{ tags:['neuroprotection','investigational'], id: 7, name: 'Simvastatin', slug: 'simvastatin', description: 'Research on Simvastatin for neuroprotection in multiple sclerosis.' },
 	{ tags:['DMTs','S1P'], id: 10, name: 'Siponimod', slug: 'siponimod', description: 'Studies on Siponimod (Mayzent) for secondary progressive multiple sclerosis.' },
 	{ tags:['cell therapy','immunotherapy','investigational'], id: 8, name: 'Tcelna', slug: 'tcelna', description: 'Research on Tcelna for multiple sclerosis treatment.' },
-	{ tags:['DMTs','fumarate'], id: 36, name: 'Tecfidera', slug: 'tecfidera', description: 'Studies on Tecfidera (dimethyl fumarate) for relapsing-remitting multiple sclerosis.' },
+	{ tags:['DMTs','fumarate'], id: 36, name: 'Dimethyl Fumarate', slug: 'dimethyl-fumarate', description: 'Studies on Tecfidera (dimethyl fumarate) for relapsing-remitting multiple sclerosis.' },
 	{ tags:['BTKi','investigational'], id: 34, name: 'Tolebrutinib', slug: 'tolebrutinib', description: 'Research on Tolebrutinib BTK inhibitor for multiple sclerosis treatment.' },
 	{ tags:['DMTs','anti-CD20'], id: 39, name: 'Ublituximab', slug: 'ublituximab', description: 'Studies on Ublituximab (Briumvi) for relapsing multiple sclerosis.' },
-	{ tags:['DMTs','fumarate'], id: 42, name: 'Vumerity', slug: 'vumerity', description: 'Research on Vumerity (diroximel fumarate) for multiple sclerosis treatment.' }
+	{ tags:['DMTs','fumarate'], id: 42, name: 'diroximel Fumarate', slug: 'diroximel-fumarate', description: 'Research on Vumerity (diroximel fumarate) for multiple sclerosis treatment.' }
 ];
 
 /**
@@ -222,19 +222,20 @@ function Observatory({ config = DEFAULT_CONFIG }) {
                   </div>
                 </div>
                 {(searchTerm || selectedTags.length > 0) && (
-                  <div className="observatory-filters-status">
-                    <small className="text-muted">
-                      Showing {filteredCategories.length} of {categories.length} treatments
-                      {(searchTerm || selectedTags.length > 0) && (
-                        <button
-                          className="btn btn-link btn-sm p-0 ml-2 observatory-clear-filters"
-                          onClick={handleClearAllFilters}
-                          style={{ fontSize: '0.8rem', textDecoration: 'none' }}
-                        >
-                          Clear all filters
-                        </button>
-                      )}
-                    </small>
+                  <div className="observatory-filters-status mt-2">
+                    <div className="d-flex justify-content-between align-items-center">
+                      <small className="text-muted">
+                        Showing {filteredCategories.length} of {categories.length} treatments
+                      </small>
+                      <button
+                        className="btn btn-outline-secondary btn-sm"
+                        onClick={handleClearAllFilters}
+                        title="Clear all filters"
+                      >
+                        <i className="fa fa-times mr-1"></i>
+                        Clear all filters
+                      </button>
+                    </div>
                   </div>
                 )}
               </div>
