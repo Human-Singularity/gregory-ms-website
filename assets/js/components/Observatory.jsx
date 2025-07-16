@@ -221,23 +221,22 @@ function Observatory({ config = DEFAULT_CONFIG }) {
                     )}
                   </div>
                 </div>
-                {(searchTerm || selectedTags.length > 0) && (
-                  <div className="observatory-filters-status mt-2">
-                    <div className="d-flex justify-content-between align-items-center">
-                      <small className="text-muted">
-                        Showing {filteredCategories.length} of {categories.length} treatments
-                      </small>
-                      <button
-                        className="btn btn-outline-secondary btn-sm"
-                        onClick={handleClearAllFilters}
-                        title="Clear all filters"
-                      >
-                        <i className="fa fa-times mr-1"></i>
-                        Clear all filters
-                      </button>
-                    </div>
+                <div className="observatory-filters-status mt-2">
+                  <div className="d-flex justify-content-between align-items-center">
+                    <small className="text-muted">
+                      Showing {filteredCategories.length} of {categories.length} treatments
+                    </small>
+                    <button
+                      className={`btn btn-sm ${(searchTerm || selectedTags.length > 0) ? 'btn-outline-secondary' : 'btn-outline-light'}`}
+                      onClick={handleClearAllFilters}
+                      disabled={!searchTerm && selectedTags.length === 0}
+                      title="Clear all filters"
+                    >
+                      <i className="fa fa-times mr-1"></i>
+                      Clear all filters
+                    </button>
                   </div>
-                )}
+                </div>
               </div>
             </div>
 
@@ -287,7 +286,7 @@ function Observatory({ config = DEFAULT_CONFIG }) {
                   No treatments match your 
                   {searchTerm && ` search for "${searchTerm}"`}
                   {searchTerm && selectedTags.length > 0 && ' and '}
-                  {selectedTags.length > 0 && `selected tags: ${selectedTags.join(', ')}`}
+                  {selectedTags.length > 0 && ` selected tags: ${selectedTags.join(', ')}`}
                 </p>
                 <p>Try:</p>
                 <ul className="list-unstyled">
