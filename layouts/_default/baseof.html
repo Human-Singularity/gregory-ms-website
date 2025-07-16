@@ -33,6 +33,9 @@
 	{{- $nowUi := resources.Get "scss/now-ui-kit.scss" | toCSS (dict "enableSourceMap" false "outputStyle" "compressed") -}}
 	{{- $gregoryCustom := resources.Get "scss/gregory-custom.scss" | toCSS (dict "enableSourceMap" false "outputStyle" "compressed") -}}
 	{{- $badges := resources.Get "css/badges.css" | resources.Fingerprint -}}
+	{{- if or (eq .Params.app "observatory") (hasPrefix .RelPermalink "/observatory/") -}}
+	{{- $observatory := resources.Get "css/observatory.css" | resources.Fingerprint -}}
+	{{- end -}}
 	{{ $montserrat := resources.Get "css/Montserrat.css" | resources.Fingerprint }}
 	{{ $styles := slice $nowUi  | resources.Concat "css/style.css" | resources.Minify | resources.Fingerprint }}
 
@@ -41,6 +44,9 @@
 	<link rel="stylesheet" href="{{ $nowUi.Permalink }}" integrity="{{ $nowUi.Data.Integrity }}">
 	<link rel="stylesheet" href="{{$montserrat.Permalink}}">
 	<link rel="stylesheet" href="{{$badges.Permalink}}">
+	{{- if or (eq .Params.app "observatory") (hasPrefix .RelPermalink "/observatory/") -}}
+	<link rel="stylesheet" href="{{$observatory.Permalink}}">
+	{{- end -}}
 	<script src="https://kit.fontawesome.com/16e8434146.js" crossorigin="anonymous"></script>
 
 
