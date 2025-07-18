@@ -34346,7 +34346,19 @@
         try {
           const authorResponse = await axios_default.get(`https://api.gregory-ms.com/authors/?author_id=${currentAuthorId}&format=json`);
           if (!isMounted) return;
-          const authorData = authorResponse.data;
+          console.log("Author API response:", authorResponse.data);
+          let authorData;
+          if (Array.isArray(authorResponse.data)) {
+            authorData = authorResponse.data[0];
+          } else if (authorResponse.data.results && Array.isArray(authorResponse.data.results)) {
+            authorData = authorResponse.data.results[0];
+          } else {
+            authorData = authorResponse.data;
+          }
+          console.log("Processed author data:", authorData);
+          if (!authorData) {
+            throw new Error("Author not found in API response");
+          }
           setAuthor(authorData);
           let allArticles = [];
           let page = 1;
@@ -34361,10 +34373,11 @@
           if (isMounted) {
             setArticles(allArticles);
             setLoading(false);
-            document.title = `${authorData.given_name} ${authorData.family_name} Multiple Sclerosis Research`;
+            const fullName = authorData.full_name || authorData.name || `${authorData.given_name || ""} ${authorData.family_name || ""}`.trim() || "Unknown Author";
+            document.title = `${fullName} Multiple Sclerosis Research`;
             const h1 = document.querySelector("h1");
             if (h1) {
-              h1.textContent = `${authorData.given_name} ${authorData.family_name}`;
+              h1.textContent = fullName;
             }
             removeSpecifiedNodes();
           }
@@ -34383,8 +34396,22 @@
       };
     }, [currentAuthorId]);
     const generateAvatarUrl = (author2) => {
-      var _a, _b;
-      const initials = `${((_a = author2.given_name) == null ? void 0 : _a[0]) || ""}${((_b = author2.family_name) == null ? void 0 : _b[0]) || ""}`.toUpperCase();
+      const givenName = author2.given_name || author2.first_name || "";
+      const familyName = author2.family_name || author2.last_name || "";
+      const fullName = author2.full_name || author2.name || "";
+      let initials = "";
+      if (givenName && familyName) {
+        initials = `${givenName[0] || ""}${familyName[0] || ""}`.toUpperCase();
+      } else if (fullName) {
+        const nameParts = fullName.split(" ");
+        if (nameParts.length >= 2) {
+          initials = `${nameParts[0][0] || ""}${nameParts[nameParts.length - 1][0] || ""}`.toUpperCase();
+        } else {
+          initials = nameParts[0] && nameParts[0][0] ? nameParts[0][0].toUpperCase() : "A";
+        }
+      } else {
+        initials = "A";
+      }
       return `https://ui-avatars.com/api/?name=${encodeURIComponent(initials)}&background=007bff&color=fff&size=120&rounded=true`;
     };
     const indexOfLastArticle = currentPage * articlesPerPage;
@@ -34411,13 +34438,13 @@
       "img",
       {
         src: generateAvatarUrl(author),
-        alt: `${author.full_name || `${author.given_name} ${author.family_name}`} avatar`,
+        alt: `${author.full_name || author.name || `${author.given_name || ""} ${author.family_name || ""}`.trim() || "Unknown Author"} avatar`,
         className: "rounded-circle shadow",
         width: "120",
         height: "120",
         style: { objectFit: "cover" }
       }
-    )), /* @__PURE__ */ import_react10.default.createElement("div", { className: "text-center text-sm-start flex-grow-1" }, /* @__PURE__ */ import_react10.default.createElement("h1", { className: "mb-3 display-6 text-primary" }, author.full_name || `${author.given_name} ${author.family_name}`), /* @__PURE__ */ import_react10.default.createElement("div", { className: "d-flex flex-wrap justify-content-center justify-content-sm-start gap-3 align-items-center mb-3" }, /* @__PURE__ */ import_react10.default.createElement("span", { className: "badge bg-primary fs-6 px-3 py-2" }, /* @__PURE__ */ import_react10.default.createElement("i", { className: "fas fa-file-alt mr-2" }), formatNumber(author.articles_count), " Articles"), author.country && /* @__PURE__ */ import_react10.default.createElement("span", { className: "text-muted fs-6" }, /* @__PURE__ */ import_react10.default.createElement("i", { className: "fas fa-globe mr-2" }), author.country)), author.ORCID && /* @__PURE__ */ import_react10.default.createElement("div", { className: "text-muted mb-3" }, /* @__PURE__ */ import_react10.default.createElement("i", { className: "fab fa-orcid mr-2" }), /* @__PURE__ */ import_react10.default.createElement(
+    )), /* @__PURE__ */ import_react10.default.createElement("div", { className: "text-center text-sm-start flex-grow-1" }, /* @__PURE__ */ import_react10.default.createElement("h1", { className: "mb-3 display-6 text-primary" }, author.full_name || author.name || `${author.given_name || ""} ${author.family_name || ""}`.trim() || "Unknown Author"), /* @__PURE__ */ import_react10.default.createElement("div", { className: "d-flex flex-wrap justify-content-center justify-content-sm-start gap-3 align-items-center mb-3" }, /* @__PURE__ */ import_react10.default.createElement("span", { className: "badge bg-primary fs-6 px-3 py-2" }, /* @__PURE__ */ import_react10.default.createElement("i", { className: "fas fa-file-alt mr-2" }), formatNumber(author.articles_count), " Articles"), author.country && /* @__PURE__ */ import_react10.default.createElement("span", { className: "text-muted fs-6" }, /* @__PURE__ */ import_react10.default.createElement("i", { className: "fas fa-globe mr-2" }), author.country)), author.ORCID && /* @__PURE__ */ import_react10.default.createElement("div", { className: "text-muted mb-3" }, /* @__PURE__ */ import_react10.default.createElement("i", { className: "fab fa-orcid mr-2" }), /* @__PURE__ */ import_react10.default.createElement(
       "a",
       {
         href: author.ORCID,

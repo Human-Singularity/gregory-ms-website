@@ -55,8 +55,29 @@ export function AuthorProfile() {
         // Fetch author details
         const authorResponse = await axios.get(`https://api.gregory-ms.com/authors/?author_id=${currentAuthorId}&format=json`);
         
-        if (!isMounted) return;        
-        const authorData = authorResponse.data;
+        if (!isMounted) return;
+        
+        console.log('Author API response:', authorResponse.data);
+        
+        // Handle the response - it might be an array or a single object
+        let authorData;
+        if (Array.isArray(authorResponse.data)) {
+          // If it's an array, take the first result
+          authorData = authorResponse.data[0];
+        } else if (authorResponse.data.results && Array.isArray(authorResponse.data.results)) {
+          // If it's a paginated response with results array
+          authorData = authorResponse.data.results[0];
+        } else {
+          // If it's a direct object
+          authorData = authorResponse.data;
+        }
+        
+        console.log('Processed author data:', authorData);
+        
+        if (!authorData) {
+          throw new Error('Author not found in API response');
+        }
+        
         setAuthor(authorData);
         
         // Fetch all articles for this author by paginating through all pages
@@ -79,10 +100,15 @@ export function AuthorProfile() {
           setLoading(false);
           
           // Update document title and header
-          document.title = `${authorData.given_name} ${authorData.family_name} Multiple Sclerosis Research`;
+          const fullName = authorData.full_name || 
+                          authorData.name || 
+                          `${authorData.given_name || ''} ${authorData.family_name || ''}`.trim() ||
+                          'Unknown Author';
+          
+          document.title = `${fullName} Multiple Sclerosis Research`;
           const h1 = document.querySelector('h1');
           if (h1) {
-            h1.textContent = `${authorData.given_name} ${authorData.family_name}`;
+            h1.textContent = fullName;
           }
           
           // Remove specified nodes from the page
@@ -107,7 +133,24 @@ export function AuthorProfile() {
 
   const generateAvatarUrl = (author) => {
     // Generate a generic avatar based on initials
-    const initials = `${author.given_name?.[0] || ''}${author.family_name?.[0] || ''}`.toUpperCase();
+    const givenName = author.given_name || author.first_name || '';
+    const familyName = author.family_name || author.last_name || '';
+    const fullName = author.full_name || author.name || '';
+    
+    let initials = '';
+    if (givenName && familyName) {
+      initials = `${givenName[0] || ''}${familyName[0] || ''}`.toUpperCase();
+    } else if (fullName) {
+      const nameParts = fullName.split(' ');
+      if (nameParts.length >= 2) {
+        initials = `${nameParts[0][0] || ''}${nameParts[nameParts.length - 1][0] || ''}`.toUpperCase();
+      } else {
+        initials = (nameParts[0] && nameParts[0][0]) ? nameParts[0][0].toUpperCase() : 'A';
+      }
+    } else {
+      initials = 'A';
+    }
+    
     return `https://ui-avatars.com/api/?name=${encodeURIComponent(initials)}&background=007bff&color=fff&size=120&rounded=true`;
   };
 
@@ -182,7 +225,7 @@ export function AuthorProfile() {
                           <div className="mb-3 mb-sm-0 me-sm-4 text-center">
                             <img
                               src={generateAvatarUrl(author)}
-                              alt={`${author.full_name || `${author.given_name} ${author.family_name}`} avatar`}
+                              alt={`${author.full_name || author.name || `${author.given_name || ''} ${author.family_name || ''}`.trim() || 'Unknown Author'} avatar`}
                               className="rounded-circle shadow"
                               width="120"
                               height="120"
@@ -191,7 +234,10 @@ export function AuthorProfile() {
                           </div>
                           <div className="text-center text-sm-start flex-grow-1">
                             <h1 className="mb-3 display-6 text-primary">
-                              {author.full_name || `${author.given_name} ${author.family_name}`}
+                              {author.full_name || 
+                               author.name || 
+                               `${author.given_name || ''} ${author.family_name || ''}`.trim() ||
+                               'Unknown Author'}
                             </h1>
                             <div className="d-flex flex-wrap justify-content-center justify-content-sm-start gap-3 align-items-center mb-3">
                               <span className="badge bg-primary fs-6 px-3 py-2">
