@@ -34110,6 +34110,7 @@
           fetchedRef.current = currentAuthorId;
           const authorUrl = `https://api.gregory-ms.com/authors/?author_id=${currentAuthorId}&format=json`;
           console.log("Making request to:", authorUrl);
+          let authorResponse;
           try {
             console.log("\u{1F680} Starting fetch request...");
             const response = await fetch(authorUrl, {
@@ -34130,15 +34131,15 @@
             }
             const authorData2 = await response.json();
             console.log("\u{1F4E6} JSON data parsed:", authorData2);
-            const authorResponse2 = {
+            authorResponse = {
               data: authorData2,
               status: response.status,
               statusText: response.statusText,
               headers: response.headers
             };
             console.log("\u2705 API request successful!");
-            console.log("Response status:", authorResponse2.status);
-            console.log("Response data:", authorResponse2.data);
+            console.log("Response status:", authorResponse.status);
+            console.log("Response data:", authorResponse.data);
           } catch (apiError) {
             console.error("\u274C API request failed:", apiError);
             console.error("Error name:", apiError.name);
