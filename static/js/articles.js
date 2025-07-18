@@ -34344,7 +34344,7 @@
           return;
         }
         try {
-          const authorResponse = await axios_default.get(`https://api.gregory-ms.com/authors?author_id=${currentAuthorId}&format=json`);
+          const authorResponse = await axios_default.get(`https://api.gregory-ms.com/authors/?author_id=${currentAuthorId}&format=json`);
           if (!isMounted) return;
           const authorData = authorResponse.data;
           setAuthor(authorData);
