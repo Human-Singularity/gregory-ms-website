@@ -34107,19 +34107,29 @@
         try {
           console.log("Making API call for author:", currentAuthorId);
           fetchedRef.current = currentAuthorId;
-          const authorResponse = await axios_default.get(`https://api.gregory-ms.com/authors/?author_id=${currentAuthorId}&format=json`);
+          const authorUrl = `https://api.gregory-ms.com/authors/?author_id=${currentAuthorId}&format=json`;
+          console.log("Making request to:", authorUrl);
+          const authorResponse = await axios_default.get(authorUrl);
           if (!isMounted) return;
-          console.log("Author API response:", authorResponse.data);
+          console.log("Author API response status:", authorResponse.status);
+          console.log("Author API response data:", authorResponse.data);
+          console.log("Response data type:", typeof authorResponse.data);
+          console.log("Is response data array?", Array.isArray(authorResponse.data));
           let authorData;
           if (Array.isArray(authorResponse.data)) {
+            console.log("Response is array with length:", authorResponse.data.length);
             authorData = authorResponse.data[0];
           } else if (authorResponse.data.results && Array.isArray(authorResponse.data.results)) {
+            console.log("Response has results array with length:", authorResponse.data.results.length);
             authorData = authorResponse.data.results[0];
           } else {
+            console.log("Response is direct object");
             authorData = authorResponse.data;
           }
-          console.log("Processed author data:", authorData);
+          console.log("Final processed author data:", authorData);
+          console.log("Author data type:", typeof authorData);
           if (!authorData) {
+            console.error("No author data found after processing response");
             throw new Error("Author not found in API response");
           }
           setAuthor(authorData);

@@ -66,28 +66,38 @@ export function AuthorProfile() {
         fetchedRef.current = currentAuthorId; // Mark as being fetched
         
         // Fetch author details
-        const authorResponse = await axios.get(`https://api.gregory-ms.com/authors/?author_id=${currentAuthorId}&format=json`);
+        const authorUrl = `https://api.gregory-ms.com/authors/?author_id=${currentAuthorId}&format=json`;
+        console.log('Making request to:', authorUrl);
+        const authorResponse = await axios.get(authorUrl);
         
         if (!isMounted) return;
         
-        console.log('Author API response:', authorResponse.data);
+        console.log('Author API response status:', authorResponse.status);
+        console.log('Author API response data:', authorResponse.data);
+        console.log('Response data type:', typeof authorResponse.data);
+        console.log('Is response data array?', Array.isArray(authorResponse.data));
         
         // Handle the response - it might be an array or a single object
         let authorData;
         if (Array.isArray(authorResponse.data)) {
           // If it's an array, take the first result
+          console.log('Response is array with length:', authorResponse.data.length);
           authorData = authorResponse.data[0];
         } else if (authorResponse.data.results && Array.isArray(authorResponse.data.results)) {
           // If it's a paginated response with results array
+          console.log('Response has results array with length:', authorResponse.data.results.length);
           authorData = authorResponse.data.results[0];
         } else {
           // If it's a direct object
+          console.log('Response is direct object');
           authorData = authorResponse.data;
         }
         
-        console.log('Processed author data:', authorData);
+        console.log('Final processed author data:', authorData);
+        console.log('Author data type:', typeof authorData);
         
         if (!authorData) {
+          console.error('No author data found after processing response');
           throw new Error('Author not found in API response');
         }
         
