@@ -29,6 +29,10 @@ export function TrialListItem({
             target="_blank" 
             rel="noopener noreferrer"
             id={`trial-title-${trial.trial_id || trial.nct_id || trial.id}`}
+            data-umami-event={isSearchResult ? 'click--search-trial-result' : 'click--trial-link'}
+            data-umami-event-id={trial.trial_id || trial.nct_id || trial.id}
+            data-umami-event-title={trial.title || 'Unnamed Trial'}
+            data-umami-event-status={trialStatus}
           >
             {trial.title || 'Unnamed Trial'}
           </a>
