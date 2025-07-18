@@ -28851,11 +28851,46 @@
       "Content-Type": "application/json"
     }
   });
+  apiClient.interceptors.response.use(
+    (response) => {
+      if (response.headers["x-deprecation-warning"]) {
+        console.warn("API Deprecation Warning:", response.headers["x-deprecation-warning"]);
+        console.warn("Migration Guide:", response.headers["x-migration-guide"]);
+        console.warn("Deprecated Endpoint:", response.headers["x-deprecated-endpoint"]);
+      }
+      return response;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
   var trialService = {
-    // Get all trials with pagination
-    getTrials: (page = 1) => apiClient.get(`/teams/1/trials/subject/1/?format=json&page=${page}`),
-    // Get trials by category
-    getTrialsByCategory: (category, page = 1) => apiClient.get(`/teams/1/trials/category/${category}/?format=json&page=${page}`)
+    // Get all trials with pagination - UPDATED to use new endpoint
+    getTrials: (page = 1) => apiClient.get(`/trials/?team_id=1&subject_id=1&format=json&page=${page}`),
+    // Get trials by category - UPDATED to use new endpoint
+    getTrialsByCategory: (category, page = 1) => apiClient.get(`/trials/?team_id=1&category_slug=${category}&format=json&page=${page}`),
+    // New enhanced search endpoint for trials
+    searchTrials: (params = {}) => {
+      const queryParams = new URLSearchParams({
+        format: "json",
+        team_id: 1,
+        // Default team ID
+        subject_id: 1,
+        // Default subject ID
+        ...params
+      });
+      return apiClient.get(`/trials/search/?${queryParams.toString()}`);
+    },
+    // Enhanced filtering with all available parameters
+    getTrialsWithFilters: (filters = {}) => {
+      const queryParams = new URLSearchParams({
+        format: "json",
+        team_id: 1,
+        // Default team ID
+        ...filters
+      });
+      return apiClient.get(`/trials/?${queryParams.toString()}`);
+    }
   };
 
   // assets/js/hooks/useApi.js

@@ -54042,13 +54042,6 @@
     formatAxisMap
   });
 
-  // assets/js/components/ArticleList.jsx
-  var import_react43 = __toESM(require_react());
-  var import_prop_types4 = __toESM(require_prop_types());
-
-  // assets/js/hooks/useApi.js
-  var import_react38 = __toESM(require_react());
-
   // assets/js/services/api.js
   var API_URL = "https://api.gregory-ms.com";
   var apiClient = axios_default.create({
@@ -54057,26 +54050,98 @@
       "Content-Type": "application/json"
     }
   });
+  apiClient.interceptors.response.use(
+    (response) => {
+      if (response.headers["x-deprecation-warning"]) {
+        console.warn("API Deprecation Warning:", response.headers["x-deprecation-warning"]);
+        console.warn("Migration Guide:", response.headers["x-migration-guide"]);
+        console.warn("Deprecated Endpoint:", response.headers["x-deprecated-endpoint"]);
+      }
+      return response;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
   var articleService = {
-    // Get all articles with pagination
-    getArticles: (page = 1) => apiClient.get(`/teams/1/articles?format=json&page=${page}`),
+    // Get all articles with pagination - UPDATED to use new endpoint
+    getArticles: (page = 1) => apiClient.get(`/articles/?team_id=1&format=json&page=${page}`),
     // Get a single article by ID
     getArticleById: (articleId) => apiClient.get(`/articles/${articleId}/?format=json`),
-    // Get articles by category
-    getArticlesByCategory: (category, page = 1) => apiClient.get(`/teams/1/articles/category/${category}/?format=json&page=${page}`),
-    // Get articles by author
-    getArticlesByAuthor: (authorId, page = 1) => apiClient.get(`/articles/author/${authorId}/?format=json&page=${page}`),
+    // Get articles by category - UPDATED to use new endpoint
+    getArticlesByCategory: (category, page = 1) => apiClient.get(`/articles/?team_id=1&category_slug=${category}&format=json&page=${page}`),
+    // Get articles by author - UPDATED to use new endpoint
+    getArticlesByAuthor: (authorId, page = 1) => apiClient.get(`/articles/?author_id=${authorId}&format=json&page=${page}`),
     // Get relevant articles
-    getRelevantArticles: (page = 1) => apiClient.get(`/articles/relevant/?format=json&page=${page}`)
+    getRelevantArticles: (page = 1) => apiClient.get(`/articles/relevant/?format=json&page=${page}`),
+    // New enhanced search endpoint for articles
+    searchArticles: (params = {}) => {
+      const queryParams = new URLSearchParams({
+        format: "json",
+        team_id: 1,
+        // Default team ID
+        ...params
+      });
+      return apiClient.get(`/articles/search/?${queryParams.toString()}`);
+    },
+    // Enhanced filtering with all available parameters
+    getArticlesWithFilters: (filters = {}) => {
+      const queryParams = new URLSearchParams({
+        format: "json",
+        team_id: 1,
+        // Default team ID
+        ...filters
+      });
+      return apiClient.get(`/articles/?${queryParams.toString()}`);
+    }
   };
   var trialService = {
-    // Get all trials with pagination
-    getTrials: (page = 1) => apiClient.get(`/teams/1/trials/subject/1/?format=json&page=${page}`),
-    // Get trials by category
-    getTrialsByCategory: (category, page = 1) => apiClient.get(`/teams/1/trials/category/${category}/?format=json&page=${page}`)
+    // Get all trials with pagination - UPDATED to use new endpoint
+    getTrials: (page = 1) => apiClient.get(`/trials/?team_id=1&subject_id=1&format=json&page=${page}`),
+    // Get trials by category - UPDATED to use new endpoint
+    getTrialsByCategory: (category, page = 1) => apiClient.get(`/trials/?team_id=1&category_slug=${category}&format=json&page=${page}`),
+    // New enhanced search endpoint for trials
+    searchTrials: (params = {}) => {
+      const queryParams = new URLSearchParams({
+        format: "json",
+        team_id: 1,
+        // Default team ID
+        subject_id: 1,
+        // Default subject ID
+        ...params
+      });
+      return apiClient.get(`/trials/search/?${queryParams.toString()}`);
+    },
+    // Enhanced filtering with all available parameters
+    getTrialsWithFilters: (filters = {}) => {
+      const queryParams = new URLSearchParams({
+        format: "json",
+        team_id: 1,
+        // Default team ID
+        ...filters
+      });
+      return apiClient.get(`/trials/?${queryParams.toString()}`);
+    }
+  };
+  var categoryService = {
+    // Get monthly counts for a category - Still supported endpoint
+    getMonthlyCounts: (category) => apiClient.get(`/teams/1/categories/${category}/monthly-counts/`),
+    // Get categories with filtering - NEW endpoint
+    getCategories: (params = {}) => {
+      const queryParams = new URLSearchParams({
+        format: "json",
+        ...params
+      });
+      return apiClient.get(`/categories/?${queryParams.toString()}`);
+    }
   };
 
+  // assets/js/components/ArticleList.jsx
+  var import_react43 = __toESM(require_react());
+  var import_prop_types4 = __toESM(require_prop_types());
+
   // assets/js/hooks/useApi.js
+  var import_react38 = __toESM(require_react());
   function useArticles(type = "all", options = {}) {
     const [articles, setArticles] = (0, import_react38.useState)([]);
     const [loading, setLoading] = (0, import_react38.useState)(true);
@@ -54843,9 +54908,7 @@
       setLoading((prev) => ({ ...prev, chart: true }));
       setError(null);
       try {
-        const response = await axios_default.get(
-          `${config.API_URL}/teams/${config.TEAM_ID}/categories/${category.slug}/monthly-counts/`
-        );
+        const response = await categoryService.getMonthlyCounts(category.slug);
         setMonthlyData(response.data);
       } catch (err) {
         console.error("Error loading monthly data:", err);
