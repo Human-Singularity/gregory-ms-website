@@ -71,7 +71,15 @@ function CategoryDetail({ category, config, onBack }) {
       if (!date) return;
       
       if (!combinedData[date]) {
-        combinedData[date] = { date, articles: 0, trials: 0 };
+        combinedData[date] = { 
+          date, 
+          articles: 0, 
+          trials: 0,
+          mlRelevantArticles: 0,
+          lgbmRelevant: 0,
+          lstmRelevant: 0,
+          pubmedBertRelevant: 0
+        };
       }
       combinedData[date].articles = item.count;
     });
@@ -83,21 +91,83 @@ function CategoryDetail({ category, config, onBack }) {
       if (!date) return;
       
       if (!combinedData[date]) {
-        combinedData[date] = { date, articles: 0, trials: 0 };
+        combinedData[date] = { 
+          date, 
+          articles: 0, 
+          trials: 0,
+          mlRelevantArticles: 0,
+          lgbmRelevant: 0,
+          lstmRelevant: 0,
+          pubmedBertRelevant: 0
+        };
       }
       combinedData[date].trials = item.count;
     });
+    
+    // Process ML model counts if available
+    if (data.monthly_ml_article_counts_by_model) {
+      // Process each model's counts
+      Object.keys(data.monthly_ml_article_counts_by_model).forEach(modelName => {
+        const modelCounts = data.monthly_ml_article_counts_by_model[modelName];
+        
+        modelCounts.forEach(item => {
+          const date = item.month;
+          // Skip items with null or undefined dates
+          if (!date) return;
+          
+          if (!combinedData[date]) {
+            combinedData[date] = { 
+              date, 
+              articles: 0, 
+              trials: 0,
+              mlRelevantArticles: 0,
+              lgbmRelevant: 0,
+              lstmRelevant: 0,
+              pubmedBertRelevant: 0
+            };
+          }
+          
+          // Map model names to chart fields
+          switch (modelName) {
+            case 'lgbm_tfidf':
+              combinedData[date].lgbmRelevant = item.count;
+              break;
+            case 'lstm':
+              combinedData[date].lstmRelevant = item.count;
+              break;
+            case 'pubmed_bert':
+              combinedData[date].pubmedBertRelevant = item.count;
+              break;
+          }
+          
+          // Update total ML relevant articles (use highest count among models for this month)
+          combinedData[date].mlRelevantArticles = Math.max(
+            combinedData[date].mlRelevantArticles,
+            item.count
+          );
+        });
+      });
+    }
     
     // Sort all data by date first
     const allSortedData = Object.values(combinedData).sort((a, b) => new Date(a.date) - new Date(b.date));
     
     // Calculate cumulative articles for ALL data first
     let cumulativeArticles = 0;
+    let cumulativeLgbm = 0;
+    let cumulativeLstm = 0;
+    let cumulativePubmedBert = 0;
     const allDataWithCumulative = allSortedData.map(item => {
       cumulativeArticles += item.articles;
+      cumulativeLgbm += item.lgbmRelevant;
+      cumulativeLstm += item.lstmRelevant;
+      cumulativePubmedBert += item.pubmedBertRelevant;
       return {
         ...item,
-        cumulativeArticles
+        cumulativeArticles,
+        cumulativeLgbm,
+        cumulativeLstm,
+        cumulativePubmedBert
       };
     });
     
@@ -193,10 +263,46 @@ function CategoryDetail({ category, config, onBack }) {
                   Articles (Total): {entry.value}
                 </p>
               );
+            } else if (entry.dataKey === 'cumulativeLgbm') {
+              return (
+                <p key={index} style={{ color: entry.color, margin: '2px 0' }}>
+                  LightGBM (Total): {entry.value}
+                </p>
+              );
+            } else if (entry.dataKey === 'cumulativeLstm') {
+              return (
+                <p key={index} style={{ color: entry.color, margin: '2px 0' }}>
+                  LSTM (Total): {entry.value}
+                </p>
+              );
+            } else if (entry.dataKey === 'cumulativePubmedBert') {
+              return (
+                <p key={index} style={{ color: entry.color, margin: '2px 0' }}>
+                  PubMed BERT (Total): {entry.value}
+                </p>
+              );
             } else if (entry.dataKey === 'trials') {
               return (
                 <p key={index} style={{ color: entry.color, margin: '2px 0' }}>
                   Clinical Trials: {entry.value}
+                </p>
+              );
+            } else if (entry.dataKey === 'lgbmRelevant') {
+              return (
+                <p key={index} style={{ color: entry.color, margin: '2px 0' }}>
+                  LightGBM (Monthly): {entry.value}
+                </p>
+              );
+            } else if (entry.dataKey === 'lstmRelevant') {
+              return (
+                <p key={index} style={{ color: entry.color, margin: '2px 0' }}>
+                  LSTM (Monthly): {entry.value}
+                </p>
+              );
+            } else if (entry.dataKey === 'pubmedBertRelevant') {
+              return (
+                <p key={index} style={{ color: entry.color, margin: '2px 0' }}>
+                  PubMed BERT (Monthly): {entry.value}
                 </p>
               );
             }
@@ -301,6 +407,12 @@ function CategoryDetail({ category, config, onBack }) {
                           <i className="fas fa-chart-bar text-success mr-2"></i>Green bars show clinical trials
                           <span className="mx-3">•</span>
                           <i className="fas fa-chart-line text-info mr-2"></i>Blue line shows cumulative articles
+                          <br/>
+                          <i className="fas fa-chart-line text-warning mr-2"></i>Orange line: LightGBM model
+                          <span className="mx-3">•</span>
+                          <i className="fas fa-chart-line text-danger mr-2"></i>Red line: LSTM model
+                          <span className="mx-3">•</span>
+                          <i className="fas fa-chart-line text-purple mr-2"></i>Purple line: PubMed BERT model
                         </p>
                       </div>
                       
@@ -381,6 +493,36 @@ function CategoryDetail({ category, config, onBack }) {
                             strokeWidth={2}
                             name="Articles (Cumulative)"
                             dot={{ fill: '#007bff', strokeWidth: 1, r: 3 }}
+                          />
+                          <Line 
+                            yAxisId="right"
+                            type="monotone" 
+                            dataKey="cumulativeLgbm" 
+                            stroke="#fd7e14" 
+                            strokeWidth={2}
+                            name="LightGBM (Cumulative)"
+                            dot={{ fill: '#fd7e14', strokeWidth: 1, r: 2 }}
+                            strokeDasharray="5 5"
+                          />
+                          <Line 
+                            yAxisId="right"
+                            type="monotone" 
+                            dataKey="cumulativeLstm" 
+                            stroke="#dc3545" 
+                            strokeWidth={2}
+                            name="LSTM (Cumulative)"
+                            dot={{ fill: '#dc3545', strokeWidth: 1, r: 2 }}
+                            strokeDasharray="8 4"
+                          />
+                          <Line 
+                            yAxisId="right"
+                            type="monotone" 
+                            dataKey="cumulativePubmedBert" 
+                            stroke="#6f42c1" 
+                            strokeWidth={2}
+                            name="PubMed BERT (Cumulative)"
+                            dot={{ fill: '#6f42c1', strokeWidth: 1, r: 2 }}
+                            strokeDasharray="12 3"
                           />
                         </ComposedChart>
                       </ResponsiveContainer>

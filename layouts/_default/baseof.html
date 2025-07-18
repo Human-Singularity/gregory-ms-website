@@ -406,6 +406,9 @@
 		{{- if .HasShortcode "trials"  -}}
 		{{ partial "react-app-loader.html" (dict "app" "trials") }}
 		{{ end }}
+		{{- if .HasShortcode "sources"  -}}
+		{{ partial "react-app-loader.html" (dict "app" "sources") }}
+		{{ end }}
 		{{- if .HasShortcode "authorprofile"  -}}
 		{{ partial "react-app-loader.html" (dict "app" "authorProfile") }}
 		{{ end }}

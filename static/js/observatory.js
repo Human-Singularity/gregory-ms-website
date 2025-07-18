@@ -54929,7 +54929,15 @@
         const date2 = item.month;
         if (!date2) return;
         if (!combinedData[date2]) {
-          combinedData[date2] = { date: date2, articles: 0, trials: 0 };
+          combinedData[date2] = {
+            date: date2,
+            articles: 0,
+            trials: 0,
+            mlRelevantArticles: 0,
+            lgbmRelevant: 0,
+            lstmRelevant: 0,
+            pubmedBertRelevant: 0
+          };
         }
         combinedData[date2].articles = item.count;
       });
@@ -54937,17 +54945,69 @@
         const date2 = item.month;
         if (!date2) return;
         if (!combinedData[date2]) {
-          combinedData[date2] = { date: date2, articles: 0, trials: 0 };
+          combinedData[date2] = {
+            date: date2,
+            articles: 0,
+            trials: 0,
+            mlRelevantArticles: 0,
+            lgbmRelevant: 0,
+            lstmRelevant: 0,
+            pubmedBertRelevant: 0
+          };
         }
         combinedData[date2].trials = item.count;
       });
+      if (data.monthly_ml_article_counts_by_model) {
+        Object.keys(data.monthly_ml_article_counts_by_model).forEach((modelName) => {
+          const modelCounts = data.monthly_ml_article_counts_by_model[modelName];
+          modelCounts.forEach((item) => {
+            const date2 = item.month;
+            if (!date2) return;
+            if (!combinedData[date2]) {
+              combinedData[date2] = {
+                date: date2,
+                articles: 0,
+                trials: 0,
+                mlRelevantArticles: 0,
+                lgbmRelevant: 0,
+                lstmRelevant: 0,
+                pubmedBertRelevant: 0
+              };
+            }
+            switch (modelName) {
+              case "lgbm_tfidf":
+                combinedData[date2].lgbmRelevant = item.count;
+                break;
+              case "lstm":
+                combinedData[date2].lstmRelevant = item.count;
+                break;
+              case "pubmed_bert":
+                combinedData[date2].pubmedBertRelevant = item.count;
+                break;
+            }
+            combinedData[date2].mlRelevantArticles = Math.max(
+              combinedData[date2].mlRelevantArticles,
+              item.count
+            );
+          });
+        });
+      }
       const allSortedData = Object.values(combinedData).sort((a2, b) => new Date(a2.date) - new Date(b.date));
       let cumulativeArticles = 0;
+      let cumulativeLgbm = 0;
+      let cumulativeLstm = 0;
+      let cumulativePubmedBert = 0;
       const allDataWithCumulative = allSortedData.map((item) => {
         cumulativeArticles += item.articles;
+        cumulativeLgbm += item.lgbmRelevant;
+        cumulativeLstm += item.lstmRelevant;
+        cumulativePubmedBert += item.pubmedBertRelevant;
         return {
           ...item,
-          cumulativeArticles
+          cumulativeArticles,
+          cumulativeLgbm,
+          cumulativeLstm,
+          cumulativePubmedBert
         };
       });
       let filteredData = allDataWithCumulative;
@@ -55004,8 +55064,20 @@
         return /* @__PURE__ */ import_react47.default.createElement("div", { className: "bg-white p-3 border rounded shadow" }, /* @__PURE__ */ import_react47.default.createElement("p", { className: "font-weight-bold mb-2" }, formattedDate), payload.map((entry, index) => {
           if (entry.dataKey === "cumulativeArticles") {
             return /* @__PURE__ */ import_react47.default.createElement("p", { key: index, style: { color: entry.color, margin: "2px 0" } }, "Articles (Total): ", entry.value);
+          } else if (entry.dataKey === "cumulativeLgbm") {
+            return /* @__PURE__ */ import_react47.default.createElement("p", { key: index, style: { color: entry.color, margin: "2px 0" } }, "LightGBM (Total): ", entry.value);
+          } else if (entry.dataKey === "cumulativeLstm") {
+            return /* @__PURE__ */ import_react47.default.createElement("p", { key: index, style: { color: entry.color, margin: "2px 0" } }, "LSTM (Total): ", entry.value);
+          } else if (entry.dataKey === "cumulativePubmedBert") {
+            return /* @__PURE__ */ import_react47.default.createElement("p", { key: index, style: { color: entry.color, margin: "2px 0" } }, "PubMed BERT (Total): ", entry.value);
           } else if (entry.dataKey === "trials") {
             return /* @__PURE__ */ import_react47.default.createElement("p", { key: index, style: { color: entry.color, margin: "2px 0" } }, "Clinical Trials: ", entry.value);
+          } else if (entry.dataKey === "lgbmRelevant") {
+            return /* @__PURE__ */ import_react47.default.createElement("p", { key: index, style: { color: entry.color, margin: "2px 0" } }, "LightGBM (Monthly): ", entry.value);
+          } else if (entry.dataKey === "lstmRelevant") {
+            return /* @__PURE__ */ import_react47.default.createElement("p", { key: index, style: { color: entry.color, margin: "2px 0" } }, "LSTM (Monthly): ", entry.value);
+          } else if (entry.dataKey === "pubmedBertRelevant") {
+            return /* @__PURE__ */ import_react47.default.createElement("p", { key: index, style: { color: entry.color, margin: "2px 0" } }, "PubMed BERT (Monthly): ", entry.value);
           }
           return /* @__PURE__ */ import_react47.default.createElement("p", { key: index, style: { color: entry.color, margin: "2px 0" } }, entry.name, ": ", entry.value);
         }));
@@ -55047,7 +55119,7 @@
       },
       /* @__PURE__ */ import_react47.default.createElement("i", { className: "fa fa-flask mr-2" }),
       "Clinical Trials"
-    ))), /* @__PURE__ */ import_react47.default.createElement("div", { className: "tab-content" }, activeTab === "chart" && /* @__PURE__ */ import_react47.default.createElement("div", { className: "tab-pane fade show active" }, loading.chart ? /* @__PURE__ */ import_react47.default.createElement("div", { className: "text-center py-5" }, /* @__PURE__ */ import_react47.default.createElement("div", { className: "spinner-border text-primary", role: "status" }, /* @__PURE__ */ import_react47.default.createElement("span", { className: "sr-only" }, "Loading chart..."))) : error ? /* @__PURE__ */ import_react47.default.createElement("div", { className: "alert alert-danger" }, /* @__PURE__ */ import_react47.default.createElement("h4", null, "Error"), /* @__PURE__ */ import_react47.default.createElement("p", null, error)) : chartData.length > 0 ? /* @__PURE__ */ import_react47.default.createElement("div", { className: "card" }, /* @__PURE__ */ import_react47.default.createElement("div", { className: "card-body" }, /* @__PURE__ */ import_react47.default.createElement("div", { className: "d-flex justify-content-between align-items-start mb-3" }, /* @__PURE__ */ import_react47.default.createElement("div", null, /* @__PURE__ */ import_react47.default.createElement("h5", { className: "card-title mb-2" }, "Monthly Research Activity"), /* @__PURE__ */ import_react47.default.createElement("p", { className: "text-muted mb-0" }, /* @__PURE__ */ import_react47.default.createElement("i", { className: "fas fa-chart-bar text-success mr-2" }), "Green bars show clinical trials", /* @__PURE__ */ import_react47.default.createElement("span", { className: "mx-3" }, "\u2022"), /* @__PURE__ */ import_react47.default.createElement("i", { className: "fas fa-chart-line text-info mr-2" }), "Blue line shows cumulative articles")), /* @__PURE__ */ import_react47.default.createElement("div", { className: "d-flex flex-column align-items-end" }, /* @__PURE__ */ import_react47.default.createElement("div", { className: "btn-group btn-group-sm mb-2", role: "group" }, /* @__PURE__ */ import_react47.default.createElement(
+    ))), /* @__PURE__ */ import_react47.default.createElement("div", { className: "tab-content" }, activeTab === "chart" && /* @__PURE__ */ import_react47.default.createElement("div", { className: "tab-pane fade show active" }, loading.chart ? /* @__PURE__ */ import_react47.default.createElement("div", { className: "text-center py-5" }, /* @__PURE__ */ import_react47.default.createElement("div", { className: "spinner-border text-primary", role: "status" }, /* @__PURE__ */ import_react47.default.createElement("span", { className: "sr-only" }, "Loading chart..."))) : error ? /* @__PURE__ */ import_react47.default.createElement("div", { className: "alert alert-danger" }, /* @__PURE__ */ import_react47.default.createElement("h4", null, "Error"), /* @__PURE__ */ import_react47.default.createElement("p", null, error)) : chartData.length > 0 ? /* @__PURE__ */ import_react47.default.createElement("div", { className: "card" }, /* @__PURE__ */ import_react47.default.createElement("div", { className: "card-body" }, /* @__PURE__ */ import_react47.default.createElement("div", { className: "d-flex justify-content-between align-items-start mb-3" }, /* @__PURE__ */ import_react47.default.createElement("div", null, /* @__PURE__ */ import_react47.default.createElement("h5", { className: "card-title mb-2" }, "Monthly Research Activity"), /* @__PURE__ */ import_react47.default.createElement("p", { className: "text-muted mb-0" }, /* @__PURE__ */ import_react47.default.createElement("i", { className: "fas fa-chart-bar text-success mr-2" }), "Green bars show clinical trials", /* @__PURE__ */ import_react47.default.createElement("span", { className: "mx-3" }, "\u2022"), /* @__PURE__ */ import_react47.default.createElement("i", { className: "fas fa-chart-line text-info mr-2" }), "Blue line shows cumulative articles", /* @__PURE__ */ import_react47.default.createElement("br", null), /* @__PURE__ */ import_react47.default.createElement("i", { className: "fas fa-chart-line text-warning mr-2" }), "Orange line: LightGBM model", /* @__PURE__ */ import_react47.default.createElement("span", { className: "mx-3" }, "\u2022"), /* @__PURE__ */ import_react47.default.createElement("i", { className: "fas fa-chart-line text-danger mr-2" }), "Red line: LSTM model", /* @__PURE__ */ import_react47.default.createElement("span", { className: "mx-3" }, "\u2022"), /* @__PURE__ */ import_react47.default.createElement("i", { className: "fas fa-chart-line text-purple mr-2" }), "Purple line: PubMed BERT model")), /* @__PURE__ */ import_react47.default.createElement("div", { className: "d-flex flex-column align-items-end" }, /* @__PURE__ */ import_react47.default.createElement("div", { className: "btn-group btn-group-sm mb-2", role: "group" }, /* @__PURE__ */ import_react47.default.createElement(
       "button",
       {
         type: "button",
@@ -55116,6 +55188,42 @@
         strokeWidth: 2,
         name: "Articles (Cumulative)",
         dot: { fill: "#007bff", strokeWidth: 1, r: 3 }
+      }
+    ), /* @__PURE__ */ import_react47.default.createElement(
+      Line,
+      {
+        yAxisId: "right",
+        type: "monotone",
+        dataKey: "cumulativeLgbm",
+        stroke: "#fd7e14",
+        strokeWidth: 2,
+        name: "LightGBM (Cumulative)",
+        dot: { fill: "#fd7e14", strokeWidth: 1, r: 2 },
+        strokeDasharray: "5 5"
+      }
+    ), /* @__PURE__ */ import_react47.default.createElement(
+      Line,
+      {
+        yAxisId: "right",
+        type: "monotone",
+        dataKey: "cumulativeLstm",
+        stroke: "#dc3545",
+        strokeWidth: 2,
+        name: "LSTM (Cumulative)",
+        dot: { fill: "#dc3545", strokeWidth: 1, r: 2 },
+        strokeDasharray: "8 4"
+      }
+    ), /* @__PURE__ */ import_react47.default.createElement(
+      Line,
+      {
+        yAxisId: "right",
+        type: "monotone",
+        dataKey: "cumulativePubmedBert",
+        stroke: "#6f42c1",
+        strokeWidth: 2,
+        name: "PubMed BERT (Cumulative)",
+        dot: { fill: "#6f42c1", strokeWidth: 1, r: 2 },
+        strokeDasharray: "12 3"
       }
     )))))) : /* @__PURE__ */ import_react47.default.createElement("div", { className: "alert alert-info" }, /* @__PURE__ */ import_react47.default.createElement("p", null, "No data available for this category."))), activeTab === "articles" && /* @__PURE__ */ import_react47.default.createElement("div", { className: "tab-pane fade show active" }, /* @__PURE__ */ import_react47.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-3" }, /* @__PURE__ */ import_react47.default.createElement("h5", null, "Research Articles"), /* @__PURE__ */ import_react47.default.createElement(
       DownloadButton_default,
