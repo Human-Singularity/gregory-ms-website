@@ -4,6 +4,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { ComposedChart, Bar, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer, Legend } from 'recharts';
+import { categoryService } from '../services/api';
 import ArticleList from './ArticleList';
 import TrialsList from './TrialsList';
 import DownloadButton from './DownloadButton';
@@ -39,9 +40,8 @@ function CategoryDetail({ category, config, onBack }) {
     setError(null);
 
     try {
-      const response = await axios.get(
-        `${config.API_URL}/teams/${config.TEAM_ID}/categories/${category.slug}/monthly-counts/`
-      );
+      // Use the categoryService instead of direct axios call
+      const response = await categoryService.getMonthlyCounts(category.slug);
       setMonthlyData(response.data);
     } catch (err) {
       console.error('Error loading monthly data:', err);

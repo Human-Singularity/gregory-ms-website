@@ -28879,17 +28879,50 @@
       "Content-Type": "application/json"
     }
   });
+  apiClient.interceptors.response.use(
+    (response) => {
+      if (response.headers["x-deprecation-warning"]) {
+        console.warn("API Deprecation Warning:", response.headers["x-deprecation-warning"]);
+        console.warn("Migration Guide:", response.headers["x-migration-guide"]);
+        console.warn("Deprecated Endpoint:", response.headers["x-deprecated-endpoint"]);
+      }
+      return response;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
   var articleService = {
-    // Get all articles with pagination
-    getArticles: (page = 1) => apiClient.get(`/teams/1/articles?format=json&page=${page}`),
+    // Get all articles with pagination - UPDATED to use new endpoint
+    getArticles: (page = 1) => apiClient.get(`/articles/?team_id=1&format=json&page=${page}`),
     // Get a single article by ID
     getArticleById: (articleId) => apiClient.get(`/articles/${articleId}/?format=json`),
-    // Get articles by category
-    getArticlesByCategory: (category, page = 1) => apiClient.get(`/teams/1/articles/category/${category}/?format=json&page=${page}`),
-    // Get articles by author
-    getArticlesByAuthor: (authorId, page = 1) => apiClient.get(`/articles/author/${authorId}/?format=json&page=${page}`),
+    // Get articles by category - UPDATED to use new endpoint
+    getArticlesByCategory: (category, page = 1) => apiClient.get(`/articles/?team_id=1&category_slug=${category}&format=json&page=${page}`),
+    // Get articles by author - UPDATED to use new endpoint
+    getArticlesByAuthor: (authorId, page = 1) => apiClient.get(`/articles/?author_id=${authorId}&format=json&page=${page}`),
     // Get relevant articles
-    getRelevantArticles: (page = 1) => apiClient.get(`/articles/relevant/?format=json&page=${page}`)
+    getRelevantArticles: (page = 1) => apiClient.get(`/articles/relevant/?format=json&page=${page}`),
+    // New enhanced search endpoint for articles
+    searchArticles: (params = {}) => {
+      const queryParams = new URLSearchParams({
+        format: "json",
+        team_id: 1,
+        // Default team ID
+        ...params
+      });
+      return apiClient.get(`/articles/search/?${queryParams.toString()}`);
+    },
+    // Enhanced filtering with all available parameters
+    getArticlesWithFilters: (filters = {}) => {
+      const queryParams = new URLSearchParams({
+        format: "json",
+        team_id: 1,
+        // Default team ID
+        ...filters
+      });
+      return apiClient.get(`/articles/?${queryParams.toString()}`);
+    }
   };
 
   // assets/js/hooks/useApi.js

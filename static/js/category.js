@@ -55846,13 +55846,6 @@
     return node.__zoom;
   }
 
-  // assets/js/components/ArticleList.jsx
-  var import_react42 = __toESM(require_react());
-  var import_prop_types4 = __toESM(require_prop_types());
-
-  // assets/js/hooks/useApi.js
-  var import_react37 = __toESM(require_react());
-
   // assets/js/services/api.js
   var API_URL = "https://api.gregory-ms.com";
   var apiClient = axios_default.create({
@@ -55861,26 +55854,98 @@
       "Content-Type": "application/json"
     }
   });
+  apiClient.interceptors.response.use(
+    (response) => {
+      if (response.headers["x-deprecation-warning"]) {
+        console.warn("API Deprecation Warning:", response.headers["x-deprecation-warning"]);
+        console.warn("Migration Guide:", response.headers["x-migration-guide"]);
+        console.warn("Deprecated Endpoint:", response.headers["x-deprecated-endpoint"]);
+      }
+      return response;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
   var articleService = {
-    // Get all articles with pagination
-    getArticles: (page = 1) => apiClient.get(`/teams/1/articles?format=json&page=${page}`),
+    // Get all articles with pagination - UPDATED to use new endpoint
+    getArticles: (page = 1) => apiClient.get(`/articles/?team_id=1&format=json&page=${page}`),
     // Get a single article by ID
     getArticleById: (articleId) => apiClient.get(`/articles/${articleId}/?format=json`),
-    // Get articles by category
-    getArticlesByCategory: (category, page = 1) => apiClient.get(`/teams/1/articles/category/${category}/?format=json&page=${page}`),
-    // Get articles by author
-    getArticlesByAuthor: (authorId, page = 1) => apiClient.get(`/articles/author/${authorId}/?format=json&page=${page}`),
+    // Get articles by category - UPDATED to use new endpoint
+    getArticlesByCategory: (category, page = 1) => apiClient.get(`/articles/?team_id=1&category_slug=${category}&format=json&page=${page}`),
+    // Get articles by author - UPDATED to use new endpoint
+    getArticlesByAuthor: (authorId, page = 1) => apiClient.get(`/articles/?author_id=${authorId}&format=json&page=${page}`),
     // Get relevant articles
-    getRelevantArticles: (page = 1) => apiClient.get(`/articles/relevant/?format=json&page=${page}`)
+    getRelevantArticles: (page = 1) => apiClient.get(`/articles/relevant/?format=json&page=${page}`),
+    // New enhanced search endpoint for articles
+    searchArticles: (params = {}) => {
+      const queryParams = new URLSearchParams({
+        format: "json",
+        team_id: 1,
+        // Default team ID
+        ...params
+      });
+      return apiClient.get(`/articles/search/?${queryParams.toString()}`);
+    },
+    // Enhanced filtering with all available parameters
+    getArticlesWithFilters: (filters = {}) => {
+      const queryParams = new URLSearchParams({
+        format: "json",
+        team_id: 1,
+        // Default team ID
+        ...filters
+      });
+      return apiClient.get(`/articles/?${queryParams.toString()}`);
+    }
   };
   var trialService = {
-    // Get all trials with pagination
-    getTrials: (page = 1) => apiClient.get(`/teams/1/trials/subject/1/?format=json&page=${page}`),
-    // Get trials by category
-    getTrialsByCategory: (category, page = 1) => apiClient.get(`/teams/1/trials/category/${category}/?format=json&page=${page}`)
+    // Get all trials with pagination - UPDATED to use new endpoint
+    getTrials: (page = 1) => apiClient.get(`/trials/?team_id=1&subject_id=1&format=json&page=${page}`),
+    // Get trials by category - UPDATED to use new endpoint
+    getTrialsByCategory: (category, page = 1) => apiClient.get(`/trials/?team_id=1&category_slug=${category}&format=json&page=${page}`),
+    // New enhanced search endpoint for trials
+    searchTrials: (params = {}) => {
+      const queryParams = new URLSearchParams({
+        format: "json",
+        team_id: 1,
+        // Default team ID
+        subject_id: 1,
+        // Default subject ID
+        ...params
+      });
+      return apiClient.get(`/trials/search/?${queryParams.toString()}`);
+    },
+    // Enhanced filtering with all available parameters
+    getTrialsWithFilters: (filters = {}) => {
+      const queryParams = new URLSearchParams({
+        format: "json",
+        team_id: 1,
+        // Default team ID
+        ...filters
+      });
+      return apiClient.get(`/trials/?${queryParams.toString()}`);
+    }
+  };
+  var categoryService = {
+    // Get monthly counts for a category - Still supported endpoint
+    getMonthlyCounts: (category) => apiClient.get(`/teams/1/categories/${category}/monthly-counts/`),
+    // Get categories with filtering - NEW endpoint
+    getCategories: (params = {}) => {
+      const queryParams = new URLSearchParams({
+        format: "json",
+        ...params
+      });
+      return apiClient.get(`/categories/?${queryParams.toString()}`);
+    }
   };
 
+  // assets/js/components/ArticleList.jsx
+  var import_react42 = __toESM(require_react());
+  var import_prop_types4 = __toESM(require_prop_types());
+
   // assets/js/hooks/useApi.js
+  var import_react37 = __toESM(require_react());
   function useArticles(type2 = "all", options = {}) {
     const [articles, setArticles] = (0, import_react37.useState)([]);
     const [loading, setLoading] = (0, import_react37.useState)(true);
@@ -56631,10 +56696,7 @@
 
   // assets/js/apps/category.jsx
   function InteractiveLineChart() {
-    const API_URL2 = "https://api.gregory-ms.com";
     const { category } = useParams();
-    const monthlyCountsEndpoint = `${API_URL2}/teams/1/categories/${category}/monthly-counts/`;
-    const categoryTrialsEndpoint = `${API_URL2}/teams/1/trials/category/${category}/?format=json`;
     const [monthlyCounts, setMonthlyCounts] = (0, import_react46.useState)(null);
     const [clinicalTrials, setClinicalTrials] = (0, import_react46.useState)([]);
     const [loading, setLoading] = (0, import_react46.useState)(true);
@@ -56644,8 +56706,8 @@
       setLoading(true);
       async function fetchData() {
         try {
-          const monthlyCountsResponse = await axios_default.get(monthlyCountsEndpoint);
-          const trialsResponse = await axios_default.get(categoryTrialsEndpoint);
+          const monthlyCountsResponse = await categoryService.getMonthlyCounts(category);
+          const trialsResponse = await trialService.getTrialsByCategory(category, 1);
           if (isMounted) {
             setMonthlyCounts(monthlyCountsResponse.data);
             setClinicalTrials(trialsResponse.data.results);
@@ -56767,13 +56829,13 @@
     return /* @__PURE__ */ import_react46.default.createElement("div", { className: "category-page" }, /* @__PURE__ */ import_react46.default.createElement(InteractiveLineChart, null), /* @__PURE__ */ import_react46.default.createElement("div", { className: "downloads mb-4" }, /* @__PURE__ */ import_react46.default.createElement("h3", null, "Download Data"), /* @__PURE__ */ import_react46.default.createElement("div", { className: "row" }, /* @__PURE__ */ import_react46.default.createElement("div", { className: "col-md-6" }, /* @__PURE__ */ import_react46.default.createElement("h4", null, "Articles"), /* @__PURE__ */ import_react46.default.createElement(
       DownloadButton_default,
       {
-        apiEndpoint: `https://api.gregory-ms.com/teams/1/articles/category/${category}/`,
+        apiEndpoint: `https://api.gregory-ms.com/articles/?team_id=1&category_slug=${category}&format=csv&all_results=true`,
         fileName: `gregory-ms-${category}-articles.csv`
       }
     )), /* @__PURE__ */ import_react46.default.createElement("div", { className: "col-md-6" }, /* @__PURE__ */ import_react46.default.createElement("h4", null, "Clinical Trials"), /* @__PURE__ */ import_react46.default.createElement(
       DownloadButton_default,
       {
-        apiEndpoint: `https://api.gregory-ms.com/teams/1/trials/category/${category}/`,
+        apiEndpoint: `https://api.gregory-ms.com/trials/?team_id=1&category_slug=${category}&format=csv&all_results=true`,
         fileName: `gregory-ms-${category}-trials.csv`
       }
     )))), /* @__PURE__ */ import_react46.default.createElement("div", { className: "articles-section mb-5" }, /* @__PURE__ */ import_react46.default.createElement("h3", null, "Articles"), /* @__PURE__ */ import_react46.default.createElement(

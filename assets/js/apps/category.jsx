@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route, Routes, useParams } from 'react-router-
 import axios from 'axios';
 import { ComposedChart, Bar, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer, Label, Legend } from 'recharts';
 import * as d3 from 'd3';
+import { categoryService, trialService } from '../services/api';
 import ArticleList from '../components/ArticleList';
 import TrialsList from '../components/TrialsList';
 import DownloadButton from '../components/DownloadButton';
@@ -15,11 +16,7 @@ import DownloadButton from '../components/DownloadButton';
  * InteractiveLineChart component - Displays monthly counts for a category
  */
 function InteractiveLineChart() {
-  const API_URL = 'https://api.gregory-ms.com';
   const { category } = useParams();
-  
-  const monthlyCountsEndpoint = `${API_URL}/teams/1/categories/${category}/monthly-counts/`;
-  const categoryTrialsEndpoint = `${API_URL}/teams/1/trials/category/${category}/?format=json`;
   
   const [monthlyCounts, setMonthlyCounts] = useState(null);
   const [clinicalTrials, setClinicalTrials] = useState([]);
@@ -32,11 +29,11 @@ function InteractiveLineChart() {
 
     async function fetchData() {
       try {
-        // Fetch monthly counts
-        const monthlyCountsResponse = await axios.get(monthlyCountsEndpoint);
+        // Fetch monthly counts using the service
+        const monthlyCountsResponse = await categoryService.getMonthlyCounts(category);
         
-        // Fetch clinical trials
-        const trialsResponse = await axios.get(categoryTrialsEndpoint);
+        // Fetch clinical trials using the updated service
+        const trialsResponse = await trialService.getTrialsByCategory(category, 1);
         
         if (isMounted) {
           setMonthlyCounts(monthlyCountsResponse.data);
@@ -211,14 +208,14 @@ function CategoryPage() {
           <div className="col-md-6">
             <h4>Articles</h4>
             <DownloadButton 
-              apiEndpoint={`https://api.gregory-ms.com/teams/1/articles/category/${category}/`}
+              apiEndpoint={`https://api.gregory-ms.com/articles/?team_id=1&category_slug=${category}&format=csv&all_results=true`}
               fileName={`gregory-ms-${category}-articles.csv`}
             />
           </div>
           <div className="col-md-6">
             <h4>Clinical Trials</h4>
             <DownloadButton 
-              apiEndpoint={`https://api.gregory-ms.com/teams/1/trials/category/${category}/`}
+              apiEndpoint={`https://api.gregory-ms.com/trials/?team_id=1&category_slug=${category}&format=csv&all_results=true`}
               fileName={`gregory-ms-${category}-trials.csv`}
             />
           </div>
