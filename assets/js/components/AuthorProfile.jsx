@@ -43,6 +43,7 @@ export function AuthorProfile() {
 
   useEffect(() => {
     let isMounted = true;
+    let currentFetch = null; // Track the current fetch operation
     
     console.log('🔄 useEffect triggered for authorId:', currentAuthorId);
     console.log('🔄 fetchedRef.current:', fetchedRef.current);
@@ -55,20 +56,22 @@ export function AuthorProfile() {
     }
     
     // Check if we're already fetching or have fetched this author
-    if (fetchedRef.current === currentAuthorId) {
-      console.log('⚠️ Already fetched/fetching author:', currentAuthorId);
+    if (fetchedRef.current === currentAuthorId && author) {
+      console.log('⚠️ Already fetched author:', currentAuthorId, 'and have data');
+      setLoading(false); // Make sure loading is false if we already have data
       return;
     }
     
     setLoading(true);
+    setError(null); // Clear any previous errors
     
     async function fetchData() {
       console.log('fetchData called with authorId:', currentAuthorId);
       
-      // Prevent duplicate fetches for the same author
+      // Double check - prevent duplicate fetches for the same author
       if (fetchedRef.current === currentAuthorId) {
         console.log('Data already fetched for author:', currentAuthorId, '- skipping API call');
-        setLoading(false);
+        if (isMounted) setLoading(false);
         return;
       }
 
@@ -128,6 +131,7 @@ export function AuthorProfile() {
         console.log('🔍 About to check isMounted:', isMounted);
         if (!isMounted) {
           console.log('⚠️ Component unmounted, returning early');
+          fetchedRef.current = null; // Reset so it can be fetched again if component remounts
           return;
         }
         
@@ -221,17 +225,21 @@ export function AuthorProfile() {
           }
           
           setLoading(false);
+        } else {
+          console.log('⚠️ Component unmounted during error handling');
+          fetchedRef.current = null; // Reset so it can be retried
         }
       }
     }
 
     // Only fetch if we haven't already fetched this author
-    fetchData();
+    currentFetch = fetchData();
 
     return () => {
       console.log('🧹 Cleanup function called');
       isMounted = false;
-      // Don't reset fetchedRef here unless authorId actually changes
+      // Don't reset fetchedRef here - let it persist across remounts
+      // fetchedRef will be reset if there's an error or unmount during fetch
     };
   }, [currentAuthorId]);
 

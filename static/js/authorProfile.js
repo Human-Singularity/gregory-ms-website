@@ -34091,6 +34091,7 @@
     const currentAuthorId = (0, import_react9.useMemo)(() => getAuthorId(), [authorId]);
     (0, import_react9.useEffect)(() => {
       let isMounted = true;
+      let currentFetch = null;
       console.log("\u{1F504} useEffect triggered for authorId:", currentAuthorId);
       console.log("\u{1F504} fetchedRef.current:", fetchedRef.current);
       if (!currentAuthorId) {
@@ -34099,17 +34100,19 @@
         setLoading(false);
         return;
       }
-      if (fetchedRef.current === currentAuthorId) {
-        console.log("\u26A0\uFE0F Already fetched/fetching author:", currentAuthorId);
+      if (fetchedRef.current === currentAuthorId && author) {
+        console.log("\u26A0\uFE0F Already fetched author:", currentAuthorId, "and have data");
+        setLoading(false);
         return;
       }
       setLoading(true);
+      setError(null);
       async function fetchData() {
         var _a, _b, _c, _d, _e, _f, _g, _h;
         console.log("fetchData called with authorId:", currentAuthorId);
         if (fetchedRef.current === currentAuthorId) {
           console.log("Data already fetched for author:", currentAuthorId, "- skipping API call");
-          setLoading(false);
+          if (isMounted) setLoading(false);
           return;
         }
         try {
@@ -34157,6 +34160,7 @@
           console.log("\u{1F50D} About to check isMounted:", isMounted);
           if (!isMounted) {
             console.log("\u26A0\uFE0F Component unmounted, returning early");
+            fetchedRef.current = null;
             return;
           }
           console.log("\u{1F50D} About to process response...");
@@ -34223,10 +34227,13 @@
               setError(new Error(`Failed to load author: ${err.message}`));
             }
             setLoading(false);
+          } else {
+            console.log("\u26A0\uFE0F Component unmounted during error handling");
+            fetchedRef.current = null;
           }
         }
       }
-      fetchData();
+      currentFetch = fetchData();
       return () => {
         console.log("\u{1F9F9} Cleanup function called");
         isMounted = false;
