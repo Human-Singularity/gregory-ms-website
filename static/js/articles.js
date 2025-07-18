@@ -34356,13 +34356,42 @@
           fetchedRef.current = currentAuthorId;
           const authorUrl = `https://api.gregory-ms.com/authors/?author_id=${currentAuthorId}&format=json`;
           console.log("Making request to:", authorUrl);
-          const authorResponse = await axios_default.get(authorUrl, {
-            timeout: 1e4,
-            // 10 second timeout
-            headers: {
-              "Accept": "application/json"
+          try {
+            console.log("\u{1F680} Starting fetch request...");
+            const response = await fetch(authorUrl, {
+              method: "GET",
+              headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              mode: "cors"
+              // Explicitly set CORS mode
+            });
+            console.log("\u{1F4E1} Fetch response received");
+            console.log("Response status:", response.status);
+            console.log("Response ok:", response.ok);
+            console.log("Response headers:", Object.fromEntries(response.headers.entries()));
+            if (!response.ok) {
+              throw new Error(`HTTP ${response.status}: ${response.statusText}`);
             }
-          });
+            const authorData2 = await response.json();
+            console.log("\u{1F4E6} JSON data parsed:", authorData2);
+            const authorResponse2 = {
+              data: authorData2,
+              status: response.status,
+              statusText: response.statusText,
+              headers: response.headers
+            };
+            console.log("\u2705 API request successful!");
+            console.log("Response status:", authorResponse2.status);
+            console.log("Response data:", authorResponse2.data);
+          } catch (apiError) {
+            console.error("\u274C API request failed:", apiError);
+            console.error("Error name:", apiError.name);
+            console.error("Error message:", apiError.message);
+            console.error("Error stack:", apiError.stack);
+            throw apiError;
+          }
           if (!isMounted) return;
           console.log("Author API response status:", authorResponse.status);
           console.log("Author API response data:", authorResponse.data);
