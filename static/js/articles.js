@@ -1096,7 +1096,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useReducer(reducer, initialArg, init2);
           }
-          function useRef5(initialValue) {
+          function useRef4(initialValue) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
@@ -1116,7 +1116,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useCallback(callback, deps);
           }
-          function useMemo4(create2, deps) {
+          function useMemo3(create2, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useMemo(create2, deps);
           }
@@ -1888,9 +1888,9 @@
           exports.useImperativeHandle = useImperativeHandle;
           exports.useInsertionEffect = useInsertionEffect;
           exports.useLayoutEffect = useLayoutEffect3;
-          exports.useMemo = useMemo4;
+          exports.useMemo = useMemo3;
           exports.useReducer = useReducer;
-          exports.useRef = useRef5;
+          exports.useRef = useRef4;
           exports.useState = useState8;
           exports.useSyncExternalStore = useSyncExternalStore;
           exports.useTransition = useTransition;
@@ -34323,7 +34323,6 @@
     const [currentPage, setCurrentPage] = (0, import_react10.useState)(1);
     const [articlesPerPage] = (0, import_react10.useState)(10);
     const { authorId } = useParams();
-    const fetchedRef = (0, import_react10.useRef)(null);
     const getAuthorId = () => {
       if (authorId && /^\d+$/.test(authorId)) return authorId;
       const path2 = window.location.pathname;
@@ -34334,156 +34333,59 @@
       if (queryId && /^\d+$/.test(queryId)) return queryId;
       return null;
     };
-    const currentAuthorId = (0, import_react10.useMemo)(() => getAuthorId(), [authorId]);
+    const currentAuthorId = getAuthorId();
     (0, import_react10.useEffect)(() => {
-      let isMounted = true;
-      let currentFetch = null;
-      console.log("\u{1F504} useEffect triggered for authorId:", currentAuthorId);
-      console.log("\u{1F504} fetchedRef.current:", fetchedRef.current);
-      if (!currentAuthorId) {
-        console.log("\u274C No authorId provided");
-        setError(new Error("No author ID provided"));
-        setLoading(false);
-        return;
-      }
-      if (fetchedRef.current === currentAuthorId && author) {
-        console.log("\u26A0\uFE0F Already fetched author:", currentAuthorId, "and have data");
-        setLoading(false);
-        return;
-      }
-      setLoading(true);
-      setError(null);
       async function fetchData() {
-        var _a, _b, _c, _d, _e, _f, _g, _h;
-        console.log("fetchData called with authorId:", currentAuthorId);
-        if (fetchedRef.current === currentAuthorId) {
-          console.log("Data already fetched for author:", currentAuthorId, "- skipping API call");
-          if (isMounted) setLoading(false);
+        if (!currentAuthorId) {
+          setError(new Error("No author ID provided"));
+          setLoading(false);
           return;
         }
+        setLoading(true);
+        setError(null);
         try {
-          console.log("Making API call for author:", currentAuthorId);
-          fetchedRef.current = currentAuthorId;
-          const authorUrl = `https://api.gregory-ms.com/authors/?author_id=${currentAuthorId}&format=json`;
-          console.log("Making request to:", authorUrl);
-          let authorResponse;
-          try {
-            console.log("\u{1F680} Starting fetch request...");
-            const response = await fetch(authorUrl, {
-              method: "GET",
-              headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-              },
-              mode: "cors"
-              // Explicitly set CORS mode
-            });
-            console.log("\u{1F4E1} Fetch response received");
-            console.log("Response status:", response.status);
-            console.log("Response ok:", response.ok);
-            console.log("Response headers:", Object.fromEntries(response.headers.entries()));
-            if (!response.ok) {
-              throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-            }
-            const authorData2 = await response.json();
-            console.log("\u{1F4E6} JSON data parsed:", authorData2);
-            authorResponse = {
-              data: authorData2,
-              status: response.status,
-              statusText: response.statusText,
-              headers: response.headers
-            };
-            console.log("\u2705 API request successful!");
-            console.log("Response status:", authorResponse.status);
-            console.log("Response data:", authorResponse.data);
-          } catch (apiError) {
-            console.error("\u274C API request failed:", apiError);
-            console.error("Error name:", apiError.name);
-            console.error("Error message:", apiError.message);
-            console.error("Error stack:", apiError.stack);
-            throw apiError;
-          }
-          console.log("\u{1F50D} About to check isMounted:", isMounted);
-          if (!isMounted) {
-            console.log("\u26A0\uFE0F Component unmounted, returning early");
-            fetchedRef.current = null;
-            return;
-          }
-          console.log("\u{1F50D} About to process response...");
-          console.log("Author API response status:", authorResponse.status);
-          console.log("Author API response data:", authorResponse.data);
-          console.log("Response data type:", typeof authorResponse.data);
-          console.log("Is response data array?", Array.isArray(authorResponse.data));
+          console.log("Fetching author:", currentAuthorId);
+          const authorResponse = await axios_default.get(`https://api.gregory-ms.com/authors/?author_id=${currentAuthorId}&format=json`);
+          console.log("Author response:", authorResponse.data);
           let authorData;
           if (Array.isArray(authorResponse.data)) {
-            console.log("Response is array with length:", authorResponse.data.length);
             authorData = authorResponse.data[0];
           } else if (authorResponse.data.results && Array.isArray(authorResponse.data.results)) {
-            console.log("Response has results array with length:", authorResponse.data.results.length);
             authorData = authorResponse.data.results[0];
           } else {
-            console.log("Response is direct object");
             authorData = authorResponse.data;
           }
-          console.log("\u{1F50D} Final processed author data:", authorData);
-          console.log("\u{1F50D} Author data type:", typeof authorData);
-          console.log("\u{1F50D} Author data details:", JSON.stringify(authorData, null, 2));
+          console.log("Processed author data:", authorData);
           if (!authorData) {
-            console.error("\u274C No author data found after processing response");
             throw new Error("Author not found in API response");
           }
-          console.log("\u{1F3AF} About to setAuthor with:", authorData);
           setAuthor(authorData);
-          console.log("\u2705 setAuthor completed");
           let allArticles = [];
           let page = 1;
           let hasMore = true;
-          while (hasMore && isMounted) {
+          while (hasMore) {
             const articlesResponse = await axios_default.get(`https://api.gregory-ms.com/articles/?author_id=${currentAuthorId}&format=json&page=${page}`);
             const pageResults = articlesResponse.data.results || [];
             allArticles = [...allArticles, ...pageResults];
             hasMore = articlesResponse.data.next !== null;
             page++;
           }
-          if (isMounted) {
-            setArticles(allArticles);
-            setLoading(false);
-            const fullName = authorData.full_name || authorData.name || `${authorData.given_name || ""} ${authorData.family_name || ""}`.trim() || "Unknown Author";
-            document.title = `${fullName} Multiple Sclerosis Research`;
-            const h1 = document.querySelector("h1");
-            if (h1) {
-              h1.textContent = fullName;
-            }
-            removeSpecifiedNodes();
+          setArticles(allArticles);
+          setLoading(false);
+          const fullName = authorData.full_name || authorData.name || `${authorData.given_name || ""} ${authorData.family_name || ""}`.trim() || "Unknown Author";
+          document.title = `${fullName} Multiple Sclerosis Research`;
+          const h1 = document.querySelector("h1");
+          if (h1) {
+            h1.textContent = fullName;
           }
+          removeSpecifiedNodes();
         } catch (err) {
-          console.error("API Error details:", err);
-          console.error("Error response:", err.response);
-          console.error("Error status:", (_a = err.response) == null ? void 0 : _a.status);
-          console.error("Error data:", (_b = err.response) == null ? void 0 : _b.data);
-          if (isMounted) {
-            fetchedRef.current = null;
-            if (((_c = err.response) == null ? void 0 : _c.status) === 404) {
-              setError(new Error(`Author with ID ${currentAuthorId} was not found in our database.`));
-            } else if (((_d = err.response) == null ? void 0 : _d.status) >= 400 && ((_e = err.response) == null ? void 0 : _e.status) < 500) {
-              setError(new Error(`Invalid request: ${((_g = (_f = err.response) == null ? void 0 : _f.data) == null ? void 0 : _g.detail) || err.message}`));
-            } else if (((_h = err.response) == null ? void 0 : _h.status) >= 500) {
-              setError(new Error("Server error. Please try again later."));
-            } else {
-              setError(new Error(`Failed to load author: ${err.message}`));
-            }
-            setLoading(false);
-          } else {
-            console.log("\u26A0\uFE0F Component unmounted during error handling");
-            fetchedRef.current = null;
-          }
+          console.error("Error fetching author:", err);
+          setError(err);
+          setLoading(false);
         }
       }
-      currentFetch = fetchData();
-      return () => {
-        console.log("\u{1F9F9} Cleanup function called");
-        isMounted = false;
-      };
+      fetchData();
     }, [currentAuthorId]);
     const generateAvatarUrl = (author2) => {
       const givenName = author2.given_name || author2.first_name || "";
