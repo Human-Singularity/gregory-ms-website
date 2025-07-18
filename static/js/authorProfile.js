@@ -34093,6 +34093,7 @@
       let isMounted = true;
       setLoading(true);
       async function fetchData() {
+        var _a, _b, _c, _d, _e, _f, _g, _h;
         console.log("fetchData called with authorId:", currentAuthorId);
         if (!currentAuthorId) {
           setError(new Error("No author ID provided"));
@@ -34109,7 +34110,13 @@
           fetchedRef.current = currentAuthorId;
           const authorUrl = `https://api.gregory-ms.com/authors/?author_id=${currentAuthorId}&format=json`;
           console.log("Making request to:", authorUrl);
-          const authorResponse = await axios_default.get(authorUrl);
+          const authorResponse = await axios_default.get(authorUrl, {
+            timeout: 1e4,
+            // 10 second timeout
+            headers: {
+              "Accept": "application/json"
+            }
+          });
           if (!isMounted) return;
           console.log("Author API response status:", authorResponse.status);
           console.log("Author API response data:", authorResponse.data);
@@ -34155,9 +34162,21 @@
             removeSpecifiedNodes();
           }
         } catch (err) {
+          console.error("API Error details:", err);
+          console.error("Error response:", err.response);
+          console.error("Error status:", (_a = err.response) == null ? void 0 : _a.status);
+          console.error("Error data:", (_b = err.response) == null ? void 0 : _b.data);
           if (isMounted) {
             fetchedRef.current = null;
-            setError(err);
+            if (((_c = err.response) == null ? void 0 : _c.status) === 404) {
+              setError(new Error(`Author with ID ${currentAuthorId} was not found in our database.`));
+            } else if (((_d = err.response) == null ? void 0 : _d.status) >= 400 && ((_e = err.response) == null ? void 0 : _e.status) < 500) {
+              setError(new Error(`Invalid request: ${((_g = (_f = err.response) == null ? void 0 : _f.data) == null ? void 0 : _g.detail) || err.message}`));
+            } else if (((_h = err.response) == null ? void 0 : _h.status) >= 500) {
+              setError(new Error("Server error. Please try again later."));
+            } else {
+              setError(new Error(`Failed to load author: ${err.message}`));
+            }
             setLoading(false);
           }
         }
