@@ -120,6 +120,21 @@ function Observatory({ config = DEFAULT_CONFIG }) {
     setSearchTerm(e.target.value);
   };
 
+  // Handle search form submission (when user presses Enter)
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (searchTerm.trim()) {
+      // Track search with umami
+      if (typeof umami !== 'undefined') {
+        umami.track('observatory-search', {
+          query: searchTerm.trim(),
+          resultCount: filteredCategories.length,
+          selectedTags: selectedTags.length > 0 ? selectedTags.join(',') : null
+        });
+      }
+    }
+  };
+
   // Clear search
   const handleClearSearch = () => {
     setSearchTerm('');
@@ -127,11 +142,22 @@ function Observatory({ config = DEFAULT_CONFIG }) {
 
   // Handle tag selection
   const handleTagToggle = (tag) => {
+    const isRemoving = selectedTags.includes(tag);
+    
     setSelectedTags(prev => 
       prev.includes(tag) 
         ? prev.filter(t => t !== tag)
         : [...prev, tag]
     );
+
+    // Track tag interaction with umami
+    if (typeof umami !== 'undefined') {
+      umami.track('observatory-tag', {
+        tag: tag,
+        action: isRemoving ? 'remove' : 'add',
+        totalSelectedTags: isRemoving ? selectedTags.length - 1 : selectedTags.length + 1
+      });
+    }
   };
 
   // Clear all filters
@@ -145,6 +171,15 @@ function Observatory({ config = DEFAULT_CONFIG }) {
     setSelectedCategory(category);
     // Update URL without page reload
     navigate(`/observatory/category/${category.slug}`, { replace: true });
+    
+    // Track category selection with umami
+    if (typeof umami !== 'undefined') {
+      umami.track('observatory-category', {
+        category: category.name,
+        slug: category.slug,
+        tags: category.tags.join(',')
+      });
+    }
   };
 
   // Handle back to categories list
@@ -196,31 +231,33 @@ function Observatory({ config = DEFAULT_CONFIG }) {
             {/* Search Bar */}
             <div className="row justify-content-center mb-4">
               <div className="col-md-6">
-                <div className="input-group observatory-search">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Search treatments (e.g., 'Fingolimod', 'stem cell', 'remyelination')"
-                    value={searchTerm}
-                    onChange={handleSearchChange}
-                  />
-                  <div className="input-group-append">
-                    {searchTerm ? (
-                      <button
-                        className="btn btn-outline-secondary"
-                        type="button"
-                        onClick={handleClearSearch}
-                        title="Clear search"
-                      >
-                        <i className="fa fa-times"></i>
-                      </button>
-                    ) : (
-                      <span className="input-group-text">
-                        <i className="fa fa-search"></i>
-                      </span>
-                    )}
+                <form onSubmit={handleSearchSubmit} className="observatory-search">
+                  <div className="input-group">
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Search treatments (e.g., 'Fingolimod', 'stem cell', 'remyelination')"
+                      value={searchTerm}
+                      onChange={handleSearchChange}
+                    />
+                    <div className="input-group-append">
+                      {searchTerm ? (
+                        <button
+                          className="btn btn-outline-secondary"
+                          type="button"
+                          onClick={handleClearSearch}
+                          title="Clear search"
+                        >
+                          <i className="fa fa-times"></i>
+                        </button>
+                      ) : (
+                        <span className="input-group-text">
+                          <i className="fa fa-search"></i>
+                        </span>
+                      )}
+                    </div>
                   </div>
-                </div>
+                </form>
                 <div className="observatory-filters-status mt-2">
                   <div className="d-flex justify-content-between align-items-center">
                     <small className="text-muted">

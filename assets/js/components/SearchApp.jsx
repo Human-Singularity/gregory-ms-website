@@ -87,18 +87,6 @@ function SearchApp() {
     setHasSearched(true);
     // Set active tab to match search type
     setActiveTab(searchType);
-    e.preventDefault();
-    
-    if (!searchTerm.trim()) {
-      setError('Please enter a search term');
-      return;
-    }
-    
-    setIsLoading(true);
-    setError(null);
-    setHasSearched(true);
-    // Set active tab to match search type
-    setActiveTab(searchType);
     
     try {
       if (searchType === 'articles') {
@@ -238,6 +226,26 @@ function SearchApp() {
         setTrialResults([]);
         setTrialCount(0);
         setTrialLastPage(1);
+      }
+
+      // Track successful search with umami
+      if (typeof umami !== 'undefined') {
+        let resultCount = 0;
+        if (searchType === 'articles') {
+          resultCount = articleCount;
+        } else if (searchType === 'trials') {
+          resultCount = trialCount;
+        } else if (searchType === 'authors') {
+          resultCount = authorCount;
+        }
+
+        umami.track('search', {
+          query: searchTerm.trim(),
+          type: searchType,
+          field: searchField,
+          resultCount: resultCount,
+          trialStatus: searchType === 'trials' ? trialStatus : null
+        });
       }
     } catch (err) {
       console.error('Search error:', err);

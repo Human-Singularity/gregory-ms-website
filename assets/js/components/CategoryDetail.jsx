@@ -344,7 +344,12 @@ function CategoryDetail({ category, config, onBack }) {
             <h2 className="text-primary">{category.name}</h2>
             <p className="text-muted">{category.description}</p>
           </div>
-          <button className="btn btn-secondary" onClick={onBack}>
+          <button 
+            className="btn btn-secondary" 
+            onClick={onBack}
+            data-umami-event="click--observatory-back"
+            data-umami-event-category={category.name}
+          >
             <i className="fa fa-arrow-left mr-2"></i>
             Back to Categories
           </button>
@@ -356,6 +361,9 @@ function CategoryDetail({ category, config, onBack }) {
             <button
               className={`nav-link ${activeTab === 'chart' ? 'active' : ''}`}
               onClick={() => handleTabChange('chart')}
+              data-umami-event="click--observatory-tab"
+              data-umami-event-tab="chart"
+              data-umami-event-category={category.name}
             >
               <i className="fa fa-chart-line mr-2"></i>
               Monthly Overview
@@ -365,6 +373,9 @@ function CategoryDetail({ category, config, onBack }) {
             <button
               className={`nav-link ${activeTab === 'articles' ? 'active' : ''}`}
               onClick={() => handleTabChange('articles')}
+              data-umami-event="click--observatory-tab"
+              data-umami-event-tab="articles"
+              data-umami-event-category={category.name}
             >
               <i className="fa fa-file-text mr-2"></i>
               Articles
@@ -374,6 +385,9 @@ function CategoryDetail({ category, config, onBack }) {
             <button
               className={`nav-link ${activeTab === 'trials' ? 'active' : ''}`}
               onClick={() => handleTabChange('trials')}
+              data-umami-event="click--observatory-tab"
+              data-umami-event-tab="trials"
+              data-umami-event-category={category.name}
             >
               <i className="fa fa-flask mr-2"></i>
               Clinical Trials

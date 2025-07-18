@@ -19,7 +19,13 @@ function AuthorListItem({ author, isSearchResult = false }) {
       <div className="d-flex w-100 justify-content-between align-items-start">
         <div className="author-info flex-grow-1">
           <h5 className="mb-2">
-            <a href={authorUrl} className="text-primary text-decoration-none">
+            <a 
+              href={authorUrl} 
+              className="text-primary text-decoration-none"
+              data-umami-event={isSearchResult ? 'click--search-author-result' : 'click--author-link'}
+              data-umami-event-id={author.author_id}
+              data-umami-event-name={author.full_name}
+            >
               {author.full_name}
             </a>
           </h5>
@@ -47,6 +53,8 @@ function AuthorListItem({ author, isSearchResult = false }) {
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="text-success"
+                      data-umami-event="click--external-orcid"
+                      data-umami-event-author={author.full_name}
                     >
                       {author.ORCID}
                     </a>
@@ -65,6 +73,9 @@ function AuthorListItem({ author, isSearchResult = false }) {
                     <a 
                       href={authorUrl} 
                       className="btn btn-sm btn-primary"
+                      data-umami-event={isSearchResult ? 'click--search-author-profile' : 'click--author-profile'}
+                      data-umami-event-id={author.author_id}
+                      data-umami-event-name={author.full_name}
                     >
                       <i className="fas fa-user-circle mr-1"></i>
                       View Profile

@@ -33,8 +33,19 @@ export function ArticleListItem({
   // Determine if we should use a Link or an anchor tag
   const LinkComponent = isSearchResult ? 'a' : Link;
   const linkProps = isSearchResult 
-    ? { href: `/articles/${article.article_id}/`, target: "_blank", rel: "noopener noreferrer" }
-    : { to: articleUrl };
+    ? { 
+        href: `/articles/${article.article_id}/`, 
+        target: "_blank", 
+        rel: "noopener noreferrer",
+        'data-umami-event': 'click--search-article-result',
+        'data-umami-event-id': article.article_id,
+        'data-umami-event-title': article.title
+      }
+    : { 
+        to: articleUrl,
+        'data-umami-event': 'click--article-link',
+        'data-umami-event-id': article.article_id
+      };
 
   return (
     <div className="list-group-item list-group-item-action flex-column align-items-start" role="article" aria-labelledby={`article-title-${article.article_id}`}>
