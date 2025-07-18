@@ -66,7 +66,7 @@ export function AuthorProfile() {
         let hasMore = true;
         
         while (hasMore && isMounted) {
-          const articlesResponse = await axios.get(`https://api.gregory-ms.com/articles/author/${currentAuthorId}/?format=json&page=${page}`);
+          const articlesResponse = await axios.get(`https://api.gregory-ms.com/articles/?author_id=${currentAuthorId}&format=json&page=${page}`);
           const pageResults = articlesResponse.data.results || [];
           allArticles = [...allArticles, ...pageResults];
           
@@ -227,7 +227,7 @@ export function AuthorProfile() {
                       <div className="col-lg-4 col-md-5 mt-4 mt-md-0">
                         <div className="text-center text-md-end">
                           <DownloadButton
-                            apiEndpoint={`https://api.gregory-ms.com/articles/author/${currentAuthorId}/`}
+                            apiEndpoint={`https://api.gregory-ms.com/articles/?author_id=${currentAuthorId}`}
                             className="btn btn-outline-primary"
                           />
                         </div>

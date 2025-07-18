@@ -83,7 +83,7 @@ export function AuthorArticleChart({ authorId, articles: providedArticles }) {
         let hasMore = true;
         
         while (hasMore) {
-          const response = await axios.get(`https://api.gregory-ms.com/articles/author/${authorId}/?format=json&page=${page}`);
+          const response = await axios.get(`https://api.gregory-ms.com/articles/?author_id=${authorId}&format=json&page=${page}`);
           const pageResults = response.data.results || [];
           allArticles = [...allArticles, ...pageResults];
           

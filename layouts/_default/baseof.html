@@ -319,13 +319,13 @@
 	<script>initPhotoSwipeFromDOM('.gallery');</script>
 {{- end -}}
 		<!-- Scripts -->
-		{{- $jquery := resources.Get "/js/core/jquery.js" -}}
-		{{- $popper := resources.Get "/js/core/popper.min.js" -}}
+		{{- $jquery := resources.Get "/js/core/jquery.js" | resources.Fingerprint -}}
+		{{- $popper := resources.Get "/js/core/popper.min.js" | resources.Fingerprint -}}
 		{{- $bootstrap := resources.Get "/js/core/bootstrap.js" -}}
 		<!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
-		{{- $bootstrapSwitch := resources.Get "/js/plugins/bootstrap-switch.js" -}}
+		{{- $bootstrapSwitch := resources.Get "/js/plugins/bootstrap-switch.js" | resources.Fingerprint -}}
 		<!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
-		{{- $nouislider := resources.Get "/js/plugins/nouislider.min.js" -}}
+		{{- $nouislider := resources.Get "/js/plugins/nouislider.min.js" | resources.Fingerprint -}}
 		{{- $customJs := resources.Get "/js/custom.js" | resources.Fingerprint -}}
 		<!-- Control Center for Now Ui Kit: parallax effects, scripts for the example pages etc -->
 		{{- $nowuikitjs := resources.Get "/js/now-ui-kit.js" -}}
