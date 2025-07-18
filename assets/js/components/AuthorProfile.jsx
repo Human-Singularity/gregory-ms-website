@@ -56,14 +56,14 @@ export function AuthorProfile() {
 
       // Prevent duplicate fetches for the same author
       if (fetchedRef.current === currentAuthorId) {
-        console.log('Data already fetched for author:', currentAuthorId);
+        console.log('Data already fetched for author:', currentAuthorId, '- skipping API call');
         setLoading(false);
         return;
       }
 
       try {
         console.log('Making API call for author:', currentAuthorId);
-        fetchedRef.current = currentAuthorId; // Mark as being fetched
+        fetchedRef.current = currentAuthorId; // Mark as being fetched BEFORE the API call
         
         // Fetch author details
         const authorUrl = `https://api.gregory-ms.com/authors/?author_id=${currentAuthorId}&format=json`;
