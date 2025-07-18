@@ -53,8 +53,8 @@ export function AuthorProfile() {
 
       try {
         // Fetch author details
-        const authorResponse = await axios.get(`https://api.gregory-ms.com/authors/${currentAuthorId}/?format=json`);
-        
+        const authorResponse = await axios.get(`https://api.gregory-ms.com/authors?author_id=${currentAuthorId}&format=json`);
+
         if (!isMounted) return;
         
         const authorData = authorResponse.data;
