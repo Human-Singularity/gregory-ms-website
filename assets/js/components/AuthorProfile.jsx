@@ -68,7 +68,12 @@ export function AuthorProfile() {
         // Fetch author details
         const authorUrl = `https://api.gregory-ms.com/authors/?author_id=${currentAuthorId}&format=json`;
         console.log('Making request to:', authorUrl);
-        const authorResponse = await axios.get(authorUrl);
+        const authorResponse = await axios.get(authorUrl, {
+          timeout: 10000, // 10 second timeout
+          headers: {
+            'Accept': 'application/json',
+          }
+        });
         
         if (!isMounted) return;
         
@@ -138,9 +143,25 @@ export function AuthorProfile() {
           removeSpecifiedNodes();
         }
       } catch (err) {
+        console.error('API Error details:', err);
+        console.error('Error response:', err.response);
+        console.error('Error status:', err.response?.status);
+        console.error('Error data:', err.response?.data);
+        
         if (isMounted) {
           fetchedRef.current = null; // Reset on error so we can retry
-          setError(err);
+          
+          // More specific error handling
+          if (err.response?.status === 404) {
+            setError(new Error(`Author with ID ${currentAuthorId} was not found in our database.`));
+          } else if (err.response?.status >= 400 && err.response?.status < 500) {
+            setError(new Error(`Invalid request: ${err.response?.data?.detail || err.message}`));
+          } else if (err.response?.status >= 500) {
+            setError(new Error('Server error. Please try again later.'));
+          } else {
+            setError(new Error(`Failed to load author: ${err.message}`));
+          }
+          
           setLoading(false);
         }
       }
