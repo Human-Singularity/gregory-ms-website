@@ -286,14 +286,14 @@ function Observatory({ config = DEFAULT_CONFIG }) {
                   No treatments match your 
                   {searchTerm && ` search for "${searchTerm}"`}
                   {searchTerm && selectedTags.length > 0 && ' and '}
-                  {selectedTags.length > 0 && ` selected tags: ${selectedTags.join(', ')}`}
+                  {selectedTags.length > 0 && `selected tags: ${selectedTags.join(', ')}`}
                 </p>
                 <p>Try:</p>
-                <ul className="list-unstyled">
-                  <li>• Specific drug names (e.g., "Tecfidera", "Ocrelizumab")</li>
-                  <li>• Treatment types (e.g., "stem cell", "antibody")</li>
-                  <li>• Mechanisms (e.g., "remyelination", "neuroprotection")</li>
-                  <li>• Removing some filters</li>
+                <ul className="list">
+                  <li>Specific drug names (e.g., "Tecfidera", "Ocrelizumab")</li>
+                  <li>Treatment types (e.g., "stem cell", "antibody")</li>
+                  <li>Mechanisms (e.g., "remyelination", "neuroprotection")</li>
+                  <li>Removing some filters</li>
                 </ul>
               </div>
             </div>
