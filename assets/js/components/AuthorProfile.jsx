@@ -69,6 +69,8 @@ export function AuthorProfile() {
         const authorUrl = `https://api.gregory-ms.com/authors/?author_id=${currentAuthorId}&format=json`;
         console.log('Making request to:', authorUrl);
         
+        let authorResponse;
+        
         try {
           console.log('🚀 Starting fetch request...');
           const response = await fetch(authorUrl, {
@@ -93,7 +95,7 @@ export function AuthorProfile() {
           console.log('📦 JSON data parsed:', authorData);
           
           // Create an axios-like response object for compatibility
-          const authorResponse = {
+          authorResponse = {
             data: authorData,
             status: response.status,
             statusText: response.statusText,
