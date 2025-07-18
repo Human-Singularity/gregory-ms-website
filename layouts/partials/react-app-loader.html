@@ -1,0 +1,42 @@
+{{- /* 
+  React App Loader - Use this partial to load React apps consistently
+  Example usage: {{ partial "react-app-loader.html" (dict "app" "articles" "minify" true) }}
+  Parameters:
+    - app: Name of the app to load (required)
+    - minify: Whether to minify the output (default: true)
+    - fingerprint: Whether to fingerprint the output (default: true)
+*/ -}}
+
+{{- $app := .app -}}
+{{- $minify := default true .minify -}}
+{{- $fingerprint := default true .fingerprint -}}
+
+{{- /* Check if pre-compiled JS file exists in static folder */ -}}
+{{- $staticJsPath := printf "js/%s.js" $app -}}
+{{- $staticJsExists := false -}}
+{{- $staticJsExists = fileExists (printf "static/%s" $staticJsPath) -}}
+
+{{- if $staticJsExists -}}
+  {{- /* Use pre-compiled JS file */ -}}
+  <script src="{{ $staticJsPath | relURL }}"></script>
+{{- else -}}
+  {{- /* Fall back to Hugo's js.Build */ -}}
+  {{- $appPath := printf "js/apps/%s.jsx" $app -}}
+  {{- $appResource := resources.Get $appPath -}}
+
+  {{- if $appResource -}}
+    {{- $appResource = $appResource | js.Build -}}
+    
+    {{- if $minify -}}
+      {{- $appResource = $appResource | resources.Minify -}}
+    {{- end -}}
+    
+    {{- if $fingerprint -}}
+      {{- $appResource = $appResource | resources.Fingerprint -}}
+    {{- end -}}
+    
+    <script src="{{ $appResource.RelPermalink }}"></script>
+  {{- else -}}
+    <!-- WARNING: App resource not found: {{ $appPath }} -->
+  {{- end -}}
+{{- end -}}

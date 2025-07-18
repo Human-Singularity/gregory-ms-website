@@ -15,7 +15,6 @@ layout: page
 menu:
   column_1:
     Name: Developers
-    Weight: 3
 
 draft: false
 enableDisqus : true

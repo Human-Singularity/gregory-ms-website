@@ -1,0 +1,426 @@
+/**
+ * Gregory MS - Search App Styles
+ * Consistent styles for search components and article listings
+ */
+
+/* ----------------------------------------
+   1. Search App Layout
+   ---------------------------------------- */
+.search-app {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.search-app .container {
+  max-width: 1200px;
+}
+
+/* ----------------------------------------
+   2. Search Form Styles
+   ---------------------------------------- */
+.search-form {
+  background: #f8f9fa;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.search-form .form-group {
+  margin-bottom: 1rem;
+}
+
+.search-form .btn {
+  min-width: 120px;
+}
+
+/* ----------------------------------------
+   3. Search Results Layout
+   ---------------------------------------- */
+.search-results {
+  margin-top: 2rem;
+}
+
+.search-results .nav-tabs {
+  border-bottom: 2px solid #e9ecef;
+  margin-bottom: 1.5rem;
+}
+
+.search-results .nav-tabs .nav-link {
+  border: none;
+  padding: 0.75rem 1.5rem;
+  color: #495057;
+  background: none;
+}
+
+.search-results .nav-tabs .nav-link.active {
+  color: #007bff;
+  border-bottom: 2px solid #007bff;
+  background: none;
+}
+
+.search-results .nav-tabs .nav-link:hover {
+  border-color: transparent;
+  color: #0056b3;
+}
+
+/* ----------------------------------------
+   4. Article List Consistency
+   ---------------------------------------- */
+.search-app .list-group-item,
+.author-profile .list-group-item {
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 1px solid #e9ecef;
+  padding: 1rem 1.5rem;
+  transition: background-color 0.15s ease-in-out;
+}
+
+.search-app .list-group-item:hover,
+.author-profile .list-group-item:hover {
+  background-color: #f8f9fa;
+}
+
+.search-app .list-group-item:first-child,
+.author-profile .list-group-item:first-child {
+  border-top: 0;
+}
+
+.search-app .list-group-item:last-child,
+.author-profile .list-group-item:last-child {
+  border-bottom: 0;
+}
+
+/* Article titles */
+.search-app .list-group-item h5,
+.author-profile .list-group-item h5 {
+  font-size: 1.1rem;
+  line-height: 1.4;
+  margin-bottom: 0.5rem;
+}
+
+.search-app .list-group-item h5 a,
+.author-profile .list-group-item h5 a {
+  color: #007bff;
+  text-decoration: underline;
+  transition: color 0.15s ease-in-out;
+}
+
+.search-app .list-group-item h5 a:hover,
+.author-profile .list-group-item h5 a:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+/* Article metadata */
+.search-app .article-metadata,
+.author-profile .article-metadata {
+  margin-bottom: 0.75rem;
+}
+
+.search-app .article-metadata .badge,
+.author-profile .article-metadata .badge {
+  margin-right: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+/* Override any default badge styles that might interfere */
+.search-app .article-metadata .badge.badge-journal,
+.author-profile .article-metadata .badge.badge-journal,
+.search-app .badge-journal,
+.author-profile .badge-journal {
+  background-color: #0062cc !important;
+  color: #ffffff !important;
+  font-size: 0.875rem;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid #0062cc !important;
+  opacity: 1 !important;
+}
+
+/* Expert selection badge styling */
+.search-app .article-metadata .badge.badge-expert,
+.author-profile .article-metadata .badge.badge-expert,
+.search-app .badge-expert,
+.author-profile .badge-expert {
+  background-color: #28a745 !important;
+  color: #ffffff !important;
+  font-size: 0.875rem;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid #28a745 !important;
+  opacity: 1 !important;
+}
+
+/* Prediction badge styling */
+.search-app .prediction-badge,
+.author-profile .prediction-badge {
+  font-size: 0.875rem;
+  padding: 0.25rem 0.5rem;
+}
+
+/* Article summary */
+.search-app .article-summary,
+.author-profile .article-summary {
+  color: #6c757d;
+  font-size: 0.975rem;
+  line-height: 1.5;
+  margin-bottom: 0.75rem;
+}
+
+/* Article links */
+.search-app .article-links,
+.author-profile .article-links {
+  font-size: 0.875rem;
+}
+
+.search-app .article-links a,
+.author-profile .article-links a {
+  color: #007bff;
+  text-decoration: none;
+  margin-right: 1rem;
+}
+
+.search-app .article-links a:hover,
+.author-profile .article-links a:hover {
+  text-decoration: underline;
+}
+
+/* ----------------------------------------
+   5. Results Stats and Info
+   ---------------------------------------- */
+.search-results .results-info {
+  background: #e9ecef;
+  padding: 0.75rem 1rem;
+  border-radius: 0.25rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  color: #495057;
+}
+
+.search-results .results-count {
+  font-weight: 600;
+  color: #007bff;
+}
+
+/* ----------------------------------------
+   6. Mobile Responsive Adjustments
+   ---------------------------------------- */
+@media (max-width: 768px) {
+  .search-app .list-group-item {
+    padding: 0.75rem 1rem;
+  }
+  
+  .search-form {
+    padding: 1rem;
+  }
+  
+  .search-form .btn {
+    min-width: 100px;
+    font-size: 0.9rem;
+  }
+  
+  .search-results .nav-tabs .nav-link {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .search-app .list-group-item {
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .search-app .list-group-item h5 {
+    font-size: 1rem;
+  }
+  
+  .search-form {
+    padding: 0.75rem;
+  }
+  
+  .search-results .nav-tabs .nav-link {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* ----------------------------------------
+   7. Loading and Error States
+   ---------------------------------------- */
+.search-app .spinner-border {
+  width: 2rem;
+  height: 2rem;
+}
+
+.search-app .alert {
+  margin: 1rem 0;
+}
+
+/* ----------------------------------------
+   8. Download Button Styling
+   ---------------------------------------- */
+.search-app .download-button,
+.author-profile .download-button {
+  margin-top: 1rem;
+}
+
+.search-app .download-button .btn,
+.author-profile .download-button .btn {
+  font-size: 0.875rem;
+  padding: 0.5rem 1rem;
+}
+
+/* ----------------------------------------
+   9. Author Search Results
+   ---------------------------------------- */
+.author-item {
+  margin-bottom: 1rem;
+  border: 1px solid #e9ecef;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.author-item:hover {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.author-item .author-info h5 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.author-item .author-info h5 a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.author-item .author-info h5 a:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+.author-item .author-details {
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+.author-item .author-details i {
+  width: 16px;
+  text-align: center;
+}
+
+.author-item .author-stats .badge {
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.author-item .author-actions {
+  border-top: 1px solid #e9ecef;
+  padding-top: 1rem;
+}
+
+.author-item .author-actions .btn {
+  font-size: 0.875rem;
+}
+
+.author-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.author-list .author-item {
+  width: 100%;
+}
+
+/* ORCID styling */
+.author-item .fab.fa-orcid {
+  color: #a6ce39;
+}
+
+.author-item a[href*="orcid.org"] {
+  color: #a6ce39;
+  text-decoration: none;
+}
+
+.author-item a[href*="orcid.org"]:hover {
+  color: #8bb01a;
+  text-decoration: underline;
+}
+
+/* ----------------------------------------
+   9. Tabbed Search Interface
+   ---------------------------------------- */
+.search-app .card-header-tabs {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.search-app .card-header-tabs .nav-link {
+  border: none;
+  border-bottom: 3px solid transparent;
+  background: none;
+  color: #6c757d;
+  font-weight: 500;
+  padding: 1rem 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.search-app .card-header-tabs .nav-link:hover {
+  background-color: #f8f9fa;
+  color: #007bff;
+  border-bottom-color: #007bff;
+}
+
+.search-app .card-header-tabs .nav-link.active {
+  background-color: #fff;
+  color: #007bff;
+  border-bottom-color: #007bff;
+  font-weight: 600;
+}
+
+.search-app .card-header-tabs .nav-link i {
+  opacity: 0.7;
+}
+
+.search-app .card-header-tabs .nav-link.active i,
+.search-app .card-header-tabs .nav-link:hover i {
+  opacity: 1;
+}
+
+.search-app .tab-pane h5 {
+  border-bottom: 2px solid #e9ecef;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.search-app .tab-pane .form-control-lg {
+  border-radius: 0.5rem;
+  border: 2px solid #e9ecef;
+  transition: border-color 0.3s ease;
+}
+
+.search-app .tab-pane .form-control-lg:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.search-app .btn-lg.px-5 {
+  min-width: 200px;
+  border-radius: 2rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.search-app .tab-pane .text-muted {
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+/* Search type specific styling */
+.search-app .tab-pane small.text-muted {
+  font-size: 0.875rem;
+  font-style: italic;
+}

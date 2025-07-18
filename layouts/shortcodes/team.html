@@ -1,8 +1,9 @@
 <div class="about-team team-4">
 	<div class="container">
 		<div class="row">
-			{{ range (where ($.Site.Pages.ByTitle) "Section" "team") }}{{ if .Params.name }}
-			<div class="col-xl-6 col-lg-7 ">
+			{{ range (where ($.Site.Pages.ByTitle) "Section" "members") }}{{ if .Params.name }}
+			{{$name := .Params.name }}
+			<div class="col-xl-4 col-lg-4 col-md-6">
 				<div class="card card-profile card-plain">
 					<div class="row">
 						<div class="col-md-5">
@@ -10,10 +11,10 @@
 								<a href="{{ .Permalink }}" data-umami-event="click--{{.Params.name}}">
 									{{- with .Resources.GetMatch "avatar" -}}
 										{{- if eq .MediaType.SubType "gif" -}}
-											<img class="img img-raised rounded" src="{{- .RelPermalink -}}" alt="{{ i18n "photo_of" }}{{ .Params.name }}">
+											<img class="img img-raised rounded" src="{{- .RelPermalink -}}" alt="{{ i18n "photo_of" }}{{ .Params.name }}" loading="lazy">
 										{{- else }}
 											{{- $avatar := .Fill "400x400" -}}
-											<img class="img img-raised rounded" src="{{- $avatar.RelPermalink -}}" alt="{{ i18n "photo_of" }}{{ .Params.name }}" style="transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0px)'">											{{- end }}
+											<img class="img img-raised rounded" src="{{- $avatar.RelPermalink -}}" alt="{{ i18n "photo_of" }}{{ .Params.name }}" style="transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0px)'" loading="lazy">											{{- end }}
 									{{- end -}}
 								</a>
 							</div>
@@ -24,15 +25,10 @@
 								{{ with .Params.subtitle }}
 								<h6 class="category">{{ . }}</h6>
 								{{ end }}
-								<p class="card-description">
-									{{ $truncatedSummary := truncate 100 .Content | plainify }}
-									{{ $truncatedSummaryWithIcon := printf "%s <i class='fa fa-arrow-right'></i>" $truncatedSummary  }}
-									<a href="{{.Permalink}}" data-umami-event="click--{{.Params.name}}">{{ $truncatedSummaryWithIcon | safeHTML  }}</a>
-								</p>
 								<div class="card-footer">
 									{{ with .Params.profiles }}
 										{{ range $key, $val := . }}
-										<a href="{{ $val }}" class="btn btn-icon btn-neutral btn-{{ $key }}"><i class="fab fa-{{ $key }}"></i></a>
+										<a href="{{ $val }}" class="btn btn-icon btn-neutral btn-{{ $key }}" title="{{$name}} on {{$key}}"><i class="fab fa-{{ $key }}"></i></a>
 										{{ end }}
 									{{ end }}
 								</div>

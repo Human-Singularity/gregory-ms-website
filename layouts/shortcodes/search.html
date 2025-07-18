@@ -1,0 +1,29 @@
+<div class="col-12" id="search-root"></div>
+
+<script>
+// Define fallback utility functions in global scope to avoid undefined errors
+window.formatDate = function(dateString) {
+  if (!dateString) return '';
+  
+  try {
+    const date = new Date(dateString);
+    
+    // Check if date is valid
+    if (isNaN(date.getTime())) {
+      return '';
+    }
+    
+    // Format options
+    const options = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    };
+    
+    return date.toLocaleDateString('en-US', options);
+  } catch (error) {
+    console.error('Error formatting date:', error);
+    return '';
+  }
+};
+</script>

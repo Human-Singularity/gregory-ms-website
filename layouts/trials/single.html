@@ -187,7 +187,7 @@
 					 		{{- else }}
 					 			{{- $avatarimage = (.Fill "300x300").RelPermalink -}}
 					 		{{- end }}
-					 		<img alt="{{ $author.Params.name }}" class="img img-raised" src="{{- $avatarimage -}}">
+					 		<img alt="{{ $author.Params.name }}" class="img img-raised" src="{{- $avatarimage -}}" loading="lazy">
 					 	{{- end -}}
 					 </a>
 					 <div class="ripple-container"></div>

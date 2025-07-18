@@ -1,27 +1,30 @@
 ---
-title: "Full Listing"
-subtitle: This is the complete list of articles in the database
+title: "MS Research Papers"
+subtitle: Multiple Sclerosis Research published since February 2021
 
-menu:
-  main:
-    name: Papers
-    weight: 6
 options:
   header: mini
   showHeader: true
   navbar: navbar navbar-expand-lg bg-white fixed-top font-weight-bold
 
 resources:
-  - src: arif-riyanto-UD9nADGj2mc-unsplash.jpeg
+  - src: ryunosuke-kikuno-FKqxZ58bVjU-unsplash.jpg
     name: "header"
 cta:
-  - label: <i class="fas fa-file-archive"></i> Download zip file
+  - label: <i class="fas fa-file-archive"></i> Download all multiple sclerosis research
     url: /developers/articles.zip
     classes: btn-sm btn-success
+seo:
+  canonical: articles/
 ---
-
+<!-- >
+<div class="row">
+<div class="col-12 justify-content-center align-self-center align-center text-center pb-5">
+<a href="https://metabase.gregory-ms.com/public/dashboard/39cbe602-4d42-46af-bfe4-0de04ef5e5f9" id="metabaseDashboard" data-umami-event="click--body-metabase-dashboard-articles" class="btn btn-lg btn-primary" target="_blank">Open the Dashboard of Scientific Papers for Multiple Sclerosis <i class=" text-white fas fa-external-link-square-alt" aria-hidden="true"></i></a>
+</div>
+</div>
 <div id="sourceinfo">
-<p>Articles listed come from the following sites, using keyword searches for `Multiple Sclerosis, autoimmune encephalomyelitis, encephalomyelitis, immune tolerance, myelin`.</p>
+<p>Papers listed come from the following sites, using keyword searches for `Multiple Sclerosis, autoimmune encephalomyelitis, encephalomyelitis, immune tolerance, myelin`.</p>
 <ul class="list-inline">
   <li class="list-inline-item"><a target="_blank" class="btn btn-primary btn-outline-primary btn-round" href='https://www.apta.org/search?Q=&quot;Multiple+Sclerosis&quot;+OR+&quot;autoimmune+encephalomyelitis&quot;+OR+encephalomyelitis+OR+&quot;immune+tolerance&quot;+OR+myelin&amp;searcharticletypes=8834&amp;searchconditionandsymptoms=&amp;searchloc=APTA'>APTA <i class="text-muted text-primary fas fa-external-link-square-alt"></i></a> </li>
   <li class="list-inline-item"><a target="_blank" class="btn btn-primary btn-outline-primary btn-round" href='https://www.biomedcentral.com/search?searchType=publisherSearch&amp;sort=PubDate&amp;page=1&amp;query=Multiple+Sclerosis'>BioMedCentral <i class="text-muted text-primary fas fa-external-link-square-alt"></i></a> </li>
@@ -34,6 +37,9 @@ cta:
   <li class="list-inline-item"><a target="_blank" class="btn btn-primary btn-outline-primary btn-round" href='https://www.msard-journal.com/action/doSearch?text1=Multiple+Sclerosis&amp;field1=AbstractTitleKeywordFilterField&amp;startPage=0&amp;sortBy=Earliest'>MS and Related Disorders <i class="text-muted text-primary fas fa-external-link-square-alt"></i></a> </li>
   <li class="list-inline-item"><a target="_blank" class="btn btn-primary btn-outline-primary btn-round" href='https://journals.sagepub.com/action/doSearch?AllField=multiple+sclerosis&amp;SeriesKey=msja&amp;content=articlesChapters&amp;countTerms=true&amp;target=default&amp;sortBy=Ppub&amp;startPage=&amp;ContentItemType=research-article'>Sage <i class="text-muted text-primary fas fa-external-link-square-alt"></i></a> </li>
 </ul>
+<p>
+  <a class="btn btn-info btn-round btn-lg text-white font-weight-bold mx-auto" data-umami-event="click--relevant-articles-on-articles-page" href="/relevant/">All papers with positive patient outcomes for MS <i class="text-muted text-white fas fa-arrow-right" style="transform: 0.4s; boxShadow: 0.4s"></i></a>
+</p>
 </div>
-
+-->
 {{< articles >}}

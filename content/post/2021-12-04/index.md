@@ -1,6 +1,5 @@
 ---
-authors:
-  - bruno-amaral
+author: Bruno Amaral
 date: 2021-12-04T12:45:33Z
 description: ""
 draft: false
@@ -42,7 +41,7 @@ I wanted to make the most of this opportunity and bring something extra to the p
 
 If you want to explore data and share it with a team, [Metabase](https://www.metabase.com/) is the tool for you. Metabase connects to any data source you can think of and allows anyone to build dashboards with an intuitive interface.
 
-We are using it for two objectives. **First**, Metabase charts are used in some of the pages of the Observatory. One example is the page for [Ocrevus, also known as Ocrelizumab](/observatory/ocrelizumab/). 
+We are using it for two objectives. **First**, Metabase charts are used in some of the pages of the Observatory. One example is the page for [Ocrevus, also known as Ocrelizumab](/categories/ocrelizumab/). 
 
 This page now features two interactive charts where you can see the number of articles found with "ocrelizumab" in the title and how many of them seem to be relevant for People with Multiple Sclerosis and their quality of life.
 
@@ -91,3 +90,6 @@ To subscribe to the weekly digest, send an email to <bruno@gregory-ms.com>
 <div class="embed-responsive embed-responsive-16by9">
 <iframe src="/post/2021-12-04/ViewerJS/#/post/2021-12-04/Gregory_spem2021_PT.pdf" width='800' height='600' allowfullscreen webkitallowfullscreen></iframe>
 </div>
+</div>
+
+[Header photo by RawPixel](https://www.rawpixel.com/image/11935635/robot-hand-desktop-wallpaper)

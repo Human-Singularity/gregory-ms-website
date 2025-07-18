@@ -1,0 +1,203 @@
+author = "Bruno Amaral"
+baseURL = "https://gregory-ms.com/"
+copyright = ""
+DefaultContentLanguage = "en"
+enableEmoji = true
+enableInlineShortcodes = true
+enableRobotsTXT = true
+googleAnalytics = ""
+languageCode = "en"
+theme = ["Hugo-Now-UI-Pro"]
+title = "Multiple Sclerosis research by Gregory MS"
+removePathAccents = true
+# Set the default site thumbnail
+
+# Google 
+googleSiteVerification = ""
+# googleTagManager = ""
+headerPhoto = ""
+
+[outputs]
+    home = [ "HTML", "RSS", "JSON" ]
+    section = [ "HTML", "RSS"]
+    term = [ "HTML", "RSS"]
+
+[params]
+  defaultImage = "/gregory-thumb.png"
+  author = "Bruno Amaral"
+  enableComments = false 
+  defaultAuthor = "authors/bruno-amaral"
+  description = "An AI assistant to research articles and clinical trials for Multiple Sclerosis"
+  disqus = ""
+  enableMathJax = false # enable it in Front Matter
+  enableReadingTime = false
+  favicon = "favicon.ico"
+  lazyImage = true
+  logo="Gregory_Banner3.png"
+  showmonth = true
+  slogan = ""
+  startyear = "2021"
+
+[params.valine]
+  appId = ''
+  appKey = ''
+  avatar = 'robohash'
+  debug = true
+  enable = false
+  enableHeaderVisitor = true
+  lang = 'en' # zh-CN
+  placeholder = 'Say Something......'
+  requiredFields = ['nick', 'mail']
+  visitor = true
+[params.options]
+  hideSubscribeForm = false
+
+[menu]
+  [[menu.main]]
+  name = 'Home'
+  pageRef = "_index.md"
+  weight = 1
+
+  [[menu.main]]
+  name = 'Doctors'
+  pageRef = "doctors/_index.md"
+  weight = 2
+
+  [[menu.main]]
+  name = 'Researchers'
+  pageRef = "researchers/_index.md"
+  weight = 3
+
+  [[menu.main]]
+  name = 'Patients'
+  pageRef = "patients/_index.md"
+  weight = 4
+
+  [[menu.main]]
+  name = 'Relevant Papers'
+  pageRef = "relevant/_index.md"
+  weight = 5
+
+  [[menu.main]]
+  name = 'Clinical Trials'
+  pageRef = "trials/_index.md"
+  weight = 6
+
+  [[menu.main]]
+  name = 'Observatory'
+  pageRef = "observatory/_index.md"
+  weight = 7
+
+
+
+  [[menu.main]]
+  name = 'News'
+  pageRef = "post/_index.md"
+  weight = 9
+
+  [[menu.main]]
+  name = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16"> <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/> </svg>'
+  pageRef = "search/index.md"
+  title = "Seek and you will find"
+  weight = 10
+
+  [[menu.column_1]]
+  name = 'About'
+  pageRef = "about/_index.md"
+  weight = 1
+
+  [[menu.column_1]]
+  name = 'Contact'
+  pageRef = "contacts/_index.md"
+  weight = 2
+
+  [[menu.column_1]]
+  name = 'Data Sources'
+  pageRef = "sources/_index.md"
+  weight = 3
+
+  [[menu.column_1]]
+  name = 'Privacy Policy'
+  pageRef = "privacy-policy/_index.md"
+  weight = 4
+
+  [[menu.column_2]]
+  name = 'Lisbon Collective <i class="fas fa-external-link-square-alt"></i>'
+  url = "https://lisboncollective.com"
+  [[menu.column_2]]
+  name ='OneOverZero <i class="fas fa-external-link-square-alt"></i>'
+  url = "https://github.com/oneoverzero"
+  [[menu.column_2]]
+  name = '<img src="/images/powered_by_project_galileo.png" height="96" width="255" alt="Support by CloudFlare, Project Galileo" loading="lazy" />'
+  url = 'https://www.cloudflare.com/en-gb/galileo/'
+  [[menu.column_3]]
+  name = "Website stats"
+  url = "https://analytics.gregory-ms.com/share/bEuESUpF/GregoryMS"
+
+[social]
+  github = "https://github.com/brunoamaral/gregory"
+  rss = ""
+
+[taxonomies]
+category = "categories"
+member = "members"
+tag = "tags"
+
+[permalinks]
+  article_source = "/articles/source/:slug"
+  trial_source = "/trials/source/:slug"
+
+  # post = "/:slug/"
+  # page = "/:slug/"
+  # category = "/:slug/"
+
+# doc: https://gohugo.io/getting-started/configuration-markup#highlight
+# syntax style: https://xyproto.github.io/splash/docs/longer/all.html
+[markup]
+  [markup.highlight]
+    codeFences = true
+    guessSyntax = false
+    hl_Lines = ""
+    lineNoStart = 1
+    lineNos = false
+    lineNumbersInTable = true
+    noClasses = true
+    style = "monokai" # github, dracula, vim, monokai
+    tabWidth = 4
+  [markup.goldmark.renderer]
+    hardWraps = false
+    unsafe = true
+
+# Added from hugo.toml - JSX/TSX support
+[module]
+  [module.hugoVersion]
+    extended = true
+    min = "0.147.0"
+
+# Added from hugo.toml - Ensure JSX files aren't processed as templates
+[mediaTypes]
+  [mediaTypes."text/jsx"]
+    suffixes = ["jsx"]
+    delimiter = ""
+
+[outputFormats]
+  [outputFormats.JSX]
+    mediaType = "text/jsx"
+    isPlainText = true
+    notAlternative = true
+
+[security]
+  enableInlineShortcodes = false
+  [security.exec]
+    allow = ['^dart-sass-embedded$', '^go$', '^npx$', '^postcss$', '^babel$']
+    osEnv = ['(?i)^(PATH|PATHEXT|APPDATA|TMP|TEMP|TERM|GETENV)$']
+  [security.funcs]
+    getenv = ['^HUGO_|SLUG', '^REPOSITORY_URL$', '^NODE_ENV$'] # Merged from both files
+  [security.http]
+    methods = ['(?i)GET|POST']
+    urls = ['.*']
+
+[build]
+  writeStats = true
+  # Added from hugo.toml
+  useResourceCacheWhen = "never" # fallback, always, never

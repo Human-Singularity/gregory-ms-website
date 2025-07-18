@@ -1,6 +1,4 @@
 ---
-authors:
-  - bruno-amaral
 date: 2021-10-15T19:32:14+01:00
 description: ""
 draft: false
@@ -38,7 +36,7 @@ scripts:
 
 Therefore, please keep in mind none of the content found on this site is a prescription, recommendation, or even a suggestion. The information found here is meant to assist medical teams and researchers. 
 
-We are trying to help them save time by collecting up to date information and identifying articles which are relevant in providing new treatment protocols.
+We aim to save them time by gathering up-to-date information and highlighting articles relevant to new treatment protocols.
 
 This is done manually and with the assistance of a [machine learning algorithm](https://en.wikipedia.org/wiki/Machine_learning). This algorithm was trained by Bruno, and therefore reflects his bias and interpretation of what is relevant.
 

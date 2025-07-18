@@ -21,7 +21,6 @@ disableAutoCollapse: true
 menu:
     column_3:
         Name: Annual Reports
-        weight: 8
 
 resources:
   - src: annual-review-2021.png

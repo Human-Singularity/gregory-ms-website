@@ -12,12 +12,18 @@ resources:
   - src: Gregory_Banner3.jpg
     name: "header"
 cta:
-  - label: <i class="fab fa-twitter me-1" aria-hidden="true"></i> @GregoryMS_
-    url: https://twitter.com/GregoryMS_
-    classes: btn btn-sm btn-info umami--click--twitter-profile-header-button
-  - label: <i class="fab fa-mastodon me-1" aria-hidden="true"></i> @GregoryMS
-    url: https://med-mastodon.com/@gregoryMS
-    classes: btn btn-sm text-light bg-secondary umami--click--mastodon-profile-header-button
+  - label: Donate
+    url: /donations/
+    classes: btn btn-lg font-weight-bold bg-success btn-success
+  - label: Subscribe
+    url: '#subscribe'
+    classes: btn btn-lg font-weight-bold bg-info btn-info
+## - label: <i class="fa fa-cloud me-1" aria-hidden="true"></i> @Gregory-MS.com
+##   url: https://bsky.app/profile/gregory-ms.com
+##   classes: btn btn-sm btn-info umami--click--twitter-profile-header-button
+## - label: <i class="fab fa-mastodon me-1" aria-hidden="true"></i> @GregoryMS
+##   url: https://med-mastodon.com/@gregoryMS
+##   classes: btn btn-sm text-light bg-secondary umami--click--mastodon-profile-header-button
 options:
   header: small
   headerHeight:
@@ -28,229 +34,271 @@ options:
 ---
 
 <div class="section py-2">
-	<div class="container-fluid">
-		<div class="row justify-content-center">
-			<div class="col-md-2">
-				<a href='{{< ref "doctors/index.md" >}}' class="" data-umami-event="click--body-link-doctors">
-					<div class="info info-hover">
-						<div class="icon icon-success icon-circle">
-							<i class="fas fa-user-md"></i>
-						</div>
-						<h2 class="h4 font-weight-normal info-title">MS Doctors</h2>
-					</div>
-				</a>
-			</div>
+  <div class="container-fluid">
+    <div class="row justify-content-center pt-5">
+      <div class="col-md-2">
+        <a href='{{< ref "doctors/index.md" >}}' class="info info-hover" data-umami-event="click--body-link-doctors">
+          <div class="icon icon-success icon-circle">
+            <i class="fas fa-user-md"></i>
+          </div>
+          <h2 class="h4 font-weight-normal info-title">MS Doctors</h2>
+        </a>
+      </div>
 
-			<div class="col-md-2">
-				<a href='{{< ref "researchers/index.md" >}}' data-umami-event="click--body-link-researchers">
-					<div class="info info-hover">
-						<div class="icon icon-info icon-circle">
-							<i class="fas fa-brain"></i>
-						</div>
-						<h2 class="h4 font-weight-normal info-title">MS Researchers</h2>
-					</div>
-				</a>
-			</div>
-			<div class="col-md-2">
-				<a href='{{< ref "physicaltherapists/_index.md" >}}' data-umami-event="click--body-link-physical-therapists">
-					<div class="info info-hover">
-						<div class="icon icon-warning icon-circle">
-							<i class="fas fa-walking"></i>
-						</div>
-						<h2 class="h4 font-weight-normal info-title">
-							Physical Therapists
-						</h2>
-					</div>
-				</a>
-			</div>
+      <div class="col-md-2">
+        <a href='{{< ref "researchers/index.md" >}}' class="info info-hover" data-umami-event="click--body-link-researchers">
+          <div class="icon icon-info icon-circle">
+            <i class="fas fa-brain"></i>
+          </div>
+          <h2 class="h4 font-weight-normal info-title">MS Researchers</h2>
+        </a>
+      </div>
+      
+      <div class="col-md-2">
+        <a href='{{< ref "patients/index.md" >}}' class="info info-hover" data-umami-event="click--body-link-patients">
+          <div class="icon icon-primary icon-circle">
+            <i class="far fa-hospital"></i>
+          </div>
+          <h2 class="h4 font-weight-normal info-title">MS Patients</h2>
+        </a>
+      </div>
+      
+    </div>
 
-			<div class="col-md-2">
-				<a href='{{< ref "patients/index.md" >}}' data-umami-event="click--body-link-patients">
-					<div class="info info-hover">
-						<div class="icon icon-primary icon-circle">
-							<i class="far fa-hospital"></i>
-						</div>
-						<h2 class="h4 font-weight-normal info-title">MS Patients</h2>
-					</div>
-				</a>
-			</div>
-		</div>
+    <div class="row justify-content-center">
+      <div class="col-md-5">
+        <h2 class="title">How it works</h2>
 
-		<div class="row justify-content-center">
-			<div class="col-md-5">
-				<h2 class="title">How it works</h2>
+        <p>This website is an implementation of <a href="https://gregory-ai.com/" class="font-weight-bold" target="_blank">GregoryAI <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="width:14px; height:auto;" class="">
 
-				<p>This website is an implementation of <a href="https://gregory-ai.com/" class="font-weight-bold" target="_blank">GregoryAI <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="width:14px; height:auto;" class="">
+          <path d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z" fill="#dc3600"></path>
+          </svg></a> focused on Multiple Sclerosis research. We use this Artificial Intelligence assistant to find, filter, and distribute relevant research to Doctors and clinical researchers.</p>
+      </div>
+      
+      <div class="col-md-3 text-center">
+        <img
+          src="gregory_standing.svg"
+          class="w-75"
+          alt="GregoryAI - Artificial Intelligence"
+          loading="lazy"
+          height="300"
+          width="auto"
+        />
+      </div>
+    </div>
 
-					<path d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z" fill="#dc3600"></path>
-					</svg></a> focused on Multiple Sclerosis research. We use this Artificial Intelligence assistant to find, filter, and distribute relevant research to Doctors and clinical researchers.</p>
-			</div>
-			
-			<div class="col-md-3 text-center">
-				<img
-					src="gregory_standing.svg"
-					class="w-100"
-					alt="GregoryAI - Artificial Intelligence"
-					height=""
-					loading="lazy"
-				/>
-			</div>
-		</div>
+    <div class="separator separator-primary"></div>
 
-		<div class="separator separator-primary"></div>
+    <div class="row justify-content-center bg-grey pt-5">
+      <div class="col-md-3 mb-5 col-12 justify-content-center align-self-center align-right">
+        <img
+          src="undraw_file_searching_re_3evy.svg" 
+          class="w-75 align-middle d-none d-md-block float-left"
+          alt="relevant articles for multiple sclerosis"
+          loading="lazy"
+        />
+      </div>
+      <div class="col-md-4 text-right col-12 mb-5  justify-content-center align-self-center">
+        <h3 class="">View the selection of research for Multiple Sclerosis</h3>
 
-		<div class="row justify-content-center bg-grey pt-5">
+        <p class="lead font-weight-normal">
+        </p>
 
-			<div class="col-md-3 mb-5 col-12 justify-content-center align-self-center align-right">
-				<img
-					src="undraw_file_searching_re_3evy.svg" 
-					class="w-75 align-middle d-none d-md-block float-left"
-					alt="relevant articles for multiple sclerosis"
-					loading="lazy"
-				/>
-			</div>
-			<div class="col-md-4 text-right col-12 mb-5  justify-content-center align-self-center">
-				<h3 class="">View the selection of research for Multiple Sclerosis</h3>
+        <a
+          href='{{< ref "/relevant/_index.md" >}}' data-umami-event="click--body-link-relevant-articles"
+          class="btn btn-success btn-round btn-lg font-weight-bold"
+          >Relevant Research <i class="fas fa-arrow-circle-right"></i
+        ></a>
+      </div>
+    </div>
+    <!-- <div class="row justify-content-center mt-5">
+      <div class="col-md-4 col-12">
+        <p class="lead font-weight-normal">
+        </p>
+        <h3 class="">Monitor MS research in real time</h3>
 
-				<p class="lead font-weight-normal">
-				</p>
+        <a
+          href='{{< ref "/observatory/_index.md" >}}' data-umami-event="click--body-link-observatory"
+          class="btn btn-success btn-round btn-lg font-weight-bold"
+          >Multiple Sclerosis Observatory <i class="fas fa-arrow-circle-right"></i
+        ></a>
+      </div>
 
-				<a
-					href='{{< ref "/relevant/_index.md" >}}' data-umami-event="click--body-link-relevant-articles"
-					class="btn btn-success btn-round btn-lg font-weight-bold"
-					>Relevant Research <i class="fas fa-arrow-circle-right"></i
-				></a>
-			</div>
-			</div>
-<div class="row justify-content-center mt-5">
-			<div class="col-md-4 col-12">
-				<p class="lead font-weight-normal">
-				</p>
-				<h3 class="">Monitor MS research in real time</h3>
+      <div class="col-md-4 col-12">
+        <img
+          src="undraw_searching_re_3ra9.svg" 
+          class="align-middle d-none d-md-block float-left w-75"
+          alt="updates on the roadmap and news about the project"
+          loading="lazy"
+        />
+      </div>
+    </div>  -->
+    <div class="row justify-content-center bg-grey mt-5 pt-5 pb-5">
+      <div class="col-md-4 col-12 justify-content-center align-self-center align-right">
+        <img
+          src="undraw_sync_files_re_ws4c.svg" 
+          class="w-50 align-middle d-none d-md-block float-left"
+          alt="relevant articles for multiple sclerosis patients"
+          loading="lazy"
+        />
+      </div>
+      <div class="col-md-4 col-12">
+        <h3 class="">Annual Reports</h3>
+      
+        <p class="lead font-weight-normal">We keep track of our activities and expenses for the sake of transparency. The reports also includes our findings regarding Multiple Sclerosis literature.
+        </p>
+      
+        <a
+          href='{{< ref "/annual-review/_index.md" >}}' data-umami-event="click--body-link-annual-reports"
+          class="btn btn-success btn-round btn-lg font-weight-bold"
+          >Our accounts and activities <i class="fas fa-arrow-circle-right"></i
+        ></a>
+      </div>
+    </div>
+    <div class="row justify-content-center mt-5 pt-5 mb-5">
+      <div class="col-md-4 col-12">
+          <h3 class="">Project news</h3>
 
-				<a
-					href='{{< ref "/observatory/_index.md" >}}' data-umami-event="click--body-link-observatory"
-					class="btn btn-success btn-round btn-lg font-weight-bold"
-					>Multiple Sclerosis Observatory <i class="fas fa-arrow-circle-right"></i
-				></a>
-			</div>
+          <a
+            href='{{< ref "/post/_index.md" >}}' data-umami-event="click--body-link-project-news"
+            class="btn btn-success btn-round btn-lg font-weight-bold"
+            >News and Updates <i class="fas fa-arrow-circle-right"></i
+          ></a>
+      </div>
 
-			<div class="col-md-4 col-12">
-				<img
-					src="undraw_searching_re_3ra9.svg" 
-					class="align-middle d-none d-md-block float-left w-75"
-					alt="updates on the roadmap and news about the project"
-					loading="lazy"
-				/>
-			</div>
+      <div class="col-md-5 col-12">
+          <img
+            src="undraw_add_information_j2wg.svg" 
+            class="align-middle d-none d-md-block float-left w-75"
+            alt="updates on the roadmap and news about the project"
+            loading="lazy"
+          />
+      </div>
+    </div>
+    <div class="row justify-content-center bg-grey mt-5 pt-5 pb-5">
+      <div class="col-md-4 col-12 justify-content-center align-self-center align-right">
+        <a
+        href='{{< ref "/academia/_index.md" >}}' data-umami-event="click--body-link-academia"
+        title="Academic research and publications about GregoryAI">
+        <img
+          src="/undraw_online_articles_re_yrkj.svg" 
+          class="align-middle d-none d-md-block float-left img img-raised rounded"
+          alt="Academic publications about GregoryAI"
+          loading="lazy"
+        />
+        </a>
+      </div>
+      <div class="col-md-4 col-12">
+        <h3 class="">Academic Research</h3>
+      
+        <p class="lead font-weight-normal">Explore our scholarly publications and academic research about GregoryAI's methodology and results.
+        </p>
+      
+        <a
+          href='{{< ref "/academia/_index.md" >}}' data-umami-event="click--body-link-academia"
+          class="btn btn-success btn-round btn-lg font-weight-bold"
+          >Academic Publications <i class="fas fa-arrow-circle-right"></i
+        ></a>
+      </div>
+    </div>
+    <div class="row justify-content-center mt-5 pt-5 pb-5">
+      <div class="col-md-4 col-12 justify-content-center align-self-center align-right">
+        <a
+        href='{{< ref "/media/_index.md" >}}' data-umami-event="click--body-link-media"
+        title="GregoryAI in the media">
+        <img
+          src="publico_EN_lg_transparent.png" 
+          class="align-middle d-none d-md-block float-left img img-raised"
+          alt="GregoryAI in the media"
+          loading="lazy"
+          style="border-radius: 14px;"
+        />
+        </a>
+      </div>
+      <div class="col-md-4 col-12">
+        <h3 class="mb-1">In the Media</h3>
+        <p class="small">See media coverage of GregoryAI
+        </p>
+        <p class="lead font-weight-normal">
+          Explore our media coverage and press mentions featuring GregoryAI's work on multiple sclerosis research.
+        </p>
+      
+        <a
+          href='{{< ref "/media/_index.md" >}}' data-umami-event="click--body-link-media"
+          class="btn btn-success btn-round btn-lg font-weight-bold"
+          >Media Coverage <i class="fas fa-arrow-circle-right"></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-8 ml-auto mr-auto text-center">
+        <h2 class="title">Meet the Team</h2>
+      </div>
+    </div>
+    {{< team >}}
+    <div class="row justify-content-center mt-5 pt-5 pb-5 bg-grey">
+      <div class="col-md-6 col-12">
+        <h3 class="">Developers</h3>
+
+        <p class="lead font-weight-normal">
+          Get free access to the articles and clinical trials, or contribute to develop GregoryAi.
+        </p>
+
+        <a
+          href='https://api.gregory-ms.com/'
+          target="_blank" data-umami-event="click--body-link-project-news"
+          class="btn btn-success btn-round btn-lg font-weight-bold click--body-link-API"
+          >Free API <i class="fas fa-arrow-circle-right"></i
+        ></a>
+        <a
+        href='{{< ref "/developers/index.md" >}}' data-umami-event="click--body-link-developer-docs"
+        class="btn btn-info btn-round btn-lg font-weight-bold"
+        >Documentation <i class="fas fa-arrow-circle-right"></i
+      ></a>
+      <a
+      href='https://github.com/brunoamaral/gregory' data-umami-event="click--body-link-developers-github"
+      title="GregoryAI open source on GitHub"
+      class="btn btn-dark btn-round btn-lg font-weight-bold"
+      >Github <i class="fab fa-github"></i>
+      </a>
+
+      </div>
+
+      <div class="col-md-4 col-12">
+        <img
+          src="undraw_programmer_re_owql.svg" 
+          class="align-middle d-none d-md-block float-left w-50"
+          alt="illustration showing a programmer using the GregoryAI software"
+          loading="lazy"
+        />
+      </div>
+    </div>
+    
+    <!-- Horizontal Subscribe Form Section -->
+    <div class="row justify-content-center mt-5 pt-5 pb-5">
+      <div class="col-md-10">
+        <div class="text-center mb-4">
+          <h2 class="title">Subscribe to Updates</h2>
+          <p class="lead">Get the latest research on Multiple Sclerosis delivered to your inbox</p>
+        </div>
+        {{< subscribe-form-horizontal >}}
+      </div>
+    </div>
+    <!-- End Horizontal Subscribe Form Section -->
+    
+  </div>
 </div>
-<div class="row justify-content-center bg-grey mt-5 pt-5 pb-5">
-			<div class="col-md-4 col-12 justify-content-center align-self-center align-right">
-				<img
-					src="undraw_sync_files_re_ws4c.svg" 
-					class="w-50 align-middle d-none d-md-block float-left"
-					alt="relevant articles for multiple sclerosis patients"
-					loading="lazy"
-				/>
-			</div>
-			<div class="col-md-4 col-12">
-				<h3 class="">Annual Reports</h3>
-			
-				<p class="lead font-weight-normal">We keep track of our activities and expenses for the sake of transparency. The report also includes our findings regarding Multiple Sclerosis.
-				</p>
-			
-				<a
-					href='{{< ref "/annual-review/_index.md" >}}' data-umami-event="click--body-link-annual-reports"
-					class="btn btn-success btn-round btn-lg font-weight-bold"
-					>2022 in Review <i class="fas fa-arrow-circle-right"></i
-				></a>
-</div>
-</div>
-<div class="row justify-content-center mt-5 pt-5 mb-5">
-			<div class="col-md-4 col-12">
-				<h3 class="">Project news and development of new features</h3>
-
-				<p class="lead font-weight-normal">
-				</p>
-
-				<a
-					href='{{< ref "/post/_index.md" >}}' data-umami-event="click--body-link-project-news"
-					class="btn btn-success btn-round btn-lg font-weight-bold"
-					>News and Updates <i class="fas fa-arrow-circle-right"></i
-				></a>
-			</div>
-
-			<div class="col-md-5 col-12">
-				<img
-					src="undraw_add_information_j2wg.svg" 
-					class="align-middle d-none d-md-block float-left w-75"
-					alt="updates on the roadmap and news about the project"
-					loading="lazy"
-				/>
-			</div>
-</div>
-
-		</div>
-	</div>
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-8 ml-auto mr-auto text-center">
-				<h2 class="title">Meet the Team</h2>
-			</div>
-		</div>
-		{{< team >}}
-		<div class="row justify-content-center mt-5 pt-5 pb-5 bg-grey">
-			<div class="col-md-6 col-12">
-				<h3 class="">Developers</h3>
-
-				<p class="lead font-weight-normal">
-					Get free access to the articles and clinical trials, or contribute to develop GregoryAi.
-				</p>
-
-				<a
-					href='https://api.gregory-ms.com/'
-					target="_blank" data-umami-event="click--body-link-project-news"
-					class="btn btn-success btn-round btn-lg font-weight-bold click--body-link-API"
-					>Free API <i class="fas fa-arrow-circle-right"></i
-				></a>
-				<a
-				href='{{< ref "/developers/index.md" >}}' data-umami-event="click--body-link-developer-docs"
-				class="btn btn-info btn-round btn-lg font-weight-bold"
-				>Documentation <i class="fas fa-arrow-circle-right"></i
-			></a>
-			<a
-			href='https://github.com/brunoamaral/gregory' data-umami-event="click--body-link-developers-github"
-			class="btn btn-dark btn-round btn-lg font-weight-bold"
-			>Github <i class="fab fa-github"></i>
-			</a>
-
-			</div>
-
-			<div class="col-md-4 col-12">
-				<img
-					src="undraw_programmer_re_owql.svg" 
-					class="align-middle d-none d-md-block float-left w-50"
-					alt="illustration showing a programmer using the GregoryAI software"
-					loading="lazy"
-				/>
-			</div>
-</div>
-	</div>
-</div>
-
-
-
-
 <style>
-	.page-header:before {
-		background-color: rgba(0, 0, 0, 0.1);
-	}
-	.page-header .container,
-	.page-header .title {
-		color: #000;
-	}
-	.navbar.navbar-transparent,
-	.navbar a:not(.btn):not(.dropdown-item) {
-		color: #000;
-	}
+  .page-header:before {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+  .page-header .container,
+  .page-header .title {
+    color: #000;
+  }
+  .navbar.navbar-transparent,
+  .navbar a:not(.btn):not(.dropdown-item) {
+    color: #000;
+  }
 </style>

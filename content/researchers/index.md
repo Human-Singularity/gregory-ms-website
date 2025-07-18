@@ -30,77 +30,56 @@ options:
   header: mini
   navbar: navbar navbar-expand-lg bg-white fixed-top font-weight-bold
 scripts:
-  - '<script src="/js/mermaid.min.js"></script>'
-menu:
-  main:
-    url: researchers
-    name: Researchers
-    weight: 3
+  - 
 ---
 
 </div>
 
 <div class="row justify-content-center align-self-center mb-5 mt-5 p-md-5">
+<div class="col-md-4 col-12 justify-content-center align-self-left align-left">
+  <img src="images/undraw_Online_articles_re_yrkj.svg" class="float-left w-75 align-middle d-none d-md-block" alt="medical doctors" loading="lazy"/>
+  </div>
+  <div class="col-md-5 col-12 justify-content-center align-self-center">
+  <h2>Discover Multiple Sclerosis breakthroughs as they happen</h2>
+<p>Gregory-MS scans 19 peer-reviewed journals, preprint servers and three global trial registries every day. 
+Our open-source machine-learning model—refined with the help of <a href="https://www.novasbe.unl.pt/en/">Nova SBE</a>; scores each paper for clinically proven patient outcomes, so neurologists, researchers and People with MS (PwMS) receive only the studies that can bring us hope.</p>
+    <a href='{{< ref "/relevant/_index.md" >}}' class="btn btn-success btn-round btn-lg font-weight-bold " data-umami-event="click--observatory-researchers-page">Relevant Papers <i class="fas fa-arrow-circle-right"></i></a>
+    		<div class="d-flex flex-wrap justify-content-left align-items-left">
+			<a href="https://github.com/brunoamaral/gregory-ai" class="badge badge-pill badge-success mx-2 my-1" rel="noopener" aria-label="Open-source code on GitHub (external link)">
+				<i class="fas fa-code mr-1"></i>Open-source
+			</a>
+			<a href="/about/" class="badge badge-pill badge-info mx-2 my-1" aria-label="Independent project governance">
+				<i class="fas fa-user-shield mr-1"></i>Independent
+			</a>
+			<a href="https://creativecommons.org/licenses/by/4.0/" class="badge badge-pill badge-secondary mx-2 my-1" rel="noopener" aria-label="Content licensed CC BY 4.0 (external link)">
+				<i class="fab fa-creative-commons mr-1"></i>CC BY-4.0
+				<span class="sr-only">(Creative Commons)</span>
+			</a>
+      <a href="https://api.gregory-ms.com/sources/?subject_id=1&team_id=1" class="badge badge-pill badge-warning mx-2 my-1" rel="noopener" aria-label="API endpoint for sources">
+        <i class="fa-solid fa-book-medical mr-1"></i>Sources
+      </a>
+		</div>
+  </div>
+</div>
+<!-- Trust ribbon -->
+<div class="bg-light border-top py-2">
+	<div class="container">
+	</div>
+</div>
+<!-- /Trust ribbon -->
+
+<div class="row justify-content-center align-items-center py-5 bg-light">
+  <div class="col-md-8 text-center">
+    <h2 class=" ">Discover the Top Contributors This Year</h2>
+    <p class="lead">We keep track of who is making the biggest impact in the field of Multiple Sclerosis research.</p>
+    <a href="/authors/ranking/" class="btn btn-primary btn-lg font-weight-bold" role="button">View Author Ranking <i class="fas fa-arrow-right ml-2"></i></a>
+  </div>
+</div>
+
+<div class="row justify-content-center align-self-center p-md-5 bg-grey">
   <div class="col-md-5 col-12 justify-content-center align-self-center ">
-    <div class="col-md-12 ml-auto mr-auto">
-                <div class="card card-contact card-raised">
-                  <form role="form" id="contact-form1" method="post" action="https://api.gregory-ms.com/subscriptions/new/">
-                    <div class="card-header text-center">
-                      <h4 class="card-title font-weight-bold">Weekly digest of relevant papers on Multiple Sclerosis</h4>
-                      <p class="p-3">Every tuesday, and email with the latest research filtered by Machine Learning and human review.</p>
-                    </div>
-                    <div class="card-body">
-                      <div class="row">
-                        <div class="col-md-6 pr-2">
-                          <label>First name</label>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text pr-2"><i class="now-ui-icons users_circle-08"></i></span>
-                            </div>
-                            <input type="text" name="first_name" class="form-control" placeholder="First Name..." aria-label="First Name..." autocomplete="given-name">
-                          </div>
-                        </div>
-                        <div class="col-md-6 pl-2">
-                          <div class="form-group">
-                            <label>Last name</label>
-                            <div class="input-group">
-                              <div class="input-group-prepend">
-                                <span class="input-group-text pr-2"><i class="now-ui-icons text_caps-small"></i></span>
-                              </div>
-                              <input type="text" name="last_name" class="form-control" placeholder="Last Name..." aria-label="Last Name..." autocomplete="family-name">
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label>Email address</label>
-                        <div class="input-group">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text pr-2"><i class="now-ui-icons ui-1_email-85"></i></span>
-                          </div>
-                          <input type="email" name="email" id="email" class="form-control" placeholder="Email Here..." autocomplete="email">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label>I am a...</label>
-                        <div class="input-group">
-                          <select id="profile" name="profile" class="form-control">
-                            <option value="researcher">researcher</option>
-                            <option value="doctor">doctor</option>
-                            <option value="clinical centre">clinical centre</option>
-                            <option value="patient">patient</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-12 ml-auto mr-auto text-center">
-                          <input value="2" name="list" id="list" type="hidden">
-                          <button type="submit" class="btn btn-primary btn-round mr-auto ml-auto">Subscribe</button>
-                        </div>
-                      </div>
-                    </div>
-                  </form>
-                </div>
+      <div class="col-md-12 ml-auto mr-auto">
+                {{< subscribe-form >}}
               </div>
   </div>
   <div class="col-md-5 col-12 justify-content-center align-self-center">
@@ -109,54 +88,28 @@ menu:
 </div>
 
 
-<div class="row justify-content-center align-self-center mb-5 mt-5 p-md-5 bg-grey">
-
-<div class="col-md-5 col-12 justify-content-center align-self-center align-right">
-  <img src="images/undraw_Online_articles_re_yrkj.svg" class="float-right w-75 align-middle d-none d-md-block" alt="medical doctors" loading="lazy"/>
-  </div>
-  <div class="col-md-5 col-12 justify-content-center align-self-center">
-  
-  <h3 class="title">Current Multiple Sclerosis Research</h3>
-  
-  <p class="lead font-weight-normal">You can browse the most up to date research articles, download our database, and receive a free newsletter with the most relevant articles.</p>
-      <a href='{{< ref "/articles/_index.md" >}}' class="btn btn-primary btn-round btn-lg font-weight-bold " data-umami-event="click--view-articles-researchers-page">View articles <i class="fas fa-arrow-circle-right"></i></a>
-      <a href='{{< ref "/downloads/_index.md" >}}' class="btn btn-success btn-round btn-lg font-weight-bold " data-umami-event="click--downloads-researchers-page">Download the database <i class="fas fa-download"></i></a>
-  </div>
-</div>
 
 
-
+<!-- 
 <div class="row justify-content-center align-self-center mb-5 p-md-5">
 <div class="col-md-5 col-12 justify-content-center align-self-center align-right ">
   <img src="images/undraw_medicine_b1ol.svg" class="w-50 align-middle d-none d-md-block float-left" alt="medical doctors" loading="lazy" />
   </div>
   <div class="col-md-5 col-12 justify-content-center align-self-center">
   
-  <h3 class="title">The Multiple Sclerosis observatory of current research</h3>
+  <h3 class="">The Multiple Sclerosis observatory of current research</h3>
   
-  <p class="lead font-weight-bold">On this page you will find a listing of promissing medicine and therapies with their associated articles and clinical trials.</p>
+  <p class="lead font-weight-normal">On this page you will find a listing of promissing medicine and therapies with their associated articles and clinical trials.</p>
   
-  <p>An item is added to the list based on what is identified by the MS Society Website, or when there is an associated clinical trial.</p>
   <a href='{{< ref "/observatory/_index.md" >}}' class="btn btn-success btn-round btn-lg font-weight-bold " data-umami-event="click--observatory-researchers-page">Observatory <i class="fas fa-arrow-circle-right"></i></a>
 </div>  
 </div>
+-->
 
-<div class="row justify-content-center align-self-center mb-5 p-md-5">
-<div class="col-md-12"><h3 class="title text-center">Where the information comes from</h3></div>
-<div class="mermaid col-md-10 mx-auto">
-graph TD;
-    APTA[fa:fa-newspaper APTA.org] -->Gregory;
-    BioMedCentral[fa:fa-newspaper BioMedCentral.com] -->Gregory;
-    JNeurosci[fa:fa-newspaper JNeurosci.org]-->Gregory;
-    PEDro[fa:fa-newspaper PEDro.org.au] -->Gregory;
-    PubMed[fa:fa-newspaper PubMed.gov] -->Gregory;
-    Reuters[fa:fa-newspaper Reuters Health]-->Gregory;
-    Scielo[fa:fa-newspaper Scielo.org] -->Gregory;
-    TheLancet[fa:fa-newspaper The Lancet Health]-->Gregory;
-    MsRelDis[fa:fa-newspaper MS and Related Disorders]-->Gregory;
-    Manual[fa:fa-keyboard Manual Input]-->Gregory;
-    Gregory{fa:fa-robot Gregory}-->Website(fa:fa-globe Website)
-    Gregory{fa:fa-robot Gregory}-->Newsletter(fa:fa-envelope Newsletter)
+<div class="row justify-content-center align-self-center mb-n5 p-md-5 bg-light">
+<div class="col-md-12"><h3 class="title text-center">Where the papers listed come from</h3></div>
+<div class="col-md-10 mx-auto">
+<svg aria-roledescription="flowchart-v2" role="graphics-document document" viewBox="-8 -8 1887.921875 329.3125" style="max-width: 100%;" xmlns="http://www.w3.org/2000/svg" width="100%" id="graph-div" height="100%" xmlns:xlink="http://www.w3.org/1999/xlink"><style>@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css");'</style><style>#graph-div{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}#graph-div .error-icon{fill:#552222;}#graph-div .error-text{fill:#552222;stroke:#552222;}#graph-div .edge-thickness-normal{stroke-width:2px;}#graph-div .edge-thickness-thick{stroke-width:3.5px;}#graph-div .edge-pattern-solid{stroke-dasharray:0;}#graph-div .edge-pattern-dashed{stroke-dasharray:3;}#graph-div .edge-pattern-dotted{stroke-dasharray:2;}#graph-div .marker{fill:#333333;stroke:#333333;}#graph-div .marker.cross{stroke:#333333;}#graph-div svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#graph-div .label{font-family:"trebuchet ms",verdana,arial,sans-serif;color:#333;}#graph-div .cluster-label text{fill:#333;}#graph-div .cluster-label span,#graph-div p{color:#333;}#graph-div .label text,#graph-div span,#graph-div p{fill:#333;color:#333;}#graph-div .node rect,#graph-div .node circle,#graph-div .node ellipse,#graph-div .node polygon,#graph-div .node path{fill:#ECECFF;stroke:#9370DB;stroke-width:1px;}#graph-div .flowchart-label text{text-anchor:middle;}#graph-div .node .label{text-align:center;}#graph-div .node.clickable{cursor:pointer;}#graph-div .arrowheadPath{fill:#333333;}#graph-div .edgePath .path{stroke:#333333;stroke-width:2.0px;}#graph-div .flowchart-link{stroke:#333333;fill:none;}#graph-div .edgeLabel{background-color:#e8e8e8;text-align:center;}#graph-div .edgeLabel rect{opacity:0.5;background-color:#e8e8e8;fill:#e8e8e8;}#graph-div .labelBkg{background-color:rgba(232, 232, 232, 0.5);}#graph-div .cluster rect{fill:#ffffde;stroke:#aaaa33;stroke-width:1px;}#graph-div .cluster text{fill:#333;}#graph-div .cluster span,#graph-div p{color:#333;}#graph-div div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:12px;background:hsl(80, 100%, 96.2745098039%);border:1px solid #aaaa33;border-radius:2px;pointer-events:none;z-index:100;}#graph-div .flowchartTitleText{text-anchor:middle;font-size:18px;fill:#333;}#graph-div :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style><g><marker orient="auto" markerHeight="12" markerWidth="12" markerUnits="userSpaceOnUse" refY="5" refX="10" viewBox="0 0 10 10" class="marker flowchart" id="flowchart-pointEnd"><path style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowMarkerPath" d="M 0 0 L 10 5 L 0 10 z"></path></marker><marker orient="auto" markerHeight="12" markerWidth="12" markerUnits="userSpaceOnUse" refY="5" refX="0" viewBox="0 0 10 10" class="marker flowchart" id="flowchart-pointStart"><path style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowMarkerPath" d="M 0 5 L 10 10 L 10 0 z"></path></marker><marker orient="auto" markerHeight="11" markerWidth="11" markerUnits="userSpaceOnUse" refY="5" refX="11" viewBox="0 0 10 10" class="marker flowchart" id="flowchart-circleEnd"><circle style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowMarkerPath" r="5" cy="5" cx="5"></circle></marker><marker orient="auto" markerHeight="11" markerWidth="11" markerUnits="userSpaceOnUse" refY="5" refX="-1" viewBox="0 0 10 10" class="marker flowchart" id="flowchart-circleStart"><circle style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowMarkerPath" r="5" cy="5" cx="5"></circle></marker><marker orient="auto" markerHeight="11" markerWidth="11" markerUnits="userSpaceOnUse" refY="5.2" refX="12" viewBox="0 0 11 11" class="marker cross flowchart" id="flowchart-crossEnd"><path style="stroke-width: 2; stroke-dasharray: 1, 0;" class="arrowMarkerPath" d="M 1,1 l 9,9 M 10,1 l -9,9"></path></marker><marker orient="auto" markerHeight="11" markerWidth="11" markerUnits="userSpaceOnUse" refY="5.2" refX="-1" viewBox="0 0 11 11" class="marker cross flowchart" id="flowchart-crossStart"><path style="stroke-width: 2; stroke-dasharray: 1, 0;" class="arrowMarkerPath" d="M 1,1 l 9,9 M 10,1 l -9,9"></path></marker><g class="root"><g class="clusters"></g><g class="edgePaths"><path marker-end="url(#flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-APTA LE-Gregory" id="L-APTA-Gregory-0" d="M49.58984375,39L49.58984375,43.166666666666664C49.58984375,47.333333333333336,49.58984375,55.666666666666664,179.52351241548354,74.23918289701645C309.45718108096713,92.81169912736623,569.3245184119343,121.62339825473242,699.2581870774178,136.02924781841554L829.1918557429013,150.43509738209863"></path><path marker-end="url(#flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-BioMedCentral LE-Gregory" id="L-BioMedCentral-Gregory-0" d="M236.8828125,39L236.8828125,43.166666666666664C236.8828125,47.333333333333336,236.8828125,55.666666666666664,335.882451351803,73.95771791903034C434.88209020360597,92.24876917139402,632.8813679072119,120.49753834278802,731.8810067590149,134.62192292848502L830.880645610818,148.74630751418204"></path><path marker-end="url(#flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-JNeurosci LE-Gregory" id="L-JNeurosci-Gregory-0" d="M441.38671875,39L441.38671875,43.166666666666664C441.38671875,47.333333333333336,441.38671875,55.666666666666664,506.832316305676,73.42777484015734C572.277913861352,91.18888301364802,703.1691089727041,118.37776602729603,768.6147065283799,131.97220753412003L834.0603040840559,145.56664904094404"></path><path marker-end="url(#flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-PEDro LE-Gregory" id="L-PEDro-Gregory-0" d="M623.01953125,39L623.01953125,43.166666666666664C623.01953125,47.333333333333336,623.01953125,55.666666666666664,659.1695518253985,72.45121640376819C695.3195724007969,89.23576614086971,767.6196135515938,114.47153228173944,803.7696341269924,127.0894153521743L839.9196547023909,139.70729842260917"></path><path marker-end="url(#flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-PubMed LE-Gregory" id="L-PubMed-Gregory-0" d="M798.7109375,39L798.7109375,43.166666666666664C798.7109375,47.333333333333336,798.7109375,55.666666666666664,808.3623667653541,69.66790667214603C818.0137960307079,83.66914667762539,837.3166545614158,103.3382933552508,846.9680838267699,113.17286669406349L856.6195130921238,123.00744003287619"></path><path marker-end="url(#flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-Reuters LE-Gregory" id="L-Reuters-Gregory-0" d="M980.54296875,39L980.54296875,43.166666666666664C980.54296875,47.333333333333336,980.54296875,55.666666666666664,971.0582061513127,69.66790667214603C961.5734435526255,83.66914667762539,942.6039183552508,103.3382933552508,933.1191557565635,113.17286669406349L923.6343931578762,123.00744003287619"></path><path marker-end="url(#flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-Scielo LE-Gregory" id="L-Scielo-Gregory-0" d="M1154.88671875,39L1154.88671875,43.166666666666664C1154.88671875,47.333333333333336,1154.88671875,55.666666666666664,1119.1170241667116,72.44026635421157C1083.347329583423,89.21386604175648,1011.8079404168462,114.42773208351296,976.0382458335579,127.0346651043912L940.2685512502694,139.64159812526944"></path><path marker-end="url(#flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-TheLancet LE-Gregory" id="L-TheLancet-Gregory-0" d="M1342.046875,39L1342.046875,43.166666666666664C1342.046875,47.333333333333336,1342.046875,55.666666666666664,1276.0861411915305,73.44258650403053C1210.1254073830612,91.21850634139439,1078.2039397661222,118.43701268278875,1012.2432059576527,132.04626585348595L946.2824721491831,145.65551902418312"></path><path marker-end="url(#flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-MsRelDis LE-Gregory" id="L-MsRelDis-Gregory-0" d="M1583.77734375,39L1583.77734375,43.166666666666664C1583.77734375,47.333333333333336,1583.77734375,55.666666666666664,1478.1170930828375,74.03148110367097C1372.4568424156753,92.39629554067528,1161.1363410813506,120.79259108135057,1055.4760904141883,134.9907388516882L949.8158397470258,149.18888662202585"></path><path marker-end="url(#flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-Manual LE-Gregory" id="L-Manual-Gregory-0" d="M1806.8203125,39L1806.8203125,43.166666666666664C1806.8203125,47.333333333333336,1806.8203125,55.666666666666664,1664.2795223263336,74.32476972216689C1521.738732152667,92.98287277766711,1236.6571518053343,121.96574555533421,1094.1163616316678,136.4571819441678L951.5755714580013,150.94861833300132"></path><path marker-end="url(#flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-Gregory LE-Website" id="L-Gregory-Website-0" d="M859.4921631692927,194.1777100442927L851.7359823285773,203.36684170357725C843.9798014878619,212.55597336286178,828.4674398064309,230.9342366814309,820.7112589657154,244.29003500738213C812.955078125,257.6458333333333,812.955078125,265.9791666666667,812.955078125,270.1458333333333L812.955078125,274.3125"></path><path marker-end="url(#flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-Gregory LE-Newsletter" id="L-Gregory-Newsletter-0" d="M920.7617430807073,194.1777100442927L928.3512572547561,203.36684170357725C935.9407714288049,212.55597336286178,951.1197997769024,230.9342366814309,958.7093139509512,244.29003500738213C966.298828125,257.6458333333333,966.298828125,265.9791666666667,966.298828125,270.1458333333333L966.298828125,274.3125"></path></g><g class="edgeLabels"><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g></g><g class="nodes"><g transform="translate(49.58984375, 19.5)" id="flowchart-APTA-186" class="node default default flowchart-label"><rect height="39" width="99.1796875" y="-19.5" x="-49.58984375" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-42.08984375, -12)" style="" class="label"><rect></rect><foreignObject height="24" width="84.1796875"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel"><i class="fa fa-newspaper"></i> APTA.org</span></div></foreignObject></g></g><g transform="translate(889.626953125, 156.65625)" id="flowchart-Gregory-187" class="node default default flowchart-label"><polygon style="" transform="translate(-67.65625,67.65625)" class="label-container" points="67.65625,0 135.3125,-67.65625 67.65625,-135.3125 0,-67.65625"></polygon><g transform="translate(-40.65625, -12)" style="" class="label"><rect></rect><foreignObject height="24" width="81.3125"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel"><i class="fa fa-robot"></i> Gregory</span></div></foreignObject></g></g><g transform="translate(236.8828125, 19.5)" id="flowchart-BioMedCentral-188" class="node default default flowchart-label"><rect height="39" width="175.40625" y="-19.5" x="-87.703125" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-80.203125, -12)" style="" class="label"><rect></rect><foreignObject height="24" width="160.40625"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel"><i class="fa fa-newspaper"></i> BioMedCentral.com</span></div></foreignObject></g></g><g transform="translate(441.38671875, 19.5)" id="flowchart-JNeurosci-190" class="node default default flowchart-label"><rect height="39" width="133.6015625" y="-19.5" x="-66.80078125" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-59.30078125, -12)" style="" class="label"><rect></rect><foreignObject height="24" width="118.6015625"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel"><i class="fa fa-newspaper"></i> JNeurosci.org</span></div></foreignObject></g></g><g transform="translate(623.01953125, 19.5)" id="flowchart-PEDro-192" class="node default default flowchart-label"><rect height="39" width="129.6640625" y="-19.5" x="-64.83203125" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-57.33203125, -12)" style="" class="label"><rect></rect><foreignObject height="24" width="114.6640625"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel"><i class="fa fa-newspaper"></i> PEDro.org.au</span></div></foreignObject></g></g><g transform="translate(798.7109375, 19.5)" id="flowchart-PubMed-194" class="node default default flowchart-label"><rect height="39" width="121.71875" y="-19.5" x="-60.859375" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-53.359375, -12)" style="" class="label"><rect></rect><foreignObject height="24" width="106.71875"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel"><i class="fa fa-newspaper"></i> PubMed.gov</span></div></foreignObject></g></g><g transform="translate(980.54296875, 19.5)" id="flowchart-Reuters-196" class="node default default flowchart-label"><rect height="39" width="141.9453125" y="-19.5" x="-70.97265625" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-63.47265625, -12)" style="" class="label"><rect></rect><foreignObject height="24" width="126.9453125"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel"><i class="fa fa-newspaper"></i> Reuters Health</span></div></foreignObject></g></g><g transform="translate(1154.88671875, 19.5)" id="flowchart-Scielo-198" class="node default default flowchart-label"><rect height="39" width="106.7421875" y="-19.5" x="-53.37109375" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-45.87109375, -12)" style="" class="label"><rect></rect><foreignObject height="24" width="91.7421875"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel"><i class="fa fa-newspaper"></i> Scielo.org</span></div></foreignObject></g></g><g transform="translate(1342.046875, 19.5)" id="flowchart-TheLancet-200" class="node default default flowchart-label"><rect height="39" width="167.578125" y="-19.5" x="-83.7890625" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-76.2890625, -12)" style="" class="label"><rect></rect><foreignObject height="24" width="152.578125"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel"><i class="fa fa-newspaper"></i> The Lancet Health</span></div></foreignObject></g></g><g transform="translate(1583.77734375, 19.5)" id="flowchart-MsRelDis-202" class="node default default flowchart-label"><rect height="39" width="215.8828125" y="-19.5" x="-107.94140625" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-100.44140625, -12)" style="" class="label"><rect></rect><foreignObject height="24" width="200.8828125"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel"><i class="fa fa-newspaper"></i> MS and Related Disorders</span></div></foreignObject></g></g><g transform="translate(1806.8203125, 19.5)" id="flowchart-Manual-204" class="node default default flowchart-label"><rect height="39" width="130.203125" y="-19.5" x="-65.1015625" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-57.6015625, -12)" style="" class="label"><rect></rect><foreignObject height="24" width="115.203125"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel"><i class="fa fa-keyboard"></i> Manual Input</span></div></foreignObject></g></g><g transform="translate(812.955078125, 293.8125)" id="flowchart-Website-207" class="node default default flowchart-label"><rect height="39" width="92.46875" y="-19.5" x="-46.234375" ry="5" rx="5" style="" class="basic label-container"></rect><g transform="translate(-38.734375, -12)" style="" class="label"><rect></rect><foreignObject height="24" width="77.46875"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel"><i class="fa fa-globe"></i> Website</span></div></foreignObject></g></g><g transform="translate(966.298828125, 293.8125)" id="flowchart-Newsletter-209" class="node default default flowchart-label"><rect height="39" width="114.21875" y="-19.5" x="-57.109375" ry="5" rx="5" style="" class="basic label-container"></rect><g transform="translate(-49.609375, -12)" style="" class="label"><rect></rect><foreignObject height="24" width="99.21875"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel"><i class="fa fa-envelope"></i> Newsletter</span></div></foreignObject></g></g></g></g></g></svg>
 </div>
 <div class="col-md-12 text-center">
   <a href='{{< ref "/about/index.md" >}}' class="btn btn-primary btn-round btn-lg font-weight-bold " data-umami-event="click--more-info-on-sources-researchers-page">More information on the about page <i class="fas fa-arrow-circle-right"></i></a>

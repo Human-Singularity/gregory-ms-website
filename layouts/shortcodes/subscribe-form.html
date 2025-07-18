@@ -1,0 +1,105 @@
+<div class="card card-contact card-raised" id="subscribe">
+  <div class="anchor-target" id="subscribe-anchor"></div>
+  <form role="form" id="contact-form1" method="post" action="https://api.gregory-ms.com/subscriptions/new/">
+    <div class="card-header text-center">
+      <h4 class="card-title font-weight-bold">Stay updated</h4>
+      <p class="p-3">Choose which alerts you want to receive.</p>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6 pr-2">
+          <label>First name</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text pr-2"><i class="now-ui-icons users_circle-08"></i></span>
+            </div>
+            <input type="text" name="first_name" class="form-control" placeholder="First Name..." aria-label="First Name..." autocomplete="given-name" required>
+          </div>
+        </div>
+        <div class="col-md-6 pl-2">
+          <div class="form-group">
+            <label>Last name</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text pr-2"><i class="now-ui-icons text_caps-small"></i></span>
+              </div>
+              <input type="text" name="last_name" class="form-control" placeholder="Last Name..." aria-label="Last Name..." autocomplete="family-name">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email address</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text pr-2"><i class="now-ui-icons ui-1_email-85"></i></span>
+          </div>
+          <input type="email" name="email" id="email" class="form-control" placeholder="Email Here..." autocomplete="email" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>I am a...</label>
+        <div class="input-group">
+          <select id="profile" name="profile" class="form-control">
+            <option value="patient">patient</option>
+            <option value="doctor">doctor</option>
+            <option value="researcher">researcher</option>
+            <option value="clinical centre">clinical centre</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Send me</label>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input class="form-check-input subscription-option-vertical" type="checkbox" name="list" value="2">
+            weekly digest of articles
+            <span class="form-check-sign"></span>
+          </label>
+        </div>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input class="form-check-input subscription-option-vertical" type="checkbox" name="list" value="1">
+            new clinical trials
+            <span class="form-check-sign"></span>
+          </label>
+        </div>
+        <div class="invalid-feedback d-none" id="checkbox-error-vertical">
+          Please select at least one subscription option.
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 ml-auto mr-auto text-center">
+          <button type="submit" class="btn btn-primary btn-round mr-auto ml-auto font-weight-bold">Subscribe Now</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const form = document.getElementById('contact-form1');
+  const checkboxes = form.querySelectorAll('.subscription-option-vertical');
+  const errorMessage = document.getElementById('checkbox-error-vertical');
+  
+  form.addEventListener('submit', function(event) {
+    let isChecked = false;
+    
+    checkboxes.forEach(function(checkbox) {
+      if (checkbox.checked) {
+        isChecked = true;
+      }
+    });
+    
+    if (!isChecked) {
+      event.preventDefault();
+      errorMessage.classList.remove('d-none');
+      errorMessage.classList.add('d-block');
+    } else {
+      errorMessage.classList.add('d-none');
+      errorMessage.classList.remove('d-block');
+    }
+  });
+});
+</script>

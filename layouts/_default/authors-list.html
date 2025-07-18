@@ -1,0 +1,19 @@
+{{ define "bodyclasses" }}authors-list-page{{ end }}
+
+{{ define "description" }}
+	{{ partial "description.html" . }}
+{{ end }}
+
+{{ define "main" }}
+<div class="wrapper">
+
+	<div class="section">
+		<div class="container">
+			<a name="content"></a>
+			{{ .Content }}
+		</div>
+	</div>
+</div>
+
+<script src="/js/authorProfile.js"></script>
+{{ end }}

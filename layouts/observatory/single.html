@@ -1,0 +1,15 @@
+{{ define "bodyclasses" }}observatory-page{{ end }}
+
+{{ define "main" }}
+
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-12">
+      <div id="root"></div>
+    </div>
+  </div>
+</div>
+
+{{ partial "react-app.html" (dict "app" "observatory") }}
+
+{{ end }}

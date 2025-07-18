@@ -26,11 +26,6 @@ options:
   navbar: navbar navbar-expand-lg bg-white fixed-top font-weight-bold
 scripts:
 
-menu:
-  main:
-    url: patients
-    name: Patients
-    weight: 5
 ---
 
 
@@ -39,63 +34,7 @@ menu:
 </div>
 <div class="col-md-5 col-12 justify-content-center align-self-center ">
   <div class="col-md-12 ml-auto mr-auto">
-  <div class="card card-contact card-raised">
-  <form role="form" id="contact-form1" method="post" action="https://api.gregory-ms.com/subscriptions/new/">
-  <div class="card-header text-center">
-  <h4 class="card-title font-weight-bold">Subscribe for updates on new clinical trials</h4>
-  <p class="p-3">A free service that notifies you when a clinical trial is posted on <a href="https://clinicaltrials.gov/ct2/results/rss.xml?rcv_d=14&lup_d=&sel_rss=new14&cond=Multiple+Sclerosis&count=10000" class="text-info font-weight-bold">ClinicalTrials.gov</a> or <a href="https://www.clinicaltrialsregister.eu/ctr-search/rest/feed/bydates?query=multiple+AND+sclerosis" class="text-info font-weight-bold">Clinicaltrialsregister.eu</a></p>
-  </div>
-  <div class="card-body">
-  <div class="row">
-  <div class="col-md-6 pr-2">
-  <label>First name</label>
-  <div class="input-group">
-  <div class="input-group-prepend">
-  <span class="input-group-text pr-2"><i class="now-ui-icons users_circle-08"></i></span>
-  </div>
-  <input type="text" name="first_name" class="form-control" placeholder="First Name..." aria-label="First Name..." autocomplete="given-name">
-  </div>
-  </div>
-  <div class="col-md-6 pl-2">
-  <div class="form-group">
-  <label>Last name</label>
-  <div class="input-group">
-  <div class="input-group-prepend">
-  <span class="input-group-text pr-2"><i class="now-ui-icons text_caps-small"></i></span>
-  </div>
-  <input type="text" name="last_name" class="form-control" placeholder="Last Name..." aria-label="Last Name..." autocomplete="family-name">
-  </div>
-  </div>
-  </div>
-  </div>
-  <div class="form-group">
-  <label>Email address</label>
-  <div class="input-group">
-  <div class="input-group-prepend">
-  <span class="input-group-text pr-2"><i class="now-ui-icons ui-1_email-85"></i></span>
-  </div>
-  <input type="email" name="email" id="email" class="form-control" placeholder="Email Here..." autocomplete="email">
-  </div>
-  </div>
-  <div class="form-group">
-  <label>I am a...</label>
-  <div class="input-group">
-  <select id="profile" name="profile" class="form-control">
-  <option value="patient">patient</option>
-  <option value="doctor">doctor</option>
-  <option value="clinical centre">clinical centre</option>
-  </select>
-  </div>
-  </div>
-  <div class="row">
-  <div class="col-md-12 ml-auto mr-auto text-center">
-  <input value="1" name="list" id="list" type="hidden">
-  <button type="submit" class="btn btn-success font-weight-bold btn-lg btn-round mr-auto ml-auto">Subscribe</button>
-  </div>
-  </div>
-  </div>
-  </form>
-  </div>
+  {{< subscribe-form >}}
   </div>
 </div>
 
@@ -104,7 +43,7 @@ menu:
 
 
 <div class="offset-md-2 col-md-5 col-12 justify-content-center align-self-center">
-  <h3 class="title text-primary">Information on this website should not be considered medical advise of any sort.</h3>
+  <h3 class="title text-primary">Information on this website should not be considered medical advice of any sort.</h3>
   <p>What you see here was done with no funding and by a small team. It runs on good will and donations to keep the server running.</p>
   <p>We need your help in spreading the word. Send an email to your healthcare team, share the website on your social networks and groups.</p>
 
@@ -139,16 +78,13 @@ menu:
 <div class="w-100 mt-5 mb-5"></div>
 </div>
 <div class="row bg-grey pt-5 pb-5 mb-0 ">
-<div class="col-md-6 col-12 justify-content-center align-self-center mt-5">
-  <a href="https://ko-fi.com/gregoryms"><img src="images/Ko-fi_Logo_RGB.svg" class="d-none d-sm-block col-md-7" data-umami-event="click--patients-page-donate-logo-link float-right"/></a>
-</div>
 
-<div class="col-md-5 col-12 justify-content-center align-self-center align-left">
-  <p>If you want to contribute to the server costs, you can send your donation through the Ko-Fi page below.</p>
+<div class="col-md-5 col-12 justify-content-center align-self-center align-center mx-auto">
+  <p>If you want to contribute to the server costs, you can send your donation through the donate page below.</p>
   <p>We also encourage you to look at the <a href="/annual-review/">Annual Report</a> section where we keep track of donations and expenses.</p>
   <p>
   <a href="/annual-review/" class="btn btn-success btn-round btn-lg font-weight-bold" data-umami-event="click--patients-page-annual-reviews">Annual Reviews <i class="fas fa-arrow-circle-right"></i></a>
-  <a href="https://ko-fi.com/gregoryms" class="btn btn-info btn-round btn-lg font-weight-bold " data-umami-event="click--patients-page-donate-text-link">Donate with Ko-Fi <i class="fas fa-mug-hot ko-fi"></i></a>
+  <a href="https://donate.stripe.com/6oEeVmf1tdHIdOw7ss" target="_blank" class="btn btn-info btn-round btn-lg font-weight-bold " data-umami-event="click--patients-page-donate-text-link">Donate  </a>
   </p>
 </div>
 

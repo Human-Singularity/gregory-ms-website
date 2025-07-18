@@ -21,7 +21,6 @@ scripts:
 menu:
   column_1:
     Name: Contacts
-    Weight: 2
 options:
   header: mini
   unlisted: false
@@ -37,16 +36,16 @@ resources:
 
 ### Gregory MS Team
 
-<a href="mailto:gregory@gregory-ms.com" data-umami-event="click--email-gregory-contacts-page" class="">gregory@gregory-ms.com</a>
+<a href="mailto:team@gregory-ms.com" data-umami-event="click--email-gregory-contacts-page" class="">team@gregory-ms.com</a>
 
 ### Bruno Amaral{.title .text-info}
 
-https://brunoamaral.eu
+<https://brunoamaral.eu>
 
 <a href="mailto:bruno@gregory-ms.com" data-umami-event="click--email-bruno-contacts-page" class="click--email-bruno-contacts-page">bruno@gregory-ms.com</a>
 
 
-https://twitter.com/brunoamaral     
+https://bsky.app/profile/brunoamaral.eu     
 
 [+351 912 875 856](tel:+351912875856)
 

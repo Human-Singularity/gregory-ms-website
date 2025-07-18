@@ -1,6 +1,6 @@
 ---
-title: "Observatory"
-subtitle: This page includes searches for new medicine and therapy for Multiple Sclerosis.
+title: Multiple Sclerosis Treatment Research Observatory
+subtitle: Explore research articles and clinical trials for MS treatments and therapies
 date: 2021-08-12T15:33:35+01:00
 lastmod: 
 author: Bruno Amaral
@@ -13,14 +13,12 @@ resources:
   - src: lucas-vasques-9vnACvX2748-unsplash.jpeg
     name: header
 
+layout: page
 description: 
 categories: []
 tags: []
-menu:
-  main:
-    Name: Observatory
-    Weight: 7
-draft: false
+app: observatory
+
 enableDisqus : true
 enableMathJax: false
 disableToC: false
@@ -28,16 +26,10 @@ disableAutoCollapse: true
 
 ---
 
-Visit the page of [Multiple Sclerosis categories](/categories/) to browse articles refering to new or current medicines, medical fields, or areas of MS Research.
+<div class="col-md-12">
 
-For a more flexible analysis, use the dashboard bellow to suit your needs.
+<div id="root"></div>
 
-Hover each chart to download the results, click each title or article id number to read more information.
+{{< react-app observatory >}}
 
-<a href="https://metabase.gregory-ms.com/public/dashboard/39cbe602-4d42-46af-bfe4-0de04ef5e5f9" target="_blank" data-umami-event="click--open-dashboard-new-tab">Open dashboard in new tab <i class="fas fa-external-link-square-alt"></i></a> 
-
-{{< metabase-embed dashboard="1" width="1300" height="1250" >}}
-
-## Author Search
-
-{{< metabase-embed dashboard="10" width="1300" height="1250" >}}
+</div>

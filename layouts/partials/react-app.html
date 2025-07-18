@@ -1,0 +1,16 @@
+{{/* React App Loader Partial */}}
+{{ $app := .app }}
+
+{{ if eq $app "articles" }}
+  <script src="{{ "js/articles.js" | relURL }}"></script>
+{{ else if eq $app "trials" }}
+  <script src="{{ "js/trials.js" | relURL }}"></script>
+{{ else if eq $app "category" }}
+  <script src="{{ "js/category.js" | relURL }}"></script>
+{{ else if eq $app "authorProfile" }}
+  <script src="{{ "js/authorProfile.js" | relURL }}"></script>
+{{ else if eq $app "relevant" }}
+  <script src="{{ "js/relevant.js" | relURL }}"></script>
+{{ else if eq $app "observatory" }}
+  <script src="{{ "js/observatory.js" | relURL }}"></script>
+{{ end }}

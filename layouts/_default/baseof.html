@@ -20,7 +20,7 @@
 	<meta name="robots" content="noindex, nofollow">
 	{{- end -}}
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<!-- Fonts and icons -->
+	<!-- Fonts -->
 	{{- $montserrat := resources.Get "css/Montserrat.css" -}}
 	
 	<!-- CSS Files -->
@@ -28,25 +28,26 @@
 	<link href="{{- $print.Permalink -}}" media="print" rel="stylesheet" />
 	<!-- Preload fonts -->
 	<link rel="preload" href="/fonts/nucleo-outline.woff2" as="font" crossorigin="anonymous">
-	<link rel="preload" href="/webfonts/fa-regular-400.woff2" as="font" crossorigin="anonymous">
-	<link rel="preload" href="/webfonts/fa-brands-400.woff2" as="font" crossorigin="anonymous">
-
-	{{ $fontawesome := resources.Get "css/fontawesome/fontawesome.css"  }}
-	{{ $brands := resources.Get "css/fontawesome/brands.css"  }}
-	{{ $regular := resources.Get "css/fontawesome/regular.css"  }}
-	{{ $solid := resources.Get "css/fontawesome/solid.css"  }}
 
 	{{- $bootstrap := resources.Get "css/bootstrap.min.css" -}}
-	{{- $nowUi := resources.Get "scss/now-ui-kit.scss" | resources.ToCSS (dict "enableSourceMap" false "outputStyle" "compressed") -}}
+	{{- $nowUi := resources.Get "scss/now-ui-kit.scss" | toCSS (dict "enableSourceMap" false "outputStyle" "compressed") -}}
+	{{- $gregoryCustom := resources.Get "scss/gregory-custom.scss" | toCSS (dict "enableSourceMap" false "outputStyle" "compressed") -}}
+	{{- $badges := resources.Get "css/badges.css" | resources.Fingerprint -}}
+	{{- $observatory := resources.Get "css/observatory.css" | resources.Fingerprint -}}
+	{{ $montserrat := resources.Get "css/Montserrat.css" | resources.Fingerprint }}
+	{{ $styles := slice $nowUi  | resources.Concat "css/style.css" | resources.Minify | resources.Fingerprint }}
 
-	{{ $styles := slice $bootstrap $nowUi $montserrat $fontawesome $brands $regular $solid | resources.Concat "css/style.css" | postCSS (dict "config" "./assets/css/postcss.config.js") | minify | fingerprint  -}}
+	<link rel="stylesheet" href="{{ $bootstrap.Permalink }}" media="screen" />
+	<link rel="stylesheet" href="{{ $gregoryCustom.Permalink }}" media="screen" />
+	<link rel="stylesheet" href="{{ $nowUi.Permalink }}" integrity="{{ $nowUi.Data.Integrity }}">
+	<link rel="stylesheet" href="{{$montserrat.Permalink}}">
+	<link rel="stylesheet" href="{{$badges.Permalink}}">
+	{{- if or (eq .Params.app "observatory") (hasPrefix .RelPermalink "/observatory/") -}}
+	<link rel="stylesheet" href="{{$observatory.Permalink}}">
+	{{- end -}}
+	<script src="https://kit.fontawesome.com/16e8434146.js" crossorigin="anonymous"></script>
 
-	<link rel="stylesheet" href="{{$styles.Permalink}}">
 
-	{{- if or (.HasShortcode "youtube") (.HasShortcode "youtube") (.HasShortcode "youtube") -}}
-	{{- $plyr_css := resources.Get "/css/plyr/plyr.css" -}}
-	<link rel="stylesheet" href="{{- $plyr_css.RelPermalink -}}">
-	{{end}}
 
 	{{- with .OutputFormats.Get "rss" -}}
 	<link rel="{{- .Rel -}}" type="{{- .MediaType.Type -}}" href="{{- .Permalink | safeURL -}}" title="{{- $.Site.Title -}}">
@@ -58,6 +59,10 @@
 	<link rel="alternate" href="{{- .Permalink -}}" hreflang="{{- .Lang -}}">
 		{{- end}}
 	{{- end -}}
+	{{ with $.Params.seo.canonical }}
+	<link rel="canonical" href="{{ $.Site.BaseURL}}{{.}}" />		
+	{{ end }}
+
 	<meta property="og:title" content="{{- .Title -}}" />
 	{{- block "description" . -}}
 	{{ partial "description.html" . }}
@@ -165,12 +170,9 @@
 	{{- end -}}
 	<meta name="twitter:dnt" content="on">
 
-	<!-- Facebook Page Admin ID for Domain Insights -->
-	{{- with $.Site.Social.facebook_admin -}}<meta property="fb:admins" content="{{- . -}}" />{{- end -}}
-	{{- with $.Site.Social.facebook_app_id -}}<meta property="fb:app_id" content="{{- . -}}" />{{- end -}}
 
 	{{- with $.Site.Params.googleSiteVerification -}}<meta name="google-site-verification" content="{{- . -}}" />{{- end -}}
-	{{- if ne .Site.IsServer true -}}
+	{{- if ne hugo.IsServer true -}}
 	{{- with $.Site.Params.googleTagManager -}}
 	<!-- Google Tag Manager -->
 	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -196,7 +198,7 @@
 	{{ end }}
 </head>
 	<body class="{{ block "bodyclasses" . }}{{ end }} sidebar-collapse" id="{{ block "bodyid" . }}home{{ end }}" {{ block "data-attributes" . }}{{end}} >
-	{{- if eq .Site.IsServer false -}}
+	{{- if eq hugo.IsServer false -}}
 	<!-- Google Tag Manager (noscript) -->
 	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{- $.Site.Params.googleTagManager -}}"
 	height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -216,37 +218,17 @@
 		  <span class="navbar-toggler-bar bottom-bar"></span>
 		</button>
 	  </div>
-	  <div class="collapse navbar-collapse justify-content-end" id="navigation" data-nav-image="/assets/img/blurred-image-1.jpg">
+	  <div class="collapse navbar-collapse justify-content-end" id="navigation" data-nav-image="/cdn-cgi/image/width=1920,quality=50/assets/img/blurred-image-1.jpg">
+		{{- $current := . -}}
 		<ul class="navbar-nav">
-
-			{{- range .Site.Menus.main -}}
-				<li class="nav-item {{ if (or ( $.Page.IsMenuCurrent "main" .) ( $.Page.HasMenuCurrent "main" .)) }} active {{- end -}}"><a href="{{- .URL | absLangURL -}}" title="{{- .Post -}}" class="nav-link top-menu menu-click"  data-umami-event="click--topnav-{{- .Name | urlize | lower -}} ">{{- .Name | safeHTML -}}</a></li>
-			{{- end -}}  <!-- end range .Site.Menus.main -->
-
-			{{- if .Site.IsMultiLingual -}}
-
-				{{- range .Site.Languages -}}
-
-					{{- if eq . $.Site.Language -}}
-									<li class="nav-item active"><a href="#" title="{{- .LanguageName -}}" class="nav-link language">
-									{{- partial "language-icons" (dict "context" .  "active" true "lang" .Lang "hasTranslation" true) -}}
-									</a></li>
-							{{- else -}} <!-- else if not eq . $.Site.Language -->
-
-								{{- if eq (len $.Translations) 0 -}}
-									<li class="nav-item language-inactive"><a title="{{- .LanguageName -}}" class="nav-link language-inactive language">{{- partial "language-icons" (dict "context" .  "active" false "lang" .Lang "hasTranslation" false) -}}</a></li>
-									{{- else -}}
-									{{- range $.Translations -}}
-										<li class="nav-item"><a href="{{- .Permalink -}}" title="{{- .Language.LanguageName -}}" class="nav-link language">{{- partial "language-icons" (dict "context" .  "active" false "lang" .Lang "hasTranslation" true) -}}</a></li>
-									{{- end -}} <!-- end range translations -->
-							{{- end -}} <!-- if  len translation 0  -->
-
-					{{- end -}} <!-- if eq . $.Site.Language -->
-
-				{{- end -}} <!-- range site languates -->
-
-			{{- end -}} <!-- end if site is multilingual   -->
-			</ul>
+		  {{- range .Site.Menus.main -}}
+			<li class="nav-item{{ if or ($current.IsMenuCurrent "main" .) ($current.HasMenuCurrent "main" .) (eq $current.RelPermalink .URL) }} active{{ end }}">
+			  <a href="{{- .URL | absLangURL -}}" title="{{- .Post -}}" class="nav-link top-menu menu-click" data-umami-event="click--topnav-{{- .Name | urlize | lower -}}">
+				{{- .Name | safeHTML -}}
+			  </a>
+			</li>
+		  {{- end -}}
+		</ul>
 	  </div>
 	</div>
   </nav><!-- End Menu --><!-- End Navbar -->
@@ -266,7 +248,7 @@
 			  {{- i18n "subscribe_description" -}}
 			</p>
 		  </div>
-		  <div class="col text-center"><a href='https://ko-fi.com/gregoryms' class="btn btn-info btn-round btn-lg font-weight-bold " data-umami-event="click--donate-button">I want to donate now <i class="fas fa-arrow-circle-right"></i></a></div>
+		  <div class="col text-center"><a href='https://donate.stripe.com/6oEeVmf1tdHIdOw7ss' target="_blank" class="btn btn-info btn-round btn-lg font-weight-bold " data-umami-event="click--donate-button">I want to donate now <i class="fas fa-arrow-circle-right"></i></a></div>
 		</div>
 	  </div>
 	</div>
@@ -348,11 +330,6 @@
 		<!-- Control Center for Now Ui Kit: parallax effects, scripts for the example pages etc -->
 		{{- $nowuikitjs := resources.Get "/js/now-ui-kit.js" -}}
 		{{- $vibrant := resources.Get "/js/Vibrant.js" | resources.Fingerprint -}} 
-		{{- if or (.HasShortcode "youtube") (.HasShortcode "youtube") (.HasShortcode "youtube") -}}
-		<!-- Plyr for better html <video> and <audio> -->
-		{{- $plyr_js := resources.Get "/js/plyr/plyr.min.js" -}} 
-		<script src="{{- $plyr_js.Permalink }}"></script>
-		{{ end }}
 		<!-- Bring it all together into one file -->
 		<!-- we are not including nouislider and  bootstrapSwitch -->
 		{{- $javascript := slice $bootstrap  $nowuikitjs  | resources.Concat "js/javascript.js" | resources.Minify | resources.Fingerprint  -}}
@@ -362,9 +339,6 @@
 
 		<script src="{{$vibrant.Permalink }}" defer="true"></script>
 		<script src="{{ $customJs.Permalink }}" defer="true"></script>
-
-		{{ $gregJs := resources.Get "/js/gregory.js" | resources.Minify | resources.Fingerprint }} 
-		<script src="{{$gregJs.Permalink}}" defer="true"></script>
 
 		{{ block "list-javascript" . }}{{ end }}
 		<!--  Plugin for the DatePicker, full documentation here: https://github.com/uxsolutions/bootstrap-datepicker -->
@@ -424,21 +398,34 @@
 			{{- end -}}
 		{{- end -}}
 		{{- if .HasShortcode "relevant"  -}}
-		{{ $api := resources.Get "js/gregory_api_relevant_articles.jsx" | js.Build | babel | resources.Minify | resources.Fingerprint }}
-		<script src="{{ $api.Permalink }}"></script>
+		{{ partial "react-app-loader.html" (dict "app" "relevant") }}
 		{{ end }}
 		{{- if .HasShortcode "articles"  -}}
-		{{ $api := resources.Get "js/gregory_api_all_articles.jsx" | js.Build | babel | resources.Minify | resources.Fingerprint }}
-		<script src="{{ $api.Permalink }}"></script>
+		{{ partial "react-app-loader.html" (dict "app" "articles") }}
 		{{ end }}
 		{{- if .HasShortcode "trials"  -}}
-		{{ $api := resources.Get "js/gregory_api_trials.jsx" | js.Build | babel | resources.Minify | resources.Fingerprint }}
-		<script src="{{ $api.Permalink }}"></script>
+		{{ partial "react-app-loader.html" (dict "app" "trials") }}
 		{{ end }}
+		{{- if .HasShortcode "sources"  -}}
+		{{ partial "react-app-loader.html" (dict "app" "sources") }}
+		{{ end }}
+		{{- if .HasShortcode "authorprofile"  -}}
+		{{ partial "react-app-loader.html" (dict "app" "authorProfile") }}
+		{{ end }}
+		{{- if .HasShortcode "search"  -}}
+		{{ partial "react-app-loader.html" (dict "app" "search") }}
+		{{ end }}
+		{{- if eq .RelPermalink "/authors/ranking/" -}}
+		{{ partial "react-app-loader.html" (dict "app" "authorRanking") }}
+		{{ end }}
+		{{- if or (eq .Params.app "observatory") (hasPrefix .RelPermalink "/observatory/") -}}
+		{{ partial "react-app-loader.html" (dict "app" "observatory") }}
+		{{ end }}
+
 		{{- if or (.HasShortcode "metabase-embed")  -}}
 		<script src="https://metabase.gregory-ms.com/app/iframeResizer.js"></script>
 		{{end}}
-		{{- if eq .Site.IsServer false -}}
+		{{- if eq hugo.IsServer false -}}
 		<script async src="https://analytics.gregory-ms.com/script.js" data-website-id="ba098fd5-be22-4a28-aafa-a4e9d8222496"></script>
 		{{ end }}
 	</body>
