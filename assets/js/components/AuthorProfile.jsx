@@ -68,12 +68,49 @@ export function AuthorProfile() {
         // Fetch author details
         const authorUrl = `https://api.gregory-ms.com/authors/?author_id=${currentAuthorId}&format=json`;
         console.log('Making request to:', authorUrl);
-        const authorResponse = await axios.get(authorUrl, {
-          timeout: 10000, // 10 second timeout
-          headers: {
-            'Accept': 'application/json',
+        
+        try {
+          console.log('🚀 Starting fetch request...');
+          const response = await fetch(authorUrl, {
+            method: 'GET',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            mode: 'cors', // Explicitly set CORS mode
+          });
+          
+          console.log('📡 Fetch response received');
+          console.log('Response status:', response.status);
+          console.log('Response ok:', response.ok);
+          console.log('Response headers:', Object.fromEntries(response.headers.entries()));
+          
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
           }
-        });
+          
+          const authorData = await response.json();
+          console.log('📦 JSON data parsed:', authorData);
+          
+          // Create an axios-like response object for compatibility
+          const authorResponse = {
+            data: authorData,
+            status: response.status,
+            statusText: response.statusText,
+            headers: response.headers
+          };
+          
+          console.log('✅ API request successful!');
+          console.log('Response status:', authorResponse.status);
+          console.log('Response data:', authorResponse.data);
+          
+        } catch (apiError) {
+          console.error('❌ API request failed:', apiError);
+          console.error('Error name:', apiError.name);
+          console.error('Error message:', apiError.message);
+          console.error('Error stack:', apiError.stack);
+          throw apiError; // Re-throw to be caught by outer catch
+        }
         
         if (!isMounted) return;
         
