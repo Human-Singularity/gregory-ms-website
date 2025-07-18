@@ -34347,7 +34347,7 @@
           return;
         }
         if (fetchedRef.current === currentAuthorId) {
-          console.log("Data already fetched for author:", currentAuthorId);
+          console.log("Data already fetched for author:", currentAuthorId, "- skipping API call");
           setLoading(false);
           return;
         }
