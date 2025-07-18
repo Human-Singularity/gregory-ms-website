@@ -16,9 +16,6 @@ disableToC: false
 disableAutoCollapse: true
 
 url: about
-menu:
-  column_1:
-    Name: About
 options:
   header: mini
   unlisted: false
