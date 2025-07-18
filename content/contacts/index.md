@@ -42,7 +42,7 @@ resources:
 
 <https://brunoamaral.eu>
 
-<a href="mailto:bruno@gregory-ms.com" data-umami-event="click--email-bruno-contacts-page" class="click--email-bruno-contacts-page">bruno@gregory-ms.com</a>
+<a href="mailto:bruno@gregory-ms.com" data-umami-event="click--email-bruno-contacts-page">bruno@gregory-ms.com</a>
 
 
 https://bsky.app/profile/brunoamaral.eu     

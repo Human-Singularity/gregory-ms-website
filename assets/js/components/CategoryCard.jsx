@@ -29,6 +29,9 @@ function CategoryCard({ category, onSelect }) {
       role="button"
       tabIndex={0}
       aria-label={`View details for ${category.name}`}
+      data-umami-event="click--category-card"
+      data-umami-event-category={category.name}
+      data-umami-event-slug={category.slug}
     >
       <div className="card-body d-flex flex-column">
         <h5 className="card-title text-primary mb-2">{category.name}</h5>

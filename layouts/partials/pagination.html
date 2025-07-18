@@ -11,14 +11,14 @@
   {{ if $pag.HasPrev }}
   {{ with $pag.First -}}
   <li class="page-item">
-    <a href="{{ .URL }}#relevantarticles" class="page-link" aria-label="First">
+    <a href="{{ .URL }}#relevantarticles" class="page-link" aria-label="First" data-umami-event="click--pagination-first">
         <span aria-hidden="true"><i class="fa fa-angle-left" aria-hidden="true"></i><i class="fa fa-angle-double-left" aria-hidden="true"></i></span>
     </a>
   </li>
   {{ end }}
 
   <li class="page-item{{ if not $pag.HasPrev }} disabled{{ end }}">
-    <a {{ if $pag.HasPrev }}href="{{ $pag.Prev.URL }}#relevantarticles"{{ end }} class="page-link" aria-label="Previous">
+    <a {{ if $pag.HasPrev }}href="{{ $pag.Prev.URL }}#relevantarticles"{{ end }} class="page-link" aria-label="Previous" data-umami-event="click--pagination-prev">
         <span aria-hidden="true"><i class="fa fa-angle-double-left" aria-hidden="true"></i></span>
     </a>
   </li>
@@ -40,7 +40,7 @@
   {{- end -}}
   {{- if $showNumber }}
   <li class="page-item{{ if eq . $pag }} active{{ end }}">
-    <a class="page-link" href="{{ .URL }}#relevantarticles">{{ .PageNumber }}</a>
+    <a class="page-link" href="{{ .URL }}#relevantarticles" data-umami-event="click--pagination-page" data-umami-event-page="{{ .PageNumber }}">{{ .PageNumber }}</a>
   </li>
   {{- else if $shouldEllipse }}
   <li class="page-item disabled">
@@ -50,14 +50,14 @@
   {{- end }}
   {{ if $pag.HasNext }}
   <li class="page-item{{ if not $pag.HasNext }} disabled{{ end }}">
-    <a {{ if $pag.HasNext }}href="{{ $pag.Next.URL }}#relevantarticles"{{ end }} class="page-link" aria-label="Next">
+    <a {{ if $pag.HasNext }}href="{{ $pag.Next.URL }}#relevantarticles"{{ end }} class="page-link" aria-label="Next" data-umami-event="click--pagination-next">
         <span aria-hidden="true"><i class="fa fa-angle-double-right" aria-hidden="true"></i></span>
     </a>
   </li>
 
   {{- with $pag.Last }}
   <li class="page-item">
-    <a href="{{ .URL }}#relevantarticles" class="page-link" aria-label="Last">
+    <a href="{{ .URL }}#relevantarticles" class="page-link" aria-label="Last" data-umami-event="click--pagination-last">
         <span aria-hidden="true"><i class="fa fa-angle-double-right" aria-hidden="true"></i><i class="fa fa-angle-right" aria-hidden="true"></i></span>
     </a>
   </li>

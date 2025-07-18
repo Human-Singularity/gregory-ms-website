@@ -23,6 +23,9 @@ export function Trial({ trial }) {
               href={trial.link} 
               target="_blank" 
               rel="noopener noreferrer"
+              data-umami-event="click--trial-external"
+              data-umami-event-title={trial.title}
+              data-umami-event-id={trial.trial_id}
             >
               {trial.title} <i className="fas fa-external-link-square-alt"></i>
             </a>

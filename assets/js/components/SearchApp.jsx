@@ -655,6 +655,7 @@ function SearchApp() {
                       setHasSearched(false);
                     }}
                     type="button"
+                    data-umami-event="click--search-tab-articles"
                   >
                     <i className="fas fa-file-alt mr-2"></i>
                     Research Articles
@@ -681,6 +682,7 @@ function SearchApp() {
                       setHasSearched(false);
                     }}
                     type="button"
+                    data-umami-event="click--search-tab-trials"
                   >
                     <i className="fas fa-flask mr-2"></i>
                     Clinical Trials
@@ -707,6 +709,7 @@ function SearchApp() {
                       setHasSearched(false);
                     }}
                     type="button"
+                    data-umami-event="click--search-tab-authors"
                   >
                     <i className="fas fa-user-graduate mr-2"></i>
                     Authors
@@ -768,6 +771,9 @@ function SearchApp() {
                           type="submit" 
                           className="btn btn-primary btn-lg px-5"
                           disabled={isLoading}
+                          data-umami-event="click--search-articles"
+                          data-umami-event-term={searchTerm}
+                          data-umami-event-field={searchField}
                         >
                           {isLoading ? (
                             <>
@@ -854,6 +860,9 @@ function SearchApp() {
                           type="submit" 
                           className="btn btn-primary btn-lg px-5"
                           disabled={isLoading}
+                          data-umami-event="click--search-trials"
+                          data-umami-event-term={searchTerm}
+                          data-umami-event-status={trialStatus}
                         >
                           {isLoading ? (
                             <>
@@ -915,6 +924,9 @@ function SearchApp() {
                           type="submit" 
                           className="btn btn-primary btn-lg px-5"
                           disabled={isLoading}
+                          data-umami-event="click--search-authors"
+                          data-umami-event-term={searchTerm}
+                          data-umami-event-field={searchField}
                         >
                           {isLoading ? (
                             <>
