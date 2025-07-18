@@ -73,10 +73,12 @@ document.addEventListener('DOMContentLoaded', function() {
   
   form.addEventListener('submit', function(event) {
     let isChecked = false;
+    let selectedLists = [];
     
     checkboxes.forEach(function(checkbox) {
       if (checkbox.checked) {
         isChecked = true;
+        selectedLists.push(checkbox.value);
       }
     });
     
@@ -84,9 +86,27 @@ document.addEventListener('DOMContentLoaded', function() {
       event.preventDefault();
       errorMessage.classList.remove('d-none');
       errorMessage.classList.add('d-block');
+      
+      // Track failed subscription attempt
+      if (typeof umami !== 'undefined') {
+        umami.track('subscribe-newsletter-error', {
+          error: 'no_list_selected',
+          formType: 'horizontal'
+        });
+      }
     } else {
       errorMessage.classList.add('d-none');
       errorMessage.classList.remove('d-block');
+      
+      // Track successful form submission
+      if (typeof umami !== 'undefined') {
+        const formData = new FormData(form);
+        umami.track('subscribe-newsletter-submit', {
+          profile: formData.get('profile') || 'not_selected',
+          lists: selectedLists.join(','),
+          formType: 'horizontal'
+        });
+      }
     }
   });
 });
