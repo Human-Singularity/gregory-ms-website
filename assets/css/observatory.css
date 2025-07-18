@@ -3,6 +3,21 @@
  * Styles for the observatory page with categories and tags
  */
 
+/* Ensure proper page layout with footer */
+body.observatory-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+body.observatory-page .wrapper {
+  flex: 1;
+}
+
+body.observatory-page .footer {
+  margin-top: auto;
+}
+
 /* Category cards */
 .observatory-card .card {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
