@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import ArticleList from './ArticleList';
@@ -20,6 +20,7 @@ export function AuthorProfile() {
   const [currentPage, setCurrentPage] = useState(1);
   const [articlesPerPage] = useState(10);
   const { authorId } = useParams();
+  const fetchedRef = useRef(null); // Track which author we've already fetched
 
   // Fallback to get authorId from URL if useParams doesn't work
   const getAuthorId = () => {
@@ -38,20 +39,32 @@ export function AuthorProfile() {
     return null;
   };
 
-  const currentAuthorId = getAuthorId();
+  const currentAuthorId = useMemo(() => getAuthorId(), [authorId]);
 
   useEffect(() => {
     let isMounted = true;
     setLoading(true);
 
     async function fetchData() {
+      console.log('fetchData called with authorId:', currentAuthorId);
+      
       if (!currentAuthorId) {
         setError(new Error('No author ID provided'));
         setLoading(false);
         return;
       }
 
+      // Prevent duplicate fetches for the same author
+      if (fetchedRef.current === currentAuthorId) {
+        console.log('Data already fetched for author:', currentAuthorId);
+        setLoading(false);
+        return;
+      }
+
       try {
+        console.log('Making API call for author:', currentAuthorId);
+        fetchedRef.current = currentAuthorId; // Mark as being fetched
+        
         // Fetch author details
         const authorResponse = await axios.get(`https://api.gregory-ms.com/authors/?author_id=${currentAuthorId}&format=json`);
         
@@ -116,18 +129,30 @@ export function AuthorProfile() {
         }
       } catch (err) {
         if (isMounted) {
+          fetchedRef.current = null; // Reset on error so we can retry
           setError(err);
           setLoading(false);
         }
       }
     }
 
-    if (currentAuthorId) {
+    // Only fetch if we haven't already fetched this author
+    if (currentAuthorId && fetchedRef.current !== currentAuthorId) {
       fetchData();
+    } else if (!currentAuthorId) {
+      setError(new Error('No author ID provided'));
+      setLoading(false);
+    } else {
+      // We already have this author's data
+      setLoading(false);
     }
 
     return () => {
       isMounted = false;
+      // Reset fetch tracking if author changes
+      if (fetchedRef.current !== currentAuthorId) {
+        fetchedRef.current = null;
+      }
     };
   }, [currentAuthorId]);
 
