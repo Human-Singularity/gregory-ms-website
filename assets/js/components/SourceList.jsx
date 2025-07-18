@@ -95,6 +95,7 @@ export function SourceList({
                   type="button"
                   className={`btn ${filterType === 'all' ? 'btn-primary' : 'btn-outline-primary'}`}
                   onClick={() => handleFilterChange('all')}
+                  data-umami-event="click--filter-all"
                 >
                   <i className="fas fa-list mr-2"></i>All Sources
                 </button>
@@ -102,6 +103,7 @@ export function SourceList({
                   type="button"
                   className={`btn ${filterType === 'science paper' ? 'btn-primary' : 'btn-outline-primary'}`}
                   onClick={() => handleFilterChange('science paper')}
+                  data-umami-event="click--filter-science-papers"
                 >
                   <i className="fas fa-flask mr-2"></i>Science Papers
                 </button>
@@ -109,6 +111,7 @@ export function SourceList({
                   type="button"
                   className={`btn ${filterType === 'trials' ? 'btn-primary' : 'btn-outline-primary'}`}
                   onClick={() => handleFilterChange('trials')}
+                  data-umami-event="click--filter-clinical-trials"
                 >
                   <i className="fas fa-user-md mr-2"></i>Clinical Trials
                 </button>

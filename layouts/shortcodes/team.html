@@ -8,7 +8,7 @@
 					<div class="row">
 						<div class="col-md-5">
 							<div class="card-image">
-								<a href="{{ .Permalink }}" data-umami-event="click--{{.Params.name}}">
+								<a href="{{ .Permalink }}" data-umami-event="click--team-member" data-umami-event-name="{{ .Params.name | plainify }}">>
 									{{- with .Resources.GetMatch "avatar" -}}
 										{{- if eq .MediaType.SubType "gif" -}}
 											<img class="img img-raised rounded" src="{{- .RelPermalink -}}" alt="{{ i18n "photo_of" }}{{ .Params.name }}" loading="lazy">
@@ -21,7 +21,7 @@
 						</div>
 						<div class="col-md-7">
 							<div class="card-body">
-								<h4 class="card-title"><a href="{{ .Permalink }}" data-umami-event="click--{{.Params.name}}">{{ .Params.name }}</a></h4>
+								<h4 class="card-title"><a href="{{ .Permalink }}" data-umami-event="click--team-member" data-umami-event-name="{{ .Params.name | plainify }}">{{ .Params.name }}</a></h4>
 								{{ with .Params.subtitle }}
 								<h6 class="category">{{ . }}</h6>
 								{{ end }}

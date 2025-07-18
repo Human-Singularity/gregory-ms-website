@@ -1,1 +1,59 @@
-<a href="{{ .Destination }}" {{ with .Title }} title="{{ . }}"{{ end }} {{ if strings.HasPrefix .Destination "http" }} target="_blank"{{ end }}>{{ .Text }}</a>
+{{- $url := .Destination | safeURL -}}
+{{- $isExternal := strings.HasPrefix $url "http" -}}
+{{- $isEmail := strings.HasPrefix $url "mailto:" -}}
+{{- $isTel := strings.HasPrefix $url "tel:" -}}
+{{- $isAnchor := strings.HasPrefix $url "#" -}}
+
+{{- if $isExternal -}}
+  {{- $parsed := urls.Parse $url -}}
+  {{- $domain := $parsed.Host -}}
+  {{- $isGregoryMS := strings.Contains $domain "gregory-ms.com" -}}
+  
+  {{- if $isGregoryMS -}}
+    {{- /* Gregory MS domain links - treat as internal */ -}}
+    <a href="{{ $url }}" {{ with .Title }} title="{{ . }}"{{ end }} data-umami-event="click--internal-gregoryms" data-umami-event-target="{{ $url }}">{{ .Text | safeHTML }}</a>
+  {{- else -}}
+    {{- $eventName := "click--external-link" -}}
+    {{- if strings.Contains $domain "github" -}}
+      {{- $eventName = "click--external-github" -}}
+    {{- else if strings.Contains $domain "linkedin" -}}
+      {{- $eventName = "click--external-linkedin" -}}
+    {{- else if strings.Contains $domain "doi.org" -}}
+      {{- $eventName = "click--external-doi" -}}
+    {{- else if strings.Contains $domain "pubmed" -}}
+      {{- $eventName = "click--external-pubmed" -}}
+    {{- else if strings.Contains $domain "clinicaltrials.gov" -}}
+      {{- $eventName = "click--external-clinicaltrials" -}}
+    {{- else if strings.Contains $domain "sciencedirect" -}}
+      {{- $eventName = "click--external-sciencedirect" -}}
+    {{- else if strings.Contains $domain "thelancet" -}}
+      {{- $eventName = "click--external-thelancet" -}}
+    {{- else if strings.Contains $domain "orcid" -}}
+      {{- $eventName = "click--external-orcid" -}}
+    {{- else if strings.Contains $domain "brunoamaral" -}}
+      {{- $eventName = "click--external-bruno" -}}
+    {{- else if strings.Contains $domain "digitalocean" -}}
+      {{- $eventName = "click--external-digitalocean" -}}
+    {{- else if strings.Contains $domain "gohugo" -}}
+      {{- $eventName = "click--external-hugo" -}}
+    {{- else if strings.Contains $domain "creative-tim" -}}
+      {{- $eventName = "click--external-creative-tim" -}}
+    {{- else if strings.Contains $domain "mailgun" -}}
+      {{- $eventName = "click--external-mailgun" -}}
+    {{- else if strings.Contains $domain "novasbe" -}}
+      {{- $eventName = "click--external-novasbe" -}}
+    {{- else if strings.Contains $domain "human-singularity" -}}
+      {{- $eventName = "click--external-human-singularity" -}}
+    {{- end -}}
+    <a href="{{ $url }}" {{ with .Title }} title="{{ . }}"{{ end }} target="_blank" rel="noopener noreferrer" data-umami-event="{{ $eventName }}" data-umami-event-domain="{{ $domain }}">{{ .Text | safeHTML }}</a>
+  {{- end -}}
+{{- else if $isEmail -}}
+  <a href="{{ $url }}" {{ with .Title }} title="{{ . }}"{{ end }} data-umami-event="click--email-link" data-umami-event-address="{{ strings.TrimPrefix "mailto:" $url }}">{{ .Text | safeHTML }}</a>
+{{- else if $isTel -}}
+  <a href="{{ $url }}" {{ with .Title }} title="{{ . }}"{{ end }} data-umami-event="click--phone-link" data-umami-event-number="{{ strings.TrimPrefix "tel:" $url }}">{{ .Text | safeHTML }}</a>
+{{- else if $isAnchor -}}
+  <a href="{{ $url }}" {{ with .Title }} title="{{ . }}"{{ end }} data-umami-event="click--anchor-link" data-umami-event-target="{{ strings.TrimPrefix "#" $url }}">{{ .Text | safeHTML }}</a>
+{{- else -}}
+  {{- /* Internal Hugo links */ -}}
+  <a href="{{ $url }}" {{ with .Title }} title="{{ . }}"{{ end }} data-umami-event="click--internal-link" data-umami-event-target="{{ $url }}">{{ .Text | safeHTML }}</a>
+{{- end -}}
