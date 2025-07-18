@@ -34337,15 +34337,22 @@
     const currentAuthorId = (0, import_react10.useMemo)(() => getAuthorId(), [authorId]);
     (0, import_react10.useEffect)(() => {
       let isMounted = true;
+      console.log("\u{1F504} useEffect triggered for authorId:", currentAuthorId);
+      console.log("\u{1F504} fetchedRef.current:", fetchedRef.current);
+      if (!currentAuthorId) {
+        console.log("\u274C No authorId provided");
+        setError(new Error("No author ID provided"));
+        setLoading(false);
+        return;
+      }
+      if (fetchedRef.current === currentAuthorId) {
+        console.log("\u26A0\uFE0F Already fetched/fetching author:", currentAuthorId);
+        return;
+      }
       setLoading(true);
       async function fetchData() {
         var _a, _b, _c, _d, _e, _f, _g, _h;
         console.log("fetchData called with authorId:", currentAuthorId);
-        if (!currentAuthorId) {
-          setError(new Error("No author ID provided"));
-          setLoading(false);
-          return;
-        }
         if (fetchedRef.current === currentAuthorId) {
           console.log("Data already fetched for author:", currentAuthorId, "- skipping API call");
           setLoading(false);
@@ -34393,7 +34400,12 @@
             console.error("Error stack:", apiError.stack);
             throw apiError;
           }
-          if (!isMounted) return;
+          console.log("\u{1F50D} About to check isMounted:", isMounted);
+          if (!isMounted) {
+            console.log("\u26A0\uFE0F Component unmounted, returning early");
+            return;
+          }
+          console.log("\u{1F50D} About to process response...");
           console.log("Author API response status:", authorResponse.status);
           console.log("Author API response data:", authorResponse.data);
           console.log("Response data type:", typeof authorResponse.data);
@@ -34409,13 +34421,16 @@
             console.log("Response is direct object");
             authorData = authorResponse.data;
           }
-          console.log("Final processed author data:", authorData);
-          console.log("Author data type:", typeof authorData);
+          console.log("\u{1F50D} Final processed author data:", authorData);
+          console.log("\u{1F50D} Author data type:", typeof authorData);
+          console.log("\u{1F50D} Author data details:", JSON.stringify(authorData, null, 2));
           if (!authorData) {
-            console.error("No author data found after processing response");
+            console.error("\u274C No author data found after processing response");
             throw new Error("Author not found in API response");
           }
+          console.log("\u{1F3AF} About to setAuthor with:", authorData);
           setAuthor(authorData);
+          console.log("\u2705 setAuthor completed");
           let allArticles = [];
           let page = 1;
           let hasMore = true;
@@ -34457,19 +34472,10 @@
           }
         }
       }
-      if (currentAuthorId && fetchedRef.current !== currentAuthorId) {
-        fetchData();
-      } else if (!currentAuthorId) {
-        setError(new Error("No author ID provided"));
-        setLoading(false);
-      } else {
-        setLoading(false);
-      }
+      fetchData();
       return () => {
+        console.log("\u{1F9F9} Cleanup function called");
         isMounted = false;
-        if (fetchedRef.current !== currentAuthorId) {
-          fetchedRef.current = null;
-        }
       };
     }, [currentAuthorId]);
     const generateAvatarUrl = (author2) => {

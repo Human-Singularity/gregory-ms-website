@@ -43,17 +43,28 @@ export function AuthorProfile() {
 
   useEffect(() => {
     let isMounted = true;
+    
+    console.log('🔄 useEffect triggered for authorId:', currentAuthorId);
+    console.log('🔄 fetchedRef.current:', fetchedRef.current);
+    
+    if (!currentAuthorId) {
+      console.log('❌ No authorId provided');
+      setError(new Error('No author ID provided'));
+      setLoading(false);
+      return;
+    }
+    
+    // Check if we're already fetching or have fetched this author
+    if (fetchedRef.current === currentAuthorId) {
+      console.log('⚠️ Already fetched/fetching author:', currentAuthorId);
+      return;
+    }
+    
     setLoading(true);
-
+    
     async function fetchData() {
       console.log('fetchData called with authorId:', currentAuthorId);
       
-      if (!currentAuthorId) {
-        setError(new Error('No author ID provided'));
-        setLoading(false);
-        return;
-      }
-
       // Prevent duplicate fetches for the same author
       if (fetchedRef.current === currentAuthorId) {
         console.log('Data already fetched for author:', currentAuthorId, '- skipping API call');
@@ -114,8 +125,13 @@ export function AuthorProfile() {
           throw apiError; // Re-throw to be caught by outer catch
         }
         
-        if (!isMounted) return;
+        console.log('🔍 About to check isMounted:', isMounted);
+        if (!isMounted) {
+          console.log('⚠️ Component unmounted, returning early');
+          return;
+        }
         
+        console.log('🔍 About to process response...');
         console.log('Author API response status:', authorResponse.status);
         console.log('Author API response data:', authorResponse.data);
         console.log('Response data type:', typeof authorResponse.data);
@@ -137,15 +153,18 @@ export function AuthorProfile() {
           authorData = authorResponse.data;
         }
         
-        console.log('Final processed author data:', authorData);
-        console.log('Author data type:', typeof authorData);
+        console.log('🔍 Final processed author data:', authorData);
+        console.log('🔍 Author data type:', typeof authorData);
+        console.log('🔍 Author data details:', JSON.stringify(authorData, null, 2));
         
         if (!authorData) {
-          console.error('No author data found after processing response');
+          console.error('❌ No author data found after processing response');
           throw new Error('Author not found in API response');
         }
         
+        console.log('🎯 About to setAuthor with:', authorData);
         setAuthor(authorData);
+        console.log('✅ setAuthor completed');
         
         // Fetch all articles for this author by paginating through all pages
         let allArticles = [];
@@ -207,22 +226,12 @@ export function AuthorProfile() {
     }
 
     // Only fetch if we haven't already fetched this author
-    if (currentAuthorId && fetchedRef.current !== currentAuthorId) {
-      fetchData();
-    } else if (!currentAuthorId) {
-      setError(new Error('No author ID provided'));
-      setLoading(false);
-    } else {
-      // We already have this author's data
-      setLoading(false);
-    }
+    fetchData();
 
     return () => {
+      console.log('🧹 Cleanup function called');
       isMounted = false;
-      // Reset fetch tracking if author changes
-      if (fetchedRef.current !== currentAuthorId) {
-        fetchedRef.current = null;
-      }
+      // Don't reset fetchedRef here unless authorId actually changes
     };
   }, [currentAuthorId]);
 
