@@ -39,7 +39,7 @@
 				{{- end }}
 				{{- with .Params.cta }}
 					{{ range . }}
-						<a href="{{ with .url }} {{ . }}{{ end }}" class="btn btn-lg {{ with .classes }}{{ . }}{{ else }} btn-primary{{ end }}">{{ with .label }}{{ . | safeHTML }}{{ end }}</a>
+						<a href="{{ with .url }} {{ . }}{{ end }}" class="btn btn-lg {{ with .classes }}{{ . }}{{ else }} btn-primary{{ end }}" data-umami-event="click--header-cta" data-umami-event-label="{{ .label | plainify }}">{{ with .label }}{{ . | safeHTML }}{{ end }}</a>
 					{{ end }}
 				{{- end }}
 			</div>

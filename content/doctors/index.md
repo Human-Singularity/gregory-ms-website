@@ -83,7 +83,7 @@ scripts:
     <h3 class="title">Clinical Trials</h3>
     <p class="lead font-weight-normal">We do our best to identify clinical trials for Multiple Sclerosis and publicise them.</p>
     <a href='{{< ref "/trials/_index.md" >}}' class="btn btn-info btn-round btn-lg font-weight-bold" data-umami-event="click--doctors-page-view-trials">View latest clinical trials <i class="ml-1 fas fa-arrow-circle-right"></i></a>
-    <a href='{{< ref "/search/_index.md" >}}' class="btn btn-success btn-round btn-lg font-weight-bold" data-umami-event="click--doctors-page-view-trials">Search for MS clinical trials <i class="ml-1 fas fa-arrow-circle-right"></i></a>
+    <a href='{{< ref "/search/_index.md" >}}' class="btn btn-success btn-round btn-lg font-weight-bold" data-umami-event="click--doctors-page-search-trials">Search for MS clinical trials <i class="ml-1 fas fa-arrow-circle-right"></i></a>
     </div>
 </div>
 

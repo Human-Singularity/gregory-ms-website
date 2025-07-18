@@ -214,6 +214,8 @@ export function AuthorProfile() {
                                   target='_blank' 
                                   rel='noreferrer'
                                   className="text-decoration-none text-muted"
+                                  data-umami-event="click--author-orcid"
+                                  data-umami-event-author={author.name}
                                 >
                                   ORCID: {author.ORCID}
                                 </a>

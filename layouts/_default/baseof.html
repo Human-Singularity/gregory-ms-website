@@ -209,10 +209,10 @@
   <nav class={{with .Params.options.navbar }}"{{.}}"{{else}}"navbar navbar-expand-lg bg-dynamic fixed-top navbar-transparent" color-on-scroll="400"{{end}}>
 	<div class="container">
 	  <div class="navbar-translate">
-		<a class="navbar-brand menu-click" href="{{- .Site.BaseURL | relLangURL -}}" rel="tooltip" title="Home" data-placement="bottom">
+		<a class="navbar-brand menu-click" href="{{- .Site.BaseURL | relLangURL -}}" rel="tooltip" title="Home" data-placement="bottom" data-umami-event="click--logo-home">
 		  Gregory MS
 		</a>
-		<button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+		<button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation" data-umami-event="click--mobile-menu-toggle">
 		  <span class="navbar-toggler-bar top-bar"></span>
 		  <span class="navbar-toggler-bar middle-bar"></span>
 		  <span class="navbar-toggler-bar bottom-bar"></span>

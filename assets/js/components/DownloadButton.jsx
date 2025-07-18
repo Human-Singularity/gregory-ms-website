@@ -236,6 +236,9 @@ export function DownloadButton({
         className="btn btn-success"
         onClick={handleDownload}
         disabled={isLoading}
+        data-umami-event="click--download-csv"
+        data-umami-event-filename={fileName}
+        data-umami-event-endpoint={apiEndpoint}
       >
         {isLoading ? (
           <>

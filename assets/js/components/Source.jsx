@@ -50,6 +50,9 @@ export function Source({ source }) {
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-decoration-none"
+                data-umami-event="click--source-external"
+                data-umami-event-source={source.name}
+                data-umami-event-type={source.source_for}
               >
                 {source.name} <i className="fas fa-external-link-alt ml-1"></i>
               </a>

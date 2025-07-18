@@ -32,7 +32,14 @@ export function ArticleSnippet({ article, showRelevanceIndicators = false }) {
         <div className="card-body">
           {formatDate(date)} 
           <h4 className="card-title">
-            <Link to={articleUrl}>{article.title}</Link>
+            <Link 
+              to={articleUrl}
+              data-umami-event="click--article-external"
+              data-umami-event-title={article.title}
+              data-umami-event-id={article.article_id}
+            >
+              {article.title}
+            </Link>
           </h4>
           <p className="card-description">
             {article.takeaways}

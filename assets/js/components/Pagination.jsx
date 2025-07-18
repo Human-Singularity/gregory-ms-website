@@ -67,6 +67,8 @@ const Pagination = ({
             onClick={() => onPageChange(currentPage - 1)}
             disabled={currentPage === 1}
             aria-label="Previous page"
+            data-umami-event="click--pagination-prev"
+            data-umami-event-page={currentPage - 1}
           >
             <span aria-hidden="true">&laquo;</span>
             <span className="sr-only">Previous</span>
@@ -89,6 +91,8 @@ const Pagination = ({
                 onClick={() => onPageChange(page)}
                 aria-label={`Page ${page}`}
                 aria-current={page === currentPage ? 'page' : undefined}
+                data-umami-event="click--pagination-page"
+                data-umami-event-page={page}
               >
                 {page}
               </button>
@@ -103,6 +107,8 @@ const Pagination = ({
             onClick={() => onPageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
             aria-label="Next page"
+            data-umami-event="click--pagination-next"
+            data-umami-event-page={currentPage + 1}
           >
             <span className="sr-only">Next</span>
             <span aria-hidden="true">&raquo;</span>
