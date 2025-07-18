@@ -1096,7 +1096,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useReducer(reducer, initialArg, init2);
           }
-          function useRef4(initialValue) {
+          function useRef5(initialValue) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
@@ -1116,7 +1116,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useCallback(callback, deps);
           }
-          function useMemo3(create2, deps) {
+          function useMemo4(create2, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useMemo(create2, deps);
           }
@@ -1888,9 +1888,9 @@
           exports.useImperativeHandle = useImperativeHandle;
           exports.useInsertionEffect = useInsertionEffect;
           exports.useLayoutEffect = useLayoutEffect3;
-          exports.useMemo = useMemo3;
+          exports.useMemo = useMemo4;
           exports.useReducer = useReducer;
-          exports.useRef = useRef4;
+          exports.useRef = useRef5;
           exports.useState = useState8;
           exports.useSyncExternalStore = useSyncExternalStore;
           exports.useTransition = useTransition;
@@ -34077,6 +34077,7 @@
     const [currentPage, setCurrentPage] = (0, import_react9.useState)(1);
     const [articlesPerPage] = (0, import_react9.useState)(10);
     const { authorId } = useParams();
+    const fetchedRef = (0, import_react9.useRef)(null);
     const getAuthorId = () => {
       if (authorId && /^\d+$/.test(authorId)) return authorId;
       const path2 = window.location.pathname;
@@ -34087,17 +34088,25 @@
       if (queryId && /^\d+$/.test(queryId)) return queryId;
       return null;
     };
-    const currentAuthorId = getAuthorId();
+    const currentAuthorId = (0, import_react9.useMemo)(() => getAuthorId(), [authorId]);
     (0, import_react9.useEffect)(() => {
       let isMounted = true;
       setLoading(true);
       async function fetchData() {
+        console.log("fetchData called with authorId:", currentAuthorId);
         if (!currentAuthorId) {
           setError(new Error("No author ID provided"));
           setLoading(false);
           return;
         }
+        if (fetchedRef.current === currentAuthorId) {
+          console.log("Data already fetched for author:", currentAuthorId);
+          setLoading(false);
+          return;
+        }
         try {
+          console.log("Making API call for author:", currentAuthorId);
+          fetchedRef.current = currentAuthorId;
           const authorResponse = await axios_default.get(`https://api.gregory-ms.com/authors/?author_id=${currentAuthorId}&format=json`);
           if (!isMounted) return;
           console.log("Author API response:", authorResponse.data);
@@ -34137,16 +34146,25 @@
           }
         } catch (err) {
           if (isMounted) {
+            fetchedRef.current = null;
             setError(err);
             setLoading(false);
           }
         }
       }
-      if (currentAuthorId) {
+      if (currentAuthorId && fetchedRef.current !== currentAuthorId) {
         fetchData();
+      } else if (!currentAuthorId) {
+        setError(new Error("No author ID provided"));
+        setLoading(false);
+      } else {
+        setLoading(false);
       }
       return () => {
         isMounted = false;
+        if (fetchedRef.current !== currentAuthorId) {
+          fetchedRef.current = null;
+        }
       };
     }, [currentAuthorId]);
     const generateAvatarUrl = (author2) => {
