@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { articleService, trialService } from '../services/api';
+import { articleService, trialService, sourceService } from '../services/api';
 
 /**
  * Hook for fetching articles with pagination
@@ -196,4 +196,145 @@ export function useTrials(type = 'all', options = {}) {
       setPage
     } 
   };
+}
+
+/**
+ * Hook for fetching sources with client-side filtering and pagination
+ * @param {string} type - Type of sources to fetch ('all', 'science paper', 'trials')
+ * @param {object} options - Options for the fetch
+ * @returns {object} - Sources data, loading state, error state, and pagination
+ */
+export function useSources(type = 'all', options = {}) {
+  const [allSources, setAllSources] = useState([]);
+  const [sources, setSources] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [page, setPage] = useState(options.initialPage || 1);
+  const [lastPage, setLastPage] = useState(null);
+
+  // Fetch all sources once
+  useEffect(() => {
+    let isMounted = true;
+    setLoading(true);
+
+    const fetchAllSources = async () => {
+      try {
+        // Fetch all sources by getting all pages
+        let allSourcesData = [];
+        let currentPage = 1;
+        let hasMorePages = true;
+        
+        while (hasMorePages && isMounted) {
+          const response = await sourceService.getSources({ page: currentPage });
+          
+          if (response.data.results && response.data.results.length > 0) {
+            allSourcesData = [...allSourcesData, ...response.data.results];
+            
+            // Check if there are more pages
+            hasMorePages = response.data.next !== null;
+            currentPage++;
+          } else {
+            hasMorePages = false;
+          }
+        }
+        
+        if (isMounted) {
+          // Store all sources
+          setAllSources(allSourcesData);
+          // Don't set loading to false here - let the filtering effect handle it
+        }
+      } catch (err) {
+        if (isMounted) {
+          setError(err);
+          setLoading(false);
+        }
+      }
+    };
+
+    fetchAllSources();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []); // Only fetch once
+
+  // Apply filtering and pagination when type or page changes
+  useEffect(() => {
+    if (allSources.length === 0) return;
+
+    // Apply filtering
+    let filteredSources = allSources;
+    if (type !== 'all') {
+      filteredSources = allSources.filter(source => source.source_for === type);
+    }
+
+    // Apply pagination only if we have more than 10 sources and not showing all
+    const sourcesPerPage = 10;
+    let paginatedSources = filteredSources;
+    let totalPages = 1;
+
+    if (filteredSources.length > sourcesPerPage) {
+      totalPages = Math.ceil(filteredSources.length / sourcesPerPage);
+      const startIndex = (page - 1) * sourcesPerPage;
+      const endIndex = startIndex + sourcesPerPage;
+      paginatedSources = filteredSources.slice(startIndex, endIndex);
+    }
+
+    setSources(paginatedSources);
+    setLastPage(totalPages);
+    setLoading(false); // Set loading to false after sources are processed
+  }, [allSources, type, page]);
+
+  return { 
+    sources, 
+    loading, 
+    error,
+    pagination: {
+      page,
+      lastPage,
+      setPage
+    } 
+  };
+}
+
+/**
+ * Hook for fetching a single source
+ * @param {string} sourceId - ID of the source to fetch
+ * @returns {object} - Source data, loading state, and error state
+ */
+export function useSource(sourceId) {
+  const [source, setSource] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    let isMounted = true;
+    setLoading(true);
+
+    const fetchSource = async () => {
+      try {
+        const response = await sourceService.getSourceById(sourceId);
+        
+        if (isMounted) {
+          setSource(response.data);
+          setLoading(false);
+        }
+      } catch (err) {
+        if (isMounted) {
+          setError(err);
+          setLoading(false);
+        }
+      }
+    };
+
+    if (sourceId) {
+      fetchSource();
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, [sourceId]);
+
+  return { source, loading, error };
 }

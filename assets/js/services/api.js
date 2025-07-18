@@ -253,10 +253,42 @@ export const authorService = {
     apiClient.get(`/authors/${authorId}/monthly-counts/?format=json`),
 };
 
+/**
+ * Source related API calls
+ */
+export const sourceService = {
+  // Get all sources with pagination and filtering
+  getSources: (params = {}) => {
+    const queryParams = new URLSearchParams({
+      format: 'json',
+      team_id: 1, // Default team ID
+      subject_id: 1, // Default subject ID
+      ...params
+    });
+    return apiClient.get(`/sources/?${queryParams.toString()}`);
+  },
+
+  // Get a single source by ID
+  getSourceById: (sourceId) => 
+    apiClient.get(`/sources/${sourceId}/?format=json`),
+
+  // Get sources by team and subject
+  getSourcesByTeamSubject: (teamId, subjectId, params = {}) => {
+    const queryParams = new URLSearchParams({
+      format: 'json',
+      team_id: teamId,
+      subject_id: subjectId,
+      ...params
+    });
+    return apiClient.get(`/sources/?${queryParams.toString()}`);
+  },
+};
+
 export default {
   articleService,
   trialService,
   categoryService,
   authorService,
   subjectService,
+  sourceService,
 };
