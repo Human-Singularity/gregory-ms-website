@@ -17,9 +17,6 @@ tags:
 categories: 
   - 
 title: "Disclaimer"
-menu:
-  column_3:
-    name: Disclaimer
 disable_comments: true
 options:
   unlisted: false

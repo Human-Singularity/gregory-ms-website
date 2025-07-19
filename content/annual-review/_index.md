@@ -18,9 +18,6 @@ enableMathJax: false
 disableToC: false
 disableAutoCollapse: true
 
-menu:
-    column_3:
-        Name: Annual Reports
 
 resources:
   - src: annual-review-2021.png
