@@ -107,32 +107,58 @@ headerPhoto = ""
   weight = 1
 
   [[menu.column_1]]
-  name = 'Contact'
-  pageRef = "contacts/_index.md"
+  name = 'Author Ranking'
+  pageRef = "ranking/_index.md"
   weight = 2
 
   [[menu.column_1]]
-  name = 'Data Sources'
-  pageRef = "sources/_index.md"
+  name = 'Contact'
+  pageRef = "contacts/_index.md"
   weight = 3
 
-  [[menu.column_1]]
-  name = 'Privacy Policy'
-  pageRef = "privacy-policy/_index.md"
-  weight = 4
-
-  [[menu.column_2]]
-  name = 'Lisbon Collective <i class="fas fa-external-link-square-alt"></i>'
-  url = "https://lisboncollective.com"
-  [[menu.column_2]]
-  name ='OneOverZero <i class="fas fa-external-link-square-alt"></i>'
-  url = "https://github.com/oneoverzero"
   [[menu.column_2]]
   name = '<img src="/images/powered_by_project_galileo.png" height="96" width="255" alt="Support by CloudFlare, Project Galileo" loading="lazy" />'
   url = 'https://www.cloudflare.com/en-gb/galileo/'
+  weight = 1
+  
+  [[menu.column_2]]
+  name = 'Lisbon Collective <i class="fas fa-external-link-square-alt"></i>'
+  url = "https://lisboncollective.com"
+  weight = 2
+  
+  [[menu.column_2]]
+  name ='OneOverZero <i class="fas fa-external-link-square-alt"></i>'
+  url = "https://github.com/oneoverzero"
+  weight = 3
+  [[menu.column_3]]
+  name = "Annual Reports"
+  pageRef = "annual-review/_index.md"
+  weight = 1
+
+  [[menu.column_3]]
+  name = "Data Sources"
+  pageRef = "sources/_index.md"
+  weight = 2
+
+  [[menu.column_3]]
+  name = "Disclaimer"
+  pageRef = "disclaimer/_index.md"
+  weight = 3
+
+  [[menu.column_3]]
+  name = "Donations"
+  pageRef = "donations/_index.md"
+  weight = 4
+
+  [[menu.column_3]]
+  name = "Privacy Policy"
+  pageRef = "privacy-policy/_index.md"
+  weight = 5
+
   [[menu.column_3]]
   name = "Website stats"
   url = "https://analytics.gregory-ms.com/share/bEuESUpF/GregoryMS"
+  weight = 6
 
 [social]
   github = "https://github.com/brunoamaral/gregory"
