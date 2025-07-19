@@ -6,7 +6,7 @@ import React from 'react';
 /**
  * CategoryCard component
  * @param {Object} props - Component props
- * @param {Object} props.category - Category object with slug, name, description, and optional author info
+ * @param {Object} props.category - Category object with slug, name, description, and optional category_description
  * @param {Function} props.onSelect - Callback function when category is selected
  */
 function CategoryCard({ category, onSelect }) {
@@ -19,6 +19,23 @@ function CategoryCard({ category, onSelect }) {
       e.preventDefault();
       onSelect(category);
     }
+  };
+
+  // Function to truncate description for card display
+  const getTruncatedDescription = (category) => {
+    // Use category_description if available, otherwise fall back to description
+    const fullDescription = category.category_description || category.description;
+    
+    // Truncate to approximately 100 characters, ending at word boundary
+    if (fullDescription.length <= 100) {
+      return fullDescription;
+    }
+    
+    // Find the last space before 100 characters to avoid cutting words
+    const truncated = fullDescription.substring(0, 100);
+    const lastSpace = truncated.lastIndexOf(' ');
+    
+    return lastSpace > 0 ? truncated.substring(0, lastSpace) + '...' : truncated + '...';
   };
 
   return (
@@ -35,7 +52,7 @@ function CategoryCard({ category, onSelect }) {
     >
       <div className="card-body d-flex flex-column">
         <h5 className="card-title text-primary mb-2">{category.name}</h5>
-        <p className="card-text text-muted flex-grow-1">{category.description}</p>
+        <p className="card-text text-muted flex-grow-1">{getTruncatedDescription(category)}</p>
         <div className="mt-auto">
           <div className="d-flex justify-content-between align-items-end">
             {category.tags && category.tags.length > 0 && (
