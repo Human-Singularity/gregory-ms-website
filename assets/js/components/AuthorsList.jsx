@@ -28,50 +28,80 @@ function AuthorsList({ category, config, isActive }) {
     }
   }, [isActive, hasInitialized, category.slug]);
 
+  // Helper function to fetch a specific category by ID using proper endpoints
+  const fetchSpecificCategory = async (categoryId) => {
+    console.log(`Fetching specific category with ID ${categoryId}...`);
+    
+    try {
+      // Use the categories list endpoint with category_id filter (now that the API bug is fixed)
+      console.log(`Using categories API with category_id filter...`);
+      
+      const response = await axios.get(`${config.API_URL}/categories/`, {
+        params: {
+          category_id: categoryId,
+          team_id: config.TEAM_ID,
+          format: 'json',
+          include_authors: 'true',
+          max_authors: 20,
+          sort_by: 'articles_count',
+          order: 'desc'
+        }
+      });
+      
+      console.log(`Categories API response:`, response.data);
+      
+      // Should now return only the specific category
+      const categoryData = response.data.results?.[0];
+      if (categoryData && categoryData.id == categoryId) {
+        console.log(`Found category:`, categoryData);
+        return categoryData;
+      } else {
+        console.log(`Category ${categoryId} not found or unexpected response format`);
+        throw new Error(`Category ${categoryId} not found in API response`);
+      }
+      
+    } catch (err) {
+      console.log(`Categories API failed:`, err.response?.status, err.message);
+      throw err;
+    }
+  };
+
   // Load authors data
   const loadAuthors = async () => {
     setLoading(true);
     setError(null);
 
     try {
-      console.log('Loading authors for category:', category.slug);
+      console.log('Loading authors for category:', category.slug, 'ID:', category.id);
       
-      // Use the correct enhanced categories API endpoint with category filtering
-      const response = await axios.get(`${config.API_URL}/categories/`, {
-        params: {
-          category_id: category.id,
-          team_id: config.TEAM_ID,
-          format: 'json',
-          include_authors: 'true',
-          max_authors: 20, // Get top 20 authors
-          sort_by: 'articles_count',
-          order: 'desc'
-        }
-      });
-
-      console.log('Categories API response:', response.data);
-
-      // Extract the category data and its authors
-      const categoryData = response.data.results?.find(cat => cat.id === category.id);
+      // Try to get the specific category directly by ID
+      const categoryData = await fetchSpecificCategory(category.id);
+      
       if (categoryData && categoryData.top_authors) {
         const authors = categoryData.top_authors.slice(0, 20) || []; // Ensure we only get top 20
         
+        console.log('Found authors for category:', authors.length);
         setAuthors(authors);
         setTotalCount(authors.length);
         calculateTopCountries(authors);
+      } else if (categoryData && !categoryData.top_authors) {
+        console.log('Category found but no top_authors field available');
+        throw new Error('Category found but no author data available - the API may not include author data for this category');
       } else {
-        throw new Error('Category not found or no author data available');
+        console.log('Category not found in API response');
+        throw new Error('Category not found in API response');
       }
       
     } catch (err) {
       console.error('Error loading authors:', err);
       
-      // If the enhanced API is not available, try fallback approach
-      if (err.response && (err.response.status === 400 || err.response.status === 500)) {
+      // If the categories API fails, try the authors API with category filtering
+      if (err.response && (err.response.status === 400 || err.response.status === 404 || err.response.status === 500)) {
+        console.log('Categories API failed with status:', err.response.status);
         try {
-          console.log('Enhanced categories API not available, trying authors API...');
+          console.log('Trying authors API with category_slug filtering...');
           
-          // Fallback to authors API with category_slug filtering
+          // Fallback to authors API with category_slug filtering (this should be safer)
           const fallbackResponse = await axios.get(`${config.API_URL}/authors/`, {
             params: {
               team_id: config.TEAM_ID,
@@ -83,44 +113,28 @@ function AuthorsList({ category, config, isActive }) {
             }
           });
           
+          console.log('Authors API fallback response:', fallbackResponse.data);
           const authors = fallbackResponse.data.results?.slice(0, 20) || [];
-          setAuthors(authors);
-          setTotalCount(authors.length);
-          calculateTopCountries(authors);
           
-          return; // Success with fallback
+          if (authors.length > 0) {
+            setAuthors(authors);
+            setTotalCount(authors.length);
+            calculateTopCountries(authors);
+            
+            // Show a notice that we're using fallback data
+            setError('Using fallback data source for authors (some features may be limited)');
+            return; // Success with fallback
+          } else {
+            throw new Error('No authors found for this category');
+          }
           
         } catch (fallbackErr) {
-          console.error('Fallback authors API also failed:', fallbackErr);
-          
-          // If category filtering is not supported, show all top authors
-          try {
-            const allAuthorsResponse = await axios.get(`${config.API_URL}/authors/`, {
-              params: {
-                team_id: config.TEAM_ID,
-                format: 'json',
-                page: 1,
-                page_size: 20, // Get top 20 authors
-                ordering: '-article_count'
-              }
-            });
-            
-            const allAuthors = allAuthorsResponse.data.results?.slice(0, 20) || [];
-            setAuthors(allAuthors);
-            setTotalCount(allAuthors.length);
-            calculateTopCountries(allAuthors);
-            
-            // Show a notice that we're showing all authors instead of category-specific ones
-            setError(`Showing all top authors (category-specific filtering will be available soon)`);
-            return;
-            
-          } catch (finalErr) {
-            console.error('All attempts failed:', finalErr);
-          }
+          console.error('Authors API fallback also failed:', fallbackErr);
+          // Don't try to fetch all authors - that would be too dangerous with 9000+ records
         }
       }
       
-      // More detailed error message
+      // Set final error message without trying dangerous fallbacks
       let errorMessage = 'Failed to load authors for this category';
       if (err.response) {
         errorMessage += ` (Status: ${err.response.status})`;

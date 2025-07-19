@@ -42,8 +42,8 @@ function CategoryDetail({ category, config, onBack }) {
     setError(null);
 
     try {
-      // Use the categoryService instead of direct axios call
-      const response = await categoryService.getMonthlyCounts(category.slug);
+      // Use the categoryService with category ID instead of slug
+      const response = await categoryService.getMonthlyCounts(category.id);
       setMonthlyData(response.data);
     } catch (err) {
       console.error('Error loading monthly data:', err);
