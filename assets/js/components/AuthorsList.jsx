@@ -18,6 +18,7 @@ function AuthorsList({ category, config, isActive }) {
   const [error, setError] = useState(null);
   const [totalCount, setTotalCount] = useState(0);
   const [hasInitialized, setHasInitialized] = useState(false);
+  const [topCountries, setTopCountries] = useState([]);
 
   // Load authors when tab becomes active (lazy loading)
   useEffect(() => {
@@ -57,6 +58,7 @@ function AuthorsList({ category, config, isActive }) {
         
         setAuthors(authors);
         setTotalCount(authors.length);
+        calculateTopCountries(authors);
       } else {
         throw new Error('Category not found or no author data available');
       }
@@ -84,6 +86,7 @@ function AuthorsList({ category, config, isActive }) {
           const authors = fallbackResponse.data.results?.slice(0, 20) || [];
           setAuthors(authors);
           setTotalCount(authors.length);
+          calculateTopCountries(authors);
           
           return; // Success with fallback
           
@@ -105,6 +108,7 @@ function AuthorsList({ category, config, isActive }) {
             const allAuthors = allAuthorsResponse.data.results?.slice(0, 20) || [];
             setAuthors(allAuthors);
             setTotalCount(allAuthors.length);
+            calculateTopCountries(allAuthors);
             
             // Show a notice that we're showing all authors instead of category-specific ones
             setError(`Showing all top authors (category-specific filtering will be available soon)`);
@@ -130,9 +134,49 @@ function AuthorsList({ category, config, isActive }) {
       setError(errorMessage);
       setAuthors([]);
       setTotalCount(0);
+      setTopCountries([]);
     } finally {
       setLoading(false);
     }
+  };
+
+  // Calculate top countries from authors data
+  const calculateTopCountries = (authorsData) => {
+    const countryCount = {};
+    const countryStats = {};
+
+    // Count authors by country and sum their articles
+    authorsData.forEach(author => {
+      const country = author.country || 'Not specified';
+      const articlesCount = author.articles_count || author.article_count || 0;
+      
+      if (!countryCount[country]) {
+        countryCount[country] = 0;
+        countryStats[country] = { authorsCount: 0, totalArticles: 0 };
+      }
+      
+      countryCount[country]++;
+      countryStats[country].authorsCount++;
+      countryStats[country].totalArticles += articlesCount;
+    });
+
+    // Convert to array and sort by number of authors (then by total articles)
+    const sortedCountries = Object.entries(countryStats)
+      .map(([country, stats]) => ({
+        country,
+        authorsCount: stats.authorsCount,
+        totalArticles: stats.totalArticles
+      }))
+      .sort((a, b) => {
+        // Sort by number of authors first, then by total articles
+        if (b.authorsCount !== a.authorsCount) {
+          return b.authorsCount - a.authorsCount;
+        }
+        return b.totalArticles - a.totalArticles;
+      })
+      .slice(0, 10); // Get top 10 countries
+
+    setTopCountries(sortedCountries);
   };
 
   // Loading state
@@ -253,6 +297,50 @@ function AuthorsList({ category, config, isActive }) {
                 <h5>No authors found</h5>
                 <p>There are no authors with articles in the {category.name} category.</p>
               </div>
+            </div>
+          )}
+
+          {/* Top Countries Table */}
+          {authors.length > 0 && topCountries.length > 0 && (
+            <div className="mt-5">
+              <h5 className="mb-3">
+                <i className="fas fa-globe mr-2 text-info"></i>
+                Top Countries by Research Activity
+              </h5>
+              <p className="text-muted mb-3">
+                Countries ranked by number of contributing authors in {category.name} research
+              </p>
+              
+              <table className="table table-striped table-hover table-sm">
+                <thead className="thead-light">
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Country</th>
+                    <th scope="col">Authors</th>
+                    <th scope="col">Total Articles</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {topCountries.map((countryData, index) => (
+                    <tr key={countryData.country}>
+                      <th scope="row" className="text-muted">{index + 1}</th>
+                      <td>
+                        <strong>{countryData.country}</strong>
+                      </td>
+                      <td>
+                        <span className="badge badge-info">
+                          {countryData.authorsCount}
+                        </span>
+                      </td>
+                      <td>
+                        <span className="badge badge-secondary">
+                          {countryData.totalArticles}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           )}
         </>

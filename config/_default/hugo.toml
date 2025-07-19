@@ -12,6 +12,9 @@ title = "Multiple Sclerosis research by Gregory MS"
 removePathAccents = true
 # Set the default site thumbnail
 
+# Ignore Node.js artifacts that are no longer needed
+ignoreFiles = ["node_modules/", "package-lock.json", "\\.jsx\\.js$", "jsx-build\\.js$", "babel\\.config\\.js$"]
+
 # Google 
 googleSiteVerification = ""
 # googleTagManager = ""
@@ -215,10 +218,10 @@ tag = "tags"
 [security]
   enableInlineShortcodes = false
   [security.exec]
-    allow = ['^dart-sass-embedded$', '^go$', '^npx$', '^postcss$', '^babel$']
+    allow = ['^dart-sass-embedded$', '^go$', '^postcss$']
     osEnv = ['(?i)^(PATH|PATHEXT|APPDATA|TMP|TEMP|TERM|GETENV)$']
   [security.funcs]
-    getenv = ['^HUGO_|SLUG', '^REPOSITORY_URL$', '^NODE_ENV$'] # Merged from both files
+    getenv = ['^HUGO_|SLUG', '^REPOSITORY_URL$']
   [security.http]
     methods = ['(?i)GET|POST']
     urls = ['.*']
