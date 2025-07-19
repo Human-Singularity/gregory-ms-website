@@ -31,9 +31,6 @@ cta:
   - label: Donate with Stripe 
     url: https://donate.stripe.com/6oEeVmf1tdHIdOw7ss
     classes: btn btn-lg font-weight-bold bg-success btn-success 
-menu:
-  column_3:
-    Name: Donations
 
 ---
 <div class="col-md-6 mx-auto">
