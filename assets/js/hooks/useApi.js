@@ -211,6 +211,7 @@ export function useSources(type = 'all', options = {}) {
   const [error, setError] = useState(null);
   const [page, setPage] = useState(options.initialPage || 1);
   const [lastPage, setLastPage] = useState(null);
+  const [totalCount, setTotalCount] = useState(0);
 
   // Fetch all sources once
   useEffect(() => {
@@ -268,6 +269,9 @@ export function useSources(type = 'all', options = {}) {
       filteredSources = allSources.filter(source => source.source_for === type);
     }
 
+    // Set total count of filtered sources
+    setTotalCount(filteredSources.length);
+
     // Apply pagination only if we have more than 10 sources and not showing all
     const sourcesPerPage = 10;
     let paginatedSources = filteredSources;
@@ -289,6 +293,7 @@ export function useSources(type = 'all', options = {}) {
     sources, 
     loading, 
     error,
+    totalCount,
     pagination: {
       page,
       lastPage,

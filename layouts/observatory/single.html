@@ -10,6 +10,9 @@
   </div>
 </div>
 
-{{ partial "react-app.html" (dict "app" "observatory") }}
+{{/* Include badge explanation content for React to access */}}
+{{ partial "badge-explanation-react.html" . }}
+
+{{ partial "react-app-loader.html" (dict "app" "observatory") }}
 
 {{ end }}

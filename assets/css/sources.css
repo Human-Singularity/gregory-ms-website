@@ -1,21 +1,134 @@
 /* Sources page specific styles */
 .sources-list .card {
   transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  border: 1px solid #e9ecef;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+  border-radius: 0.5rem;
+  overflow: hidden;
 }
 
 .sources-list .card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+.sources-list .card-body {
+  padding: 1.5rem;
+}
+
+.sources-list .card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: #2c3e50;
+  line-height: 1.3;
 }
 
 .sources-list .badge {
+  font-size: 0.75em;
+  padding: 0.4em 0.6em;
+  border-radius: 0.375rem;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  font-weight: 600;
+}
+
+/* Table styles */
+.sources-table {
+  margin-top: 1rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  table-layout: fixed;
+  width: 100%;
+}
+
+.sources-table thead th {
+  background-color: #f8f9fa;
+  border-bottom: 2px solid #dee2e6;
+  color: #495057;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.875rem;
+  letter-spacing: 0.025em;
+  padding: 1rem 0.75rem;
+}
+
+.sources-table tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.sources-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.sources-table td {
+  padding: 1rem 0.75rem;
+  vertical-align: middle;
+  border-top: 1px solid #dee2e6;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.sources-table .source-name {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.sources-table .source-name a {
+  color: #2c3e50;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  word-wrap: break-word;
+}
+
+.sources-table .source-name a:hover {
+  color: #007bff;
+}
+
+.sources-table .source-description {
+  color: #6c757d;
+  line-height: 1.5;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.sources-table .description-content {
+  margin-bottom: 0;
+}
+
+.sources-table .description-content p {
+  margin-bottom: 0.5rem;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.sources-table .description-content p:last-child {
+  margin-bottom: 0;
+}
+
+.sources-table .fa-external-link-alt {
   font-size: 0.8em;
-  padding: 0.5em 0.75em;
+  opacity: 0.7;
+}
+
+/* Ensure table responsive wrapper doesn't overflow */
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Force description column to constrain content */
+.sources-table td:nth-child(3) {
+  max-width: 0;
+  overflow: hidden;
 }
 
 .sources-list .card-title a {
   color: inherit;
   text-decoration: none;
+  transition: color 0.2s ease;
 }
 
 .sources-list .card-title a:hover {
@@ -26,22 +139,190 @@
 .sources-list .fa-external-link-alt {
   font-size: 0.8em;
   opacity: 0.7;
+  transition: opacity 0.2s ease;
 }
 
-/* Filter button styles */
+.sources-list .card-title a:hover .fa-external-link-alt {
+  opacity: 1;
+}
+
+/* Description Styling */
+.sources-list .card-description,
+.sources-list .source-description {
+  line-height: 1.6;
+  color: #555;
+}
+
+.sources-list .card-description h1,
+.sources-list .card-description h2,
+.sources-list .card-description h3,
+.sources-list .source-description h1,
+.sources-list .source-description h2,
+.sources-list .source-description h3 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.sources-list .card-description h1,
+.sources-list .source-description h1 {
+  font-size: 1.1rem;
+}
+
+.sources-list .card-description h2,
+.sources-list .source-description h2 {
+  font-size: 1.05rem;
+}
+
+.sources-list .card-description h3,
+.sources-list .source-description h3 {
+  font-size: 1rem;
+}
+
+.sources-list .card-description p,
+.sources-list .source-description p {
+  margin-bottom: 0.5rem;
+}
+
+.sources-list .card-description ul,
+.sources-list .card-description ol,
+.sources-list .source-description ul,
+.sources-list .source-description ol {
+  margin-bottom: 0.75rem;
+  padding-left: 1.5rem;
+}
+
+.sources-list .card-description li,
+.sources-list .source-description li {
+  margin-bottom: 0.25rem;
+}
+
+.sources-list .card-description blockquote,
+.sources-list .source-description blockquote {
+  border-left: 4px solid #007bff;
+  margin: 0.5rem 0;
+  padding-left: 1rem;
+  color: #6c757d;
+  font-style: italic;
+  background-color: #f8f9fa;
+  padding: 0.75rem 0.75rem 0.75rem 1.5rem;
+  border-radius: 0.25rem;
+}
+
+.sources-list .card-description code,
+.sources-list .source-description code {
+  background-color: #f8f9fa;
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  color: #e83e8c;
+  word-wrap: break-word;
+  word-break: break-all;
+  overflow-wrap: break-word;
+}
+
+.sources-list .card-description pre,
+.sources-list .source-description pre {
+  background-color: #f8f9fa;
+  padding: 0.75rem;
+  border-radius: 0.375rem;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  word-break: break-all;
+  overflow-wrap: break-word;
+  overflow-x: hidden;
+  max-width: 100%;
+  border: 1px solid #e9ecef;
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.sources-list .card-description pre code,
+.sources-list .source-description pre code {
+  background: none;
+  padding: 0;
+  color: #495057;
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+/* Break long URLs and text in table descriptions */
+.sources-table .description-content a,
+.sources-table .description-content {
+  word-wrap: break-word;
+  word-break: break-all;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.sources-list .card-description a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.sources-list .card-description a:hover {
+  text-decoration: underline;
+}
+
+/* Expand/Collapse Button */
+.sources-list .btn-link {
+  transition: all 0.2s ease;
+  font-weight: 500;
+  text-decoration: none !important;
+  font-size: 0.875rem;
+}
+
+.sources-list .btn-link:hover {
+  color: #0056b3 !important;
+}
+
+/* Source Type Icons */
+.sources-list .card-body .fa-flask {
+  color: #007bff;
+}
+
+.sources-list .card-body .fa-user-md {
+  color: #28a745;
+}
+
+.sources-list .card-body .fa-link {
+  color: #6c757d;
+}
+
+/* Footer Button Styling */
+.sources-list .btn-outline-primary.btn-sm {
+  border-radius: 0.375rem;
+  font-size: 0.8rem;
+  padding: 0.375rem 0.75rem;
+  transition: all 0.2s ease;
+}
+
+.sources-list .border-top {
+  border-color: #e9ecef !important;
+}
+
+/* Filter button styles - Use default Bootstrap btn-group behavior */
 .sources-list .btn-group .btn {
   margin-right: 0;
-  border-radius: 0;
 }
 
 .sources-list .btn-group .btn:first-child {
   border-top-left-radius: 0.375rem;
   border-bottom-left-radius: 0.375rem;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 .sources-list .btn-group .btn:last-child {
   border-top-right-radius: 0.375rem;
   border-bottom-right-radius: 0.375rem;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.sources-list .btn-group .btn:not(:first-child):not(:last-child) {
+  border-radius: 0;
 }
 
 /* Responsive adjustments */
@@ -53,11 +334,25 @@
   }
   
   .sources-list .btn-group .btn {
-    border-radius: 0.375rem !important;
+    margin-right: 0;
     margin-bottom: 0.5rem;
   }
   
+  .sources-list .btn-group .btn:first-child {
+    border-radius: 0.375rem 0.375rem 0 0;
+  }
+  
   .sources-list .btn-group .btn:last-child {
+    border-radius: 0 0 0.375rem 0.375rem;
     margin-bottom: 0;
+  }
+  
+  .sources-list .btn-group .btn:not(:first-child):not(:last-child) {
+    border-radius: 0;
+  }
+  
+  /* If only one button, make it fully rounded */
+  .sources-list .btn-group .btn:only-child {
+    border-radius: 0.375rem;
   }
 }

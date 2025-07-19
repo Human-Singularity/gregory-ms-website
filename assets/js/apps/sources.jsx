@@ -20,12 +20,6 @@ function App() {
             <div className="container-fluid">
               <div className="row">
                 <div className="col-12">
-                  <div className="mb-4">
-                    <h1 className="text-center mb-3">Our Data Sources</h1>
-                    <p className="text-center text-muted lead">
-                      Learn about the trusted sources we use to gather Multiple Sclerosis research and clinical trial information
-                    </p>
-                  </div>
                   <SourceList 
                     type="all" 
                     pagePath="/sources" 
@@ -41,12 +35,6 @@ function App() {
             <div className="container-fluid">
               <div className="row">
                 <div className="col-12">
-                  <div className="mb-4">
-                    <h1 className="text-center mb-3">Our Data Sources</h1>
-                    <p className="text-center text-muted lead">
-                      Learn about the trusted sources we use to gather Multiple Sclerosis research and clinical trial information
-                    </p>
-                  </div>
                   <SourceList 
                     type="all" 
                     pagePath="/sources" 
