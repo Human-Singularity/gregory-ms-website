@@ -1,0 +1,15 @@
+{{- /* 
+  Badge Explanation React Helper
+  Use this in Hugo templates where you want React to be able to access the badge explanation content
+  Usage: {{ partial "badge-explanation-react.html" . }}
+*/ -}}
+
+{{- /* Render the content in a hidden container that React can access */ -}}
+<div data-badge-explanation-content style="display: none;">
+  {{ partial "badge-explanation.html" . }}
+</div>
+
+{{- /* Also render it normally if needed */ -}}
+{{ if .Params.showBadgeExplanation }}
+  {{ partial "badge-explanation.html" . }}
+{{ end }}
