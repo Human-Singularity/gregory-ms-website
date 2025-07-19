@@ -22,7 +22,7 @@ function AuthorListItem({ author, isSearchResult = false }) {
             <a 
               href={authorUrl} 
               className="text-primary text-decoration-none"
-              data-umami-event={isSearchResult ? 'click--search-author-result' : 'click--author-link'}
+              data-umami-event={isSearchResult ? `click--search-author-result-${author.author_id}` : `click--author-link-${author.author_id}`}
               data-umami-event-id={author.author_id}
               data-umami-event-name={author.full_name}
             >
@@ -53,8 +53,9 @@ function AuthorListItem({ author, isSearchResult = false }) {
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="text-success"
-                      data-umami-event="click--external-orcid"
+                      data-umami-event={`click--external-orcid-${author.author_id}`}
                       data-umami-event-author={author.full_name}
+                      data-umami-event-id={author.author_id}
                     >
                       {author.ORCID}
                     </a>
@@ -73,7 +74,7 @@ function AuthorListItem({ author, isSearchResult = false }) {
                     <a 
                       href={authorUrl} 
                       className="btn btn-sm btn-primary"
-                      data-umami-event={isSearchResult ? 'click--search-author-profile' : 'click--author-profile'}
+                      data-umami-event={isSearchResult ? `click--search-author-profile-${author.author_id}` : `click--author-profile-${author.author_id}`}
                       data-umami-event-id={author.author_id}
                       data-umami-event-name={author.full_name}
                     >

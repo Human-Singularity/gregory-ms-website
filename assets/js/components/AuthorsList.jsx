@@ -280,6 +280,9 @@ function AuthorsList({ category, config, isActive }) {
                         href={`/authors/${author.author_slug || author.slug || author.author_id}/`}
                         className="text-decoration-none"
                         title="View author profile"
+                        data-umami-event={`click--author-${(author.author_slug || author.slug || author.author_id)}`}
+                        data-umami-event-name={author.full_name || author.name}
+                        data-umami-event-id={author.author_id}
                       >
                         <strong>{author.full_name || author.name}</strong>
                       </a>
@@ -290,6 +293,9 @@ function AuthorsList({ category, config, isActive }) {
                           rel="noopener noreferrer"
                           className="ml-2"
                           title="View ORCID Profile"
+                          data-umami-event={`click--orcid-${(author.author_slug || author.slug || author.author_id)}`}
+                          data-umami-event-name={author.full_name || author.name}
+                          data-umami-event-id={author.author_id}
                         >
                           <i className="fab fa-orcid text-success"></i>
                         </a>
