@@ -145,6 +145,9 @@ export function AuthorRanking() {
                         href={`/authors/${author.author_id}/`}
                         className="d-inline-block"
                         title={`View ${author.full_name || `${author.given_name} ${author.family_name}`}'s profile`}
+                        data-umami-event={`click--author-avatar-${author.author_id}`}
+                        data-umami-event-name={author.full_name || `${author.given_name} ${author.family_name}`}
+                        data-umami-event-id={author.author_id}
                       >
                         <img
                           src={generateAvatarUrl(author)}
@@ -161,6 +164,9 @@ export function AuthorRanking() {
                         <a
                           href={`/authors/${author.author_id}/`}
                           className="text-decoration-underline fw-semibold text-primary"
+                          data-umami-event={`click--author-name-${author.author_id}`}
+                          data-umami-event-name={author.full_name || `${author.given_name} ${author.family_name}`}
+                          data-umami-event-id={author.author_id}
                         >
                           {author.full_name || `${author.given_name} ${author.family_name}`}
                         </a>
@@ -206,6 +212,9 @@ export function AuthorRanking() {
                             href={`/authors/${author.author_id}/`}
                             className="d-block"
                             title={`View ${author.full_name || `${author.given_name} ${author.family_name}`}'s profile`}
+                            data-umami-event={`click--author-mobile-avatar-${author.author_id}`}
+                            data-umami-event-name={author.full_name || `${author.given_name} ${author.family_name}`}
+                            data-umami-event-id={author.author_id}
                           >
                             <img
                               src={generateAvatarUrl(author)}
@@ -222,6 +231,9 @@ export function AuthorRanking() {
                             <a
                               href={`/authors/${author.author_id}/`}
                               className="text-decoration-underline fw-semibold text-primary"
+                              data-umami-event={`click--author-mobile-name-${author.author_id}`}
+                              data-umami-event-name={author.full_name || `${author.given_name} ${author.family_name}`}
+                              data-umami-event-id={author.author_id}
                             >
                               {author.full_name || `${author.given_name} ${author.family_name}`}
                             </a>

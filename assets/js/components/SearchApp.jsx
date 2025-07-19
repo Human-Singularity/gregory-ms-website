@@ -73,6 +73,16 @@ function SearchApp() {
       return;
     }
 
+    // Track search submission with umami
+    if (typeof umami !== 'undefined') {
+      umami.track('search-submit', {
+        query: searchTerm.trim(),
+        type: searchType,
+        field: searchField,
+        status: trialStatus || 'all'
+      });
+    }
+
     // Update URL parameters
     urlUtils.updateSearchParams({
       type: searchType,
@@ -259,6 +269,16 @@ function SearchApp() {
   const handleArticlePage = async (newPage) => {
     if (newPage < 1 || newPage > articleLastPage) return;
     
+    // Track pagination with umami
+    if (typeof umami !== 'undefined') {
+      umami.track('search-pagination-articles', {
+        page: newPage,
+        query: searchTerm.trim(),
+        field: searchField,
+        totalPages: articleLastPage
+      });
+    }
+    
     setArticlePage(newPage);
     setIsLoading(true);
     
@@ -311,6 +331,16 @@ function SearchApp() {
   // Handle trial pagination
   const handleTrialPage = async (newPage) => {
     if (newPage < 1 || newPage > trialLastPage) return;
+    
+    // Track pagination with umami
+    if (typeof umami !== 'undefined') {
+      umami.track('search-pagination-trials', {
+        page: newPage,
+        query: searchTerm.trim(),
+        status: trialStatus,
+        totalPages: trialLastPage
+      });
+    }
     
     setTrialPage(newPage);
     setIsLoading(true);
@@ -372,6 +402,16 @@ function SearchApp() {
   // Handle author pagination
   const handleAuthorPage = async (newPage) => {
     if (newPage < 1 || newPage > authorLastPage) return;
+    
+    // Track pagination with umami
+    if (typeof umami !== 'undefined') {
+      umami.track('search-pagination-authors', {
+        page: newPage,
+        query: searchTerm.trim(),
+        field: searchField,
+        totalPages: authorLastPage
+      });
+    }
     
     setAuthorPage(newPage);
     setIsLoading(true);
@@ -764,7 +804,16 @@ function SearchApp() {
                               className="form-control"
                               id="searchField"
                               value={searchField}
-                              onChange={(e) => setSearchField(e.target.value)}
+                              onChange={(e) => {
+                                setSearchField(e.target.value);
+                                // Track field selection change
+                                if (typeof umami !== 'undefined') {
+                                  umami.track('search-field-change', {
+                                    field: e.target.value,
+                                    type: searchType
+                                  });
+                                }
+                              }}
                             >
                               <option value="all">All Fields</option>
                               <option value="title">Title Only</option>
@@ -835,7 +884,16 @@ function SearchApp() {
                               className="form-control"
                               id="searchField"
                               value={searchField}
-                              onChange={(e) => setSearchField(e.target.value)}
+                              onChange={(e) => {
+                                setSearchField(e.target.value);
+                                // Track field selection change
+                                if (typeof umami !== 'undefined') {
+                                  umami.track('search-field-change', {
+                                    field: e.target.value,
+                                    type: searchType
+                                  });
+                                }
+                              }}
                             >
                               <option value="all">All Fields</option>
                               <option value="title">Title Only</option>
@@ -851,7 +909,16 @@ function SearchApp() {
                               className="form-control"
                               id="trialStatus"
                               value={trialStatus}
-                              onChange={(e) => setTrialStatus(e.target.value)}
+                              onChange={(e) => {
+                                setTrialStatus(e.target.value);
+                                // Track trial status change
+                                if (typeof umami !== 'undefined') {
+                                  umami.track('search-status-change', {
+                                    status: e.target.value,
+                                    type: searchType
+                                  });
+                                }
+                              }}
                             >
                               {TRIAL_STATUS_OPTIONS.map(option => (
                                 <option key={option.value} value={option.value}>
