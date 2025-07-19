@@ -29,8 +29,8 @@ function InteractiveLineChart() {
 
     async function fetchData() {
       try {
-        // Fetch monthly counts using the service
-        const monthlyCountsResponse = await categoryService.getMonthlyCounts(category);
+        // Fetch monthly counts using the service with category slug
+        const monthlyCountsResponse = await categoryService.getMonthlyCountsBySlug(category);
         
         // Fetch clinical trials using the updated service
         const trialsResponse = await trialService.getTrialsByCategory(category, 1);

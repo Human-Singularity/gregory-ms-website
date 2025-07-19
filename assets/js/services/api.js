@@ -143,11 +143,77 @@ export const trialService = {
 
 /**
  * Category related API calls
+ * 
+ * Updated to use the new monthly_counts=true query parameter approach
+ * as documented in the latest API specification.
  */
 export const categoryService = {
-  // Get monthly counts for a category - Still supported endpoint
-  getMonthlyCounts: (category) => 
-    apiClient.get(`/teams/1/categories/${category}/monthly-counts/`),
+  // Get monthly counts for a category - Using query parameter approach
+  // Supports ml_threshold parameter (0.0-1.0, default: 0.5) for ML prediction filtering
+  // Usage: getMonthlyCounts(6, { ml_threshold: '0.8' })
+  getMonthlyCounts: (categoryId, params = {}) => {
+    const queryParams = new URLSearchParams({
+      format: 'json',
+      category_id: categoryId,
+      monthly_counts: 'true',
+      ...params
+    });
+    return apiClient.get(`/categories/?${queryParams.toString()}`).then(response => {
+      // Extract monthly_counts from the category response
+      if (response.data && response.data.results && response.data.results.length > 0) {
+        const categoryData = response.data.results[0];
+        if (categoryData.monthly_counts) {
+          // Return the monthly_counts object as the data, matching the expected format
+          return { data: categoryData.monthly_counts };
+        }
+      }
+      
+      // Fallback: return empty monthly counts structure
+      console.warn('No monthly_counts found in category response');
+      return { 
+        data: {
+          ml_threshold: 0.5,
+          available_models: [],
+          monthly_article_counts: [],
+          monthly_ml_article_counts_by_model: {},
+          monthly_trial_counts: []
+        }
+      };
+    });
+  },
+
+  // Get monthly counts by category slug - Alternative for legacy compatibility
+  // Supports ml_threshold parameter (0.0-1.0, default: 0.5) for ML prediction filtering
+  getMonthlyCountsBySlug: (categorySlug, params = {}) => {
+    const queryParams = new URLSearchParams({
+      format: 'json',
+      category_slug: categorySlug,
+      monthly_counts: 'true',
+      ...params
+    });
+    return apiClient.get(`/categories/?${queryParams.toString()}`).then(response => {
+      // Extract monthly_counts from the category response
+      if (response.data && response.data.results && response.data.results.length > 0) {
+        const categoryData = response.data.results[0];
+        if (categoryData.monthly_counts) {
+          // Return the monthly_counts object as the data, matching the expected format
+          return { data: categoryData.monthly_counts };
+        }
+      }
+      
+      // Fallback: return empty monthly counts structure
+      console.warn('No monthly_counts found in category response');
+      return { 
+        data: {
+          ml_threshold: 0.5,
+          available_models: [],
+          monthly_article_counts: [],
+          monthly_ml_article_counts_by_model: {},
+          monthly_trial_counts: []
+        }
+      };
+    });
+  },
 
   // Get categories with filtering - ENHANCED with author statistics
   getCategories: (params = {}) => {
