@@ -1,42 +1,38 @@
 {{- /* 
-  React App Loader - Use this partial to load React apps consistently
-  Example usage: {{ partial "react-app-loader.html" (dict "app" "articles" "minify" true) }}
+  React App Loader - Hugo Pipes with bundled React dependencies
+  Example usage: {{ partial "react-app-loader.html" (dict "app" "articles") }}
   Parameters:
     - app: Name of the app to load (required)
-    - minify: Whether to minify the output (default: true)
-    - fingerprint: Whether to fingerprint the output (default: true)
 */ -}}
 
 {{- $app := .app -}}
-{{- $minify := default true .minify -}}
-{{- $fingerprint := default true .fingerprint -}}
+{{- $appPath := printf "js/apps/%s.jsx" $app -}}
+{{- $appResource := resources.Get $appPath -}}
 
-{{- /* Check if pre-compiled JS file exists in static folder */ -}}
-{{- $staticJsPath := printf "js/%s.js" $app -}}
-{{- $staticJsExists := false -}}
-{{- $staticJsExists = fileExists (printf "static/%s" $staticJsPath) -}}
-
-{{- if $staticJsExists -}}
-  {{- /* Use pre-compiled JS file */ -}}
-  <script src="{{ $staticJsPath | relURL }}"></script>
-{{- else -}}
-  {{- /* Fall back to Hugo's js.Build */ -}}
-  {{- $appPath := printf "js/apps/%s.jsx" $app -}}
-  {{- $appResource := resources.Get $appPath -}}
-
-  {{- if $appResource -}}
-    {{- $appResource = $appResource | js.Build -}}
-    
-    {{- if $minify -}}
-      {{- $appResource = $appResource | resources.Minify -}}
-    {{- end -}}
-    
-    {{- if $fingerprint -}}
-      {{- $appResource = $appResource | resources.Fingerprint -}}
-    {{- end -}}
-    
+{{- if $appResource -}}
+  {{- /* Build with Hugo's js.Build using esbuild - bundle all dependencies */ -}}
+  {{- $buildOptions := dict 
+    "targetPath" (printf "js/%s.js" $app)
+    "JSX" "automatic"
+    "JSXImportSource" "react"
+    "minify" (not hugo.IsDevelopment)
+    "sourceMap" (cond hugo.IsDevelopment "external" "")
+    "format" "iife"
+    "target" "es2018"
+    "bundle" true
+  -}}
+  
+  {{- $appResource = $appResource | js.Build $buildOptions -}}
+  
+  {{- if hugo.IsDevelopment -}}
+    {{- /* Development: include unminified script with source map */ -}}
     <script src="{{ $appResource.RelPermalink }}"></script>
   {{- else -}}
-    <!-- WARNING: App resource not found: {{ $appPath }} -->
+    {{- /* Production: include fingerprinted, integrity-checked script */ -}}
+    {{- with $appResource | fingerprint -}}
+      <script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous"></script>
+    {{- end -}}
   {{- end -}}
+{{- else -}}
+  <!-- WARNING: App resource not found: {{ $appPath }} -->
 {{- end -}}

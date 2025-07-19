@@ -1,0 +1,57 @@
+# Development server configuration for Hugo
+# This handles SPA routing for React apps under /app/** paths
+
+[[redirects]]
+# Catch every URL beneath /app/ and rewrite it to the SPA root for client-side routing
+from   = "/app/**"
+to     = "/app/"
+status = 200     # 200 = rewrite (not redirect), perfect for SPAs
+
+# Additional SPA routes that might be needed
+[[redirects]]
+from   = "/articles/**"
+to     = "/articles/"
+status = 200
+
+[[redirects]]
+from   = "/trials/**"
+to     = "/trials/"
+status = 200
+
+[[redirects]]
+from   = "/authors/**"
+to     = "/authors/"
+status = 200
+
+[[redirects]]
+from   = "/sources/**"
+to     = "/sources/"
+status = 200
+
+[[redirects]]
+from   = "/categories/**"
+to     = "/categories/"
+status = 200
+
+# Keep Hugo's normal 404 for everything else
+[[redirects]]
+from   = "/**"
+to     = "/404.html"
+status = 404
+
+# Headers for JS and JSX files
+[server]
+  [[server.headers]]
+    for = "/*.js"
+    [server.headers.values]
+      Content-Type = "application/javascript"
+  
+  [[server.headers]]
+    for = "/*.jsx"
+    [server.headers.values]
+      Content-Type = "application/javascript"
+
+  [[server.headers]]
+    for = "/js/*.js"
+    [server.headers.values]
+      Content-Type = "application/javascript"
