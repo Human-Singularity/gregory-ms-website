@@ -33589,7 +33589,7 @@
         "data-umami-event-category": category.name,
         "data-umami-event-slug": category.slug
       },
-      /* @__PURE__ */ import_react.default.createElement("div", { className: "card-body d-flex flex-column" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "card-title text-primary mb-2" }, category.name), /* @__PURE__ */ import_react.default.createElement("p", { className: "card-text text-muted flex-grow-1" }, category.description), (category.article_count_total || category.trials_count_total || category.authors_count) && /* @__PURE__ */ import_react.default.createElement("div", { className: "category-stats mb-3" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex flex-wrap gap-2" }, category.article_count_total && /* @__PURE__ */ import_react.default.createElement("span", { className: "badge badge-primary badge-sm" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "fas fa-file-alt mr-1" }), category.article_count_total, " articles"), category.trials_count_total && /* @__PURE__ */ import_react.default.createElement("span", { className: "badge badge-success badge-sm" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "fas fa-flask mr-1" }), category.trials_count_total, " trials"), category.authors_count && /* @__PURE__ */ import_react.default.createElement("span", { className: "badge badge-info badge-sm" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "fas fa-users mr-1" }), category.authors_count, " authors"))), category.top_authors && category.top_authors.length > 0 && /* @__PURE__ */ import_react.default.createElement("div", { className: "top-authors-preview mb-3" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "small text-muted mb-1" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "fas fa-star mr-1" }), "Top Authors:"), /* @__PURE__ */ import_react.default.createElement("div", { className: "small" }, category.top_authors.slice(0, 3).map((author, index) => /* @__PURE__ */ import_react.default.createElement("span", { key: author.author_id, className: "text-primary" }, author.full_name, index < Math.min(2, category.top_authors.length - 1) && ", ", index === 2 && category.top_authors.length > 3 && ` +${category.top_authors.length - 3} more`)))), /* @__PURE__ */ import_react.default.createElement("div", { className: "mt-auto" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-between align-items-end" }, category.tags && category.tags.length > 0 && /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex flex-wrap" }, /* @__PURE__ */ import_react.default.createElement(
+      /* @__PURE__ */ import_react.default.createElement("div", { className: "card-body d-flex flex-column" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "card-title text-primary mb-2" }, category.name), /* @__PURE__ */ import_react.default.createElement("p", { className: "card-text text-muted flex-grow-1" }, category.description), /* @__PURE__ */ import_react.default.createElement("div", { className: "mt-auto" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-between align-items-end" }, category.tags && category.tags.length > 0 && /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex flex-wrap" }, /* @__PURE__ */ import_react.default.createElement(
         "span",
         {
           className: "text-muted mr-2 small"
@@ -54814,6 +54814,7 @@
     const [error, setError] = (0, import_react46.useState)(null);
     const [totalCount, setTotalCount] = (0, import_react46.useState)(0);
     const [hasInitialized, setHasInitialized] = (0, import_react46.useState)(false);
+    const [topCountries, setTopCountries] = (0, import_react46.useState)([]);
     (0, import_react46.useEffect)(() => {
       if (isActive && !hasInitialized) {
         loadAuthors();
@@ -54844,6 +54845,7 @@
           const authors2 = categoryData.top_authors.slice(0, 20) || [];
           setAuthors(authors2);
           setTotalCount(authors2.length);
+          calculateTopCountries(authors2);
         } else {
           throw new Error("Category not found or no author data available");
         }
@@ -54866,6 +54868,7 @@
             const authors2 = ((_b = fallbackResponse.data.results) == null ? void 0 : _b.slice(0, 20)) || [];
             setAuthors(authors2);
             setTotalCount(authors2.length);
+            calculateTopCountries(authors2);
             return;
           } catch (fallbackErr) {
             console.error("Fallback authors API also failed:", fallbackErr);
@@ -54883,6 +54886,7 @@
               const allAuthors = ((_c = allAuthorsResponse.data.results) == null ? void 0 : _c.slice(0, 20)) || [];
               setAuthors(allAuthors);
               setTotalCount(allAuthors.length);
+              calculateTopCountries(allAuthors);
               setError(`Showing all top authors (category-specific filtering will be available soon)`);
               return;
             } catch (finalErr) {
@@ -54902,9 +54906,36 @@
         setError(errorMessage);
         setAuthors([]);
         setTotalCount(0);
+        setTopCountries([]);
       } finally {
         setLoading(false);
       }
+    };
+    const calculateTopCountries = (authorsData) => {
+      const countryCount = {};
+      const countryStats = {};
+      authorsData.forEach((author) => {
+        const country = author.country || "Not specified";
+        const articlesCount = author.articles_count || author.article_count || 0;
+        if (!countryCount[country]) {
+          countryCount[country] = 0;
+          countryStats[country] = { authorsCount: 0, totalArticles: 0 };
+        }
+        countryCount[country]++;
+        countryStats[country].authorsCount++;
+        countryStats[country].totalArticles += articlesCount;
+      });
+      const sortedCountries = Object.entries(countryStats).map(([country, stats]) => ({
+        country,
+        authorsCount: stats.authorsCount,
+        totalArticles: stats.totalArticles
+      })).sort((a2, b) => {
+        if (b.authorsCount !== a2.authorsCount) {
+          return b.authorsCount - a2.authorsCount;
+        }
+        return b.totalArticles - a2.totalArticles;
+      }).slice(0, 10);
+      setTopCountries(sortedCountries);
     };
     if (loading && !hasInitialized) {
       return /* @__PURE__ */ import_react46.default.createElement("div", { className: "text-center py-5" }, /* @__PURE__ */ import_react46.default.createElement("div", { className: "spinner-border text-primary", role: "status" }, /* @__PURE__ */ import_react46.default.createElement("span", { className: "sr-only" }, "Loading authors...")), /* @__PURE__ */ import_react46.default.createElement("p", { className: "mt-3 text-muted" }, "Loading authors for ", category.name, ", this will take a while..."));
@@ -54938,7 +54969,7 @@
         title: "View ORCID Profile"
       },
       /* @__PURE__ */ import_react46.default.createElement("i", { className: "fab fa-orcid text-success" })
-    )), /* @__PURE__ */ import_react46.default.createElement("td", null, /* @__PURE__ */ import_react46.default.createElement("span", { className: "badge badge-primary" }, author.articles_count || author.article_count || 0)))))) : /* @__PURE__ */ import_react46.default.createElement("div", { className: "text-center py-5" }, /* @__PURE__ */ import_react46.default.createElement("div", { className: "text-muted" }, /* @__PURE__ */ import_react46.default.createElement("i", { className: "fas fa-users fa-3x mb-3" }), /* @__PURE__ */ import_react46.default.createElement("h5", null, "No authors found"), /* @__PURE__ */ import_react46.default.createElement("p", null, "There are no authors with articles in the ", category.name, " category.")))));
+    )), /* @__PURE__ */ import_react46.default.createElement("td", null, /* @__PURE__ */ import_react46.default.createElement("span", { className: "badge badge-primary" }, author.articles_count || author.article_count || 0)))))) : /* @__PURE__ */ import_react46.default.createElement("div", { className: "text-center py-5" }, /* @__PURE__ */ import_react46.default.createElement("div", { className: "text-muted" }, /* @__PURE__ */ import_react46.default.createElement("i", { className: "fas fa-users fa-3x mb-3" }), /* @__PURE__ */ import_react46.default.createElement("h5", null, "No authors found"), /* @__PURE__ */ import_react46.default.createElement("p", null, "There are no authors with articles in the ", category.name, " category."))), authors.length > 0 && topCountries.length > 0 && /* @__PURE__ */ import_react46.default.createElement("div", { className: "mt-5" }, /* @__PURE__ */ import_react46.default.createElement("h5", { className: "mb-3" }, /* @__PURE__ */ import_react46.default.createElement("i", { className: "fas fa-globe mr-2 text-info" }), "Top Countries by Research Activity"), /* @__PURE__ */ import_react46.default.createElement("p", { className: "text-muted mb-3" }, "Countries ranked by number of contributing authors in ", category.name, " research"), /* @__PURE__ */ import_react46.default.createElement("table", { className: "table table-striped table-hover table-sm" }, /* @__PURE__ */ import_react46.default.createElement("thead", { className: "thead-light" }, /* @__PURE__ */ import_react46.default.createElement("tr", null, /* @__PURE__ */ import_react46.default.createElement("th", { scope: "col" }, "#"), /* @__PURE__ */ import_react46.default.createElement("th", { scope: "col" }, "Country"), /* @__PURE__ */ import_react46.default.createElement("th", { scope: "col" }, "Authors"), /* @__PURE__ */ import_react46.default.createElement("th", { scope: "col" }, "Total Articles"))), /* @__PURE__ */ import_react46.default.createElement("tbody", null, topCountries.map((countryData, index) => /* @__PURE__ */ import_react46.default.createElement("tr", { key: countryData.country }, /* @__PURE__ */ import_react46.default.createElement("th", { scope: "row", className: "text-muted" }, index + 1), /* @__PURE__ */ import_react46.default.createElement("td", null, /* @__PURE__ */ import_react46.default.createElement("strong", null, countryData.country)), /* @__PURE__ */ import_react46.default.createElement("td", null, /* @__PURE__ */ import_react46.default.createElement("span", { className: "badge badge-info" }, countryData.authorsCount)), /* @__PURE__ */ import_react46.default.createElement("td", null, /* @__PURE__ */ import_react46.default.createElement("span", { className: "badge badge-secondary" }, countryData.totalArticles)))))))));
   }
   var AuthorsList_default = AuthorsList;
 
