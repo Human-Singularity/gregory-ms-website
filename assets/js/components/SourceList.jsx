@@ -29,7 +29,8 @@ export function SourceList({
   const { 
     sources, 
     loading, 
-    error, 
+    error,
+    totalCount,
     pagination: { page, lastPage, setPage }
   } = useSources(filterType, { ...options, initialPage });
 
@@ -89,8 +90,13 @@ export function SourceList({
         <div className="col-12">
           <div className="card">
             <div className="card-body">
-              <h5 className="card-title mb-3">Filter Sources</h5>
-              <div className="btn-group" role="group" aria-label="Source filters">
+              <div className="d-flex justify-content-between align-items-center mb-3">
+                <h5 className="card-title mb-0">Filter Sources</h5>
+                <span className="badge badge-secondary">
+                  {totalCount} source{totalCount !== 1 ? 's' : ''} found
+                </span>
+              </div>
+              <div className="" role="group" aria-label="Source filters">
                 <button
                   type="button"
                   className={`btn ${filterType === 'all' ? 'btn-primary' : 'btn-outline-primary'}`}
@@ -116,16 +122,40 @@ export function SourceList({
                   <i className="fas fa-user-md mr-2"></i>Clinical Trials
                 </button>
               </div>
+              {filterType !== 'all' && (
+                <p className="text-muted mb-0 mt-2">
+                  <small>
+                    <i className="fas fa-filter mr-1"></i>
+                    Showing sources for: <strong>{filterType}</strong>
+                  </small>
+                </p>
+              )}
             </div>
           </div>
         </div>
       </div>
 
-      {/* Sources Grid */}
+      {/* Sources Table */}
       <div className="row">
-        {sources.map((source) => (
-          <Source key={source.source_id} source={source} />
-        ))}
+        <div className="col-12">
+          <div className="table-responsive">
+            <table className="table table-striped table-hover sources-table">
+              <thead className="thead-light">
+                <tr>
+                  <th scope="col" width="15%">Type</th>
+                  <th scope="col" width="25%">Source Name</th>
+                  <th scope="col" width="50%">Description</th>
+                  <th scope="col" width="10%" className="text-center">Link</th>
+                </tr>
+              </thead>
+              <tbody>
+                {sources.map((source) => (
+                  <Source key={source.source_id} source={source} />
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
 
       {/* Pagination */}

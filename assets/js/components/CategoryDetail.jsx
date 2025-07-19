@@ -9,6 +9,7 @@ import ArticleList from './ArticleList';
 import TrialsList from './TrialsList';
 import AuthorsList from './AuthorsList';
 import DownloadButton from './DownloadButton';
+import BadgeExplanation from './BadgeExplanation';
 
 /**
  * CategoryDetail component
@@ -561,6 +562,9 @@ function CategoryDetail({ category, config, onBack }) {
                   <p>No data available for this category.</p>
                 </div>
               )}
+              
+              {/* Badge Explanation Section - Always show this */}
+              <BadgeExplanation />
             </div>
           )}
 

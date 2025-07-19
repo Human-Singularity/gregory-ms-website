@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { renderMarkdown, truncateText } from '../utils/markdown';
 
 /**
- * Source component - Displays a single source
+ * Source component - Displays a single source as a table row with expandable description
  * @param {object} props - Component props
  * @param {object} props.source - Source data
  * @returns {JSX.Element} - Source component
  */
 export function Source({ source }) {
+  const [isExpanded, setIsExpanded] = useState(false);
+
   if (!source) return null;
 
   const getSourceTypeIcon = (sourceFor) => {
@@ -24,32 +27,43 @@ export function Source({ source }) {
   const getSourceTypeBadgeColor = (sourceFor) => {
     switch (sourceFor?.toLowerCase()) {
       case 'science paper':
-        return 'badge-primary';
+        return 'badge-info';
       case 'trials':
         return 'badge-success';
       default:
-        return 'badge-info';
+        return 'badge-secondary';
     }
   };
 
+  // Check if description is long enough to need expansion
+  const needsExpansion = source.description && source.description.length > 200;
+  const displayDescription = needsExpansion && !isExpanded 
+    ? truncateText(source.description, 200)
+    : source.description;
+
+  const toggleExpansion = () => {
+    setIsExpanded(!isExpanded);
+  };
+
   return (
-    <div className='col-md-6 mb-4'>
-      <div className="card card-plain h-100">
-        <div className="card-body">
-          <div className="d-flex align-items-center mb-3">
-            <i className={`${getSourceTypeIcon(source.source_for)} mr-2`}></i>
+    <>
+      <tr className="source-row">
+        <td className="align-middle">
+          <div className="d-flex align-items-center">
+            <i className={`${getSourceTypeIcon(source.source_for)} mr-2 text-primary`}></i>
             <span className={`badge ${getSourceTypeBadgeColor(source.source_for)} text-white font-weight-normal`}>
               {source.source_for || 'Source'}
             </span>
           </div>
-          
-          <h4 className="card-title">
+        </td>
+        <td className="align-middle">
+          <div className="source-name">
             {source.link ? (
               <a 
                 href={source.link} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-decoration-none"
+                className="text-decoration-none font-weight-semibold"
                 data-umami-event="click--source-external"
                 data-umami-event-source={source.name}
                 data-umami-event-type={source.source_for}
@@ -57,30 +71,55 @@ export function Source({ source }) {
                 {source.name} <i className="fas fa-external-link-alt ml-1"></i>
               </a>
             ) : (
-              source.name
+              <span className="font-weight-semibold">{source.name}</span>
             )}
-          </h4>
-          
-          {source.description && (
-            <p className="card-description text-muted">
-              {source.description}
-            </p>
-          )}
-          
-          {!source.description && source.link && (
-            <p className="card-description text-muted">
-              External source for {source.source_for} data
-            </p>
-          )}
-          
-          <div className="mt-auto">
-            <small className="text-muted">
-              Source ID: {source.source_id}
-            </small>
           </div>
-        </div>
-      </div>
-    </div>
+        </td>
+        <td className="align-middle">
+          {source.description ? (
+            <div className="source-description">
+              <div 
+                className="description-content"
+                dangerouslySetInnerHTML={{ 
+                  __html: renderMarkdown(displayDescription) 
+                }}
+              />
+              
+              {/* Expand/Collapse Button */}
+              {needsExpansion && (
+                <button
+                  className="btn btn-link btn-sm p-0 text-primary mt-1"
+                  onClick={toggleExpansion}
+                  data-umami-event="click--source-expand"
+                  data-umami-event-source={source.name}
+                  data-umami-event-expanded={isExpanded}
+                >
+                  <i className={`fas fa-chevron-${isExpanded ? 'up' : 'down'} mr-1`}></i>
+                  {isExpanded ? 'Show Less' : 'Show More'}
+                </button>
+              )}
+            </div>
+          ) : (
+            <span className="text-muted">No description available</span>
+          )}
+        </td>
+        <td className="align-middle text-center">
+          {source.link && (
+            <a 
+              href={source.link} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="btn btn-outline-primary btn-sm"
+              data-umami-event="click--source-visit"
+              data-umami-event-source={source.name}
+            >
+              <i className="fas fa-external-link-alt mr-1"></i>
+              Visit
+            </a>
+          )}
+        </td>
+      </tr>
+    </>
   );
 }
 
