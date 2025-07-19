@@ -1088,7 +1088,7 @@
             }
             return dispatcher.useContext(Context);
           }
-          function useState12(initialState) {
+          function useState13(initialState) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState);
           }
@@ -1100,7 +1100,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect11(create, deps) {
+          function useEffect12(create, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create, deps);
           }
@@ -1883,7 +1883,7 @@
           exports.useContext = useContext4;
           exports.useDebugValue = useDebugValue;
           exports.useDeferredValue = useDeferredValue;
-          exports.useEffect = useEffect11;
+          exports.useEffect = useEffect12;
           exports.useId = useId;
           exports.useImperativeHandle = useImperativeHandle2;
           exports.useInsertionEffect = useInsertionEffect;
@@ -1891,7 +1891,7 @@
           exports.useMemo = useMemo5;
           exports.useReducer = useReducer;
           exports.useRef = useRef6;
-          exports.useState = useState12;
+          exports.useState = useState13;
           exports.useSyncExternalStore = useSyncExternalStore;
           exports.useTransition = useTransition;
           exports.version = ReactVersion;
@@ -2387,9 +2387,9 @@
           if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
             __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
           }
-          var React53 = require_react();
+          var React54 = require_react();
           var Scheduler = require_scheduler();
-          var ReactSharedInternals = React53.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React54.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           var suppressWarning = false;
           function setSuppressWarning(newSuppressWarning) {
             {
@@ -3996,7 +3996,7 @@
             {
               if (props.value == null) {
                 if (typeof props.children === "object" && props.children !== null) {
-                  React53.Children.forEach(props.children, function(child) {
+                  React54.Children.forEach(props.children, function(child) {
                     if (child == null) {
                       return;
                     }
@@ -29088,7 +29088,7 @@
   });
 
   // assets/js/apps/observatory.jsx
-  var import_react49 = __toESM(require_react());
+  var import_react50 = __toESM(require_react());
   var import_client = __toESM(require_client());
 
   // node_modules/react-router-dom/dist/index.js
@@ -31062,7 +31062,7 @@
   }
 
   // assets/js/components/Observatory.jsx
-  var import_react48 = __toESM(require_react());
+  var import_react49 = __toESM(require_react());
 
   // node_modules/axios/lib/helpers/bind.js
   function bind(fn, thisArg) {
@@ -33589,7 +33589,7 @@
         "data-umami-event-category": category.name,
         "data-umami-event-slug": category.slug
       },
-      /* @__PURE__ */ import_react.default.createElement("div", { className: "card-body d-flex flex-column" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "card-title text-primary mb-2" }, category.name), /* @__PURE__ */ import_react.default.createElement("p", { className: "card-text text-muted flex-grow-1" }, category.description), /* @__PURE__ */ import_react.default.createElement("div", { className: "mt-auto" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-between align-items-end" }, category.tags && category.tags.length > 0 && /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex flex-wrap" }, /* @__PURE__ */ import_react.default.createElement(
+      /* @__PURE__ */ import_react.default.createElement("div", { className: "card-body d-flex flex-column" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "card-title text-primary mb-2" }, category.name), /* @__PURE__ */ import_react.default.createElement("p", { className: "card-text text-muted flex-grow-1" }, category.description), (category.article_count_total || category.trials_count_total || category.authors_count) && /* @__PURE__ */ import_react.default.createElement("div", { className: "category-stats mb-3" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex flex-wrap gap-2" }, category.article_count_total && /* @__PURE__ */ import_react.default.createElement("span", { className: "badge badge-primary badge-sm" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "fas fa-file-alt mr-1" }), category.article_count_total, " articles"), category.trials_count_total && /* @__PURE__ */ import_react.default.createElement("span", { className: "badge badge-success badge-sm" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "fas fa-flask mr-1" }), category.trials_count_total, " trials"), category.authors_count && /* @__PURE__ */ import_react.default.createElement("span", { className: "badge badge-info badge-sm" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "fas fa-users mr-1" }), category.authors_count, " authors"))), category.top_authors && category.top_authors.length > 0 && /* @__PURE__ */ import_react.default.createElement("div", { className: "top-authors-preview mb-3" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "small text-muted mb-1" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "fas fa-star mr-1" }), "Top Authors:"), /* @__PURE__ */ import_react.default.createElement("div", { className: "small" }, category.top_authors.slice(0, 3).map((author, index) => /* @__PURE__ */ import_react.default.createElement("span", { key: author.author_id, className: "text-primary" }, author.full_name, index < Math.min(2, category.top_authors.length - 1) && ", ", index === 2 && category.top_authors.length > 3 && ` +${category.top_authors.length - 3} more`)))), /* @__PURE__ */ import_react.default.createElement("div", { className: "mt-auto" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-between align-items-end" }, category.tags && category.tags.length > 0 && /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex flex-wrap" }, /* @__PURE__ */ import_react.default.createElement(
         "span",
         {
           className: "text-muted mr-2 small"
@@ -33602,7 +33602,7 @@
   var CategoryCard_default = CategoryCard;
 
   // assets/js/components/CategoryDetail.jsx
-  var import_react47 = __toESM(require_react());
+  var import_react48 = __toESM(require_react());
 
   // node_modules/recharts/es6/container/Surface.js
   var import_react4 = __toESM(require_react());
@@ -54129,10 +54129,62 @@
   var categoryService = {
     // Get monthly counts for a category - Still supported endpoint
     getMonthlyCounts: (category) => apiClient.get(`/teams/1/categories/${category}/monthly-counts/`),
-    // Get categories with filtering - NEW endpoint
+    // Get categories with filtering - ENHANCED with author statistics
     getCategories: (params = {}) => {
       const queryParams = new URLSearchParams({
         format: "json",
+        include_authors: "true",
+        // Default to include author statistics
+        max_authors: "10",
+        // Default to top 10 authors
+        team_id: 1,
+        // Default team ID
+        ...params
+      });
+      return apiClient.get(`/categories/?${queryParams.toString()}`);
+    },
+    // Get categories without author data for performance
+    getCategoriesBasic: (params = {}) => {
+      const queryParams = new URLSearchParams({
+        format: "json",
+        include_authors: "false",
+        team_id: 1,
+        // Default team ID
+        ...params
+      });
+      return apiClient.get(`/categories/?${queryParams.toString()}`);
+    },
+    // Get detailed author statistics for a specific category - CORRECTED endpoint
+    getCategoryAuthors: (categoryId, params = {}) => {
+      const queryParams = new URLSearchParams({
+        format: "json",
+        category_id: categoryId,
+        include_authors: "true",
+        sort_by: "articles_count",
+        order: "desc",
+        ...params
+      });
+      return apiClient.get(`/categories/?${queryParams.toString()}`);
+    },
+    // Alternative method using category_slug
+    getCategoryAuthorsBySlug: (categorySlug, params = {}) => {
+      const queryParams = new URLSearchParams({
+        format: "json",
+        category_slug: categorySlug,
+        include_authors: "true",
+        sort_by: "articles_count",
+        order: "desc",
+        ...params
+      });
+      return apiClient.get(`/categories/?${queryParams.toString()}`);
+    },
+    // Get categories with date filtering for author statistics
+    getCategoriesWithDateFilter: (params = {}) => {
+      const queryParams = new URLSearchParams({
+        format: "json",
+        include_authors: "true",
+        max_authors: "10",
+        team_id: 1,
         ...params
       });
       return apiClient.get(`/categories/?${queryParams.toString()}`);
@@ -54754,8 +54806,144 @@
   };
   var TrialsList_default = TrialsList;
 
-  // assets/js/components/DownloadButton.jsx
+  // assets/js/components/AuthorsList.jsx
   var import_react46 = __toESM(require_react());
+  function AuthorsList({ category, config, isActive }) {
+    const [authors, setAuthors] = (0, import_react46.useState)([]);
+    const [loading, setLoading] = (0, import_react46.useState)(false);
+    const [error, setError] = (0, import_react46.useState)(null);
+    const [totalCount, setTotalCount] = (0, import_react46.useState)(0);
+    const [hasInitialized, setHasInitialized] = (0, import_react46.useState)(false);
+    (0, import_react46.useEffect)(() => {
+      if (isActive && !hasInitialized) {
+        loadAuthors();
+        setHasInitialized(true);
+      }
+    }, [isActive, hasInitialized, category.slug]);
+    const loadAuthors = async () => {
+      var _a, _b, _c;
+      setLoading(true);
+      setError(null);
+      try {
+        console.log("Loading authors for category:", category.slug);
+        const response = await axios_default.get(`${config.API_URL}/categories/`, {
+          params: {
+            category_id: category.id,
+            team_id: config.TEAM_ID,
+            format: "json",
+            include_authors: "true",
+            max_authors: 20,
+            // Get top 20 authors
+            sort_by: "articles_count",
+            order: "desc"
+          }
+        });
+        console.log("Categories API response:", response.data);
+        const categoryData = (_a = response.data.results) == null ? void 0 : _a.find((cat) => cat.id === category.id);
+        if (categoryData && categoryData.top_authors) {
+          const authors2 = categoryData.top_authors.slice(0, 20) || [];
+          setAuthors(authors2);
+          setTotalCount(authors2.length);
+        } else {
+          throw new Error("Category not found or no author data available");
+        }
+      } catch (err) {
+        console.error("Error loading authors:", err);
+        if (err.response && (err.response.status === 400 || err.response.status === 500)) {
+          try {
+            console.log("Enhanced categories API not available, trying authors API...");
+            const fallbackResponse = await axios_default.get(`${config.API_URL}/authors/`, {
+              params: {
+                team_id: config.TEAM_ID,
+                category_slug: category.slug,
+                format: "json",
+                page: 1,
+                page_size: 20,
+                // Get top 20 authors
+                ordering: "-article_count"
+              }
+            });
+            const authors2 = ((_b = fallbackResponse.data.results) == null ? void 0 : _b.slice(0, 20)) || [];
+            setAuthors(authors2);
+            setTotalCount(authors2.length);
+            return;
+          } catch (fallbackErr) {
+            console.error("Fallback authors API also failed:", fallbackErr);
+            try {
+              const allAuthorsResponse = await axios_default.get(`${config.API_URL}/authors/`, {
+                params: {
+                  team_id: config.TEAM_ID,
+                  format: "json",
+                  page: 1,
+                  page_size: 20,
+                  // Get top 20 authors
+                  ordering: "-article_count"
+                }
+              });
+              const allAuthors = ((_c = allAuthorsResponse.data.results) == null ? void 0 : _c.slice(0, 20)) || [];
+              setAuthors(allAuthors);
+              setTotalCount(allAuthors.length);
+              setError(`Showing all top authors (category-specific filtering will be available soon)`);
+              return;
+            } catch (finalErr) {
+              console.error("All attempts failed:", finalErr);
+            }
+          }
+        }
+        let errorMessage = "Failed to load authors for this category";
+        if (err.response) {
+          errorMessage += ` (Status: ${err.response.status})`;
+          if (err.response.data && err.response.data.detail) {
+            errorMessage += `: ${err.response.data.detail}`;
+          }
+        } else if (err.message) {
+          errorMessage += `: ${err.message}`;
+        }
+        setError(errorMessage);
+        setAuthors([]);
+        setTotalCount(0);
+      } finally {
+        setLoading(false);
+      }
+    };
+    if (loading && !hasInitialized) {
+      return /* @__PURE__ */ import_react46.default.createElement("div", { className: "text-center py-5" }, /* @__PURE__ */ import_react46.default.createElement("div", { className: "spinner-border text-primary", role: "status" }, /* @__PURE__ */ import_react46.default.createElement("span", { className: "sr-only" }, "Loading authors...")), /* @__PURE__ */ import_react46.default.createElement("p", { className: "mt-3 text-muted" }, "Loading authors for ", category.name, ", this will take a while..."));
+    }
+    if (error && !loading && !error.includes("category-specific filtering will be available soon")) {
+      return /* @__PURE__ */ import_react46.default.createElement("div", { className: "alert alert-danger" }, /* @__PURE__ */ import_react46.default.createElement("h4", null, "Error Loading Authors"), /* @__PURE__ */ import_react46.default.createElement("p", null, error), /* @__PURE__ */ import_react46.default.createElement(
+        "button",
+        {
+          className: "btn btn-outline-danger",
+          onClick: () => loadAuthors()
+        },
+        /* @__PURE__ */ import_react46.default.createElement("i", { className: "fas fa-redo mr-2" }),
+        "Try Again"
+      ));
+    }
+    return /* @__PURE__ */ import_react46.default.createElement("div", { className: "authors-list" }, error && error.includes("category-specific filtering will be available soon") && /* @__PURE__ */ import_react46.default.createElement("div", { className: "alert alert-info mb-4" }, /* @__PURE__ */ import_react46.default.createElement("i", { className: "fas fa-info-circle mr-2" }), error), loading ? /* @__PURE__ */ import_react46.default.createElement("div", { className: "text-center py-5" }, /* @__PURE__ */ import_react46.default.createElement("div", { className: "spinner-border text-primary", role: "status" }, /* @__PURE__ */ import_react46.default.createElement("span", { className: "sr-only" }, "Loading authors...")), /* @__PURE__ */ import_react46.default.createElement("p", { className: "mt-3 text-muted" }, "Loading authors for ", category.name, "...")) : /* @__PURE__ */ import_react46.default.createElement(import_react46.default.Fragment, null, /* @__PURE__ */ import_react46.default.createElement("div", { className: "mb-4" }, /* @__PURE__ */ import_react46.default.createElement("h4", { className: "mb-3" }, /* @__PURE__ */ import_react46.default.createElement("i", { className: "fas fa-users mr-2 text-primary" }), "Top Authors researching ", category.name), /* @__PURE__ */ import_react46.default.createElement("p", { className: "text-muted mb-3" }, totalCount > 0 ? /* @__PURE__ */ import_react46.default.createElement(import_react46.default.Fragment, null, "Showing top ", Math.min(totalCount, 20), " authors by publication count") : "No authors found for this category")), authors.length > 0 ? /* @__PURE__ */ import_react46.default.createElement("table", { className: "table table-striped table-hover" }, /* @__PURE__ */ import_react46.default.createElement("thead", { className: "thead-light" }, /* @__PURE__ */ import_react46.default.createElement("tr", null, /* @__PURE__ */ import_react46.default.createElement("th", { scope: "col" }, "#"), /* @__PURE__ */ import_react46.default.createElement("th", { scope: "col" }, "Author"), /* @__PURE__ */ import_react46.default.createElement("th", { scope: "col" }, "Articles"))), /* @__PURE__ */ import_react46.default.createElement("tbody", null, authors.map((author, index) => /* @__PURE__ */ import_react46.default.createElement("tr", { key: author.author_id }, /* @__PURE__ */ import_react46.default.createElement("th", { scope: "row", className: "text-muted" }, index + 1), /* @__PURE__ */ import_react46.default.createElement("td", null, /* @__PURE__ */ import_react46.default.createElement(
+      "a",
+      {
+        href: `/authors/${author.author_slug || author.slug || author.author_id}/`,
+        className: "text-decoration-none",
+        title: "View author profile"
+      },
+      /* @__PURE__ */ import_react46.default.createElement("strong", null, author.full_name || author.name)
+    ), author.ORCID && /* @__PURE__ */ import_react46.default.createElement(
+      "a",
+      {
+        href: author.ORCID,
+        target: "_blank",
+        rel: "noopener noreferrer",
+        className: "ml-2",
+        title: "View ORCID Profile"
+      },
+      /* @__PURE__ */ import_react46.default.createElement("i", { className: "fab fa-orcid text-success" })
+    )), /* @__PURE__ */ import_react46.default.createElement("td", null, /* @__PURE__ */ import_react46.default.createElement("span", { className: "badge badge-primary" }, author.articles_count || author.article_count || 0)))))) : /* @__PURE__ */ import_react46.default.createElement("div", { className: "text-center py-5" }, /* @__PURE__ */ import_react46.default.createElement("div", { className: "text-muted" }, /* @__PURE__ */ import_react46.default.createElement("i", { className: "fas fa-users fa-3x mb-3" }), /* @__PURE__ */ import_react46.default.createElement("h5", null, "No authors found"), /* @__PURE__ */ import_react46.default.createElement("p", null, "There are no authors with articles in the ", category.name, " category.")))));
+  }
+  var AuthorsList_default = AuthorsList;
+
+  // assets/js/components/DownloadButton.jsx
+  var import_react47 = __toESM(require_react());
   var import_prop_types7 = __toESM(require_prop_types());
   var import_js_file_download = __toESM(require_file_download());
   var blobToText = (blob) => {
@@ -54786,8 +54974,8 @@
     fileName = "gregory-ms-data.csv",
     searchParams = {}
   }) {
-    const [isLoading, setIsLoading] = (0, import_react46.useState)(false);
-    const [error, setError] = (0, import_react46.useState)(null);
+    const [isLoading, setIsLoading] = (0, import_react47.useState)(false);
+    const [error, setError] = (0, import_react47.useState)(null);
     const handleDownload = async () => {
       setIsLoading(true);
       setError(null);
@@ -54897,7 +55085,7 @@
         setIsLoading(false);
       }
     };
-    return /* @__PURE__ */ import_react46.default.createElement("div", { className: "download-button-container mb-4" }, /* @__PURE__ */ import_react46.default.createElement(
+    return /* @__PURE__ */ import_react47.default.createElement("div", { className: "download-button-container mb-4" }, /* @__PURE__ */ import_react47.default.createElement(
       "button",
       {
         className: "btn btn-success",
@@ -54907,8 +55095,8 @@
         "data-umami-event-filename": fileName,
         "data-umami-event-endpoint": apiEndpoint
       },
-      isLoading ? /* @__PURE__ */ import_react46.default.createElement(import_react46.default.Fragment, null, /* @__PURE__ */ import_react46.default.createElement("span", { className: "spinner-border spinner-border-sm mr-2", role: "status", "aria-hidden": "true" }), "Downloading...") : /* @__PURE__ */ import_react46.default.createElement(import_react46.default.Fragment, null, /* @__PURE__ */ import_react46.default.createElement("i", { className: "fas fa-download mr-2" }), "Download as CSV")
-    ), error && /* @__PURE__ */ import_react46.default.createElement("div", { className: "alert alert-danger mt-2" }, /* @__PURE__ */ import_react46.default.createElement("p", null, "Error downloading data: ", error.message)));
+      isLoading ? /* @__PURE__ */ import_react47.default.createElement(import_react47.default.Fragment, null, /* @__PURE__ */ import_react47.default.createElement("span", { className: "spinner-border spinner-border-sm mr-2", role: "status", "aria-hidden": "true" }), "Downloading...") : /* @__PURE__ */ import_react47.default.createElement(import_react47.default.Fragment, null, /* @__PURE__ */ import_react47.default.createElement("i", { className: "fas fa-download mr-2" }), "Download as CSV")
+    ), error && /* @__PURE__ */ import_react47.default.createElement("div", { className: "alert alert-danger mt-2" }, /* @__PURE__ */ import_react47.default.createElement("p", null, "Error downloading data: ", error.message)));
   }
   DownloadButton.propTypes = {
     apiEndpoint: import_prop_types7.default.string.isRequired,
@@ -54919,16 +55107,16 @@
 
   // assets/js/components/CategoryDetail.jsx
   function CategoryDetail({ category, config, onBack }) {
-    const [activeTab, setActiveTab] = (0, import_react47.useState)("chart");
-    const [monthlyData, setMonthlyData] = (0, import_react47.useState)(null);
-    const [loading, setLoading] = (0, import_react47.useState)({
+    const [activeTab, setActiveTab] = (0, import_react48.useState)("chart");
+    const [monthlyData, setMonthlyData] = (0, import_react48.useState)(null);
+    const [loading, setLoading] = (0, import_react48.useState)({
       chart: false
     });
-    const [error, setError] = (0, import_react47.useState)(null);
-    const [dateFilter, setDateFilter] = (0, import_react47.useState)("last12months");
-    const [customStartDate, setCustomStartDate] = (0, import_react47.useState)("");
-    const [customEndDate, setCustomEndDate] = (0, import_react47.useState)("");
-    (0, import_react47.useEffect)(() => {
+    const [error, setError] = (0, import_react48.useState)(null);
+    const [dateFilter, setDateFilter] = (0, import_react48.useState)("last12months");
+    const [customStartDate, setCustomStartDate] = (0, import_react48.useState)("");
+    const [customEndDate, setCustomEndDate] = (0, import_react48.useState)("");
+    (0, import_react48.useEffect)(() => {
       loadMonthlyData();
     }, [category.slug]);
     const loadMonthlyData = async () => {
@@ -55088,25 +55276,25 @@
           month: "long",
           year: "numeric"
         });
-        return /* @__PURE__ */ import_react47.default.createElement("div", { className: "bg-white p-3 border rounded shadow" }, /* @__PURE__ */ import_react47.default.createElement("p", { className: "font-weight-bold mb-2" }, formattedDate), payload.map((entry, index) => {
+        return /* @__PURE__ */ import_react48.default.createElement("div", { className: "bg-white p-3 border rounded shadow" }, /* @__PURE__ */ import_react48.default.createElement("p", { className: "font-weight-bold mb-2" }, formattedDate), payload.map((entry, index) => {
           if (entry.dataKey === "cumulativeArticles") {
-            return /* @__PURE__ */ import_react47.default.createElement("p", { key: index, style: { color: entry.color, margin: "2px 0" } }, "Articles (Total): ", entry.value);
+            return /* @__PURE__ */ import_react48.default.createElement("p", { key: index, style: { color: entry.color, margin: "2px 0" } }, "Articles (Total): ", entry.value);
           } else if (entry.dataKey === "cumulativeLgbm") {
-            return /* @__PURE__ */ import_react47.default.createElement("p", { key: index, style: { color: entry.color, margin: "2px 0" } }, "LightGBM (Total): ", entry.value);
+            return /* @__PURE__ */ import_react48.default.createElement("p", { key: index, style: { color: entry.color, margin: "2px 0" } }, "LightGBM (Total): ", entry.value);
           } else if (entry.dataKey === "cumulativeLstm") {
-            return /* @__PURE__ */ import_react47.default.createElement("p", { key: index, style: { color: entry.color, margin: "2px 0" } }, "LSTM (Total): ", entry.value);
+            return /* @__PURE__ */ import_react48.default.createElement("p", { key: index, style: { color: entry.color, margin: "2px 0" } }, "LSTM (Total): ", entry.value);
           } else if (entry.dataKey === "cumulativePubmedBert") {
-            return /* @__PURE__ */ import_react47.default.createElement("p", { key: index, style: { color: entry.color, margin: "2px 0" } }, "PubMed BERT (Total): ", entry.value);
+            return /* @__PURE__ */ import_react48.default.createElement("p", { key: index, style: { color: entry.color, margin: "2px 0" } }, "PubMed BERT (Total): ", entry.value);
           } else if (entry.dataKey === "trials") {
-            return /* @__PURE__ */ import_react47.default.createElement("p", { key: index, style: { color: entry.color, margin: "2px 0" } }, "Clinical Trials: ", entry.value);
+            return /* @__PURE__ */ import_react48.default.createElement("p", { key: index, style: { color: entry.color, margin: "2px 0" } }, "Clinical Trials: ", entry.value);
           } else if (entry.dataKey === "lgbmRelevant") {
-            return /* @__PURE__ */ import_react47.default.createElement("p", { key: index, style: { color: entry.color, margin: "2px 0" } }, "LightGBM (Monthly): ", entry.value);
+            return /* @__PURE__ */ import_react48.default.createElement("p", { key: index, style: { color: entry.color, margin: "2px 0" } }, "LightGBM (Monthly): ", entry.value);
           } else if (entry.dataKey === "lstmRelevant") {
-            return /* @__PURE__ */ import_react47.default.createElement("p", { key: index, style: { color: entry.color, margin: "2px 0" } }, "LSTM (Monthly): ", entry.value);
+            return /* @__PURE__ */ import_react48.default.createElement("p", { key: index, style: { color: entry.color, margin: "2px 0" } }, "LSTM (Monthly): ", entry.value);
           } else if (entry.dataKey === "pubmedBertRelevant") {
-            return /* @__PURE__ */ import_react47.default.createElement("p", { key: index, style: { color: entry.color, margin: "2px 0" } }, "PubMed BERT (Monthly): ", entry.value);
+            return /* @__PURE__ */ import_react48.default.createElement("p", { key: index, style: { color: entry.color, margin: "2px 0" } }, "PubMed BERT (Monthly): ", entry.value);
           }
-          return /* @__PURE__ */ import_react47.default.createElement("p", { key: index, style: { color: entry.color, margin: "2px 0" } }, entry.name, ": ", entry.value);
+          return /* @__PURE__ */ import_react48.default.createElement("p", { key: index, style: { color: entry.color, margin: "2px 0" } }, entry.name, ": ", entry.value);
         }));
       }
       return null;
@@ -55122,7 +55310,7 @@
       }
     };
     const chartData = formatChartData(monthlyData);
-    return /* @__PURE__ */ import_react47.default.createElement("div", { className: "row" }, /* @__PURE__ */ import_react47.default.createElement("div", { className: "col-md-12" }, /* @__PURE__ */ import_react47.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-4" }, /* @__PURE__ */ import_react47.default.createElement("div", null, /* @__PURE__ */ import_react47.default.createElement("h2", { className: "text-primary" }, category.name), /* @__PURE__ */ import_react47.default.createElement("p", { className: "text-muted" }, category.description)), /* @__PURE__ */ import_react47.default.createElement(
+    return /* @__PURE__ */ import_react48.default.createElement("div", { className: "row" }, /* @__PURE__ */ import_react48.default.createElement("div", { className: "col-md-12" }, /* @__PURE__ */ import_react48.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-4" }, /* @__PURE__ */ import_react48.default.createElement("div", null, /* @__PURE__ */ import_react48.default.createElement("h2", { className: "text-primary" }, category.name), /* @__PURE__ */ import_react48.default.createElement("p", { className: "text-muted" }, category.description)), /* @__PURE__ */ import_react48.default.createElement(
       "button",
       {
         className: "btn btn-secondary",
@@ -55130,9 +55318,9 @@
         "data-umami-event": "click--observatory-back",
         "data-umami-event-category": category.name
       },
-      /* @__PURE__ */ import_react47.default.createElement("i", { className: "fa fa-arrow-left mr-2" }),
+      /* @__PURE__ */ import_react48.default.createElement("i", { className: "fa fa-arrow-left mr-2" }),
       "Back to Categories"
-    )), /* @__PURE__ */ import_react47.default.createElement("ul", { className: "nav nav-tabs mb-4 observatory-tabs", role: "tablist" }, /* @__PURE__ */ import_react47.default.createElement("li", { className: "nav-item" }, /* @__PURE__ */ import_react47.default.createElement(
+    )), /* @__PURE__ */ import_react48.default.createElement("ul", { className: "nav nav-tabs mb-4 observatory-tabs", role: "tablist" }, /* @__PURE__ */ import_react48.default.createElement("li", { className: "nav-item" }, /* @__PURE__ */ import_react48.default.createElement(
       "button",
       {
         className: `nav-link ${activeTab === "chart" ? "active" : ""}`,
@@ -55141,9 +55329,9 @@
         "data-umami-event-tab": "chart",
         "data-umami-event-category": category.name
       },
-      /* @__PURE__ */ import_react47.default.createElement("i", { className: "fa fa-chart-line mr-2" }),
+      /* @__PURE__ */ import_react48.default.createElement("i", { className: "fa fa-chart-line mr-2" }),
       "Monthly Overview"
-    )), /* @__PURE__ */ import_react47.default.createElement("li", { className: "nav-item" }, /* @__PURE__ */ import_react47.default.createElement(
+    )), /* @__PURE__ */ import_react48.default.createElement("li", { className: "nav-item" }, /* @__PURE__ */ import_react48.default.createElement(
       "button",
       {
         className: `nav-link ${activeTab === "articles" ? "active" : ""}`,
@@ -55152,9 +55340,9 @@
         "data-umami-event-tab": "articles",
         "data-umami-event-category": category.name
       },
-      /* @__PURE__ */ import_react47.default.createElement("i", { className: "fa fa-file-text mr-2" }),
+      /* @__PURE__ */ import_react48.default.createElement("i", { className: "fa fa-file-text mr-2" }),
       "Articles"
-    )), /* @__PURE__ */ import_react47.default.createElement("li", { className: "nav-item" }, /* @__PURE__ */ import_react47.default.createElement(
+    )), /* @__PURE__ */ import_react48.default.createElement("li", { className: "nav-item" }, /* @__PURE__ */ import_react48.default.createElement(
       "button",
       {
         className: `nav-link ${activeTab === "trials" ? "active" : ""}`,
@@ -55163,9 +55351,20 @@
         "data-umami-event-tab": "trials",
         "data-umami-event-category": category.name
       },
-      /* @__PURE__ */ import_react47.default.createElement("i", { className: "fa fa-flask mr-2" }),
+      /* @__PURE__ */ import_react48.default.createElement("i", { className: "fa fa-flask mr-2" }),
       "Clinical Trials"
-    ))), /* @__PURE__ */ import_react47.default.createElement("div", { className: "tab-content" }, activeTab === "chart" && /* @__PURE__ */ import_react47.default.createElement("div", { className: "tab-pane fade show active" }, loading.chart ? /* @__PURE__ */ import_react47.default.createElement("div", { className: "text-center py-5" }, /* @__PURE__ */ import_react47.default.createElement("div", { className: "spinner-border text-primary", role: "status" }, /* @__PURE__ */ import_react47.default.createElement("span", { className: "sr-only" }, "Loading chart..."))) : error ? /* @__PURE__ */ import_react47.default.createElement("div", { className: "alert alert-danger" }, /* @__PURE__ */ import_react47.default.createElement("h4", null, "Error"), /* @__PURE__ */ import_react47.default.createElement("p", null, error)) : chartData.length > 0 ? /* @__PURE__ */ import_react47.default.createElement("div", { className: "card" }, /* @__PURE__ */ import_react47.default.createElement("div", { className: "card-body" }, /* @__PURE__ */ import_react47.default.createElement("div", { className: "d-flex justify-content-between align-items-start mb-3" }, /* @__PURE__ */ import_react47.default.createElement("div", null, /* @__PURE__ */ import_react47.default.createElement("h5", { className: "card-title mb-2" }, "Monthly Research Activity"), /* @__PURE__ */ import_react47.default.createElement("p", { className: "text-muted mb-0" }, /* @__PURE__ */ import_react47.default.createElement("i", { className: "fas fa-chart-bar text-success mr-2" }), "Green bars show clinical trials", /* @__PURE__ */ import_react47.default.createElement("span", { className: "mx-3" }, "\u2022"), /* @__PURE__ */ import_react47.default.createElement("i", { className: "fas fa-chart-line text-info mr-2" }), "Blue line shows cumulative articles", /* @__PURE__ */ import_react47.default.createElement("br", null), /* @__PURE__ */ import_react47.default.createElement("i", { className: "fas fa-chart-line text-warning mr-2" }), "Orange line: LightGBM model", /* @__PURE__ */ import_react47.default.createElement("span", { className: "mx-3" }, "\u2022"), /* @__PURE__ */ import_react47.default.createElement("i", { className: "fas fa-chart-line text-danger mr-2" }), "Red line: LSTM model", /* @__PURE__ */ import_react47.default.createElement("span", { className: "mx-3" }, "\u2022"), /* @__PURE__ */ import_react47.default.createElement("i", { className: "fas fa-chart-line text-purple mr-2" }), "Purple line: PubMed BERT model")), /* @__PURE__ */ import_react47.default.createElement("div", { className: "d-flex flex-column align-items-end" }, /* @__PURE__ */ import_react47.default.createElement("div", { className: "btn-group btn-group-sm mb-2", role: "group" }, /* @__PURE__ */ import_react47.default.createElement(
+    )), /* @__PURE__ */ import_react48.default.createElement("li", { className: "nav-item" }, /* @__PURE__ */ import_react48.default.createElement(
+      "button",
+      {
+        className: `nav-link ${activeTab === "authors" ? "active" : ""}`,
+        onClick: () => handleTabChange("authors"),
+        "data-umami-event": "click--observatory-tab",
+        "data-umami-event-tab": "authors",
+        "data-umami-event-category": category.name
+      },
+      /* @__PURE__ */ import_react48.default.createElement("i", { className: "fa fa-users mr-2" }),
+      "Top Authors"
+    ))), /* @__PURE__ */ import_react48.default.createElement("div", { className: "tab-content" }, activeTab === "chart" && /* @__PURE__ */ import_react48.default.createElement("div", { className: "tab-pane fade show active" }, loading.chart ? /* @__PURE__ */ import_react48.default.createElement("div", { className: "text-center py-5" }, /* @__PURE__ */ import_react48.default.createElement("div", { className: "spinner-border text-primary", role: "status" }, /* @__PURE__ */ import_react48.default.createElement("span", { className: "sr-only" }, "Loading chart..."))) : error ? /* @__PURE__ */ import_react48.default.createElement("div", { className: "alert alert-danger" }, /* @__PURE__ */ import_react48.default.createElement("h4", null, "Error"), /* @__PURE__ */ import_react48.default.createElement("p", null, error)) : chartData.length > 0 ? /* @__PURE__ */ import_react48.default.createElement("div", { className: "card" }, /* @__PURE__ */ import_react48.default.createElement("div", { className: "card-body" }, /* @__PURE__ */ import_react48.default.createElement("div", { className: "d-flex justify-content-between align-items-start mb-3" }, /* @__PURE__ */ import_react48.default.createElement("div", null, /* @__PURE__ */ import_react48.default.createElement("h5", { className: "card-title mb-2" }, "Monthly Research Activity"), /* @__PURE__ */ import_react48.default.createElement("p", { className: "text-muted mb-0" }, /* @__PURE__ */ import_react48.default.createElement("i", { className: "fas fa-chart-bar text-success mr-2" }), "Green bars show clinical trials", /* @__PURE__ */ import_react48.default.createElement("span", { className: "mx-3" }, "\u2022"), /* @__PURE__ */ import_react48.default.createElement("i", { className: "fas fa-chart-line text-info mr-2" }), "Blue line shows cumulative articles", /* @__PURE__ */ import_react48.default.createElement("br", null), /* @__PURE__ */ import_react48.default.createElement("i", { className: "fas fa-chart-line text-warning mr-2" }), "Orange line: LightGBM model", /* @__PURE__ */ import_react48.default.createElement("span", { className: "mx-3" }, "\u2022"), /* @__PURE__ */ import_react48.default.createElement("i", { className: "fas fa-chart-line text-danger mr-2" }), "Red line: LSTM model", /* @__PURE__ */ import_react48.default.createElement("span", { className: "mx-3" }, "\u2022"), /* @__PURE__ */ import_react48.default.createElement("i", { className: "fas fa-chart-line text-purple mr-2" }), "Purple line: PubMed BERT model")), /* @__PURE__ */ import_react48.default.createElement("div", { className: "d-flex flex-column align-items-end" }, /* @__PURE__ */ import_react48.default.createElement("div", { className: "btn-group btn-group-sm mb-2", role: "group" }, /* @__PURE__ */ import_react48.default.createElement(
       "button",
       {
         type: "button",
@@ -55173,7 +55372,7 @@
         onClick: () => handleDateFilterChange("last12months")
       },
       "Last 12 Months"
-    ), /* @__PURE__ */ import_react47.default.createElement(
+    ), /* @__PURE__ */ import_react48.default.createElement(
       "button",
       {
         type: "button",
@@ -55181,7 +55380,7 @@
         onClick: () => handleDateFilterChange("all")
       },
       "All Time"
-    ), /* @__PURE__ */ import_react47.default.createElement(
+    ), /* @__PURE__ */ import_react48.default.createElement(
       "button",
       {
         type: "button",
@@ -55189,7 +55388,7 @@
         onClick: () => handleDateFilterChange("custom")
       },
       "Custom Range"
-    )), dateFilter === "custom" && /* @__PURE__ */ import_react47.default.createElement("div", { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react47.default.createElement(
+    )), dateFilter === "custom" && /* @__PURE__ */ import_react48.default.createElement("div", { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react48.default.createElement(
       "input",
       {
         type: "month",
@@ -55199,7 +55398,7 @@
         onChange: (e) => setCustomStartDate(e.target.value),
         placeholder: "Start"
       }
-    ), /* @__PURE__ */ import_react47.default.createElement("span", { className: "text-muted mr-2" }, "to"), /* @__PURE__ */ import_react47.default.createElement(
+    ), /* @__PURE__ */ import_react48.default.createElement("span", { className: "text-muted mr-2" }, "to"), /* @__PURE__ */ import_react48.default.createElement(
       "input",
       {
         type: "month",
@@ -55209,13 +55408,13 @@
         onChange: (e) => setCustomEndDate(e.target.value),
         placeholder: "End"
       }
-    )))), /* @__PURE__ */ import_react47.default.createElement("div", { className: "observatory-chart", style: { width: "100%", height: "400px" } }, /* @__PURE__ */ import_react47.default.createElement(ResponsiveContainer, null, /* @__PURE__ */ import_react47.default.createElement(ComposedChart, { data: chartData }, /* @__PURE__ */ import_react47.default.createElement(CartesianGrid, { strokeDasharray: "3 3" }), /* @__PURE__ */ import_react47.default.createElement(
+    )))), /* @__PURE__ */ import_react48.default.createElement("div", { className: "observatory-chart", style: { width: "100%", height: "400px" } }, /* @__PURE__ */ import_react48.default.createElement(ResponsiveContainer, null, /* @__PURE__ */ import_react48.default.createElement(ComposedChart, { data: chartData }, /* @__PURE__ */ import_react48.default.createElement(CartesianGrid, { strokeDasharray: "3 3" }), /* @__PURE__ */ import_react48.default.createElement(
       XAxis,
       {
         dataKey: "date",
         tickFormatter: formatXAxis
       }
-    ), /* @__PURE__ */ import_react47.default.createElement(YAxis, { yAxisId: "left", orientation: "left" }), /* @__PURE__ */ import_react47.default.createElement(YAxis, { yAxisId: "right", orientation: "right" }), /* @__PURE__ */ import_react47.default.createElement(Tooltip, { content: /* @__PURE__ */ import_react47.default.createElement(CustomTooltip, null) }), /* @__PURE__ */ import_react47.default.createElement(Legend, null), /* @__PURE__ */ import_react47.default.createElement(
+    ), /* @__PURE__ */ import_react48.default.createElement(YAxis, { yAxisId: "left", orientation: "left" }), /* @__PURE__ */ import_react48.default.createElement(YAxis, { yAxisId: "right", orientation: "right" }), /* @__PURE__ */ import_react48.default.createElement(Tooltip, { content: /* @__PURE__ */ import_react48.default.createElement(CustomTooltip, null) }), /* @__PURE__ */ import_react48.default.createElement(Legend, null), /* @__PURE__ */ import_react48.default.createElement(
       Bar,
       {
         yAxisId: "left",
@@ -55224,7 +55423,7 @@
         name: "Clinical Trials (Monthly)",
         opacity: 0.8
       }
-    ), /* @__PURE__ */ import_react47.default.createElement(
+    ), /* @__PURE__ */ import_react48.default.createElement(
       Line,
       {
         yAxisId: "right",
@@ -55235,7 +55434,7 @@
         name: "Articles (Cumulative)",
         dot: { fill: "#007bff", strokeWidth: 1, r: 3 }
       }
-    ), /* @__PURE__ */ import_react47.default.createElement(
+    ), /* @__PURE__ */ import_react48.default.createElement(
       Line,
       {
         yAxisId: "right",
@@ -55247,7 +55446,7 @@
         dot: { fill: "#fd7e14", strokeWidth: 1, r: 2 },
         strokeDasharray: "5 5"
       }
-    ), /* @__PURE__ */ import_react47.default.createElement(
+    ), /* @__PURE__ */ import_react48.default.createElement(
       Line,
       {
         yAxisId: "right",
@@ -55259,7 +55458,7 @@
         dot: { fill: "#dc3545", strokeWidth: 1, r: 2 },
         strokeDasharray: "8 4"
       }
-    ), /* @__PURE__ */ import_react47.default.createElement(
+    ), /* @__PURE__ */ import_react48.default.createElement(
       Line,
       {
         yAxisId: "right",
@@ -55271,7 +55470,7 @@
         dot: { fill: "#6f42c1", strokeWidth: 1, r: 2 },
         strokeDasharray: "12 3"
       }
-    )))))) : /* @__PURE__ */ import_react47.default.createElement("div", { className: "alert alert-info" }, /* @__PURE__ */ import_react47.default.createElement("p", null, "No data available for this category."))), activeTab === "articles" && /* @__PURE__ */ import_react47.default.createElement("div", { className: "tab-pane fade show active" }, /* @__PURE__ */ import_react47.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-3" }, /* @__PURE__ */ import_react47.default.createElement("h5", null, "Research Articles"), /* @__PURE__ */ import_react47.default.createElement(
+    )))))) : /* @__PURE__ */ import_react48.default.createElement("div", { className: "alert alert-info" }, /* @__PURE__ */ import_react48.default.createElement("p", null, "No data available for this category."))), activeTab === "articles" && /* @__PURE__ */ import_react48.default.createElement("div", { className: "tab-pane fade show active" }, /* @__PURE__ */ import_react48.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-3" }, /* @__PURE__ */ import_react48.default.createElement("h5", null, "Research Articles"), /* @__PURE__ */ import_react48.default.createElement(
       DownloadButton_default,
       {
         apiEndpoint: `${config.API_URL}/articles/search/`,
@@ -55283,13 +55482,13 @@
           // Search by category name
         }
       }
-    )), /* @__PURE__ */ import_react47.default.createElement(
+    )), /* @__PURE__ */ import_react48.default.createElement(
       ArticleList_default,
       {
         type: "category",
         options: { category: category.slug }
       }
-    )), activeTab === "trials" && /* @__PURE__ */ import_react47.default.createElement("div", { className: "tab-pane fade show active" }, /* @__PURE__ */ import_react47.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-3" }, /* @__PURE__ */ import_react47.default.createElement("h5", null, "Clinical Trials"), /* @__PURE__ */ import_react47.default.createElement(
+    )), activeTab === "trials" && /* @__PURE__ */ import_react48.default.createElement("div", { className: "tab-pane fade show active" }, /* @__PURE__ */ import_react48.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-3" }, /* @__PURE__ */ import_react48.default.createElement("h5", null, "Clinical Trials"), /* @__PURE__ */ import_react48.default.createElement(
       DownloadButton_default,
       {
         apiEndpoint: `${config.API_URL}/trials/search/`,
@@ -55301,11 +55500,18 @@
           // Search by category name
         }
       }
-    )), /* @__PURE__ */ import_react47.default.createElement(
+    )), /* @__PURE__ */ import_react48.default.createElement(
       TrialsList_default,
       {
         type: "category",
         options: { category: category.slug }
+      }
+    )), activeTab === "authors" && /* @__PURE__ */ import_react48.default.createElement("div", { className: "tab-pane fade show active" }, /* @__PURE__ */ import_react48.default.createElement(
+      AuthorsList_default,
+      {
+        category,
+        config,
+        isActive: activeTab === "authors"
       }
     )))));
   }
@@ -55363,15 +55569,15 @@
   function Observatory({ config = DEFAULT_CONFIG }) {
     const { categorySlug } = useParams();
     const navigate = useNavigate();
-    const [selectedCategory, setSelectedCategory] = (0, import_react48.useState)(null);
-    const [categories, setCategories] = (0, import_react48.useState)([]);
-    const [filteredCategories, setFilteredCategories] = (0, import_react48.useState)([]);
-    const [searchTerm, setSearchTerm] = (0, import_react48.useState)("");
-    const [selectedTags, setSelectedTags] = (0, import_react48.useState)([]);
-    const [loading, setLoading] = (0, import_react48.useState)(true);
-    const [error, setError] = (0, import_react48.useState)(null);
+    const [selectedCategory, setSelectedCategory] = (0, import_react49.useState)(null);
+    const [categories, setCategories] = (0, import_react49.useState)([]);
+    const [filteredCategories, setFilteredCategories] = (0, import_react49.useState)([]);
+    const [searchTerm, setSearchTerm] = (0, import_react49.useState)("");
+    const [selectedTags, setSelectedTags] = (0, import_react49.useState)([]);
+    const [loading, setLoading] = (0, import_react49.useState)(true);
+    const [error, setError] = (0, import_react49.useState)(null);
     const allTags = [...new Set(CATEGORIES.flatMap((cat) => cat.tags))].sort();
-    (0, import_react48.useEffect)(() => {
+    (0, import_react49.useEffect)(() => {
       setCategories(CATEGORIES);
       setFilteredCategories(CATEGORIES);
       if (categorySlug) {
@@ -55384,7 +55590,7 @@
       }
       setLoading(false);
     }, [categorySlug]);
-    (0, import_react48.useEffect)(() => {
+    (0, import_react49.useEffect)(() => {
       let filtered = categories;
       if (searchTerm.trim()) {
         filtered = filtered.filter(
@@ -55449,19 +55655,19 @@
       navigate("/observatory", { replace: true });
     };
     if (loading) {
-      return /* @__PURE__ */ import_react48.default.createElement("div", { className: "container mt-4" }, /* @__PURE__ */ import_react48.default.createElement("div", { className: "row justify-content-center" }, /* @__PURE__ */ import_react48.default.createElement("div", { className: "col-md-8 text-center" }, /* @__PURE__ */ import_react48.default.createElement("div", { className: "spinner-border text-primary", role: "status" }, /* @__PURE__ */ import_react48.default.createElement("span", { className: "sr-only" }, "Loading...")))));
+      return /* @__PURE__ */ import_react49.default.createElement("div", { className: "container mt-4" }, /* @__PURE__ */ import_react49.default.createElement("div", { className: "row justify-content-center" }, /* @__PURE__ */ import_react49.default.createElement("div", { className: "col-md-8 text-center" }, /* @__PURE__ */ import_react49.default.createElement("div", { className: "spinner-border text-primary", role: "status" }, /* @__PURE__ */ import_react49.default.createElement("span", { className: "sr-only" }, "Loading...")))));
     }
     if (error) {
-      return /* @__PURE__ */ import_react48.default.createElement("div", { className: "container mt-4" }, /* @__PURE__ */ import_react48.default.createElement("div", { className: "row justify-content-center" }, /* @__PURE__ */ import_react48.default.createElement("div", { className: "col-md-8" }, /* @__PURE__ */ import_react48.default.createElement("div", { className: "alert alert-danger" }, /* @__PURE__ */ import_react48.default.createElement("h4", null, "Error"), /* @__PURE__ */ import_react48.default.createElement("p", null, error)))));
+      return /* @__PURE__ */ import_react49.default.createElement("div", { className: "container mt-4" }, /* @__PURE__ */ import_react49.default.createElement("div", { className: "row justify-content-center" }, /* @__PURE__ */ import_react49.default.createElement("div", { className: "col-md-8" }, /* @__PURE__ */ import_react49.default.createElement("div", { className: "alert alert-danger" }, /* @__PURE__ */ import_react49.default.createElement("h4", null, "Error"), /* @__PURE__ */ import_react49.default.createElement("p", null, error)))));
     }
-    return /* @__PURE__ */ import_react48.default.createElement("div", { className: "container mt-4" }, selectedCategory ? /* @__PURE__ */ import_react48.default.createElement(
+    return /* @__PURE__ */ import_react49.default.createElement("div", { className: "container mt-4" }, selectedCategory ? /* @__PURE__ */ import_react49.default.createElement(
       CategoryDetail_default,
       {
         category: selectedCategory,
         config,
         onBack: handleBackToList
       }
-    ) : /* @__PURE__ */ import_react48.default.createElement("div", { className: "row" }, /* @__PURE__ */ import_react48.default.createElement("div", { className: "col-md-12" }, /* @__PURE__ */ import_react48.default.createElement("div", { className: "row justify-content-center mb-4" }, /* @__PURE__ */ import_react48.default.createElement("div", { className: "col-md-6" }, /* @__PURE__ */ import_react48.default.createElement("form", { onSubmit: handleSearchSubmit, className: "observatory-search" }, /* @__PURE__ */ import_react48.default.createElement("div", { className: "input-group" }, /* @__PURE__ */ import_react48.default.createElement(
+    ) : /* @__PURE__ */ import_react49.default.createElement("div", { className: "row" }, /* @__PURE__ */ import_react49.default.createElement("div", { className: "col-md-12" }, /* @__PURE__ */ import_react49.default.createElement("div", { className: "row justify-content-center mb-4" }, /* @__PURE__ */ import_react49.default.createElement("div", { className: "col-md-6" }, /* @__PURE__ */ import_react49.default.createElement("form", { onSubmit: handleSearchSubmit, className: "observatory-search" }, /* @__PURE__ */ import_react49.default.createElement("div", { className: "input-group" }, /* @__PURE__ */ import_react49.default.createElement(
       "input",
       {
         type: "text",
@@ -55470,7 +55676,7 @@
         value: searchTerm,
         onChange: handleSearchChange
       }
-    ), /* @__PURE__ */ import_react48.default.createElement("div", { className: "input-group-append" }, searchTerm ? /* @__PURE__ */ import_react48.default.createElement(
+    ), /* @__PURE__ */ import_react49.default.createElement("div", { className: "input-group-append" }, searchTerm ? /* @__PURE__ */ import_react49.default.createElement(
       "button",
       {
         className: "btn btn-outline-secondary",
@@ -55478,8 +55684,8 @@
         onClick: handleClearSearch,
         title: "Clear search"
       },
-      /* @__PURE__ */ import_react48.default.createElement("i", { className: "fa fa-times" })
-    ) : /* @__PURE__ */ import_react48.default.createElement("span", { className: "input-group-text" }, /* @__PURE__ */ import_react48.default.createElement("i", { className: "fa fa-search" }))))), /* @__PURE__ */ import_react48.default.createElement("div", { className: "observatory-filters-status mt-2" }, /* @__PURE__ */ import_react48.default.createElement("div", { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react48.default.createElement("small", { className: "text-muted" }, "Showing ", filteredCategories.length, " of ", categories.length, " treatments"), /* @__PURE__ */ import_react48.default.createElement(
+      /* @__PURE__ */ import_react49.default.createElement("i", { className: "fa fa-times" })
+    ) : /* @__PURE__ */ import_react49.default.createElement("span", { className: "input-group-text" }, /* @__PURE__ */ import_react49.default.createElement("i", { className: "fa fa-search" }))))), /* @__PURE__ */ import_react49.default.createElement("div", { className: "observatory-filters-status mt-2" }, /* @__PURE__ */ import_react49.default.createElement("div", { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react49.default.createElement("small", { className: "text-muted" }, "Showing ", filteredCategories.length, " of ", categories.length, " treatments"), /* @__PURE__ */ import_react49.default.createElement(
       "button",
       {
         className: `btn btn-sm ${searchTerm || selectedTags.length > 0 ? "btn-outline-secondary" : "btn-outline-light"}`,
@@ -55487,9 +55693,9 @@
         disabled: !searchTerm && selectedTags.length === 0,
         title: "Clear all filters"
       },
-      /* @__PURE__ */ import_react48.default.createElement("i", { className: "fa fa-times mr-1" }),
+      /* @__PURE__ */ import_react49.default.createElement("i", { className: "fa fa-times mr-1" }),
       "Clear all filters"
-    ))))), allTags.length > 0 && /* @__PURE__ */ import_react48.default.createElement("div", { className: "row justify-content-center mb-4" }, /* @__PURE__ */ import_react48.default.createElement("div", { className: "col-md-8" }, /* @__PURE__ */ import_react48.default.createElement("div", { className: "observatory-tag-filters" }, /* @__PURE__ */ import_react48.default.createElement("div", { className: "d-flex flex-wrap justify-content-center" }, /* @__PURE__ */ import_react48.default.createElement("small", { className: "text-muted align-self-center mr-2" }, "Filter by:"), allTags.map((tag) => /* @__PURE__ */ import_react48.default.createElement(
+    ))))), allTags.length > 0 && /* @__PURE__ */ import_react49.default.createElement("div", { className: "row justify-content-center mb-4" }, /* @__PURE__ */ import_react49.default.createElement("div", { className: "col-md-8" }, /* @__PURE__ */ import_react49.default.createElement("div", { className: "observatory-tag-filters" }, /* @__PURE__ */ import_react49.default.createElement("div", { className: "d-flex flex-wrap justify-content-center" }, /* @__PURE__ */ import_react49.default.createElement("small", { className: "text-muted align-self-center mr-2" }, "Filter by:"), allTags.map((tag) => /* @__PURE__ */ import_react49.default.createElement(
       "button",
       {
         key: tag,
@@ -55498,28 +55704,28 @@
         style: { borderRadius: "20px", fontSize: "0.85rem" }
       },
       tag,
-      selectedTags.includes(tag) && /* @__PURE__ */ import_react48.default.createElement("i", { className: "fa fa-check ml-1" })
-    ))))))), /* @__PURE__ */ import_react48.default.createElement("div", { className: "row observatory-card" }, filteredCategories.map((category) => /* @__PURE__ */ import_react48.default.createElement("div", { key: category.slug, className: "col-sm-6 col-md-4 col-lg-3 mb-4" }, /* @__PURE__ */ import_react48.default.createElement(
+      selectedTags.includes(tag) && /* @__PURE__ */ import_react49.default.createElement("i", { className: "fa fa-check ml-1" })
+    ))))))), /* @__PURE__ */ import_react49.default.createElement("div", { className: "row observatory-card" }, filteredCategories.map((category) => /* @__PURE__ */ import_react49.default.createElement("div", { key: category.slug, className: "col-sm-6 col-md-4 col-lg-3 mb-4" }, /* @__PURE__ */ import_react49.default.createElement(
       CategoryCard_default,
       {
         category,
         onSelect: handleCategorySelect
       }
-    )))), filteredCategories.length === 0 && (searchTerm || selectedTags.length > 0) && /* @__PURE__ */ import_react48.default.createElement("div", { className: "col-md-12" }, /* @__PURE__ */ import_react48.default.createElement("div", { className: "alert alert-info text-center" }, /* @__PURE__ */ import_react48.default.createElement("h5", null, "No treatments found"), /* @__PURE__ */ import_react48.default.createElement("p", null, "No treatments match your", searchTerm && ` search for "${searchTerm}"`, searchTerm && selectedTags.length > 0 && " and ", selectedTags.length > 0 && `selected tags: ${selectedTags.join(", ")}`), /* @__PURE__ */ import_react48.default.createElement("p", null, "Try:"), /* @__PURE__ */ import_react48.default.createElement("ul", { className: "list" }, /* @__PURE__ */ import_react48.default.createElement("li", null, 'Specific drug names (e.g., "Tecfidera", "Ocrelizumab")'), /* @__PURE__ */ import_react48.default.createElement("li", null, 'Treatment types (e.g., "stem cell", "antibody")'), /* @__PURE__ */ import_react48.default.createElement("li", null, 'Mechanisms (e.g., "remyelination", "neuroprotection")'), /* @__PURE__ */ import_react48.default.createElement("li", null, "Removing some filters"))))));
+    )))), filteredCategories.length === 0 && (searchTerm || selectedTags.length > 0) && /* @__PURE__ */ import_react49.default.createElement("div", { className: "col-md-12" }, /* @__PURE__ */ import_react49.default.createElement("div", { className: "alert alert-info text-center" }, /* @__PURE__ */ import_react49.default.createElement("h5", null, "No treatments found"), /* @__PURE__ */ import_react49.default.createElement("p", null, "No treatments match your", searchTerm && ` search for "${searchTerm}"`, searchTerm && selectedTags.length > 0 && " and ", selectedTags.length > 0 && `selected tags: ${selectedTags.join(", ")}`), /* @__PURE__ */ import_react49.default.createElement("p", null, "Try:"), /* @__PURE__ */ import_react49.default.createElement("ul", { className: "list" }, /* @__PURE__ */ import_react49.default.createElement("li", null, 'Specific drug names (e.g., "Tecfidera", "Ocrelizumab")'), /* @__PURE__ */ import_react49.default.createElement("li", null, 'Treatment types (e.g., "stem cell", "antibody")'), /* @__PURE__ */ import_react49.default.createElement("li", null, 'Mechanisms (e.g., "remyelination", "neuroprotection")'), /* @__PURE__ */ import_react49.default.createElement("li", null, "Removing some filters"))))));
   }
   var Observatory_default = Observatory;
 
   // assets/js/apps/observatory.jsx
   window.ENV_API_URL = window.ENV_API_URL || "https://api.gregory-ms.com";
   function App() {
-    return /* @__PURE__ */ import_react49.default.createElement(BrowserRouter, null, /* @__PURE__ */ import_react49.default.createElement(Routes, null, /* @__PURE__ */ import_react49.default.createElement(Route, { path: "/", element: /* @__PURE__ */ import_react49.default.createElement(Observatory_default, null) }), /* @__PURE__ */ import_react49.default.createElement(Route, { path: "/observatory", element: /* @__PURE__ */ import_react49.default.createElement(Observatory_default, null) }), /* @__PURE__ */ import_react49.default.createElement(Route, { path: "/observatory/category/:categorySlug", element: /* @__PURE__ */ import_react49.default.createElement(Observatory_default, null) })));
+    return /* @__PURE__ */ import_react50.default.createElement(BrowserRouter, null, /* @__PURE__ */ import_react50.default.createElement(Routes, null, /* @__PURE__ */ import_react50.default.createElement(Route, { path: "/", element: /* @__PURE__ */ import_react50.default.createElement(Observatory_default, null) }), /* @__PURE__ */ import_react50.default.createElement(Route, { path: "/observatory", element: /* @__PURE__ */ import_react50.default.createElement(Observatory_default, null) }), /* @__PURE__ */ import_react50.default.createElement(Route, { path: "/observatory/category/:categorySlug", element: /* @__PURE__ */ import_react50.default.createElement(Observatory_default, null) })));
   }
   document.addEventListener("DOMContentLoaded", () => {
     const rootElement = document.getElementById("root");
     if (rootElement) {
       const root = import_client.default.createRoot(rootElement);
       root.render(
-        /* @__PURE__ */ import_react49.default.createElement(import_react49.default.StrictMode, null, /* @__PURE__ */ import_react49.default.createElement(App, null))
+        /* @__PURE__ */ import_react50.default.createElement(import_react50.default.StrictMode, null, /* @__PURE__ */ import_react50.default.createElement(App, null))
       );
       console.log("Observatory app initialized");
     } else {

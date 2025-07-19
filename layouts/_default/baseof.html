@@ -223,7 +223,7 @@
 		<ul class="navbar-nav">
 		  {{- range .Site.Menus.main -}}
 			<li class="nav-item{{ if or ($current.IsMenuCurrent "main" .) ($current.HasMenuCurrent "main" .) (eq $current.RelPermalink .URL) }} active{{ end }}">
-			  <a href="{{- .URL | absLangURL -}}" title="{{- .Post -}}" class="nav-link top-menu menu-click" data-umami-event="click--topnav-{{- .Name | urlize | lower -}}">
+			  <a href="{{- .URL | relLangURL -}}" title="{{- .Post -}}" class="nav-link top-menu menu-click" data-umami-event="click--topnav-{{- .Name | urlize | lower -}}">
 				{{- .Name | safeHTML -}}
 			  </a>
 			</li>

@@ -6,7 +6,7 @@ import React from 'react';
 /**
  * CategoryCard component
  * @param {Object} props - Component props
- * @param {Object} props.category - Category object with slug, name, and description
+ * @param {Object} props.category - Category object with slug, name, description, and optional author info
  * @param {Function} props.onSelect - Callback function when category is selected
  */
 function CategoryCard({ category, onSelect }) {
