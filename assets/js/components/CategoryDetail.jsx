@@ -320,6 +320,75 @@ function CategoryDetail({ category, config, onBack }) {
     return null;
   };
 
+  // Check if data is too sparse for meaningful visualization
+  const isSparseData = (data) => {
+    if (!data || data.length === 0) return false;
+    
+    // Consider data sparse if:
+    // 1. Less than 3 data points total, OR
+    // 2. Data points are spread across more than 2 years but have less than 6 data points
+    const totalDataPoints = data.length;
+    if (totalDataPoints < 3) return true;
+    
+    if (totalDataPoints < 6) {
+      // Check if data spans more than 2 years
+      const dates = data.map(item => new Date(item.date)).sort((a, b) => a - b);
+      const firstDate = dates[0];
+      const lastDate = dates[dates.length - 1];
+      const yearsDiff = (lastDate.getFullYear() - firstDate.getFullYear());
+      
+      if (yearsDiff > 2) return true;
+    }
+    
+    return false;
+  };
+
+  // Render sparse data message
+  const renderSparseDataMessage = (data) => {
+    const totalArticles = monthlyData?.monthly_article_counts?.reduce((sum, item) => sum + item.count, 0) || 0;
+    const totalTrials = monthlyData?.monthly_trial_counts?.reduce((sum, item) => sum + item.count, 0) || 0;
+    const dataPointCount = data && data.length > 0 ? data.length : 0;
+    
+    return (
+      <div className="alert alert-warning" style={{ backgroundColor: '#e3f2fd', borderColor: '#2196f3', color: '#0d47a1' }}>
+        <h5 className="mb-3">
+          <i className="fas fa-info-circle mr-2" style={{ color: '#1976d2' }}></i>
+          Limited Data Available
+        </h5>
+        <p className="mb-3" style={{ fontSize: '1rem', lineHeight: '1.5' }}>
+          This category has limited research activity with only <strong>{dataPointCount} data points </strong>  
+          spanning multiple years, which makes trend visualization less meaningful.
+        </p>
+        <div className="row mt-4">
+          <div className="col-md-6 mb-3">
+            <div className="card border-primary" style={{ backgroundColor: '#f8f9fa' }}>
+              <div className="card-body text-center py-4">
+                <h6 className="text-primary mb-2" style={{ fontWeight: '600' }}>Total Articles</h6>
+                <h3 className="mb-0" style={{ color: '#1976d2', fontWeight: 'bold' }}>{totalArticles}</h3>
+              </div>
+            </div>
+          </div>
+          <div className="col-md-6 mb-3">
+            <div className="card border-success" style={{ backgroundColor: '#f8f9fa' }}>
+              <div className="card-body text-center py-4">
+                <h6 className="text-success mb-2" style={{ fontWeight: '600' }}>Total Trials</h6>
+                <h3 className="mb-0" style={{ color: '#388e3c', fontWeight: 'bold' }}>{totalTrials}</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="mt-3 p-3" style={{ backgroundColor: 'rgba(33, 150, 243, 0.1)', borderRadius: '6px' }}>
+          <p className="mb-0" style={{ fontSize: '0.95rem' }}>
+            <i className="fas fa-lightbulb mr-2" style={{ color: '#ff9800' }}></i>
+            <strong>Tip:</strong> Use the <strong>Articles</strong> and <strong>Clinical Trials</strong> tabs below to explore the specific research available for this category.
+          </p>
+        </div>
+      </div>
+    );
+  };
+
+  // Get formatted chart data
+
   // Handle date filter changes
   const handleDateFilterChange = (newFilter) => {
     setDateFilter(newFilter);
@@ -469,7 +538,7 @@ function CategoryDetail({ category, config, onBack }) {
                   <h4>Error</h4>
                   <p>{error}</p>
                 </div>
-              ) : chartData.length > 0 ? (
+              ) : monthlyData && chartData.length > 0 && !isSparseData(chartData) ? (
                 <div className="card">
                   <div className="card-body">
                     <div className="d-flex justify-content-between align-items-start mb-3">
@@ -601,6 +670,9 @@ function CategoryDetail({ category, config, onBack }) {
                     </div>
                   </div>
                 </div>
+              ) : monthlyData && (chartData.length > 0 && isSparseData(chartData) || 
+                         (monthlyData.monthly_article_counts?.length > 0 || monthlyData.monthly_trial_counts?.length > 0)) ? (
+                renderSparseDataMessage(chartData.length > 0 ? chartData : [])
               ) : (
                 <div className="alert alert-info">
                   <p>No data available for this category.</p>
