@@ -337,6 +337,48 @@ function CategoryDetail({ category, config, onBack }) {
 
   const chartData = formatChartData(monthlyData);
 
+  // Function to render category description with formatting
+  const renderCategoryDescription = (category) => {
+    // Use category_description if available, otherwise fall back to description
+    const fullDescription = category.category_description || category.description;
+    
+    // Split by newlines and render each line
+    const lines = fullDescription.split('\n');
+    
+    return lines.map((line, index) => {
+      // Check if line contains a URL
+      const urlRegex = /(https?:\/\/[^\s]+)/g;
+      
+      if (urlRegex.test(line)) {
+        // Replace URLs with clickable links
+        const parts = line.split(urlRegex);
+        return (
+          <p key={index} className="text-muted">
+            {parts.map((part, partIndex) => {
+              if (urlRegex.test(part)) {
+                return (
+                  <a 
+                    key={partIndex} 
+                    href={part} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-primary"
+                  >
+                    {part}
+                  </a>
+                );
+              }
+              return part;
+            })}
+          </p>
+        );
+      } else {
+        // Regular line without URL
+        return line.trim() ? <p key={index} className="text-muted">{line}</p> : <br key={index} />;
+      }
+    });
+  };
+
   return (
     <div className="row">
       <div className="col-md-12">
@@ -344,7 +386,9 @@ function CategoryDetail({ category, config, onBack }) {
         <div className="d-flex justify-content-between align-items-center mb-4">
           <div>
             <h2 className="text-primary">{category.name}</h2>
-            <p className="text-muted">{category.description}</p>
+            <div className="category-description">
+              {renderCategoryDescription(category)}
+            </div>
           </div>
           <button 
             className="btn btn-secondary" 
