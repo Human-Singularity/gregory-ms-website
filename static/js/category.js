@@ -55930,10 +55930,62 @@
   var categoryService = {
     // Get monthly counts for a category - Still supported endpoint
     getMonthlyCounts: (category) => apiClient.get(`/teams/1/categories/${category}/monthly-counts/`),
-    // Get categories with filtering - NEW endpoint
+    // Get categories with filtering - ENHANCED with author statistics
     getCategories: (params = {}) => {
       const queryParams = new URLSearchParams({
         format: "json",
+        include_authors: "true",
+        // Default to include author statistics
+        max_authors: "10",
+        // Default to top 10 authors
+        team_id: 1,
+        // Default team ID
+        ...params
+      });
+      return apiClient.get(`/categories/?${queryParams.toString()}`);
+    },
+    // Get categories without author data for performance
+    getCategoriesBasic: (params = {}) => {
+      const queryParams = new URLSearchParams({
+        format: "json",
+        include_authors: "false",
+        team_id: 1,
+        // Default team ID
+        ...params
+      });
+      return apiClient.get(`/categories/?${queryParams.toString()}`);
+    },
+    // Get detailed author statistics for a specific category - CORRECTED endpoint
+    getCategoryAuthors: (categoryId, params = {}) => {
+      const queryParams = new URLSearchParams({
+        format: "json",
+        category_id: categoryId,
+        include_authors: "true",
+        sort_by: "articles_count",
+        order: "desc",
+        ...params
+      });
+      return apiClient.get(`/categories/?${queryParams.toString()}`);
+    },
+    // Alternative method using category_slug
+    getCategoryAuthorsBySlug: (categorySlug, params = {}) => {
+      const queryParams = new URLSearchParams({
+        format: "json",
+        category_slug: categorySlug,
+        include_authors: "true",
+        sort_by: "articles_count",
+        order: "desc",
+        ...params
+      });
+      return apiClient.get(`/categories/?${queryParams.toString()}`);
+    },
+    // Get categories with date filtering for author statistics
+    getCategoriesWithDateFilter: (params = {}) => {
+      const queryParams = new URLSearchParams({
+        format: "json",
+        include_authors: "true",
+        max_authors: "10",
+        team_id: 1,
         ...params
       });
       return apiClient.get(`/categories/?${queryParams.toString()}`);

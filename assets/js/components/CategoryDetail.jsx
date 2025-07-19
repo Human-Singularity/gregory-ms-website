@@ -7,6 +7,7 @@ import { ComposedChart, Bar, Line, XAxis, YAxis, Tooltip, CartesianGrid, Respons
 import { categoryService } from '../services/api';
 import ArticleList from './ArticleList';
 import TrialsList from './TrialsList';
+import AuthorsList from './AuthorsList';
 import DownloadButton from './DownloadButton';
 
 /**
@@ -393,6 +394,18 @@ function CategoryDetail({ category, config, onBack }) {
               Clinical Trials
             </button>
           </li>
+          <li className="nav-item">
+            <button
+              className={`nav-link ${activeTab === 'authors' ? 'active' : ''}`}
+              onClick={() => handleTabChange('authors')}
+              data-umami-event="click--observatory-tab"
+              data-umami-event-tab="authors"
+              data-umami-event-category={category.name}
+            >
+              <i className="fa fa-users mr-2"></i>
+              Top Authors
+            </button>
+          </li>
         </ul>
 
         {/* Tab Content */}
@@ -593,6 +606,17 @@ function CategoryDetail({ category, config, onBack }) {
               <TrialsList 
                 type="category" 
                 options={{ category: category.slug }}
+              />
+            </div>
+          )}
+
+          {/* Authors Tab */}
+          {activeTab === 'authors' && (
+            <div className="tab-pane fade show active">
+              <AuthorsList 
+                category={category}
+                config={config}
+                isActive={activeTab === 'authors'}
               />
             </div>
           )}

@@ -34,6 +34,160 @@ body.observatory-page .footer {
   outline-offset: 2px;
 }
 
+/* Category statistics badges */
+.category-stats .badge {
+  font-size: 0.75rem;
+  font-weight: normal;
+  margin-right: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.category-stats .gap-2 {
+  gap: 0.5rem !important;
+}
+
+/* Top authors preview */
+.top-authors-preview {
+  border-left: 3px solid #007bff;
+  padding-left: 0.75rem;
+  margin-left: 0;
+}
+
+.top-authors-preview .small {
+  line-height: 1.3;
+}
+
+/* Authors list styling */
+.authors-list .author-item {
+  transition: background-color 0.2s ease;
+}
+
+.authors-list .author-item:hover {
+  background-color: #f8f9fa;
+}
+
+/* Authors table styling */
+.authors-list .table {
+  margin-bottom: 0;
+  font-size: 0.9rem;
+}
+
+.authors-list .table th {
+  border-top: none;
+  font-weight: 600;
+  color: #495057;
+  padding: 0.75rem;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.authors-list .table td {
+  padding: 0.75rem;
+  vertical-align: middle;
+  border-top: 1px solid #dee2e6;
+}
+
+.authors-list .table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.authors-list .table th:first-child,
+.authors-list .table td:first-child {
+  width: 60px;
+  text-align: center;
+}
+
+.authors-list .table th:last-child,
+.authors-list .table td:last-child {
+  width: 100px;
+  text-align: center;
+}
+
+/* Author name link styling */
+.authors-list .table a {
+  color: #007bff;
+  transition: color 0.2s ease;
+}
+
+.authors-list .table a:hover {
+  color: #0056b3;
+  text-decoration: underline !important;
+}
+
+.authors-list .table .badge {
+  font-size: 0.8rem;
+}
+
+/* ORCID icon styling */
+.authors-list .fa-orcid {
+  font-size: 1.1rem;
+}
+
+.authors-list .fa-orcid:hover {
+  color: #16a085 !important;
+}
+
+/* Compact table for better height management */
+.authors-list .table-responsive {
+  /* Remove scrollbars - let table flow naturally */
+  overflow: visible;
+}
+
+.authors-list .list-group-item {
+  border-left: 4px solid transparent;
+  transition: border-color 0.2s ease;
+  padding: 1rem 1.25rem;
+}
+
+.authors-list .list-group-item:hover {
+  border-left-color: #007bff;
+}
+
+/* Make author names more prominent for scanning */
+.authors-list .list-group-item h5 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+/* Author details styling for better scanning */
+.authors-list .author-details {
+  margin-bottom: 0.75rem;
+}
+
+.authors-list .author-details p {
+  margin-bottom: 0.25rem;
+  font-size: 0.9rem;
+}
+
+/* Author stats badges */
+.authors-list .author-stats .badge {
+  font-size: 0.8rem;
+  padding: 0.4rem 0.8rem;
+  margin-right: 0.5rem;
+}
+
+/* Improve button spacing in author items */
+.authors-list .btn-sm {
+  font-size: 0.8rem;
+  padding: 0.4rem 0.8rem;
+}
+
+/* Add subtle separators between authors */
+.authors-list .list-group-item:not(:last-child) {
+  border-bottom: 1px solid #e9ecef;
+}
+
+/* Remove default list group styling that might interfere */
+.authors-list .list-group-item:first-child {
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+}
+
+.authors-list .list-group-item:last-child {
+  border-bottom-left-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+}
+
 /* Tag badges in cards */
 .observatory-card .badge {
   font-weight: normal;
