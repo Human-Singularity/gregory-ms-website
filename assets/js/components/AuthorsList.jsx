@@ -224,7 +224,7 @@ function AuthorsList({ category, config, isActive }) {
           <div className="spinner-border text-primary" role="status">
             <span className="sr-only">Loading authors...</span>
           </div>
-          <p className="mt-3 text-muted">Loading authors for {category.name}...</p>
+          <p className="mt-3 text-muted">Loading authors for {category.name}, this will take a while...</p>
         </div>
       ) : (
         <>
