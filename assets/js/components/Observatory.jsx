@@ -290,7 +290,7 @@ function Observatory({ config = DEFAULT_CONFIG }) {
                 <div className="col-md-8">
                   <div className="observatory-tag-filters">
                     <div className="d-flex flex-wrap justify-content-center">
-                      <small className="text-muted align-self-center mr-2">Filter by:</small>
+                      <p className="text-muted align-self-center mr-2">Filter by:</p>
                       {allTags.map(tag => (
                         <button
                           key={tag}
