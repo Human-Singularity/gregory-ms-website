@@ -1,9 +1,31 @@
+{{ define "bodyclasses" }}single page sources{{ end }}
+
+{{ define "data-attributes" }}
+	data-contentgrouptype="{{ .Section }}" data-contentgroupname="{{ .Title }}"
+{{ end }}
+
+{{ define "description" }}
+	{{ partial "description.html" . }}
+{{ end }}
+
 {{ define "main" }}
-  <div class="container">
-    {{ with .Content }}
-      <div class="content">
-        {{ . }}
-      </div>
-    {{ end }}
-  </div>
+<div class="wrapper">
+	{{ if or (eq .Params.options.header "small") (eq .Params.options.header "mini") (eq .Params.options.header nil ) }}
+		{{ partial "header-small.html" . }}
+	{{ else if eq $.Params.options.header "full"  }}
+		{{ partial "header-full.html" . }}
+	{{ end }}
+	{{ if eq .Params.options.header "search" }}
+		{{ partial "header-search.html" . }}
+	{{ end }}
+	<div class="section">
+		<div class="container">
+			{{ with .Content }}
+				<div class="content">
+					{{ . }}
+				</div>
+			{{ end }}
+		</div>
+	</div>
+</div>
 {{ end }}
