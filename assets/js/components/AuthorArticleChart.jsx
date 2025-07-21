@@ -1,19 +1,36 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import * as d3 from 'd3';
 import axios from 'axios';
+import { ComposedChart, Bar, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer, Legend } from 'recharts';
 
 /**
- * AuthorArticleChart component - Line chart showing cumulative articles per month
+ * AuthorArticleChart component - Chart showing cumulative articles and ML predictions per month
  * @param {object} props - Component props
  * @param {number} props.authorId - The author ID to fetch data for
  * @param {Array} props.articles - Optional array of articles to use instead of fetching
  */
 export function AuthorArticleChart({ authorId, articles: providedArticles }) {
-  const svgRef = useRef();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  // Helper function to get ML predictions from articles
+  const getMostRecentPredictions = (article) => {
+    if (!article.ml_predictions || !Array.isArray(article.ml_predictions)) {
+      return [];
+    }
+
+    const predictionsByAlgorithm = {};
+    article.ml_predictions.forEach(prediction => {
+      const algorithm = prediction.algorithm;
+      if (!predictionsByAlgorithm[algorithm] || 
+          new Date(prediction.created_date) > new Date(predictionsByAlgorithm[algorithm].created_date)) {
+        predictionsByAlgorithm[algorithm] = prediction;
+      }
+    });
+
+    return Object.values(predictionsByAlgorithm);
+  };
 
   useEffect(() => {
     if (!authorId) return;
@@ -26,7 +43,7 @@ export function AuthorArticleChart({ authorId, articles: providedArticles }) {
         return;
       }
 
-      // Group articles by year-month
+      // Group articles by year-month and track ML predictions
       const monthlyGroups = {};
       
       articlesData.forEach(article => {
@@ -41,10 +58,32 @@ export function AuthorArticleChart({ authorId, articles: providedArticles }) {
               year,
               month: month + 1, // Convert to 1-indexed for display
               count: 0,
-              date: new Date(year, month, 1)
+              date: new Date(year, month, 1),
+              dateKey: `${year}-${String(month + 1).padStart(2, '0')}`, // YYYY-MM format
+              lgbmRelevant: 0,
+              lstmRelevant: 0,
+              pubmedBertRelevant: 0
             };
           }
           monthlyGroups[key].count++;
+
+          // Count ML predictions for this article
+          const predictions = getMostRecentPredictions(article);
+          predictions.forEach(prediction => {
+            if (prediction.predicted_relevant) {
+              switch (prediction.algorithm) {
+                case 'lgbm_tfidf':
+                  monthlyGroups[key].lgbmRelevant++;
+                  break;
+                case 'lstm':
+                  monthlyGroups[key].lstmRelevant++;
+                  break;
+                case 'pubmed_bert':
+                  monthlyGroups[key].pubmedBertRelevant++;
+                  break;
+              }
+            }
+          });
         }
       });
       
@@ -52,12 +91,24 @@ export function AuthorArticleChart({ authorId, articles: providedArticles }) {
       const monthlyData = Object.values(monthlyGroups).sort((a, b) => a.date - b.date);
       
       // Create cumulative data
-      let cumulative = 0;
+      let cumulativeArticles = 0;
+      let cumulativeLgbm = 0;
+      let cumulativeLstm = 0;
+      let cumulativePubmedBert = 0;
+
       const cumulativeData = monthlyData.map(item => {
-        cumulative += item.count;
+        cumulativeArticles += item.count;
+        cumulativeLgbm += item.lgbmRelevant;
+        cumulativeLstm += item.lstmRelevant;
+        cumulativePubmedBert += item.pubmedBertRelevant;
+
         return {
           ...item,
-          cumulative: cumulative
+          cumulative: cumulativeArticles,
+          cumulativeArticles,
+          cumulativeLgbm,
+          cumulativeLstm,
+          cumulativePubmedBert
         };
       });
 
@@ -103,168 +154,79 @@ export function AuthorArticleChart({ authorId, articles: providedArticles }) {
     fetchData();
   }, [authorId, providedArticles]);
 
-  useEffect(() => {
-    if (!data.length || loading) return;
+  // Format x-axis labels
+  const formatXAxis = (tickItem) => {
+    const date = new Date(tickItem);
+    return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+  };
 
-    const svg = d3.select(svgRef.current);
-    svg.selectAll('*').remove(); // Clear previous chart
-
-    // Get the container width for responsive sizing
-    const container = svg.node().parentNode;
-    const containerWidth = container.offsetWidth;
-    
-    // Mobile-first responsive margins and dimensions
-    const isMobile = window.innerWidth <= 768;
-    const margin = isMobile 
-      ? { top: 15, right: 15, bottom: 40, left: 40 }
-      : { top: 20, right: 30, bottom: 60, left: 60 };
-    
-    // Ensure width fits in container with some padding for mobile
-    const availableWidth = containerWidth - (isMobile ? 32 : 0); // Account for container padding
-    const width = Math.max(isMobile ? 280 : 300, availableWidth - margin.left - margin.right);
-    const height = Math.max(200, Math.min(400, width * (isMobile ? 0.7 : 0.6))); // Slightly taller on mobile
-
-    renderChart(svg, data, width, height, margin);
-  }, [data, loading]);
-
-  // Add resize handler for responsive behavior
-  useEffect(() => {
-    const handleResize = () => {
-      if (data.length > 0 && !loading) {
-        // Debounce resize to avoid excessive re-renders
-        const timeoutId = setTimeout(() => {
-          const svg = d3.select(svgRef.current);
-          if (svg.node()) {
-            // Clear and re-render chart
-            svg.selectAll('*').remove();
-            
-            // Get new dimensions with mobile considerations
-            const container = svg.node().parentNode;
-            const containerWidth = container.offsetWidth;
-            const isMobile = window.innerWidth <= 768;
-            const margin = isMobile 
-              ? { top: 15, right: 15, bottom: 40, left: 40 }
-              : { top: 20, right: 30, bottom: 60, left: 60 };
-            
-            const availableWidth = containerWidth - (isMobile ? 32 : 0);
-            const width = Math.max(isMobile ? 280 : 300, availableWidth - margin.left - margin.right);
-            const height = Math.max(200, Math.min(400, width * (isMobile ? 0.7 : 0.6)));
-            
-            // Re-render with new dimensions
-            renderChart(svg, data, width, height, margin);
-          }
-        }, 250);
-        
-        return () => clearTimeout(timeoutId);
-      }
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, [data, loading]);
-
-  // Extract chart rendering logic to a separate function
-  const renderChart = (svg, chartData, width, height, margin) => {
-    // Create scales
-    const xScale = d3.scaleTime()
-      .domain(d3.extent(chartData, d => d.date))
-      .range([0, width]);
-
-    const yScale = d3.scaleLinear()
-      .domain([0, d3.max(chartData, d => d.cumulative)])
-      .nice()
-      .range([height, 0]);
-
-    // Create line generator
-    const line = d3.line()
-      .x(d => xScale(d.date))
-      .y(d => yScale(d.cumulative))
-      .curve(d3.curveMonotoneX);
-
-    // Create SVG container
-    const g = svg
-      .attr('width', width + margin.left + margin.right)
-      .attr('height', height + margin.top + margin.bottom)
-      .append('g')
-      .attr('transform', `translate(${margin.left},${margin.top})`);
-
-    // Add X axis
-    g.append('g')
-      .attr('transform', `translate(0,${height})`)
-      .call(d3.axisBottom(xScale)
-        .tickFormat(d3.timeFormat('%b %Y'))
-        .ticks(Math.max(2, Math.min(8, Math.floor(width / 100)))))
-      .selectAll('text')
-      .style('text-anchor', 'end')
-      .attr('dx', '-.8em')
-      .attr('dy', '.15em')
-      .attr('transform', 'rotate(-45)');
-
-    // Add Y axis
-    g.append('g')
-      .call(d3.axisLeft(yScale).ticks(Math.max(3, Math.min(8, Math.floor(height / 40)))));
-
-    // Add X axis label
-    g.append('text')
-      .attr('transform', `translate(${width / 2}, ${height + margin.bottom})`)
-      .style('text-anchor', 'middle')
-      .text('Month/Year');
-
-    // Add Y axis label
-    g.append('text')
-      .attr('transform', 'rotate(-90)')
-      .attr('y', 0 - margin.left)
-      .attr('x', 0 - (height / 2))
-      .attr('dy', '1em')
-      .style('text-anchor', 'middle')
-      .text('Cumulative Articles');
-
-    // Add the line
-    g.append('path')
-      .datum(chartData)
-      .attr('fill', 'none')
-      .attr('stroke', '#007bff')
-      .attr('stroke-width', 2)
-      .attr('d', line);
-
-    // Add dots for each data point
-    const dotRadius = Math.max(2, Math.min(5, width / 200));
-    g.selectAll('.dot')
-      .data(chartData)
-      .enter().append('circle')
-      .attr('class', 'dot')
-      .attr('cx', d => xScale(d.date))
-      .attr('cy', d => yScale(d.cumulative))
-      .attr('r', dotRadius)
-      .attr('fill', '#007bff')
-      .on('mouseover', function(event, d) {
-        // Create tooltip
-        const tooltip = d3.select('body').append('div')
-          .attr('class', 'tooltip')
-          .style('position', 'absolute')
-          .style('background', 'rgba(0, 0, 0, 0.8)')
-          .style('color', 'white')
-          .style('padding', '8px')
-          .style('border-radius', '4px')
-          .style('font-size', '12px')
-          .style('pointer-events', 'none')
-          .style('opacity', 0);
-
-        tooltip.transition()
-          .duration(200)
-          .style('opacity', 0.9);
-        
-        tooltip.html(`
-          <strong>${d3.timeFormat('%B %Y')(d.date)}</strong><br/>
-          Monthly: ${d.count} articles<br/>
-          Cumulative: ${d.cumulative} articles
-        `)
-          .style('left', (event.pageX + 10) + 'px')
-          .style('top', (event.pageY - 28) + 'px');
-      })
-      .on('mouseout', function() {
-        d3.selectAll('.tooltip').remove();
+  // Custom tooltip with enhanced accessibility
+  const CustomTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+      const date = new Date(label);
+      const formattedDate = date.toLocaleDateString('en-US', { 
+        month: 'long', 
+        year: 'numeric' 
       });
+      
+      return (
+        <div 
+          className="bg-white p-3 border rounded shadow"
+          role="tooltip"
+          aria-label={`Data for ${formattedDate}`}
+        >
+          <p className="font-weight-bold mb-2" id="tooltip-header">{formattedDate}</p>
+          <div role="list" aria-labelledby="tooltip-header">
+            {payload.map((entry, index) => {
+              let displayText = '';
+              let ariaLabel = '';
+              
+              // Custom display for different data types
+              if (entry.dataKey === 'cumulativeArticles') {
+                displayText = `Articles (Total): ${entry.value}`;
+                ariaLabel = `Total articles: ${entry.value}`;
+              } else if (entry.dataKey === 'cumulativeLgbm') {
+                displayText = `LightGBM (Total): ${entry.value}`;
+                ariaLabel = `LightGBM model total predictions: ${entry.value}`;
+              } else if (entry.dataKey === 'cumulativeLstm') {
+                displayText = `LSTM (Total): ${entry.value}`;
+                ariaLabel = `LSTM model total predictions: ${entry.value}`;
+              } else if (entry.dataKey === 'cumulativePubmedBert') {
+                displayText = `PubMed BERT (Total): ${entry.value}`;
+                ariaLabel = `PubMed BERT model total predictions: ${entry.value}`;
+              } else if (entry.dataKey === 'count') {
+                displayText = `Articles (Monthly): ${entry.value}`;
+                ariaLabel = `Articles this month: ${entry.value}`;
+              } else if (entry.dataKey === 'lgbmRelevant') {
+                displayText = `LightGBM (Monthly): ${entry.value}`;
+                ariaLabel = `LightGBM model monthly predictions: ${entry.value}`;
+              } else if (entry.dataKey === 'lstmRelevant') {
+                displayText = `LSTM (Monthly): ${entry.value}`;
+                ariaLabel = `LSTM model monthly predictions: ${entry.value}`;
+              } else if (entry.dataKey === 'pubmedBertRelevant') {
+                displayText = `PubMed BERT (Monthly): ${entry.value}`;
+                ariaLabel = `PubMed BERT model monthly predictions: ${entry.value}`;
+              } else {
+                displayText = `${entry.name}: ${entry.value}`;
+                ariaLabel = `${entry.name}: ${entry.value}`;
+              }
+              
+              return (
+                <p 
+                  key={index} 
+                  style={{ color: entry.color, margin: '2px 0' }}
+                  role="listitem"
+                  aria-label={ariaLabel}
+                >
+                  {displayText}
+                </p>
+              );
+            })}
+          </div>
+        </div>
+      );
+    }
+    return null;
   };
 
   if (loading) {
@@ -297,12 +259,143 @@ export function AuthorArticleChart({ authorId, articles: providedArticles }) {
 
   return (
     <div className="author-article-chart">
-      <div className="chart-container">
-        <svg ref={svgRef}></svg>
+      <div className="mb-3">
+        <div className="chart-legend" role="region" aria-label="Chart legend explaining the different data series">
+          <h6 className="sr-only">Chart Legend</h6>
+          <div className="legend-items" role="list">
+            <div className="legend-item d-inline-block mr-4 mb-2" role="listitem">
+              <i className="fas fa-chart-line text-info mr-2" aria-hidden="true"></i>
+              <span>Blue line: Cumulative articles</span>
+            </div>
+            <div className="legend-item d-inline-block mr-4 mb-2" role="listitem">
+              <i className="fas fa-chart-line text-warning mr-2" aria-hidden="true"></i>
+              <span>Orange dashed: LightGBM predictions</span>
+            </div>
+            <div className="legend-item d-inline-block mr-4 mb-2" role="listitem">
+              <i className="fas fa-chart-line text-danger mr-2" aria-hidden="true"></i>
+              <span>Red dashed: LSTM predictions</span>
+            </div>
+            <div className="legend-item d-inline-block mr-4 mb-2" role="listitem">
+              <i className="fas fa-chart-line mr-2" style={{ color: '#6f42c1' }} aria-hidden="true"></i>
+              <span>Purple dashed: PubMed BERT predictions</span>
+            </div>
+          </div>
+        </div>
       </div>
+      
+      <div className="chart-container" style={{ width: '100%', height: '400px', marginBottom: '1rem' }}>
+        {/* Chart description for screen readers */}
+        <div className="sr-only">
+          <h3>Publication Timeline Chart</h3>
+          <p>
+            This chart shows publication activity over time with {data.length} data points from {data.length > 0 ? formatXAxis(data[0].date) : 'N/A'} to {data.length > 0 ? formatXAxis(data[data.length - 1].date) : 'N/A'}.
+            The chart displays cumulative articles (blue line) and ML model predictions from LightGBM (orange dashed line), LSTM (red dashed line), and PubMed BERT (purple dashed line).
+            Current totals: {data.length > 0 ? data[data.length - 1]?.cumulativeArticles || 0 : 0} total articles.
+          </p>
+        </div>
+        
+        <ResponsiveContainer>
+          <ComposedChart 
+            data={data}
+            role="img"
+            aria-label={`Publication timeline chart showing ${data.length} data points with cumulative articles and ML predictions.`}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis 
+              dataKey="date" 
+              tickFormatter={formatXAxis}
+            />
+            <YAxis yAxisId="left" orientation="left" label={{ value: 'Count', angle: -90, position: 'insideLeft' }} />
+            <Tooltip content={<CustomTooltip />} />
+            <Legend />
+            <Line 
+              yAxisId="left"
+              type="monotone" 
+              dataKey="cumulativeArticles" 
+              stroke="#007bff" 
+              strokeWidth={3}
+              name="Articles (Cumulative)"
+              dot={{ fill: '#007bff', strokeWidth: 2, r: 4 }}
+            />
+            <Line 
+              yAxisId="left"
+              type="monotone" 
+              dataKey="cumulativeLgbm" 
+              stroke="#fd7e14" 
+              strokeWidth={3}
+              name="LightGBM (Cumulative)"
+              dot={{ fill: '#fd7e14', strokeWidth: 2, r: 3, symbol: 'square' }}
+              strokeDasharray="5 5"
+            />
+            <Line 
+              yAxisId="left"
+              type="monotone" 
+              dataKey="cumulativeLstm" 
+              stroke="#dc3545" 
+              strokeWidth={3}
+              name="LSTM (Cumulative)"
+              dot={{ fill: '#dc3545', strokeWidth: 2, r: 3, symbol: 'triangle' }}
+              strokeDasharray="8 4"
+            />
+            <Line 
+              yAxisId="left"
+              type="monotone" 
+              dataKey="cumulativePubmedBert" 
+              stroke="#6f42c1" 
+              strokeWidth={3}
+              name="PubMed BERT (Cumulative)"
+              dot={{ fill: '#6f42c1', strokeWidth: 2, r: 3, symbol: 'diamond' }}
+              strokeDasharray="12 3"
+            />
+          </ComposedChart>
+        </ResponsiveContainer>
+      </div>
+      
+      {/* Data table alternative for screen readers and keyboard users */}
+      <details className="mt-3">
+        <summary className="btn btn-secondary btn-sm">
+          <i className="fas fa-table mr-2"></i>
+          View Chart Data as Table
+        </summary>
+        <div className="table-responsive mt-3">
+          <table className="table table-sm table-striped" role="table" aria-label="Chart data in tabular format">
+            <caption className="sr-only">
+              Monthly publication data showing articles and ML predictions over time
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Cumulative Articles</th>
+                <th scope="col">LightGBM (Cumulative)</th>
+                <th scope="col">LSTM (Cumulative)</th>
+                <th scope="col">PubMed BERT (Cumulative)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.map((item, index) => (
+                <tr key={index}>
+                  <td>{formatXAxis(item.date)}</td>
+                  <td>{item.cumulativeArticles || 0}</td>
+                  <td>{item.cumulativeLgbm || 0}</td>
+                  <td>{item.cumulativeLstm || 0}</td>
+                  <td>{item.cumulativePubmedBert || 0}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </details>
+      
       <div className="mt-3 text-center">
         <small className="text-muted">
-          Total publications: {data.length > 0 ? data[data.length - 1].cumulative : 0} articles
+          Total publications: {data.length > 0 ? data[data.length - 1].cumulativeArticles : 0} articles
+          {data.length > 0 && data[data.length - 1].cumulativeLgbm > 0 && (
+            <span className="ms-2">
+              • ML predictions: LightGBM ({data[data.length - 1].cumulativeLgbm}), 
+              LSTM ({data[data.length - 1].cumulativeLstm}), 
+              PubMed BERT ({data[data.length - 1].cumulativePubmedBert})
+            </span>
+          )}
         </small>
       </div>
     </div>
