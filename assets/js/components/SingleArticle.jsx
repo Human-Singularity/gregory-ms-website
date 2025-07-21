@@ -33,9 +33,6 @@ export function SingleArticle() {
         pageHeader.style.display = 'none';
       }
       
-      // Apply article reading container class to body
-      document.body.classList.add('article-reading-page');
-      
       // Update canonical link
       const canonicalLink = document.querySelector("link[rel='canonical']");
       const shortLink = `https://gregory-ms.com/articles/${article.article_id}/${articleSlug || ''}`;
@@ -259,7 +256,6 @@ export function SingleArticle() {
   }
 
   return (
-    <div className="article-reading-container">
       <article>
         <header>
           <h1 className="mb-3 mt-5 pt-5">{article.title}</h1>
@@ -393,7 +389,6 @@ export function SingleArticle() {
           </div>
         )}
       </article>
-    </div>
   );
 }
 
