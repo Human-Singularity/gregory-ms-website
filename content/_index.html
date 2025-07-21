@@ -34,7 +34,7 @@ options:
 ---
 
 <div class="section py-2">
-  <div class="container-fluid">
+  <div class="container-fluid p-0">
     <div class="row justify-content-center pt-5">
       <div class="col-md-2">
         <a href='{{< ref "doctors/index.md" >}}' class="info info-hover" data-umami-event="click--body-link-doctors">
@@ -87,7 +87,75 @@ options:
       </div>
     </div>
 
-    <div class="separator separator-primary"></div>
+<!-- Observatory Call-to-Action Section -->
+<div class="container-fluid mt-5 mb-5" style="background: linear-gradient(135deg, rgba(40, 167, 69, 0.9), rgba(23, 162, 184, 0.9)), url('lucas-vasques-9vnACvX2748-unsplash.jpeg'); background-size: cover; background-position: center; background-attachment: fixed;">
+  <div class="container py-5">
+    <div class="row justify-content-center align-items-center min-vh-50">
+      <div class="col-lg-8 text-center text-white">
+        <div class="mb-4">
+          <i class="fas fa-telescope" style="font-size: 3.5rem; opacity: 0.9;"></i>
+        </div>
+        <h2 class="display-4 font-weight-bold mb-4">Explore the MS Observatory</h2>
+        <p class="lead mb-4 font-weight-normal" style="font-size: 1.3rem; line-height: 1.6;">
+          Discover breakthrough treatments, track clinical trials, and monitor the latest research developments 
+          in Multiple Sclerosis with our comprehensive observatory platform.
+        </p>
+        
+        <!-- Features highlight -->
+        <div class="row mb-5">
+          <div class="col-md-4 mb-3">
+            <div class="d-flex flex-column align-items-center">
+              <i class="fas fa-chart-line mb-2" style="font-size: 2rem;"></i>
+              <h6 class="font-weight-bold">Research Trends</h6>
+              <small class="text-white-75">Track emerging research patterns</small>
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <div class="d-flex flex-column align-items-center">
+              <i class="fas fa-pills mb-2" style="font-size: 2rem;"></i>
+              <h6 class="font-weight-bold">Treatment Updates</h6>
+              <small class="text-white-75">Latest therapeutic developments</small>
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <div class="d-flex flex-column align-items-center">
+              <i class="fas fa-flask mb-2" style="font-size: 2rem;"></i>
+              <h6 class="font-weight-bold">Clinical Trials</h6>
+              <small class="text-white-75">Monitor ongoing studies</small>
+            </div>
+          </div>
+        </div>
+        
+        <!-- CTA Buttons -->
+        <div class="d-flex flex-column flex-sm-row justify-content-center align-items-center">
+          <a href='{{< ref "/observatory/_index.md" >}}' 
+             class="btn btn-light btn-lg font-weight-bold shadow-lg mr-1" 
+             data-umami-event="click--observatory-cta-homepage">
+            <i class="fas fa-rocket mr-2"></i>Explore Observatory
+          </a>
+          <a href='{{< ref "/relevant/_index.md" >}}' 
+             class="btn btn-outline-light btn-lg font-weight-bold px-5 ml-1" 
+             data-umami-event="click--relevant-papers-cta-homepage">
+            <i class="fas fa-file-medical mr-2"></i>View Relevant Research
+          </a>
+        </div>
+        
+        <!-- Trust indicators -->
+        <div class="mt-4 d-flex flex-wrap justify-content-center align-items-center">
+          <span class="badge badge-light badge-pill mx-2 my-1 px-3 py-2">
+            <i class="fas fa-brain mr-1"></i>AI-Powered
+          </span>
+          <span class="badge badge-light badge-pill mx-2 my-1 px-3 py-2">
+            <i class="fas fa-sync-alt mr-1"></i>Real-time Updates
+          </span>
+          <span class="badge badge-light badge-pill mx-2 my-1 px-3 py-2">
+            <i class="fas fa-shield-alt mr-1"></i>Peer-Reviewed
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
     <div class="row justify-content-center bg-grey pt-5">
       <div class="col-md-3 mb-5 col-12 justify-content-center align-self-center align-right">
@@ -111,7 +179,7 @@ options:
         ></a>
       </div>
     </div>
-    <!-- <div class="row justify-content-center mt-5">
+    <div class="row justify-content-center mt-5">
       <div class="col-md-4 col-12">
         <p class="lead font-weight-normal">
         </p>
@@ -132,7 +200,7 @@ options:
           loading="lazy"
         />
       </div>
-    </div>  -->
+    </div>
     <div class="row justify-content-center bg-grey mt-5 pt-5 pb-5">
       <div class="col-md-4 col-12 justify-content-center align-self-center align-right">
         <img
@@ -142,6 +210,7 @@ options:
           loading="lazy"
         />
       </div>
+
       <div class="col-md-4 col-12">
         <h3 class="">Annual Reports</h3>
       
@@ -237,43 +306,6 @@ options:
       </div>
     </div>
     {{< team >}}
-    <div class="row justify-content-center mt-5 pt-5 pb-5 bg-grey">
-      <div class="col-md-6 col-12">
-        <h3 class="">Developers</h3>
-
-        <p class="lead font-weight-normal">
-          Get free access to the articles and clinical trials, or contribute to develop GregoryAi.
-        </p>
-
-        <a
-          href='https://api.gregory-ms.com/'
-          target="_blank" data-umami-event="click--body-link-project-news"
-          class="btn btn-success btn-round btn-lg font-weight-bold click--body-link-API"
-          >Free API <i class="fas fa-arrow-circle-right"></i
-        ></a>
-        <a
-        href='{{< ref "/developers/index.md" >}}' data-umami-event="click--body-link-developer-docs"
-        class="btn btn-info btn-round btn-lg font-weight-bold"
-        >Documentation <i class="fas fa-arrow-circle-right"></i
-      ></a>
-      <a
-      href='https://github.com/brunoamaral/gregory' data-umami-event="click--body-link-developers-github"
-      title="GregoryAI open source on GitHub"
-      class="btn btn-dark btn-round btn-lg font-weight-bold"
-      >Github <i class="fab fa-github"></i>
-      </a>
-
-      </div>
-
-      <div class="col-md-4 col-12">
-        <img
-          src="undraw_programmer_re_owql.svg" 
-          class="align-middle d-none d-md-block float-left w-50"
-          alt="illustration showing a programmer using the GregoryAI software"
-          loading="lazy"
-        />
-      </div>
-    </div>
     
     <!-- Horizontal Subscribe Form Section -->
     <div class="row justify-content-center mt-5 pt-5 pb-5">
