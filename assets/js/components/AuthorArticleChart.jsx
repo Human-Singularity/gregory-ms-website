@@ -90,13 +90,52 @@ export function AuthorArticleChart({ authorId, articles: providedArticles }) {
       // Convert to array and sort by date
       const monthlyData = Object.values(monthlyGroups).sort((a, b) => a.date - b.date);
       
+      // Create a complete date range from first to last publication
+      if (monthlyData.length === 0) {
+        setData([]);
+        setError(null);
+        setLoading(false);
+        return;
+      }
+      
+      const firstDate = monthlyData[0].date;
+      const lastDate = monthlyData[monthlyData.length - 1].date;
+      
+      // Generate all months between first and last date
+      const completeData = [];
+      const currentDate = new Date(firstDate.getFullYear(), firstDate.getMonth(), 1);
+      const endDate = new Date(lastDate.getFullYear(), lastDate.getMonth(), 1);
+      
+      while (currentDate <= endDate) {
+        const year = currentDate.getFullYear();
+        const month = currentDate.getMonth();
+        const key = `${year}-${month}`;
+        
+        // Find existing data for this month or create empty entry
+        const existingData = monthlyGroups[key] || {
+          year,
+          month: month + 1,
+          count: 0,
+          date: new Date(year, month, 1),
+          dateKey: `${year}-${String(month + 1).padStart(2, '0')}`,
+          lgbmRelevant: 0,
+          lstmRelevant: 0,
+          pubmedBertRelevant: 0
+        };
+        
+        completeData.push(existingData);
+        
+        // Move to next month
+        currentDate.setMonth(currentDate.getMonth() + 1);
+      }
+      
       // Create cumulative data
       let cumulativeArticles = 0;
       let cumulativeLgbm = 0;
       let cumulativeLstm = 0;
       let cumulativePubmedBert = 0;
 
-      const cumulativeData = monthlyData.map(item => {
+      const cumulativeData = completeData.map(item => {
         cumulativeArticles += item.count;
         cumulativeLgbm += item.lgbmRelevant;
         cumulativeLstm += item.lstmRelevant;
@@ -118,7 +157,7 @@ export function AuthorArticleChart({ authorId, articles: providedArticles }) {
     };
 
     // If articles are provided as props, use them directly
-    if (providedArticles && providedArticles.length >= 0) {
+    if (providedArticles && Array.isArray(providedArticles)) {
       processArticles(providedArticles);
       return;
     }
@@ -159,6 +198,12 @@ export function AuthorArticleChart({ authorId, articles: providedArticles }) {
     const date = new Date(tickItem);
     return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
   };
+
+  // Static activeDot functions to prevent re-renders
+  const articlesActiveDot = { fill: '#007bff', strokeWidth: 2, r: 6 };
+  const lgbmActiveDot = { fill: '#fd7e14', strokeWidth: 2, r: 5 };
+  const lstmActiveDot = { fill: '#dc3545', strokeWidth: 2, r: 5 };
+  const pubmedBertActiveDot = { fill: '#6f42c1', strokeWidth: 2, r: 5 };
 
   // Custom tooltip with enhanced accessibility
   const CustomTooltip = ({ active, payload, label }) => {
@@ -294,7 +339,7 @@ export function AuthorArticleChart({ authorId, articles: providedArticles }) {
           </p>
         </div>
         
-        <ResponsiveContainer>
+        <ResponsiveContainer width="100%" height="100%">
           <ComposedChart 
             data={data}
             role="img"
@@ -315,7 +360,8 @@ export function AuthorArticleChart({ authorId, articles: providedArticles }) {
               stroke="#007bff" 
               strokeWidth={3}
               name="Articles (Cumulative)"
-              dot={{ fill: '#007bff', strokeWidth: 2, r: 4 }}
+              dot={false}
+              activeDot={articlesActiveDot}
             />
             <Line 
               yAxisId="left"
@@ -324,7 +370,8 @@ export function AuthorArticleChart({ authorId, articles: providedArticles }) {
               stroke="#fd7e14" 
               strokeWidth={3}
               name="LightGBM (Cumulative)"
-              dot={{ fill: '#fd7e14', strokeWidth: 2, r: 3, symbol: 'square' }}
+              dot={false}
+              activeDot={lgbmActiveDot}
               strokeDasharray="5 5"
             />
             <Line 
@@ -334,7 +381,8 @@ export function AuthorArticleChart({ authorId, articles: providedArticles }) {
               stroke="#dc3545" 
               strokeWidth={3}
               name="LSTM (Cumulative)"
-              dot={{ fill: '#dc3545', strokeWidth: 2, r: 3, symbol: 'triangle' }}
+              dot={false}
+              activeDot={lstmActiveDot}
               strokeDasharray="8 4"
             />
             <Line 
@@ -344,7 +392,8 @@ export function AuthorArticleChart({ authorId, articles: providedArticles }) {
               stroke="#6f42c1" 
               strokeWidth={3}
               name="PubMed BERT (Cumulative)"
-              dot={{ fill: '#6f42c1', strokeWidth: 2, r: 3, symbol: 'diamond' }}
+              dot={false}
+              activeDot={pubmedBertActiveDot}
               strokeDasharray="12 3"
             />
           </ComposedChart>
