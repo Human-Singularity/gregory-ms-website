@@ -20,7 +20,7 @@
 	<!-- No header for better readability -->
 	
 	<div class="section">
-		<div class="container article-reading-container">
+		<div class="">
 			<article>
 				<header>
 					<h1 class="mb-3" itemprop="headline">{{ .Title }}</h1>
@@ -95,29 +95,27 @@
 				</div>
 				
 				<!-- Main article content -->
-				<div class="row">
-					<div class="col-lg-12">
-						<!-- Authors section with ORCID links if available -->
-						<div class="article-authors">
-							<h4><i class="fas fa-users mr-2"></i>Authors</h4>
-							<div id="article-authors" class="authors-list">
-								{{ with .Params.authors }}
-									{{ range $index, $author := . }}
-										<span class="author-item">
-											<span class="author-name">{{ or $author.full_name (printf "%s %s" $author.given_name $author.family_name) }}</span>
-											{{ if $author.ORCID }}
-												<a href="{{ $author.ORCID }}" class="author-orcid ml-1" target="_blank" rel="noopener noreferrer" title="ORCID: {{ $author.ORCID }}">
-													<i class="fab fa-orcid"></i>
-												</a>
-											{{ end }}
-											{{ if ne $index (sub (len $) 1) }}<span>, </span>{{ end }}
-										</span>
+				<!-- Authors section with ORCID links if available -->
+				<div class="article-authors">
+					<h4><i class="fas fa-users mr-2"></i>Authors</h4>
+					<div id="article-authors" class="authors-list">
+						{{ with .Params.authors }}
+							{{ range $index, $author := . }}
+								<span class="author-item">
+									<span class="author-name">{{ or $author.full_name (printf "%s %s" $author.given_name $author.family_name) }}</span>
+									{{ if $author.ORCID }}
+										<a href="{{ $author.ORCID }}" class="author-orcid ml-1" target="_blank" rel="noopener noreferrer" title="ORCID: {{ $author.ORCID }}">
+											<i class="fab fa-orcid"></i>
+										</a>
 									{{ end }}
-								{{ else }}
-									<!-- Will be populated by the React component -->
-								{{ end }}
-							</div>
-						</div>
+									{{ if ne $index (sub (len $) 1) }}<span>, </span>{{ end }}
+								</span>
+							{{ end }}
+						{{ else }}
+							<!-- Will be populated by the React component -->
+						{{ end }}
+					</div>
+				</div>
 						
 						<!-- Takeaways box -->
 						{{ if .Params.takeaways }}
@@ -164,9 +162,7 @@
 								<i class="fas fa-info-circle mr-1"></i> Predictions represent the relevance score from our machine learning models.
 							</p>
 						</div>
-						{{ end }}						
-					</div>
-				</div>
+						{{ end }}
 			</article>
 			
 			<!-- Comments section if enabled -->
