@@ -84,7 +84,7 @@ export const articleService = {
     
   // Get relevant articles
   getRelevantArticles: (page = 1) => 
-    apiClient.get(`/articles/relevant/?format=json&page=${page}`),
+    apiClient.get(`/articles/?relevant=true&format=json&page=${page}`),
 
   // New enhanced search endpoint for articles
   searchArticles: (params = {}) => {
