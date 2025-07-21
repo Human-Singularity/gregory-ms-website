@@ -244,7 +244,7 @@ function CategoryDetail({ category, config, onBack }) {
     return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
   };
 
-  // Custom tooltip
+  // Custom tooltip with enhanced accessibility
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       // Handle both ISO format and YYYY-MM format
@@ -255,65 +255,59 @@ function CategoryDetail({ category, config, onBack }) {
       });
       
       return (
-        <div className="bg-white p-3 border rounded shadow">
-          <p className="font-weight-bold mb-2">{formattedDate}</p>
-          {payload.map((entry, index) => {
-            // Custom display for different data types
-            if (entry.dataKey === 'cumulativeArticles') {
+        <div 
+          className="bg-white p-3 border rounded shadow"
+          role="tooltip"
+          aria-label={`Data for ${formattedDate}`}
+        >
+          <p className="font-weight-bold mb-2" id="tooltip-header">{formattedDate}</p>
+          <div role="list" aria-labelledby="tooltip-header">
+            {payload.map((entry, index) => {
+              let displayText = '';
+              let ariaLabel = '';
+              
+              // Custom display for different data types
+              if (entry.dataKey === 'cumulativeArticles') {
+                displayText = `Articles (Total): ${entry.value}`;
+                ariaLabel = `Total articles: ${entry.value}`;
+              } else if (entry.dataKey === 'cumulativeLgbm') {
+                displayText = `LightGBM (Total): ${entry.value}`;
+                ariaLabel = `LightGBM model total predictions: ${entry.value}`;
+              } else if (entry.dataKey === 'cumulativeLstm') {
+                displayText = `LSTM (Total): ${entry.value}`;
+                ariaLabel = `LSTM model total predictions: ${entry.value}`;
+              } else if (entry.dataKey === 'cumulativePubmedBert') {
+                displayText = `PubMed BERT (Total): ${entry.value}`;
+                ariaLabel = `PubMed BERT model total predictions: ${entry.value}`;
+              } else if (entry.dataKey === 'trials') {
+                displayText = `Clinical Trials: ${entry.value}`;
+                ariaLabel = `Clinical trials this month: ${entry.value}`;
+              } else if (entry.dataKey === 'lgbmRelevant') {
+                displayText = `LightGBM (Monthly): ${entry.value}`;
+                ariaLabel = `LightGBM model monthly predictions: ${entry.value}`;
+              } else if (entry.dataKey === 'lstmRelevant') {
+                displayText = `LSTM (Monthly): ${entry.value}`;
+                ariaLabel = `LSTM model monthly predictions: ${entry.value}`;
+              } else if (entry.dataKey === 'pubmedBertRelevant') {
+                displayText = `PubMed BERT (Monthly): ${entry.value}`;
+                ariaLabel = `PubMed BERT model monthly predictions: ${entry.value}`;
+              } else {
+                displayText = `${entry.name}: ${entry.value}`;
+                ariaLabel = `${entry.name}: ${entry.value}`;
+              }
+              
               return (
-                <p key={index} style={{ color: entry.color, margin: '2px 0' }}>
-                  Articles (Total): {entry.value}
+                <p 
+                  key={index} 
+                  style={{ color: entry.color, margin: '2px 0' }}
+                  role="listitem"
+                  aria-label={ariaLabel}
+                >
+                  {displayText}
                 </p>
               );
-            } else if (entry.dataKey === 'cumulativeLgbm') {
-              return (
-                <p key={index} style={{ color: entry.color, margin: '2px 0' }}>
-                  LightGBM (Total): {entry.value}
-                </p>
-              );
-            } else if (entry.dataKey === 'cumulativeLstm') {
-              return (
-                <p key={index} style={{ color: entry.color, margin: '2px 0' }}>
-                  LSTM (Total): {entry.value}
-                </p>
-              );
-            } else if (entry.dataKey === 'cumulativePubmedBert') {
-              return (
-                <p key={index} style={{ color: entry.color, margin: '2px 0' }}>
-                  PubMed BERT (Total): {entry.value}
-                </p>
-              );
-            } else if (entry.dataKey === 'trials') {
-              return (
-                <p key={index} style={{ color: entry.color, margin: '2px 0' }}>
-                  Clinical Trials: {entry.value}
-                </p>
-              );
-            } else if (entry.dataKey === 'lgbmRelevant') {
-              return (
-                <p key={index} style={{ color: entry.color, margin: '2px 0' }}>
-                  LightGBM (Monthly): {entry.value}
-                </p>
-              );
-            } else if (entry.dataKey === 'lstmRelevant') {
-              return (
-                <p key={index} style={{ color: entry.color, margin: '2px 0' }}>
-                  LSTM (Monthly): {entry.value}
-                </p>
-              );
-            } else if (entry.dataKey === 'pubmedBertRelevant') {
-              return (
-                <p key={index} style={{ color: entry.color, margin: '2px 0' }}>
-                  PubMed BERT (Monthly): {entry.value}
-                </p>
-              );
-            }
-            return (
-              <p key={index} style={{ color: entry.color, margin: '2px 0' }}>
-                {entry.name}: {entry.value}
-              </p>
-            );
-          })}
+            })}
+          </div>
         </div>
       );
     }
@@ -544,17 +538,31 @@ function CategoryDetail({ category, config, onBack }) {
                     <div className="d-flex justify-content-between align-items-start mb-3">
                       <div>
                         <h5 className="card-title mb-2">Monthly Research Activity</h5>
-                        <p className="text-muted mb-0">
-                          <i className="fas fa-chart-bar text-success mr-2"></i>Green bars show clinical trials
-                          <span className="mx-3">•</span>
-                          <i className="fas fa-chart-line text-info mr-2"></i>Blue line shows cumulative articles
-                          <br/>
-                          <i className="fas fa-chart-line text-warning mr-2"></i>Orange line: LightGBM model
-                          <span className="mx-3">•</span>
-                          <i className="fas fa-chart-line text-danger mr-2"></i>Red line: LSTM model
-                          <span className="mx-3">•</span>
-                          <i className="fas fa-chart-line text-purple mr-2"></i>Purple line: PubMed BERT model
-                        </p>
+                        <div className="chart-legend" role="region" aria-label="Chart legend explaining the different data series">
+                          <h6 className="sr-only">Chart Legend</h6>
+                          <div className="legend-items" role="list">
+                            <div className="legend-item d-inline-block mr-4 mb-2" role="listitem">
+                              <i className="fas fa-chart-bar text-success mr-2" aria-hidden="true"></i>
+                              <span>Green bars: Monthly clinical trials</span>
+                            </div>
+                            <div className="legend-item d-inline-block mr-4 mb-2" role="listitem">
+                              <i className="fas fa-chart-line text-info mr-2" aria-hidden="true"></i>
+                              <span>Blue line: Cumulative articles</span>
+                            </div>
+                            <div className="legend-item d-inline-block mr-4 mb-2" role="listitem">
+                              <i className="fas fa-chart-line text-warning mr-2" aria-hidden="true"></i>
+                              <span>Orange dashed: LightGBM model</span>
+                            </div>
+                            <div className="legend-item d-inline-block mr-4 mb-2" role="listitem">
+                              <i className="fas fa-chart-line text-danger mr-2" aria-hidden="true"></i>
+                              <span>Red dashed: LSTM model</span>
+                            </div>
+                            <div className="legend-item d-inline-block mr-4 mb-2" role="listitem">
+                              <i className="fas fa-chart-line mr-2" style={{ color: '#6f42c1' }} aria-hidden="true"></i>
+                              <span>Purple dashed: PubMed BERT model</span>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                       
                       {/* Date Filter Controls */}
@@ -608,15 +616,29 @@ function CategoryDetail({ category, config, onBack }) {
                       </div>
                     </div>
                     <div className="observatory-chart" style={{ width: '100%', height: '400px' }}>
+                      {/* Chart description for screen readers */}
+                      <div className="sr-only">
+                        <h3>Monthly Overview Chart for {category.name}</h3>
+                        <p>
+                          This chart shows research activity over time with {chartData.length} data points from {chartData.length > 0 ? formatXAxis(chartData[0].date) : 'N/A'} to {chartData.length > 0 ? formatXAxis(chartData[chartData.length - 1].date) : 'N/A'}.
+                          The chart displays cumulative articles (blue line), clinical trials per month (green bars), and ML model predictions from LightGBM (orange dashed line), LSTM (red dashed line), and PubMed BERT (purple dashed line).
+                          Current totals: {chartData.length > 0 ? chartData[chartData.length - 1]?.cumulativeArticles || 0 : 0} total articles, {chartData.reduce((sum, item) => sum + (item.trials || 0), 0)} total trials.
+                        </p>
+                      </div>
+                      
                       <ResponsiveContainer>
-                        <ComposedChart data={chartData}>
+                        <ComposedChart 
+                          data={chartData}
+                          role="img"
+                          aria-label={`Monthly research activity chart for ${category.name}. Shows ${chartData.length} data points with cumulative articles and monthly clinical trials.`}
+                        >
                           <CartesianGrid strokeDasharray="3 3" />
                           <XAxis 
                             dataKey="date" 
                             tickFormatter={formatXAxis}
                           />
-                          <YAxis yAxisId="left" orientation="left" />
-                          <YAxis yAxisId="right" orientation="right" />
+                          <YAxis yAxisId="left" orientation="left" label={{ value: 'Monthly Trials', angle: -90, position: 'insideLeft' }} />
+                          <YAxis yAxisId="right" orientation="right" label={{ value: 'Cumulative Articles', angle: 90, position: 'insideRight' }} />
                           <Tooltip content={<CustomTooltip />} />
                           <Legend />
                           <Bar 
@@ -631,18 +653,18 @@ function CategoryDetail({ category, config, onBack }) {
                             type="monotone" 
                             dataKey="cumulativeArticles" 
                             stroke="#007bff" 
-                            strokeWidth={2}
+                            strokeWidth={3}
                             name="Articles (Cumulative)"
-                            dot={{ fill: '#007bff', strokeWidth: 1, r: 3 }}
+                            dot={{ fill: '#007bff', strokeWidth: 2, r: 4 }}
                           />
                           <Line 
                             yAxisId="right"
                             type="monotone" 
                             dataKey="cumulativeLgbm" 
                             stroke="#fd7e14" 
-                            strokeWidth={2}
+                            strokeWidth={3}
                             name="LightGBM (Cumulative)"
-                            dot={{ fill: '#fd7e14', strokeWidth: 1, r: 2 }}
+                            dot={{ fill: '#fd7e14', strokeWidth: 2, r: 3, symbol: 'square' }}
                             strokeDasharray="5 5"
                           />
                           <Line 
@@ -650,9 +672,9 @@ function CategoryDetail({ category, config, onBack }) {
                             type="monotone" 
                             dataKey="cumulativeLstm" 
                             stroke="#dc3545" 
-                            strokeWidth={2}
+                            strokeWidth={3}
                             name="LSTM (Cumulative)"
-                            dot={{ fill: '#dc3545', strokeWidth: 1, r: 2 }}
+                            dot={{ fill: '#dc3545', strokeWidth: 2, r: 3, symbol: 'triangle' }}
                             strokeDasharray="8 4"
                           />
                           <Line 
@@ -660,13 +682,50 @@ function CategoryDetail({ category, config, onBack }) {
                             type="monotone" 
                             dataKey="cumulativePubmedBert" 
                             stroke="#6f42c1" 
-                            strokeWidth={2}
+                            strokeWidth={3}
                             name="PubMed BERT (Cumulative)"
-                            dot={{ fill: '#6f42c1', strokeWidth: 1, r: 2 }}
+                            dot={{ fill: '#6f42c1', strokeWidth: 2, r: 3, symbol: 'diamond' }}
                             strokeDasharray="12 3"
                           />
                         </ComposedChart>
                       </ResponsiveContainer>
+                      
+                      {/* Data table alternative for screen readers and keyboard users */}
+                      <details className="mt-4">
+                        <summary className="btn btn-secondary btn-sm">
+                          <i className="fas fa-table mr-2"></i>
+                          View Chart Data as Table
+                        </summary>
+                        <div className="table-responsive mt-3">
+                          <table className="table table-sm table-striped" role="table" aria-label="Chart data in tabular format">
+                            <caption className="sr-only">
+                              Monthly research data for {category.name} showing articles, trials, and ML predictions over time
+                            </caption>
+                            <thead>
+                              <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">Monthly Trials</th>
+                                <th scope="col">Cumulative Articles</th>
+                                <th scope="col">LightGBM (Cumulative)</th>
+                                <th scope="col">LSTM (Cumulative)</th>
+                                <th scope="col">PubMed BERT (Cumulative)</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {chartData.map((item, index) => (
+                                <tr key={index}>
+                                  <td>{formatXAxis(item.date)}</td>
+                                  <td>{item.trials || 0}</td>
+                                  <td>{item.cumulativeArticles || 0}</td>
+                                  <td>{item.cumulativeLgbm || 0}</td>
+                                  <td>{item.cumulativeLstm || 0}</td>
+                                  <td>{item.cumulativePubmedBert || 0}</td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      </details>
                     </div>
                   </div>
                 </div>
