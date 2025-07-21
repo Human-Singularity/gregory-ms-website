@@ -309,15 +309,36 @@ function Observatory({ config = DEFAULT_CONFIG }) {
                     <div className="input-group-append">
                       {searchTerm ? (
                         <button
-                          className="btn btn-outline-secondary"
+                          className="input-group-text"
                           type="button"
                           onClick={handleClearSearch}
                           title="Clear search"
+                          style={{ 
+                            border: '1px solid #ced4da',
+                            borderLeft: 'none',
+                            backgroundColor: '#f8f9fa',
+                            width: '38px',
+                            minWidth: '38px',
+                            height: '38px',
+                            padding: '0',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            cursor: 'pointer'
+                          }}
                         >
                           <i className="fa fa-times"></i>
                         </button>
                       ) : (
-                        <span className="input-group-text">
+                        <span className="input-group-text" style={{ 
+                          width: '38px',
+                          minWidth: '38px',
+                          height: '38px',
+                          padding: '0',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center'
+                        }}>
                           <i className="fa fa-search"></i>
                         </span>
                       )}
