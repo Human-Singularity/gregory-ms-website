@@ -85,7 +85,19 @@ function Observatory({ config = DEFAULT_CONFIG }) {
   // Initialize categories and handle URL params
   useEffect(() => {
     setCategories(CATEGORIES);
-    setFilteredCategories(CATEGORIES);
+    
+    // Get search parameters from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchFromUrl = urlParams.get('search') || '';
+    const tagsFromUrl = urlParams.get('tags') ? urlParams.get('tags').split(',') : [];
+    
+    // Set search and tags from URL if available
+    if (searchFromUrl) {
+      setSearchTerm(searchFromUrl);
+    }
+    if (tagsFromUrl.length > 0) {
+      setSelectedTags(tagsFromUrl);
+    }
     
     if (categorySlug) {
       const category = CATEGORIES.find(cat => cat.slug === categorySlug);
@@ -122,9 +134,28 @@ function Observatory({ config = DEFAULT_CONFIG }) {
     setFilteredCategories(filtered);
   }, [searchTerm, selectedTags, categories]);
 
+  // Update URL parameters to persist search and filter state
+  const updateUrlParams = (search, tags) => {
+    const urlParams = new URLSearchParams();
+    if (search.trim()) {
+      urlParams.set('search', search.trim());
+    }
+    if (tags.length > 0) {
+      urlParams.set('tags', tags.join(','));
+    }
+    
+    const paramString = urlParams.toString();
+    const newUrl = `/observatory${paramString ? `?${paramString}` : ''}`;
+    
+    // Update URL without causing a page reload
+    window.history.replaceState({}, '', newUrl);
+  };
+
   // Handle search input change
   const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value);
+    const newSearchTerm = e.target.value;
+    setSearchTerm(newSearchTerm);
+    updateUrlParams(newSearchTerm, selectedTags);
   };
 
   // Handle search form submission (when user presses Enter)
@@ -145,17 +176,18 @@ function Observatory({ config = DEFAULT_CONFIG }) {
   // Clear search
   const handleClearSearch = () => {
     setSearchTerm('');
+    updateUrlParams('', selectedTags);
   };
 
   // Handle tag selection
   const handleTagToggle = (tag) => {
     const isRemoving = selectedTags.includes(tag);
+    const newSelectedTags = selectedTags.includes(tag) 
+      ? selectedTags.filter(t => t !== tag)
+      : [...selectedTags, tag];
     
-    setSelectedTags(prev => 
-      prev.includes(tag) 
-        ? prev.filter(t => t !== tag)
-        : [...prev, tag]
-    );
+    setSelectedTags(newSelectedTags);
+    updateUrlParams(searchTerm, newSelectedTags);
 
     // Track tag interaction with umami
     if (typeof umami !== 'undefined') {
@@ -171,13 +203,27 @@ function Observatory({ config = DEFAULT_CONFIG }) {
   const handleClearAllFilters = () => {
     setSearchTerm('');
     setSelectedTags([]);
+    updateUrlParams('', []);
   };
 
   // Handle category selection
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
+    
+    // Preserve current search and filter state in URL when navigating to category
+    const urlParams = new URLSearchParams();
+    if (searchTerm.trim()) {
+      urlParams.set('search', searchTerm.trim());
+    }
+    if (selectedTags.length > 0) {
+      urlParams.set('tags', selectedTags.join(','));
+    }
+    
+    const paramString = urlParams.toString();
+    const categoryUrl = `/observatory/category/${category.slug}${paramString ? `?${paramString}` : ''}`;
+    
     // Update URL without page reload
-    navigate(`/observatory/category/${category.slug}`, { replace: true });
+    navigate(categoryUrl, { replace: true });
     
     // Track category selection with umami
     if (typeof umami !== 'undefined') {
@@ -192,7 +238,20 @@ function Observatory({ config = DEFAULT_CONFIG }) {
   // Handle back to categories list
   const handleBackToList = () => {
     setSelectedCategory(null);
-    navigate('/observatory', { replace: true });
+    
+    // Preserve current search and filter state when going back
+    const urlParams = new URLSearchParams();
+    if (searchTerm.trim()) {
+      urlParams.set('search', searchTerm.trim());
+    }
+    if (selectedTags.length > 0) {
+      urlParams.set('tags', selectedTags.join(','));
+    }
+    
+    const paramString = urlParams.toString();
+    const observatoryUrl = `/observatory${paramString ? `?${paramString}` : ''}`;
+    
+    navigate(observatoryUrl, { replace: true });
   };
 
   if (loading) {
