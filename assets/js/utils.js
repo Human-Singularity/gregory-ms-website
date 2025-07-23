@@ -125,6 +125,30 @@ function updateOpenGraphMeta(article) {
   if (article.takeaways) {
     setMetaTag('og:description', article.takeaways.slice(0, 155));
   }
+  
+  // Determine the appropriate Open Graph image
+  // Try to use the existing og:image if it's already set to the articles header
+  // Otherwise, use the articles page header image as default
+  let ogImage = 'https://gregory-ms.com/articles/getty-images-SEvW26fiHSI-unsplash.jpg';
+  
+  // Check if there's already an og:image meta tag we can use
+  const existingOgImage = document.querySelector('meta[property="og:image"]');
+  if (existingOgImage && existingOgImage.content && existingOgImage.content.includes('/articles/getty-images-SEvW26fiHSI-unsplash')) {
+    // Use the existing processed image (which might be optimized by Hugo)
+    ogImage = existingOgImage.content;
+  }
+  
+  // Set Open Graph image - use the articles page header image for consistent branding
+  setMetaTag('og:image', ogImage);
+  
+  // Also update Twitter meta tags for better social media sharing
+  setMetaTag('twitter:card', 'summary_large_image');
+  setMetaTag('twitter:title', article.title);
+  setMetaTag('twitter:image', ogImage);
+  
+  if (article.takeaways) {
+    setMetaTag('twitter:description', article.takeaways.slice(0, 155));
+  }
 }
 
 /**

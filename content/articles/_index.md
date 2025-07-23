@@ -8,12 +8,8 @@ options:
   navbar: navbar navbar-expand-lg bg-white fixed-top font-weight-bold
 
 resources:
-  - src: ryunosuke-kikuno-FKqxZ58bVjU-unsplash.jpg
+  - src: getty-images-SEvW26fiHSI-unsplash.jpg
     name: "header"
-cta:
-  - label: <i class="fas fa-file-archive"></i> Download all multiple sclerosis research
-    url: /developers/articles.zip
-    classes: btn-sm btn-success
 seo:
   canonical: articles/
 ---
