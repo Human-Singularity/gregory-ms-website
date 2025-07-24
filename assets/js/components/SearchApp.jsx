@@ -73,11 +73,10 @@ function SearchApp() {
       return;
     }
 
-    // Track search submission with umami
+    // Track search submission with umami - use specific event names per type
     if (typeof umami !== 'undefined') {
-      umami.track('search-submit', {
+      umami.track(`search-${searchType}`, {
         query: searchTerm.trim(),
-        type: searchType,
         field: searchField,
         status: trialStatus || 'all'
       });
@@ -132,6 +131,15 @@ function SearchApp() {
         setArticleCount(articleResponse.data.count || 0);
         setArticleLastPage(Math.ceil((articleResponse.data.count || 0) / 10));
         
+        // Track successful search result
+        if (typeof umami !== 'undefined') {
+          umami.track('search-articles-result', {
+            query: searchTerm.trim(),
+            field: searchField,
+            resultCount: articleResponse.data.count || 0
+          });
+        }
+        
         // Reset trial results since we're only searching articles
         setTrialResults([]);
         setTrialCount(0);
@@ -179,11 +187,31 @@ function SearchApp() {
           setTrialResults(trialResponse.data.results);
           setTrialCount(trialResponse.data.count || trialResponse.data.results.length || 0);
           setTrialLastPage(Math.ceil((trialResponse.data.count || trialResponse.data.results.length || 0) / 10));
+          
+          // Track successful search result
+          if (typeof umami !== 'undefined') {
+            umami.track('search-trials-result', {
+              query: searchTerm.trim(),
+              field: searchField,
+              status: trialStatus || 'all',
+              resultCount: trialResponse.data.count || trialResponse.data.results.length || 0
+            });
+          }
         } else if (trialResponse.data && Array.isArray(trialResponse.data)) {
           // Direct array response
           setTrialResults(trialResponse.data);
           setTrialCount(trialResponse.data.length || 0);
           setTrialLastPage(Math.ceil((trialResponse.data.length || 0) / 10));
+          
+          // Track successful search result
+          if (typeof umami !== 'undefined') {
+            umami.track('search-trials-result', {
+              query: searchTerm.trim(),
+              field: searchField,
+              status: trialStatus || 'all',
+              resultCount: trialResponse.data.length || 0
+            });
+          }
         } else {
           // Fallback for unexpected format
           setTrialResults([]);
@@ -218,10 +246,28 @@ function SearchApp() {
           setAuthorResults(authorResponse.data.results);
           setAuthorCount(authorResponse.data.count || authorResponse.data.results.length || 0);
           setAuthorLastPage(Math.ceil((authorResponse.data.count || authorResponse.data.results.length || 0) / 10));
+          
+          // Track successful search result
+          if (typeof umami !== 'undefined') {
+            umami.track('search-authors-result', {
+              query: searchTerm.trim(),
+              field: searchField,
+              resultCount: authorResponse.data.count || authorResponse.data.results.length || 0
+            });
+          }
         } else if (authorResponse.data && Array.isArray(authorResponse.data)) {
           setAuthorResults(authorResponse.data);
           setAuthorCount(authorResponse.data.length || 0);
           setAuthorLastPage(Math.ceil((authorResponse.data.length || 0) / 10));
+          
+          // Track successful search result
+          if (typeof umami !== 'undefined') {
+            umami.track('search-authors-result', {
+              query: searchTerm.trim(),
+              field: searchField,
+              resultCount: authorResponse.data.length || 0
+            });
+          }
         } else {
           setAuthorResults([]);
           setAuthorCount(0);
@@ -828,7 +874,7 @@ function SearchApp() {
                           type="submit" 
                           className="btn btn-primary btn-lg px-5"
                           disabled={isLoading}
-                          data-umami-event="click--search-articles"
+                          data-umami-event="click--search-articles-button"
                           data-umami-event-term={searchTerm}
                           data-umami-event-field={searchField}
                         >
@@ -935,7 +981,7 @@ function SearchApp() {
                           type="submit" 
                           className="btn btn-primary btn-lg px-5"
                           disabled={isLoading}
-                          data-umami-event="click--search-trials"
+                          data-umami-event="click--search-trials-button"
                           data-umami-event-term={searchTerm}
                           data-umami-event-status={trialStatus}
                         >
@@ -999,7 +1045,7 @@ function SearchApp() {
                           type="submit" 
                           className="btn btn-primary btn-lg px-5"
                           disabled={isLoading}
-                          data-umami-event="click--search-authors"
+                          data-umami-event="click--search-authors-button"
                           data-umami-event-term={searchTerm}
                           data-umami-event-field={searchField}
                         >
