@@ -545,6 +545,9 @@ function SearchApp() {
         delete searchParams.summary;
       }
       
+      // Add proper ordering to ensure results match what users see in the UI
+      searchParams.ordering = '-published_date';
+      
       // Add trial status filter for trials
       if (searchType === 'trials' && trialStatus) {
         searchParams.status = trialStatus;

@@ -27,6 +27,7 @@ export const searchService = {
    * @param {string} params.title - Search term for title only
    * @param {string} params.summary - Search term for summary only
    * @param {number} params.page - Page number for pagination
+   * @param {string} params.ordering - Ordering field (e.g., '-discovery_date', 'published_date')
    * @returns {Promise} - Promise with search results
    */
   searchArticles: (params) => {
@@ -37,6 +38,7 @@ export const searchService = {
       title: params.title || undefined,
       summary: params.summary || undefined,
       page: params.page || 1,
+      ordering: params.ordering || '-published_date', // Ensure newest first ordering
       page_size: params.page_size || undefined // Allow requesting all results
     });
   },
@@ -51,6 +53,7 @@ export const searchService = {
    * @param {string} params.summary - Search term for summary only
    * @param {string} params.status - Recruitment status
    * @param {number} params.page - Page number for pagination
+   * @param {string} params.ordering - Ordering field (e.g., '-discovery_date', 'published_date')
    * @returns {Promise} - Promise with search results
    */
   searchTrials: (params) => {
@@ -65,6 +68,7 @@ export const searchService = {
       summary: params.summary || undefined,
       status: params.status || undefined,
       page: params.page || 1,
+      ordering: params.ordering || '-published_date', // Ensure newest first ordering
       page_size: params.page_size || undefined // Allow requesting all results
     };
     
