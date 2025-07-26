@@ -105,8 +105,8 @@ scripts:
               </a>
             </div>
             <div class="col-md-6 mb-3">
-              <a href="/annual-review/" class="btn btn-outline-secondary">
-                <i class="fas fa-file-alt me-2"></i> Read Annual Reports
+              <a href="/annual-review/" class="btn btn-secondary">
+                <i class="fas fa-file-alt me-2"></i> Read Our Annual Reports
               </a>
             </div>
           </div>
