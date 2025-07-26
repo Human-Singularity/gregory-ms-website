@@ -4,8 +4,6 @@
  */
 
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('Donations dashboard loading...');
-    
     // API endpoints
     const DONATIONS_API_URL = 'https://stripe-transparency.dash-tech-daf.workers.dev';
     const TRIALS_API_URL = 'https://api.gregory-ms.com/trials/?team_id=1&subject_id=1&format=json';
@@ -26,27 +24,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const trialsCount = document.getElementById('trials-count');
     const articlesCount = document.getElementById('articles-count');
 
-    console.log('Elements found:', {
-        loadingElement: !!loadingElement,
-        listElement: !!listElement,
-        errorElement: !!errorElement,
-        progressBar: !!progressBar,
-        progressText: !!progressText,
-        goalPercentage: !!goalPercentage,
-        trialsCount: !!trialsCount,
-        articlesCount: !!articlesCount
-    });
-
     async function fetchDonationData() {
-        console.log('Fetching donation data from:', DONATIONS_API_URL);
         try {
             const response = await fetch(DONATIONS_API_URL);
-            console.log('API response status:', response.status);
             if (!response.ok) {
                 throw new Error('Failed to fetch donation data');
             }
             const data = await response.json();
-            console.log('API data received:', data);
             
             // Update progress bar
             updateProgressBar(data.current_year?.total_amount || 0);
@@ -61,43 +45,29 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     async function fetchPlatformStats() {
-        console.log('Fetching platform statistics...');
-        
         // Set a timeout to show fallback values if APIs don't respond quickly
         const timeoutId = setTimeout(() => {
-            console.log('API timeout - using fallback values');
             setDefaultCounts();
         }, 5000); // 5 second timeout
         
         try {
             // Fetch trials count
-            console.log('Fetching trials from:', TRIALS_API_URL);
             const trialsResponse = await fetch(TRIALS_API_URL);
-            console.log('Trials response status:', trialsResponse.status);
             if (trialsResponse.ok) {
                 const trialsData = await trialsResponse.json();
-                console.log('Trials data received:', trialsData);
                 updateTrialsCount(trialsData.count || 0);
                 clearTimeout(timeoutId); // Clear timeout if successful
-            } else {
-                console.error('Failed to fetch trials:', trialsResponse.statusText);
             }
             
             // Fetch articles count  
-            console.log('Fetching articles from:', ARTICLES_API_URL);
             const articlesResponse = await fetch(ARTICLES_API_URL);
-            console.log('Articles response status:', articlesResponse.status);
             if (articlesResponse.ok) {
                 const articlesData = await articlesResponse.json();
-                console.log('Articles data received:', articlesData);
                 updateArticlesCount(articlesData.count || 0);
                 clearTimeout(timeoutId); // Clear timeout if successful
-            } else {
-                console.error('Failed to fetch articles:', articlesResponse.statusText);
             }
             
         } catch (error) {
-            console.error('Error fetching platform stats:', error);
             clearTimeout(timeoutId);
             setDefaultCounts();
         }
@@ -129,7 +99,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function updateRecentDonations(donations) {
-        console.log('Updating recent donations with:', donations);
         // Hide loading, show list
         loadingElement.classList.add('d-none');
         listElement.classList.remove('d-none');
@@ -151,7 +120,6 @@ document.addEventListener('DOMContentLoaded', function() {
         let html = '<div class="list-group list-group-flush">';
         
         recentDonations.forEach((donation, index) => {
-            console.log('Processing donation:', donation);
             const date = new Date(donation.charge_date);
             const formattedDate = date.toLocaleDateString('en-US', {
                 year: 'numeric',
@@ -162,7 +130,6 @@ document.addEventListener('DOMContentLoaded', function() {
             // Use initials or "Anonymous" for privacy
             const donorName = donation.name || 'Anonymous Supporter';
             const amount = parseFloat(donation.amount_paid).toFixed(2);
-            console.log('Parsed amount:', amount, 'from amount_paid:', donation.amount_paid);
             
             html += `
                 <div class="list-group-item border-0 px-0 py-3 ${index === 0 ? 'border-top' : ''}">
