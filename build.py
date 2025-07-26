@@ -20,10 +20,6 @@ try:
 except ImportError:
     print("Warning: python-dotenv not installed. Environment variables will not be loaded from .env file.")
 
-# Variables for metabase embeds - these will be used only if the required modules are available
-METABASE_SITE_URL = os.getenv('METABASE_SITE_URL')
-METABASE_SECRET_KEY = os.getenv('METABASE_SECRET_KEY')
-
 # press kit variables
 directory_name = 'gregory-ai-press-kit'
 folder_id = '1KuEj8mERv5FcLfmJ1hP840GMrREoJpRc'
@@ -111,50 +107,6 @@ def delete_temporary_files():
             if file.exists():
                 file.unlink()
 
-def generate_metabase_embeds():
-    print('''
-####
-## GENERATE EMBED KEYS FOR METABASE
-####
-''')
-    if not METABASE_SITE_URL or not METABASE_SECRET_KEY:
-        print("Skipping metabase embed generation: METABASE_SITE_URL or METABASE_SECRET_KEY not set.")
-        return
-    
-    # Check for dependencies and attempt to install if missing
-    if not check_dependencies('metabase'):
-        print("Missing metabase dependencies. Attempting to install...")
-        if not install_dependencies('metabase'):
-            print("Could not install metabase dependencies. Skipping metabase embed generation.")
-            return
-        # Check again after attempting to install
-        if not check_dependencies('metabase'):
-            print("Skipping metabase embed generation due to missing dependencies.")
-            return
-    
-    import jwt
-    
-    try:
-        # Opening JSON file
-        with open('data/dashboards.json') as f:
-            dashboards = json.load(f)
-        
-        metabase_json = {}
-        for i in dashboards:
-            print(f"Generating key for dashboard: {i}")
-            payload = {"resource": {"dashboard": i}, "params": {}, "exp": round(time.time()) + (60 * 60 * 24 * 30)}
-            token = jwt.encode(payload, METABASE_SECRET_KEY, algorithm='HS256')
-            iframeUrl = METABASE_SITE_URL + 'embed/dashboard/' + token + '#bordered=true&titled=true'
-            entry = "dashboard_" + str(i)
-            metabase_json[str(entry)] = iframeUrl
-
-        embeds_json = os.path.join(GREGORY_DIR, 'data/embeds.json')
-
-        with open(embeds_json, "w") as f:
-            json.dump(metabase_json, f)
-        print("Metabase embed generation completed successfully.")
-    except Exception as e:
-        print(f"Error generating metabase embeds: {e}")
 
 def process_presskit():
     print('''
@@ -359,5 +311,4 @@ if __name__ == '__main__':
             # Only run these if not in fast mode
             process_presskit()
             delete_temporary_files()
-            generate_metabase_embeds()
         build_website()
