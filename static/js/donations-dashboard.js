@@ -62,23 +62,44 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function fetchPlatformStats() {
         console.log('Fetching platform statistics...');
+        
+        // Set a timeout to show fallback values if APIs don't respond quickly
+        const timeoutId = setTimeout(() => {
+            console.log('API timeout - using fallback values');
+            setDefaultCounts();
+        }, 5000); // 5 second timeout
+        
         try {
             // Fetch trials count
+            console.log('Fetching trials from:', TRIALS_API_URL);
             const trialsResponse = await fetch(TRIALS_API_URL);
+            console.log('Trials response status:', trialsResponse.status);
             if (trialsResponse.ok) {
                 const trialsData = await trialsResponse.json();
+                console.log('Trials data received:', trialsData);
                 updateTrialsCount(trialsData.count || 0);
+                clearTimeout(timeoutId); // Clear timeout if successful
+            } else {
+                console.error('Failed to fetch trials:', trialsResponse.statusText);
             }
             
             // Fetch articles count  
+            console.log('Fetching articles from:', ARTICLES_API_URL);
             const articlesResponse = await fetch(ARTICLES_API_URL);
+            console.log('Articles response status:', articlesResponse.status);
             if (articlesResponse.ok) {
                 const articlesData = await articlesResponse.json();
+                console.log('Articles data received:', articlesData);
                 updateArticlesCount(articlesData.count || 0);
+                clearTimeout(timeoutId); // Clear timeout if successful
+            } else {
+                console.error('Failed to fetch articles:', articlesResponse.statusText);
             }
             
         } catch (error) {
             console.error('Error fetching platform stats:', error);
+            clearTimeout(timeoutId);
+            setDefaultCounts();
         }
     }
 
@@ -197,6 +218,16 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateArticlesCount(count) {
         if (articlesCount) {
             articlesCount.textContent = count.toLocaleString();
+        }
+    }
+
+    function setDefaultCounts() {
+        // Set fallback values if API calls fail
+        if (trialsCount && trialsCount.textContent === 'Loading...') {
+            trialsCount.textContent = '5,000+';
+        }
+        if (articlesCount && articlesCount.textContent === 'Loading...') {
+            articlesCount.textContent = '30,000+';
         }
     }
 
