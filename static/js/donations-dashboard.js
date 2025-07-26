@@ -6,8 +6,10 @@
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Donations dashboard loading...');
     
-    // API endpoint for donation data
-    const API_URL = 'https://stripe-transparency.dash-tech-daf.workers.dev';
+    // API endpoints
+    const DONATIONS_API_URL = 'https://stripe-transparency.dash-tech-daf.workers.dev';
+    const TRIALS_API_URL = 'https://api.gregory-ms.com/trials/?team_id=1&subject_id=1&format=json';
+    const ARTICLES_API_URL = 'https://api.gregory-ms.com/articles/?team_id=1&subject_id=1&format=json';
     const GOAL_AMOUNT = 500; // €500 goal for 2025
     
     // Loading states
@@ -19,6 +21,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const progressBar = document.getElementById('progress-bar');
     const progressText = document.getElementById('progress-text');
     const goalPercentage = document.getElementById('goal-percentage');
+    
+    // Platform stats elements
+    const trialsCount = document.getElementById('trials-count');
+    const articlesCount = document.getElementById('articles-count');
 
     console.log('Elements found:', {
         loadingElement: !!loadingElement,
@@ -26,13 +32,15 @@ document.addEventListener('DOMContentLoaded', function() {
         errorElement: !!errorElement,
         progressBar: !!progressBar,
         progressText: !!progressText,
-        goalPercentage: !!goalPercentage
+        goalPercentage: !!goalPercentage,
+        trialsCount: !!trialsCount,
+        articlesCount: !!articlesCount
     });
 
     async function fetchDonationData() {
-        console.log('Fetching donation data from:', API_URL);
+        console.log('Fetching donation data from:', DONATIONS_API_URL);
         try {
-            const response = await fetch(API_URL);
+            const response = await fetch(DONATIONS_API_URL);
             console.log('API response status:', response.status);
             if (!response.ok) {
                 throw new Error('Failed to fetch donation data');
@@ -49,6 +57,28 @@ document.addEventListener('DOMContentLoaded', function() {
         } catch (error) {
             console.error('Error fetching donation data:', error);
             showError();
+        }
+    }
+
+    async function fetchPlatformStats() {
+        console.log('Fetching platform statistics...');
+        try {
+            // Fetch trials count
+            const trialsResponse = await fetch(TRIALS_API_URL);
+            if (trialsResponse.ok) {
+                const trialsData = await trialsResponse.json();
+                updateTrialsCount(trialsData.count || 0);
+            }
+            
+            // Fetch articles count  
+            const articlesResponse = await fetch(ARTICLES_API_URL);
+            if (articlesResponse.ok) {
+                const articlesData = await articlesResponse.json();
+                updateArticlesCount(articlesData.count || 0);
+            }
+            
+        } catch (error) {
+            console.error('Error fetching platform stats:', error);
         }
     }
 
@@ -158,6 +188,18 @@ document.addEventListener('DOMContentLoaded', function() {
         updateProgressBar(0);
     }
 
+    function updateTrialsCount(count) {
+        if (trialsCount) {
+            trialsCount.textContent = count.toLocaleString();
+        }
+    }
+
+    function updateArticlesCount(count) {
+        if (articlesCount) {
+            articlesCount.textContent = count.toLocaleString();
+        }
+    }
+
     function escapeHtml(text) {
         const div = document.createElement('div');
         div.textContent = text;
@@ -166,4 +208,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize the dashboard
     fetchDonationData();
+    fetchPlatformStats();
 });
