@@ -157,6 +157,108 @@ options:
   </div>
 </div>
 
+<!-- Donations Transparency Section -->
+<div class="container-fluid py-5" style="background: linear-gradient(135deg, rgba(52, 58, 64, 0.95), rgba(73, 80, 87, 0.95)), url('gregory_standing.svg'); background-size: contain; background-position: right center; background-repeat: no-repeat;">
+  <div class="container">
+    <div class="row justify-content-center align-items-center">
+      <div class="col-lg-8 text-center text-white">
+        <div class="mb-4">
+          <i class="fas fa-heart" style="font-size: 3rem; color: #e74c3c;"></i>
+        </div>
+        <h2 class="display-5 font-weight-bold mb-4" data-umami-event="view--donations-section-homepage">Supporting Open MS Research</h2>
+        <p class="lead mb-4" style="font-size: 1.2rem; line-height: 1.6;">
+          Join our transparent community helping make Multiple Sclerosis research accessible to everyone. 
+          See exactly how your contributions power our mission.
+        </p>
+        
+        <!-- Live Stats Row -->
+        <div class="row mb-4 text-center">
+          <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card border-0 shadow-sm bg-white text-dark h-100">
+              <div class="card-body p-3">
+                <i class="fas fa-euro-sign text-success mb-2" style="font-size: 1.8rem;"></i>
+                <h5 class="font-weight-bold mb-1" id="donation-amount">€270 Raised</h5>
+                <p class="text-muted" id="donation-goal">of €500 goal (54%)</p>
+                <div class="progress mt-2" style="height: 6px;">
+                  <div class="progress-bar bg-success" id="donation-progress" style="width: 54%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card border-0 shadow-sm bg-white text-dark h-100">
+              <div class="card-body p-3">
+                <i class="fas fa-flask text-info mb-2" style="font-size: 1.8rem;"></i>
+                <h5 class="font-weight-bold mb-1" id="trials-count">5,271</h5>
+                <p class="text-muted">Clinical Trials Tracked</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card border-0 shadow-sm bg-white text-dark h-100">
+              <div class="card-body p-3">
+                <i class="fas fa-file-medical text-warning mb-2" style="font-size: 1.8rem;"></i>
+                <h5 class="font-weight-bold mb-1" id="articles-count">33,592</h5>
+                <p class="text-muted">Research Articles</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card border-0 shadow-sm bg-white text-dark h-100">
+              <div class="card-body p-3">
+                <i class="fas fa-user-graduate text-purple mb-2" style="font-size: 1.8rem; color: #6f42c1;"></i>
+                <h5 class="font-weight-bold mb-1" id="authors-count">171,297</h5>
+                <p class="text-muted">Indexed Authors</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Features highlight -->
+        <div class="row mb-4">
+          <div class="col-md-4 mb-3">
+            <div class="d-flex flex-column align-items-center">
+              <i class="fas fa-eye mb-2" style="font-size: 1.5rem; color: #17a2b8;"></i>
+              <h6 class="font-weight-bold">Full Transparency</h6>
+              <small class="text-white-75">Every donation tracked publicly</small>
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <div class="d-flex flex-column align-items-center">
+              <i class="fas fa-users mb-2" style="font-size: 1.5rem; color: #28a745;"></i>
+              <h6 class="font-weight-bold">Community Driven</h6>
+              <small class="text-white-75">Supporting global MS research</small>
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <div class="d-flex flex-column align-items-center">
+              <i class="fas fa-shield-alt mb-2" style="font-size: 1.5rem; color: #ffc107;"></i>
+              <h6 class="font-weight-bold">Secure & Open</h6>
+              <small class="text-white-75">Open source, secure platform</small>
+            </div>
+          </div>
+        </div>
+        
+        <!-- CTA Button -->
+        <div class="mb-3">
+          <a href='{{< ref "/donations/_index.md" >}}' 
+             class="btn btn-primary btn-lg font-weight-bold shadow-lg px-5" 
+             data-umami-event="click--donations-cta-homepage">
+            <i class="fas fa-heart mr-2"></i>Support Our Mission
+          </a>
+        </div>
+        
+        <!-- Trust Badge -->
+        <div class="mt-3">
+          <span class="badge badge-light badge-pill px-3 py-2">
+            <i class="fas fa-check-circle mr-1 text-success"></i>100% Transparent Funding
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
     <div class="row justify-content-center bg-grey pt-5">
       <div class="col-md-3 mb-5 col-12 justify-content-center align-self-center align-right">
         <img
@@ -299,6 +401,10 @@ options:
     
   </div>
 </div>
+
+<!-- Homepage Statistics Script -->
+<script src="/js/homepage-stats.js"></script>
+
 <style>
   .page-header:before {
     background-color: rgba(0, 0, 0, 0.1);

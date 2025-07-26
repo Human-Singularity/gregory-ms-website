@@ -112,7 +112,7 @@ scripts:
           </div>
         </div>
       </div>
-            <!-- Platform Impact Section -->
+      <!-- Platform Impact Section -->
       <div class="card border-0 shadow-sm mb-5">
         <div class="card-body p-4">
           <h5 class="mb-4 title"><i class="fas fa-chart-bar text-info"></i> Platform Impact</h5>
