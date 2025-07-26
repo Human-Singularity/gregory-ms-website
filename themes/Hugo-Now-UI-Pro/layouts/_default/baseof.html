@@ -35,15 +35,12 @@
 	<link rel="preload" href="/webfonts/fa-regular-400.woff2" as="font" crossorigin="anonymous">
 	<link rel="preload" href="/webfonts/fa-brands-400.woff2" as="font" crossorigin="anonymous">
 
-	{{ $fontawesome := resources.Get "css/fontawesome/fontawesome.css"  }}
-	{{ $brands := resources.Get "css/fontawesome/brands.css"  }}
-	{{ $regular := resources.Get "css/fontawesome/regular.css"  }}
-	{{ $solid := resources.Get "css/fontawesome/solid.css"  }}
+	{{ $fontawesome := resources.Get "css/fontawesome/all.min.css"  }}
 
 	{{- $bootstrap := resources.Get "css/bootstrap.min.css" -}}
 	{{- $nowUi := resources.Get "scss/now-ui-kit.scss" | toCSS (dict "enableSourceMap" false "outputStyle" "compressed") -}}
 
-	{{ $styles := slice $bootstrap $nowUi $montserrat $fontawesome $brands $regular $solid | resources.Concat "css/style.css" |  minify | fingerprint  -}}
+	{{ $styles := slice $bootstrap $nowUi $montserrat $fontawesome | resources.Concat "css/style.css" |  minify | fingerprint  -}}
 
 	<link rel="stylesheet" href="{{$styles.Permalink}}">
 

@@ -229,7 +229,7 @@ function Observatory({ config = DEFAULT_CONFIG }) {
     
     // Track category selection with umami
     if (typeof umami !== 'undefined') {
-      umami.track(`observatory-category-${category.slug}`, {
+      umami.track('observatory-category-select', {
         category: category.name,
         slug: category.slug,
         tags: category.tags.join(',')
