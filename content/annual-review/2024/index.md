@@ -90,8 +90,6 @@ scripts:
   </div>
 </section>
 
----
-
 <div class="text-center">
   <a class="btn btn-success" href="./GregoryMS_Annual_Report_2024.pdf" data-umami-event="click--download-pdf-2024" target="_blank">
     Download PDF Report 
@@ -101,9 +99,8 @@ scripts:
   </a>
 </div>
 
----
 
-The project is still called Gregory‑MS, but we refer to the software as Gregory‑AI. We chose this name because "MS" might suggest it only works for Multiple Sclerosis. In fact, the software can adapt to other diseases and medical research areas.
+The project is still called Gregory‑MS, but we refer to the software as [Gregory‑AI](https://gregory-ai.com/). We chose this name because "MS" might suggest it only works for Multiple Sclerosis. In fact, the software can adapt to other diseases and medical research areas.
 
 ---
 
