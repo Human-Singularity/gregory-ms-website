@@ -112,11 +112,42 @@ scripts:
           </div>
         </div>
       </div>
+            <!-- Platform Impact Section -->
+      <div class="card border-0 shadow-sm mb-5">
+        <div class="card-body p-4">
+          <h5 class="mb-4 title"><i class="fas fa-chart-bar text-info"></i> Platform Impact</h5>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <div class="d-flex align-items-center p-3 bg-light rounded">
+                <div class="me-3">
+                  <i class="fas fa-flask fa-2x mr-3 text-primary"></i>
+                </div>
+                <div>
+                  <h6 class="mb-1">Clinical Trials</h6>
+                  <p class="mb-0" id="trials-count">Loading...</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <div class="d-flex align-items-center p-3 bg-light rounded">
+                <div class="me-3">
+                  <i class="fas fa-file-alt mr-3 fa-2x text-success"></i>
+                </div>
+                <div>
+                  <h6 class="mb-1">Research Articles</h6>
+                  <p class="mb-0" id="articles-count">Loading...</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="text-muted mt-3 mb-0 small">Real-time data from our continuously updated research database, helping the MS community stay informed about the latest developments.</p>
+        </div>
+      </div>
       <!-- Financial History -->
       <div class="card border-0 shadow-sm">
         <div class="card-body p-4">
           <h5 class="mb-3"><i class="fas fa-history text-warning"></i> Financial History</h5>
-          <p class="text-muted">In 2024, our expenses totaled €459,17 for hosting, service fees, and domain costs, with €€538 in donations received. <a style="text-decoration: underline;" class="text-info font-weight-bold" href="/annual-review/2024/GregoryMS_Annual_Report_2024.pdf#page=9" target="_blank">View detailed breakdown in our Annual Report</a>.</p>
+          <p class="text-muted">In 2024, our expenses totaled €459,17 for hosting, service fees, and domain costs, with €538 in donations received. <a style="text-decoration: underline;" class="text-info font-weight-bold" href="/annual-review/2024/GregoryMS_Annual_Report_2024.pdf#page=9" target="_blank">View detailed breakdown in our Annual Report</a>.</p>
           <div class="alert alert-info" role="alert">
             <i class="fas fa-info-circle me-2"></i>
             <strong>2024 Update:</strong> Thanks to community support, we achieved our first year of financial self-sustainability! <a href="/annual-review/2024/" class="alert-link">Read more in our 2024 review</a>.
