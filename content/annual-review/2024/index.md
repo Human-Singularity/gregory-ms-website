@@ -31,13 +31,11 @@ scripts:
 </div>
 <div class="container">
 
-## Executive Summary
+## Executive Summary{.title .text-info}
 
 **2024 marked a pivotal year for Gregory AI**, with significant expansions in functionality, partnerships, and community reach. Key achievements include enhanced clinical trial coverage, and our first year of financial self-sustainability.
 
----
-
-## Key Metrics for 2024
+## Key Metrics for 2024{.title .text-info}
 
 <section class="py-4">
   <div class="container">
@@ -70,7 +68,7 @@ scripts:
             <div class="icon icon-shape bg-white text-success rounded-circle mb-3 mx-auto">
               <i class="fas fa-users"></i>
             </div>
-            <h4 class=" mb-1">160+</h4>
+            <h4 class=" mb-1">130+</h4>
             <p class="mb-0 opacity-8 small">Subscribers</p>
           </div>
         </div>
@@ -90,7 +88,7 @@ scripts:
   </div>
 </section>
 
-<div class="text-center">
+<div class="text-center my-4">
   <a class="btn btn-success" href="./GregoryMS_Annual_Report_2024.pdf" data-umami-event="click--download-pdf-2024" target="_blank">
     Download PDF Report 
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="height: 1rem; vertical-align: middle; opacity: 0.8">
@@ -99,12 +97,11 @@ scripts:
   </a>
 </div>
 
-
-The project is still called Gregory‑MS, but we refer to the software as [Gregory‑AI](https://gregory-ai.com/). We chose this name because "MS" might suggest it only works for Multiple Sclerosis. In fact, the software can adapt to other diseases and medical research areas.
+<p>The project is still called Gregory‑MS, but we refer to the software as <a class="text-info font-weight-bold" style="text-decoration: underline;" href="https://gregory-ai.com/">GregoryAi</a>. We chose this name because "MS" might suggest it only works for Multiple Sclerosis. In fact, the software can adapt to other diseases and medical research areas.</p>
 
 ---
 
-## Development and Collaborations
+## Development and Collaborations{.title .text-info}
 
 <section class="py-4">
   <div class="container">
@@ -140,7 +137,7 @@ The project is still called Gregory‑MS, but we refer to the software as [Grego
               <h5 class="mb-0 title"><i class="fas fa-clipboard-list text-success"></i> New Clinical Trial Registry</h5>
             </div>
             <p class="">
-              Adding the <a href="https://euclinicaltrials.eu/" target="_blank">Clinical Trial Information System (CTIS)</a> as a source means users get even more complete coverage of trials around the globe. Gregory AI can now track changes or new listings from the largest registries worldwide.
+              Adding the <a class="text-info font-weight-bold" style="text-decoration: underline;" href="https://euclinicaltrials.eu/" target="_blank">Clinical Trial Information System (CTIS)</a> as a source means users get even more complete coverage of trials around the globe. Gregory AI can now track changes or new listings from the largest registries worldwide.
             </p>
           </div>
         </div>
@@ -152,7 +149,7 @@ The project is still called Gregory‑MS, but we refer to the software as [Grego
               <h5 class="mb-0 title"><i class="fas fa-handshake text-warning"></i> REGENERAR and GENIE Collaborations</h5>
             </div>
             <p class="">
-              Two new clinical research groups — <a href="https://research.regenerar.eu/" target="_blank">REGENERAR for brain regeneration</a> and <a href="https://investigacao.encefalites.pt/" target="_blank">GENIE for autoimmune encephalitis</a> — are using Gregory AI as a real-time map of relevant studies.
+              Two new clinical research groups — <a class="text-info font-weight-bold" style="text-decoration: underline;" href="https://research.regenerar.eu/" target="_blank">REGENERAR for brain regeneration</a> and <a class="text-info font-weight-bold" style="text-decoration: underline;" href="https://investigacao.encefalites.pt/" target="_blank">GENIE for autoimmune encephalitis</a> — are using Gregory AI as a real-time map of relevant studies.
             </p>
           </div>
         </div>
@@ -161,7 +158,7 @@ The project is still called Gregory‑MS, but we refer to the software as [Grego
   </div>
 </section>
 
-## Observatories and Research Insights
+## Observatories and Research Insights{.title .text-info}
 
 <section class="py-4">
   <div class="container">
@@ -194,7 +191,7 @@ The project is still called Gregory‑MS, but we refer to the software as [Grego
   </div>
 </section>
 
-## Clinical Trials and Data Expansion
+## Clinical Trials and Data Expansion{.title .text-info}
 
 <section class="py-4">
   <div class="container">
@@ -225,7 +222,7 @@ The project is still called Gregory‑MS, but we refer to the software as [Grego
   </div>
 </section>
 
-## Financial Transparency & Community Support
+## Financial Transparency & Community Support{.title .text-info}
 
 <section class="py-4">
   <div class="container">
@@ -253,28 +250,15 @@ The project is still called Gregory‑MS, but we refer to the software as [Grego
         </div>
       </div>
     </div>
-    <div class="mt-4">
-      {{< recent-donations style="compact" >}}
-    </div>
-    <div class="row mt-4">
-      <div class="col-12 text-center">
-        <a href="/annual-review/)" class="btn btn-outline-primary me-3">
-          <i class="fas fa-chart-bar me-2"></i>View Our Activities and Financial Reports
-        </a>
-        <a href="/donations/" class="btn btn-primary">
-          <i class="fas fa-heart me-2"></i>Support Our Mission
-        </a>
-      </div>
-    </div>
   </div>
 </section>
 
-## Advancements in Clinical Trials
+## Advancements in Clinical Trials{.title .text-info}
 
 - **Expanded Coverage**  
   As mentioned before, we added CTIS alongside existing sources like ClinicalTrials.gov and the WHO registry. We've strengthened our ability to track new research across continents.
 
-## Financial Overview and Team Contributions
+## Financial Overview and Team Contributions{.title .text-info}
 
 - **First Year of Self-Sustainability**  
   Thanks to generous donations, Gregory MS managed to shoulder a greater share of its hosting and email costs. This financial independence underlines the community’s trust in the project and its goals.
@@ -285,7 +269,7 @@ The project is still called Gregory‑MS, but we refer to the software as [Grego
 - **New Team Member**  
   We’re delighted to introduce *Micaela Gonçalves*, who brings a fresh perspective and energy.
 
-## Team & Community Growth
+## Team & Community Growth{.title .text-info}
 
 <section class="py-4">
   <div class="container">
@@ -318,7 +302,7 @@ The project is still called Gregory‑MS, but we refer to the software as [Grego
   </div>
 </section>
 
-## Media & Social Presence
+## Media & Social Presence{.title .text-info}
 
 <section class="py-4">
   <div class="container">
@@ -328,7 +312,7 @@ The project is still called Gregory‑MS, but we refer to the software as [Grego
           <h5 class="mb-0 title"><i class="fas fa-share-alt text-info"></i> Growing Social Media Presence</h5>
         </div>
         <p class="text-muted mb-3">
-          While changes in social media policies continue, our presence on <a href="https://med-mastodon.com/@gregoryMS" target="_blank">Mastodon (@gregory-ms@med-mastodon.com)</a> and <a href="https://bsky.app/profile/Gregory-MS.com" target="_blank">BlueSky (@Gregory-MS.com)</a> has grown.
+          While changes in social media policies continue, our presence on <a class="text-info font-weight-bold" style="text-decoration: underline;" href="https://med-mastodon.com/@gregoryMS" target="_blank">Mastodon (@gregory-ms@med-mastodon.com)</a> and <a class="text-info font-weight-bold" style="text-decoration: underline;" href="https://bsky.app/profile/Gregory-MS.com" target="_blank">BlueSky (@Gregory-MS.com)</a> has grown.
         </p>
         <p class="text-muted mb-0">
           <strong>Automated Updates:</strong> Our social media automation ensures the MS community can quickly see newly published research and clinical trials as they become available.
@@ -338,7 +322,7 @@ The project is still called Gregory‑MS, but we refer to the software as [Grego
   </div>
 </section>
 
-## Looking Forward: 2025 Aspirations
+## Looking Forward: 2025 Aspirations{.title .text-info}
 
 <section class="py-4">
   <div class="container">
