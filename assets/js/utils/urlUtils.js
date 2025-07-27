@@ -13,6 +13,7 @@ export const urlUtils = {
       q: urlParams.get('q') || '',
       field: urlParams.get('field') || 'all',
       status: urlParams.get('status') || '',
+      orcid: urlParams.get('orcid') || '',
       page: parseInt(urlParams.get('page')) || 1
     };
   },
