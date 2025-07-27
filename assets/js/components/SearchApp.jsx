@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { searchService } from '../services/searchService';
-import { stripHtml, truncateText, formatDate } from '../utils/searchUtils';
+import { stripHtml, truncateText, formatDate, cleanOrcid, isValidOrcid } from '../utils/searchUtils';
 import { urlUtils } from '../utils/urlUtils';
 import ArticleListItem from './ArticleListItem';
 import TrialListItem from './TrialListItem';
@@ -41,6 +41,8 @@ function SearchApp() {
   const [searchField, setSearchField] = useState(initialParams.field);
   const [trialStatus, setTrialStatus] = useState(initialParams.status);
   const [searchType, setSearchType] = useState(initialParams.type);
+  const [orcidSearch, setOrcidSearch] = useState(initialParams.orcid);
+  const [authorSearchType, setAuthorSearchType] = useState(initialParams.orcid ? 'orcid' : 'name');
   
   // Search results
   const [articleResults, setArticleResults] = useState([]);
@@ -68,7 +70,13 @@ function SearchApp() {
   const handleSearch = async (e) => {
     e.preventDefault();
     
-    if (!searchTerm.trim()) {
+    // Validate input based on search type
+    if (searchType === 'authors' && authorSearchType === 'orcid') {
+      if (!orcidSearch.trim()) {
+        setError('Please enter an ORCID identifier');
+        return;
+      }
+    } else if (!searchTerm.trim()) {
       setError('Please enter a search term');
       return;
     }
@@ -83,13 +91,25 @@ function SearchApp() {
     }
 
     // Update URL parameters
-    urlUtils.updateSearchParams({
+    const urlParams = {
       type: searchType,
-      q: searchTerm,
-      field: searchField,
-      status: trialStatus,
       page: 1
-    });
+    };
+    
+    if (searchType === 'authors' && authorSearchType === 'orcid') {
+      urlParams.orcid = cleanOrcid(orcidSearch);
+    } else {
+      urlParams.q = searchTerm;
+      if (searchType !== 'authors') {
+        urlParams.field = searchField;
+      }
+    }
+    
+    if (searchType === 'trials' && trialStatus) {
+      urlParams.status = trialStatus;
+    }
+    
+    urlUtils.updateSearchParams(urlParams);
     
     setIsLoading(true);
     setError(null);
@@ -230,18 +250,46 @@ function SearchApp() {
         setAuthorCount(0);
         setAuthorLastPage(1);
       } else if (searchType === 'authors') {
-        // Prepare author search parameters
-        const authorParams = {
-          team_id: 1, // Team Gregory
-          subject_id: 1, // Multiple Sclerosis
-          page: authorPage,
-          full_name: searchTerm // For authors, we search by full name
-        };
+        // Prepare author search parameters based on search type
+        let authorResponse;
         
-        // Execute author search
-        const authorResponse = await searchService.searchAuthors(authorParams);
+        if (authorSearchType === 'orcid') {
+          // ORCID search - validate and clean ORCID first
+          const cleanedOrcid = cleanOrcid(orcidSearch);
+          
+          if (!cleanedOrcid) {
+            setError('Please enter an ORCID identifier');
+            setIsLoading(false);
+            return;
+          }
+          
+          // Note: ORCID validation is relaxed to allow partial searches
+          // Full validation: if (!isValidOrcid(cleanedOrcid)) { ... }
+          
+          // Use the ORCID-specific search method
+          authorResponse = await searchService.searchAuthorsByOrcid({
+            orcid: cleanedOrcid,
+            page: authorPage
+          });
+        } else {
+          // Name search - use the existing search method
+          if (!searchTerm.trim()) {
+            setError('Please enter an author name');
+            setIsLoading(false);
+            return;
+          }
+          
+          const authorParams = {
+            team_id: 1, // Team Gregory
+            subject_id: 1, // Multiple Sclerosis
+            page: authorPage,
+            full_name: searchTerm // For authors, we search by full name
+          };
+          
+          authorResponse = await searchService.searchAuthors(authorParams);
+        }
         
-        // Update author results
+        // Update author results - handle both response formats
         if (authorResponse.data && authorResponse.data.results && Array.isArray(authorResponse.data.results)) {
           setAuthorResults(authorResponse.data.results);
           setAuthorCount(authorResponse.data.count || authorResponse.data.results.length || 0);
@@ -250,7 +298,8 @@ function SearchApp() {
           // Track successful search result
           if (typeof umami !== 'undefined') {
             umami.track('search-authors-result', {
-              query: searchTerm.trim(),
+              query: authorSearchType === 'orcid' ? cleanOrcid(orcidSearch) : searchTerm.trim(),
+              searchType: authorSearchType,
               field: searchField,
               resultCount: authorResponse.data.count || authorResponse.data.results.length || 0
             });
@@ -263,7 +312,8 @@ function SearchApp() {
           // Track successful search result
           if (typeof umami !== 'undefined') {
             umami.track('search-authors-result', {
-              query: searchTerm.trim(),
+              query: authorSearchType === 'orcid' ? cleanOrcid(orcidSearch) : searchTerm.trim(),
+              searchType: authorSearchType,
               field: searchField,
               resultCount: authorResponse.data.length || 0
             });
@@ -453,7 +503,8 @@ function SearchApp() {
     if (typeof umami !== 'undefined') {
       umami.track('search-pagination-authors', {
         page: newPage,
-        query: searchTerm.trim(),
+        query: authorSearchType === 'orcid' ? cleanOrcid(orcidSearch) : searchTerm.trim(),
+        searchType: authorSearchType,
         field: searchField,
         totalPages: authorLastPage
       });
@@ -463,24 +514,40 @@ function SearchApp() {
     setIsLoading(true);
     
     // Update URL parameters for pagination
-    urlUtils.updateSearchParams({
+    const urlParams = {
       type: 'authors',
-      q: searchTerm,
-      field: searchField,
       page: newPage
-    });
+    };
+    
+    if (authorSearchType === 'orcid') {
+      urlParams.orcid = cleanOrcid(orcidSearch);
+    } else {
+      urlParams.q = searchTerm;
+      urlParams.field = searchField;
+    }
+    
+    urlUtils.updateSearchParams(urlParams);
     
     try {
-      // Prepare author search parameters
-      const authorParams = {
-        team_id: 1, // Team Gregory
-        subject_id: 1, // Multiple Sclerosis
-        page: newPage,
-        full_name: searchTerm // For authors, we search by full name
-      };
+      let authorResponse;
       
-      // Execute author search
-      const authorResponse = await searchService.searchAuthors(authorParams);
+      if (authorSearchType === 'orcid') {
+        // ORCID search pagination
+        authorResponse = await searchService.searchAuthorsByOrcid({
+          orcid: cleanOrcid(orcidSearch),
+          page: newPage
+        });
+      } else {
+        // Name search pagination
+        const authorParams = {
+          team_id: 1, // Team Gregory
+          subject_id: 1, // Multiple Sclerosis
+          page: newPage,
+          full_name: searchTerm // For authors, we search by full name
+        };
+        
+        authorResponse = await searchService.searchAuthors(authorParams);
+      }
       
       // Update author results based on the actual response structure
       if (authorResponse.data && authorResponse.data.results && Array.isArray(authorResponse.data.results)) {
@@ -501,7 +568,7 @@ function SearchApp() {
   
   // Auto-search on component mount if URL params exist
   useEffect(() => {
-    if (initialParams.q) {
+    if (initialParams.q || initialParams.orcid) {
       // Create a fake event object and trigger search
       const fakeEvent = { preventDefault: () => {} };
       handleSearch(fakeEvent);
@@ -527,7 +594,11 @@ function SearchApp() {
     };
     
     if (searchType === 'authors') {
-      searchParams.full_name = searchTerm;
+      if (authorSearchType === 'orcid') {
+        searchParams.orcid = cleanOrcid(orcidSearch);
+      } else {
+        searchParams.full_name = searchTerm;
+      }
     } else if (searchType === 'articles' || searchType === 'trials') {
       // Use the same parameter logic as the actual search
       if (searchField === 'all' || searchField === 'title') {
@@ -666,6 +737,14 @@ function SearchApp() {
         </div>
         
         {renderPagination('authors')}
+        
+        {/* Show search info for single results */}
+        {authorResults.length === 1 && (
+          <div className="alert alert-info mt-3">
+            <i className="fas fa-info-circle mr-2"></i>
+            Found 1 author matching your search criteria.
+          </div>
+        )}
       </div>
     );
   };
@@ -792,12 +871,19 @@ function SearchApp() {
                       setSearchType('authors');
                       setActiveTab('authors');
                       // Update URL parameters for new search type
-                      urlUtils.updateSearchParams({
+                      const urlParams = {
                         type: 'authors',
-                        q: searchTerm,
-                        field: searchField,
                         page: 1
-                      });
+                      };
+                      
+                      if (authorSearchType === 'orcid' && orcidSearch) {
+                        urlParams.orcid = cleanOrcid(orcidSearch);
+                      } else if (searchTerm) {
+                        urlParams.q = searchTerm;
+                        urlParams.field = searchField;
+                      }
+                      
+                      urlUtils.updateSearchParams(urlParams);
                       // Reset results when switching tabs
                       setResults([]);
                       setCurrentPage(1);
@@ -1016,32 +1102,98 @@ function SearchApp() {
                       <p className="text-muted">Find researchers and authors who have published Multiple Sclerosis research articles.</p>
                     </div>
                     
-                    <form onSubmit={handleSearch}>
-                      <div className="row">
-                        <div className="col-md-8 mb-3">
-                          <div className="form-group">
-                            <label htmlFor="searchTerm">Author Name</label>
-                            <input
-                              type="text"
-                              className="form-control form-control-lg"
-                              id="searchTerm"
-                              placeholder="Enter author's full name or partial name..."
-                              value={searchTerm}
-                              onChange={(e) => setSearchTerm(e.target.value)}
-                              required
-                            />
-                          </div>
-                        </div>
-                        
-                        <div className="col-md-4 mb-3 d-flex align-items-end">
-                          <div className="form-group w-100">
-                            <small className="text-muted">
-                              <i className="fas fa-info-circle mr-1"></i>
-                              Search by first name, last name, or full name
-                            </small>
-                          </div>
-                        </div>
+                    {/* Author Search Type Selection */}
+                    <div className="mb-4">
+                      <div className="btn-group w-100" role="group" aria-label="Author search type">
+                        <button
+                          type="button"
+                          className={`btn ${authorSearchType === 'name' ? 'btn-primary' : 'btn-outline-primary'}`}
+                          onClick={() => {
+                            setAuthorSearchType('name');
+                            // Track search type change
+                            if (typeof umami !== 'undefined') {
+                              umami.track('search-author-type-change', {
+                                type: 'name'
+                              });
+                            }
+                          }}
+                        >
+                          <i className="fas fa-user mr-2"></i>
+                          Search by Name
+                        </button>
+                        <button
+                          type="button"
+                          className={`btn ${authorSearchType === 'orcid' ? 'btn-primary' : 'btn-outline-primary'}`}
+                          onClick={() => {
+                            setAuthorSearchType('orcid');
+                            // Track search type change
+                            if (typeof umami !== 'undefined') {
+                              umami.track('search-author-type-change', {
+                                type: 'orcid'
+                              });
+                            }
+                          }}
+                        >
+                          <i className="fas fa-id-badge mr-2"></i>
+                          Search by ORCID
+                        </button>
                       </div>
+                    </div>
+                    
+                    <form onSubmit={handleSearch}>
+                      {authorSearchType === 'name' ? (
+                        <div className="row">
+                          <div className="col-md-8 mb-3">
+                            <div className="form-group">
+                              <label htmlFor="searchTerm">Author Name</label>
+                              <input
+                                type="text"
+                                className="form-control form-control-lg"
+                                id="searchTerm"
+                                placeholder="Enter author's full name or partial name..."
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                                required
+                              />
+                            </div>
+                          </div>
+                          
+                          <div className="col-md-4 mb-3 d-flex align-items-end">
+                            <div className="form-group w-100">
+                              <small className="text-muted">
+                                <i className="fas fa-info-circle mr-1"></i>
+                                Search by first name, last name, or full name
+                              </small>
+                            </div>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="row">
+                          <div className="col-md-8 mb-3">
+                            <div className="form-group">
+                              <label htmlFor="orcidSearch">ORCID Identifier</label>
+                              <input
+                                type="text"
+                                className="form-control form-control-lg"
+                                id="orcidSearch"
+                                placeholder="Enter ORCID ID (e.g., 0000-0000-0000-0000 or https://orcid.org/0000-0000-0000-0000)"
+                                value={orcidSearch}
+                                onChange={(e) => setOrcidSearch(e.target.value)}
+                                required
+                              />
+                            </div>
+                          </div>
+                          
+                          <div className="col-md-4 mb-3 d-flex align-items-end">
+                            <div className="form-group w-100">
+                              <small className="text-muted">
+                                <i className="fas fa-info-circle mr-1"></i>
+                                ORCID URL prefixes will be automatically removed
+                              </small>
+                            </div>
+                          </div>
+                        </div>
+                      )}
                       
                       <div className="text-center">
                         <button 
@@ -1049,8 +1201,8 @@ function SearchApp() {
                           className="btn btn-primary btn-lg px-5"
                           disabled={isLoading}
                           data-umami-event="click--search-authors-button"
-                          data-umami-event-term={searchTerm}
-                          data-umami-event-field={searchField}
+                          data-umami-event-term={authorSearchType === 'name' ? searchTerm : cleanOrcid(orcidSearch)}
+                          data-umami-event-type={authorSearchType}
                         >
                           {isLoading ? (
                             <>
@@ -1097,7 +1249,8 @@ function SearchApp() {
                 <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> Use specific terms related to treatments, symptoms, or research topics</li>
                 <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> Try different spellings or related terms if you don't find what you're looking for</li>
                 <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> For articles and trials, use the field selector to search in titles only for more specific results</li>
-                <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> For authors, search by full name or partial name to find researchers</li>
+                <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> For authors, search by full name or use their ORCID identifier for precise results</li>
+                <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> ORCID searches accept both the ID (0000-0000-0000-0000) and full URLs</li>
                 <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> For clinical trials, you can filter by recruitment status to find active research opportunities</li>
                 <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> Export your results to CSV for offline reading or sharing</li>
               </ul>

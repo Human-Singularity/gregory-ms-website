@@ -132,3 +132,43 @@ export function downloadCSV(csvContent, fileName) {
   link.click();
   document.body.removeChild(link);
 }
+
+/**
+ * Clean ORCID identifier by removing URL prefix
+ * @param {string} orcid - ORCID identifier or URL
+ * @returns {string} - Clean ORCID identifier
+ */
+export function cleanOrcid(orcid) {
+  if (!orcid) return '';
+  
+  // Remove https://orcid.org/ prefix if present
+  if (orcid.includes('orcid.org/')) {
+    return orcid.split('orcid.org/')[1];
+  }
+  
+  // Remove any other common URL prefixes
+  if (orcid.startsWith('http://') || orcid.startsWith('https://')) {
+    const url = new URL(orcid);
+    return url.pathname.replace('/', '');
+  }
+  
+  return orcid.trim();
+}
+
+/**
+ * Validate ORCID format
+ * @param {string} orcid - ORCID identifier
+ * @returns {boolean} - True if valid ORCID format
+ */
+export function isValidOrcid(orcid) {
+  if (!orcid) return false;
+  
+  // Clean the ORCID first
+  const cleanedOrcid = cleanOrcid(orcid);
+  
+  // ORCID format: 0000-0000-0000-0000 (4 groups of 4 digits separated by dashes)
+  // The last digit can be X
+  const orcidPattern = /^\d{4}-\d{4}-\d{4}-(\d{3}[\dX])$/;
+  
+  return orcidPattern.test(cleanedOrcid);
+}
