@@ -1,0 +1,14 @@
+{
+  "media": {
+    "root": "assets",
+    "public": "./"
+  },
+  "content": {
+    "root": "content"
+  },
+  "themeConfig": [
+    "config/_default/hugo.toml"
+  ],
+  "arrangement": [],
+  "showCommitModal": false
+}

@@ -25,6 +25,34 @@ resources:
 
 ---
 
+
+<div class="container my-4">
+  <div class="card shadow-sm border-0">
+    <div class="card-body">
+      <h2 class="card-title h4 mb-3 text-success font-weight-bold">
+        <i class="fas fa-flask mr-2"></i>Stay Updated on MS Clinical Trials
+      </h2>
+      <p class="card-text lead mb-3">
+        GregoryAi monitors the latest clinical trials for multiple sclerosis treatments from trusted global sources.
+      </p>
+      <ul class="list-group list-group-flush mb-3">
+        <li class="list-group-item bg-transparent pl-0 border-0"><i class="fas fa-link text-info mr-2"></i><a href="https://clinicaltrials.gov/" target="_blank" rel="noopener">ClinicalTrials.gov</a></li>
+        <li class="list-group-item bg-transparent pl-0 border-0"><i class="fas fa-link text-info mr-2"></i><a href="https://euclinicaltrials.eu/" target="_blank" rel="noopener">EU Clinical Trials Register</a></li>
+        <li class="list-group-item bg-transparent pl-0 border-0"><i class="fas fa-link text-info mr-2"></i><a href="https://www.clinicaltrialsregister.eu/" target="_blank" rel="noopener">clinicaltrialsregister.eu</a></li>
+        <li class="list-group-item bg-transparent pl-0 border-0"><i class="fas fa-link text-info mr-2"></i><a href="https://trialsearch.who.int/" target="_blank" rel="noopener">WHO Trial Search</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<h3 class="mb-3 h4">
+  <i class="fas fa-sync-alt text-success mr-1"></i>Our database is updated <strong>daily</strong>, and you can receive email alerts when a new clinical trial is added or updated.
+</h3>
+
+{{< subscribe-form-horizontal >}}
+
+## Recent Clinical Trials{.mt-5 .title .text-center .text-success}
+
 {{< trials >}}
 
 <div class="row">
@@ -48,7 +76,7 @@ resources:
 <p>Multiple Sclerosis Trials listed are retrieved from <a target="_blank" href="https://www.cuf.pt/cuf-academic-center/ensaios-clinicos?combine=&unidade=&estado=All&patologia=2346&especialidade=">CUF <i class="text-muted text-primary fas fa-external-link-square-alt"></i></a> &nbsp;
   <a target="_blank" href="https://clinicaltrials.gov/ct2/results/rss.xml?rcv_d=14&lup_d=&sel_rss=new14&cond=Multiple+Sclerosis&count=10000">ClinicalTrials.gov <i class="text-muted text-primary fas fa-external-link-square-alt"></i></a> &nbsp;
   <a target="_blank" href="https://www.novartis.com/clinicaltrials/recruiting-trials?title=multiple%20sclerosis">Novartis <i class="text-muted text-primary fas fa-external-link-square-alt"></i></a> &nbsp;
-	<a href="https://www.clinicaltrialsregister.eu/ctr-search/rest/feed/bydates?query=multiple+AND+sclerosis">Clinicaltrialsregister.eu <i class="text-muted text-primary fas fa-external-link-square-alt"></i></a>
+  <a href="https://www.clinicaltrialsregister.eu/ctr-search/rest/feed/bydates?query=multiple+AND+sclerosis">Clinicaltrialsregister.eu <i class="text-muted text-primary fas fa-external-link-square-alt"></i></a>
 </p>
 
 </div>
