@@ -32,7 +32,7 @@ resources:
       <h2 class="card-title h4 mb-3 text-success font-weight-bold">
         <i class="fas fa-flask mr-2"></i>Stay Updated on MS Clinical Trials
       </h2>
-      <p class="card-text lead mb-3">
+      <p class="card-text lead mb-3 font-weight-normal">
         GregoryAi monitors the latest clinical trials for multiple sclerosis treatments from trusted global sources.
       </p>
       <ul class="list-group list-group-flush mb-3">
