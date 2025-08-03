@@ -8,7 +8,7 @@ options:
   navbar: navbar navbar-expand-lg bg-white fixed-top font-weight-bold
 
 resources:
-  - src: getty-images-SEvW26fiHSI-unsplash.jpg
+  - src: gregoryai-paper-read.jpeg
     name: "header"
 seo:
   canonical: articles/
