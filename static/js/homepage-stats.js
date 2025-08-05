@@ -5,74 +5,96 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 async function updateHomepageStats() {
+    console.log('Fetching homepage statistics...');
+    
+    // Fetch all data in parallel for better performance
+    const promises = [
+        fetchTrialsData(),
+        fetchArticlesData(),
+        fetchAuthorsData(),
+        fetchDonationsData()
+    ];
+    
+    // Wait for all promises to complete (but don't fail if one fails)
+    await Promise.allSettled(promises);
+    console.log('Homepage stats update complete');
+}
+
+async function fetchTrialsData() {
     try {
-        // Fetch trials data
-        const trialsResponse = await Promise.race([
-            fetch('https://api.gregory-ms.com/trials/'),
+        const response = await Promise.race([
+            fetch('https://api.gregory-ms.com/trials/?team_id=1&subject_id=1&format=json'),
             new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 5000))
         ]);
         
-        if (trialsResponse.ok) {
-            const trialsData = await trialsResponse.json();
-            const trialsCount = trialsData.count || 5271; // Fallback to current value
-            updateStatCard('trials-count', formatNumber(trialsCount));
+        if (response.ok) {
+            const data = await response.json();
+            const count = data.count || 5271;
+            updateStatCard('trials-count', formatNumber(count));
+            console.log('Trials count updated:', count);
         }
     } catch (error) {
-        console.log('Using fallback for trials count');
+        console.log('Using fallback for trials count:', error.message);
         updateStatCard('trials-count', '5,271');
     }
+}
 
+async function fetchArticlesData() {
     try {
-        // Fetch articles data
-        const articlesResponse = await Promise.race([
-            fetch('https://api.gregory-ms.com/articles/'),
+        const response = await Promise.race([
+            fetch('https://api.gregory-ms.com/articles/?team_id=1&subject_id=1&format=json'),
             new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 5000))
         ]);
         
-        if (articlesResponse.ok) {
-            const articlesData = await articlesResponse.json();
-            const articlesCount = articlesData.count || 33592; // Fallback to current value
-            updateStatCard('articles-count', formatNumber(articlesCount));
+        if (response.ok) {
+            const data = await response.json();
+            const count = data.count || 33592;
+            updateStatCard('articles-count', formatNumber(count));
+            console.log('Articles count updated:', count);
         }
     } catch (error) {
-        console.log('Using fallback for articles count');
+        console.log('Using fallback for articles count:', error.message);
         updateStatCard('articles-count', '33,592');
     }
+}
 
+async function fetchAuthorsData() {
     try {
-        // Fetch authors data
-        const authorsResponse = await Promise.race([
+        const response = await Promise.race([
             fetch('https://api.gregory-ms.com/authors/by_team_subject/?format=json&subject_id=1&team_id=1'),
             new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 5000))
         ]);
         
-        if (authorsResponse.ok) {
-            const authorsData = await authorsResponse.json();
-            const authorsCount = authorsData.count || 171297; // Use count field, fallback to latest known value
-            updateStatCard('authors-count', formatNumber(authorsCount));
+        if (response.ok) {
+            const data = await response.json();
+            const count = data.count || 171297;
+            updateStatCard('authors-count', formatNumber(count));
+            console.log('Authors count updated:', count);
         }
     } catch (error) {
-        console.log('Using fallback for authors count');
+        console.log('Using fallback for authors count:', error.message);
         updateStatCard('authors-count', '171,297');
     }
+}
 
+async function fetchDonationsData() {
     try {
-        // Fetch donations data from Stripe API
-        const donationsResponse = await Promise.race([
-            fetch('https://stripe-transparency.dash-tech-daf.workers.dev/'),
+        const response = await Promise.race([
+            fetch('https://stripe-transparency.dash-tech-daf.workers.dev'),
             new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 5000))
         ]);
         
-        if (donationsResponse.ok) {
-            const donationsData = await donationsResponse.json();
-            const totalAmount = donationsData.total_amount_paid || 270; // Fallback to current value
+        if (response.ok) {
+            const data = await response.json();
+            const totalAmount = data.current_year?.total_amount || data.total_amount_paid || 270;
             const goalAmount = 500;
-            const percentage = Math.round((totalAmount / goalAmount) * 100);
+            const percentage = Math.round(Math.min((totalAmount / goalAmount) * 100, 100));
             
             updateDonationCard(totalAmount, goalAmount, percentage);
+            console.log('Donations updated:', totalAmount, 'Goal:', goalAmount, 'Percentage:', percentage);
         }
     } catch (error) {
-        console.log('Using fallback for donations data');
+        console.log('Using fallback for donations data:', error.message);
         updateDonationCard(270, 500, 54);
     }
 }
@@ -82,13 +104,16 @@ function updateStatCard(elementId, value) {
     if (element) {
         // Add a subtle animation when updating
         element.style.transition = 'all 0.3s ease';
-        element.textContent = value;
         
-        // Brief highlight effect
-        element.style.color = '#28a745';
-        setTimeout(() => {
-            element.style.color = '';
-        }, 1000);
+        // If it was showing "Loading...", add a success color briefly
+        if (element.textContent === 'Loading...') {
+            element.style.color = '#28a745';
+            setTimeout(() => {
+                element.style.color = '';
+            }, 1500);
+        }
+        
+        element.textContent = value;
     }
 }
 
@@ -102,14 +127,30 @@ function updateDonationCard(totalAmount, goalAmount, percentage) {
     // Update goal text
     const goalElement = document.getElementById('donation-goal');
     if (goalElement) {
-        goalElement.textContent = `of €${goalAmount} goal (${percentage}%)`;
+        if (percentage >= 100) {
+            goalElement.textContent = `Goal reached! €${totalAmount} of €${goalAmount} (${percentage}%)`;
+        } else {
+            goalElement.textContent = `of €${goalAmount} goal (${percentage}%)`;
+        }
     }
     
     // Update progress bar
     const progressBar = document.getElementById('donation-progress');
     if (progressBar) {
-        progressBar.style.width = `${percentage}%`;
+        progressBar.style.width = `${Math.min(percentage, 100)}%`;
         progressBar.style.transition = 'width 0.8s ease-in-out';
+        
+        // Update progress bar color based on percentage
+        progressBar.className = 'progress-bar';
+        if (percentage >= 100) {
+            progressBar.classList.add('bg-success');
+        } else if (percentage >= 75) {
+            progressBar.classList.add('bg-info');
+        } else if (percentage >= 50) {
+            progressBar.classList.add('bg-warning');
+        } else {
+            progressBar.classList.add('bg-success');
+        }
     }
 }
 
