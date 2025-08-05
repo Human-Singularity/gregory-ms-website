@@ -13,6 +13,10 @@
 	<link rel="preload" href="https://commento.brunoamaral.eu/css/commento.css" as="style">
 	{{ end }}
 	<link rel="shortlink" type="text/html" href="{{ printf "%sarticles/%d" $.Site.BaseURL $.Page.Params.article_id }}">
+	
+	<!-- Open Graph image for articles -->
+	<meta property="og:image" content="{{ "/articles/gregoryai-paper-read.jpeg" | absURL }}" />
+	<meta name="twitter:image" content="{{ "/articles/gregoryai-paper-read.jpeg" | absURL }}" />
 {{ end }}
 
 {{ define "main" }}
