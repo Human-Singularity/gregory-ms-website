@@ -129,6 +129,8 @@
 	{{- if .IsHome -}}
 		<meta property="og:image" content="{{- $siteLogo}}" />
 		<meta property="twitter:image" content="{{- $siteLogo}}" />
+	{{- else if and (.IsPage) (eq .Section "articles") -}}
+		<!-- Open Graph image for articles is handled in the specific single.html template -->
 	{{- else if or (and (.Section) (ne .IsPage true)) (.IsPage) -}}
 		{{- with $headerImage -}}
 			{{- $image := .Fill "640x640" -}}
