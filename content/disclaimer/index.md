@@ -11,6 +11,7 @@ resources:
 - src:
   name: slide-1
 slug:
+alias: terms
 subtitle: 
 tags: 
   - 
