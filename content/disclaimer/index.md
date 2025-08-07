@@ -14,6 +14,7 @@ slug:
 aliases: 
 - terms
 subtitle: 
+layout: page
 tags: 
   - 
 categories: 
@@ -31,6 +32,9 @@ scripts:
   -
 ---
 
+<div class="row justify-content-center">
+  <div class="col-md-10">
+
 **Gregory MS** is an Open Project built by [Bruno Amaral](https://brunoamaral.eu), who does not have any kind of medical training.
 
 Therefore, please keep in mind none of the content found on this site is a prescription, recommendation, or even a suggestion. The information found here is meant to assist medical teams and researchers. 
@@ -40,3 +44,7 @@ We aim to save them time by gathering up-to-date information and highlighting ar
 This is done manually and with the assistance of a [machine learning algorithm](https://en.wikipedia.org/wiki/Machine_learning). This algorithm was trained by Bruno, and therefore reflects his bias and interpretation of what is relevant.
 
 We appreciate your interest, and advise you to discuss the information found here with your medical team.
+
+
+</div>
+</div>
