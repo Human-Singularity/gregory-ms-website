@@ -3,7 +3,7 @@
  */
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { categoryService } from '../services/api';
 import CategoryCard from './CategoryCard';
 import CategoryDetail from './CategoryDetail';
 
@@ -14,8 +14,9 @@ const DEFAULT_CONFIG = {
   SUBJECT_ID: window.ENV_SUBJECT_ID || 1
 };
 
-// MS research categories from the Gregory database
-const CATEGORIES = [
+// MS research categories from the Gregory database (legacy fallback)
+// Note: This legacy list remains only as a fallback if the API is unavailable.
+const LEGACY_CATEGORIES = [
 	{ tags:['immune reconstitution','DMTs'], id: 1, name: 'Alemtuzumab', slug: 'alemtuzumab', description: 'Research on Alemtuzumab (Lemtrada) for treating relapsing forms of multiple sclerosis.', category_description: 'LEMTRADA, or Alemtuzumab, is a prescription medicine used to treat relapsing forms of multiple sclerosis (MS), to include relapsing-remitting disease and active secondary progressive disease, in adults. Since treatment with LEMTRADA can increase your risk of getting certain conditions and diseases, LEMTRADA is generally prescribed for people who have tried 2 or more MS medicines that have not worked well enough. LEMTRADA is not recommended for use in patients with clinically isolated syndrome (CIS). It is not known if LEMTRADA is safe and effective for use in children under 17 years of age.\n\nhttps://www.lemtrada.com/' },
 	{ tags:['remyelination'], id: 2, name: 'Bexarotene', slug: 'bexarotene', description: 'Studies on Bexarotene as an RXR agonist for potential remyelination therapy.', category_description: 'Type: RXR agonist\nStatus: Phase II\n\nToxicity limits use; some remyelination evidence' },
 	{ tags:['immune reconstitution','DMTs'], id: 3, name: 'Cladribine', slug: 'cladribine', description: 'Research on Cladribine (Mavenclad) for multiple sclerosis treatment.', category_description: '' },
@@ -67,6 +68,83 @@ const CATEGORIES = [
 	{ tags:['remyelination','myelin repair','regenerative medicine'], id: 89, name: 'Myelin', slug: 'myelin', description: 'Published research and clinical trials for myelin.', category_description: 'Published research and clinical trials for myelin.\n\nThis category includes research on myelin structure, myelin sheath repair, remyelination processes, demyelination mechanisms, and myelin regeneration therapies. Key research areas include oligodendrocytes, oligodendrocyte progenitor cells (OPCs), Schwann cells, white matter pathology, CNS and PNS myelin, myelin proteins (MBP, PLP, MOG), and therapeutic approaches for myelin repair and remyelination. Search terms: myelin,myelin sheath,myelin repair,remyelination,demyelination,myelin regeneration,axonal myelination,myelin integrity,oligodendrocytes,oligodendrocyte progenitor cells,OPCs,Schwann cells,white matter,CNS myelin,PNS myelin,myelin basic protein,MBP,proteolipid protein,PLP,myelin oligodendrocyte glycoprotein,MOG,galactocerebroside,myelin-associated glycoprotein,MAG,myelin repair therapy,remyelination agents,demyelination treatment,remyelination therapy,remyelination drug,CNS regeneration,neuroregeneration,myelin-promoting treatment.' }
 ];
 
+// Curated list of categories to show (hardcoded), with tags derived from legacy data
+// Only category_id and category_tags are set here; other fields are hydrated from the API
+const CATEGORY_CURATED = [
+  { category_id: 1, category_tags: ['immune reconstitution','DMTs'] },
+  { category_id: 2, category_tags: ['remyelination'] },
+  { category_id: 3, category_tags: ['immune reconstitution','DMTs'] },
+  { category_id: 4, category_tags: ['remyelination','investigational'] },
+  { category_id: 5, category_tags: ['DMTs','integrin'] },
+  { category_id: 6, category_tags: ['DMTs','anti-CD20'] },
+  { category_id: 7, category_tags: ['neuroprotection','investigational'] },
+  { category_id: 8, category_tags: ['cell therapy','immunotherapy','investigational'] },
+  { category_id: 9, category_tags: ['cell therapy','stem cells','immune reconstitution'] },
+  { category_id: 10, category_tags: ['DMTs','S1P'] },
+  { category_id: 12, category_tags: ['neuroinflammation','investigational'] },
+  { category_id: 22, category_tags: ['investigational'] },
+  { category_id: 27, category_tags: ['neuroinflammation','investigational'] },
+  { category_id: 28, category_tags: ['DMTs','anti-CD20','off-label'] },
+  { category_id: 29, category_tags: ['DMTs','anti-CD20'] },
+  { category_id: 30, category_tags: ['immune reconstitution','DMTs'] },
+  { category_id: 31, category_tags: ['investigational','immunotherapy'] },
+  { category_id: 32, category_tags: ['investigational'] },
+  { category_id: 34, category_tags: ['BTKi','investigational'] },
+  { category_id: 35, category_tags: ['DMTs','S1P'] },
+  { category_id: 36, category_tags: ['DMTs','fumarate'] },
+  { category_id: 37, category_tags: ['DMTs'] },
+  { category_id: 38, category_tags: ['DMTs','chemo'] },
+  { category_id: 39, category_tags: ['DMTs','anti-CD20'] },
+  { category_id: 40, category_tags: ['DMTs','S1P'] },
+  { category_id: 41, category_tags: ['DMTs','S1P'] },
+  { category_id: 42, category_tags: ['DMTs','fumarate'] },
+  { category_id: 43, category_tags: ['DMTs','fumarate'] },
+  { category_id: 46, category_tags: ['symptomatic'] },
+  { category_id: 47, category_tags: ['neuroprotection','remyelination','investigational'] },
+  { category_id: 48, category_tags: ['remyelination'] },
+  { category_id: 49, category_tags: ['cell therapy','investigational'] },
+  { category_id: 50, category_tags: ['BTKi','investigational'] },
+  { category_id: 51, category_tags: ['remyelination','investigational'] },
+  { category_id: 52, category_tags: ['remyelination','investigational'] },
+  { category_id: 53, category_tags: ['investigational'] },
+  { category_id: 57, category_tags: ['investigational'] },
+  { category_id: 59, category_tags: ['investigational'] },
+  { category_id: 66, category_tags: ['investigational'] },
+  { category_id: 71, category_tags: ['remyelination'] },
+  { category_id: 72, category_tags: ['remyelination','investigational'] },
+  { category_id: 73, category_tags: ['remyelination','investigational'] },
+  { category_id: 75, category_tags: ['remyelination','investigational'] },
+  { category_id: 76, category_tags: ['remyelination','investigational'] },
+  { category_id: 77, category_tags: ['remyelination','neuroprotection','investigational'] },
+  { category_id: 79, category_tags: ['remyelination','investigational'] },
+  { category_id: 81, category_tags: ['neuroprotection','investigational'] },
+  { category_id: 87, category_tags: ['investigational'] },
+  { category_id: 89, category_tags: ['remyelination','myelin repair','regenerative medicine'] },
+];
+
+// Normalize curated array to id/tags shape used by the component
+const CATEGORY_IDS = CATEGORY_CURATED.map(({ category_id, category_tags }) => ({ id: category_id, tags: category_tags }));
+
+const CATEGORY_ID_TO_TAGS = new Map(CATEGORY_IDS.map(item => [item.id, item.tags]));
+const CURATED_ID_SET = new Set(CATEGORY_IDS.map(item => item.id));
+
+// Map API category object to UI shape expected by components
+const mapApiCategoryToUi = (apiCat) => ({
+  id: apiCat.id,
+  name: apiCat.category_name,
+  slug: apiCat.category_slug,
+  // Keep both fields for backward compatibility in UI
+  description: apiCat.category_description || '',
+  category_description: apiCat.category_description || '',
+  // Use curated tags from CATEGORY_IDS for filtering (stable taxonomy)
+  tags: CATEGORY_ID_TO_TAGS.get(apiCat.id) || [],
+  // Extra fields that might be useful
+  article_count_total: apiCat.article_count_total,
+  trials_count_total: apiCat.trials_count_total,
+  authors_count: apiCat.authors_count,
+  top_authors: apiCat.top_authors,
+});
+
 /**
  * Observatory component
  */
@@ -82,58 +160,134 @@ function Observatory({ config = DEFAULT_CONFIG }) {
   const [error, setError] = useState(null);
 
   // Get all unique tags from categories
-  const allTags = [...new Set(categories.flatMap(cat => cat.tags))].sort();
+  const allTags = [...new Set(categories.flatMap(cat => Array.isArray(cat.tags) ? cat.tags : []))].sort();
 
   // Initialize categories and handle URL params
   useEffect(() => {
-    setCategories(CATEGORIES);
-    
-    // Get search parameters from URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const searchFromUrl = urlParams.get('search') || '';
-    const tagsFromUrl = urlParams.get('tags') ? urlParams.get('tags').split(',') : [];
-    
-    // Set search and tags from URL if available
-    if (searchFromUrl) {
-      setSearchTerm(searchFromUrl);
-    }
-    if (tagsFromUrl.length > 0) {
-      setSelectedTags(tagsFromUrl);
-    }
-    
-    if (categorySlug) {
-      const category = CATEGORIES.find(cat => cat.slug === categorySlug);
-      if (category) {
-        setSelectedCategory(category);
-      } else {
-        setError(`Category "${categorySlug}" not found`);
+    let isMounted = true;
+    const init = async () => {
+      setLoading(true);
+      setError(null);
+
+      // Get search parameters from URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const searchFromUrl = urlParams.get('search') || '';
+      const tagsFromUrl = urlParams.get('tags') ? urlParams.get('tags').split(',') : [];
+
+      if (searchFromUrl) setSearchTerm(searchFromUrl);
+      if (tagsFromUrl.length > 0) setSelectedTags(tagsFromUrl);
+
+      try {
+        // Fetch all categories once (with generous page size) and filter client-side to our curated list
+        const respAll = await categoryService.getCategories({ 
+          team_id: config.TEAM_ID,
+          subject_id: config.SUBJECT_ID,
+          include_authors: 'true', 
+          max_authors: '10',
+          page_size: '200'
+        });
+        const allResults = respAll?.data?.results || [];
+        let fetchedCats = allResults
+          .filter(cat => CURATED_ID_SET.has(cat.id))
+          .map(mapApiCategoryToUi);
+
+        // If any curated IDs are missing, fetch them individually
+  const fetchedIds = new Set(fetchedCats.map(c => c.id));
+  const missingIds = CATEGORY_IDS.map(x => x.id).filter(id => !fetchedIds.has(id));
+        if (missingIds.length > 0) {
+          const missingFetches = await Promise.all(
+            missingIds.map(async (id) => {
+              try {
+                const resp = await categoryService.getCategories({ 
+                  category_id: id, 
+                  team_id: config.TEAM_ID,
+                  subject_id: config.SUBJECT_ID,
+                  include_authors: 'true', 
+                  max_authors: '10' 
+                });
+                const result = resp?.data?.results?.[0];
+                return result ? mapApiCategoryToUi(result) : null;
+              } catch (e) {
+                console.warn(`Failed to fetch category id ${id}:`, e?.message || e);
+                return null;
+              }
+            })
+          );
+          fetchedCats = [...fetchedCats, ...missingFetches.filter(Boolean)];
+        }
+
+        if (isMounted) {
+          // If API returned nothing (unlikely), use legacy fallback
+          setCategories(fetchedCats.length > 0 ? fetchedCats : LEGACY_CATEGORIES);
+        }
+
+        // If URL has a category slug, ensure we have the selected category
+        if (categorySlug) {
+          // Try to find it in fetched categories
+          const fromList = (fetchedCats.length > 0 ? fetchedCats : LEGACY_CATEGORIES).find(cat => cat.slug === categorySlug);
+          if (fromList) {
+            if (isMounted) setSelectedCategory(fromList);
+          } else {
+            // Fetch by slug from API as a fallback
+            try {
+              const respBySlug = await categoryService.getCategories({ category_slug: categorySlug, include_authors: 'true', max_authors: '10' });
+              const resultBySlug = respBySlug?.data?.results?.[0];
+              if (resultBySlug && isMounted) {
+                setSelectedCategory(mapApiCategoryToUi(resultBySlug));
+              } else if (isMounted) {
+                setError(`Category "${categorySlug}" not found`);
+              }
+            } catch (e) {
+              console.error('Error fetching category by slug:', e);
+              if (isMounted) setError('Failed to load category details');
+            }
+          }
+        }
+      } catch (e) {
+        console.error('Error loading categories:', e);
+        if (isMounted) {
+          // Fallback to legacy data on error
+          setCategories(LEGACY_CATEGORIES);
+          // Do not surface error if we have fallback
+        }
+      } finally {
+        if (isMounted) setLoading(false);
       }
-    }
-    
-    setLoading(false);
+    };
+
+    init();
+
+    return () => { isMounted = false; };
   }, [categorySlug]);
 
   // Filter categories based on search term and selected tags
   useEffect(() => {
-    let filtered = categories;
+  let filtered = categories;
 
     // Apply search term filter
     if (searchTerm.trim()) {
-      filtered = filtered.filter(category =>
-        category.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        category.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        (category.category_description && category.category_description.toLowerCase().includes(searchTerm.toLowerCase()))
-      );
+      filtered = filtered.filter(category => {
+        const name = (category.name || '').toLowerCase();
+        const desc = (category.description || '').toLowerCase();
+        const catDesc = (category.category_description || '').toLowerCase();
+        return (
+          name.includes(searchTerm.toLowerCase()) ||
+          desc.includes(searchTerm.toLowerCase()) ||
+          catDesc.includes(searchTerm.toLowerCase())
+        );
+      });
     }
 
     // Apply tag filter
     if (selectedTags.length > 0) {
       filtered = filtered.filter(category =>
-        selectedTags.every(tag => category.tags.includes(tag))
+        selectedTags.every(tag => Array.isArray(category.tags) && category.tags.includes(tag))
       );
     }
 
-    setFilteredCategories(filtered);
+  // Sort alphabetically by name for display
+  const sorted = [...filtered].sort((a, b) => (a.name || '').localeCompare(b.name || '', undefined, { sensitivity: 'base' }));
+  setFilteredCategories(sorted);
   }, [searchTerm, selectedTags, categories]);
 
   // Update URL parameters to persist search and filter state
