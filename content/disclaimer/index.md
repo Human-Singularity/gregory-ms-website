@@ -13,6 +13,7 @@ resources:
 slug:
 aliases: 
 - terms
+- terms-of-service
 subtitle: 
 layout: page
 tags: 
