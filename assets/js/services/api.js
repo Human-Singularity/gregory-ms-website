@@ -148,6 +148,49 @@ export const trialService = {
  * as documented in the latest API specification.
  */
 export const categoryService = {
+  // Get categories by a list of IDs using the new get_categories param (comma-separated)
+  getCategoriesByIds: (ids = [], params = {}) => {
+    const idsCsv = Array.isArray(ids) ? ids.join(',') : String(ids);
+    const queryParams = new URLSearchParams({
+      format: 'json',
+      include_authors: 'true',
+      max_authors: '10',
+      team_id: 1,
+      get_categories: idsCsv,
+      ...params
+    });
+    return apiClient.get(`/categories/?${queryParams.toString()}`);
+  },
+  // Get categories by IDs and aggregate all paginated results (follows `next` links)
+  getCategoriesByIdsAll: async (ids = [], params = {}) => {
+    const idsCsv = Array.isArray(ids) ? ids.join(',') : String(ids);
+    const baseParams = new URLSearchParams({
+      format: 'json',
+      include_authors: 'true',
+      max_authors: '10',
+      team_id: 1,
+      get_categories: idsCsv,
+      ...params
+    });
+
+    // Optionally bump page_size to reduce number of requests, still follow pagination just in case
+    if (!baseParams.has('page_size')) {
+      baseParams.set('page_size', '100');
+    }
+
+    let nextUrl = `/categories/?${baseParams.toString()}`;
+    const aggregated = [];
+
+    while (nextUrl) {
+      const resp = await apiClient.get(nextUrl);
+      const data = resp?.data || {};
+      if (Array.isArray(data.results)) aggregated.push(...data.results);
+      nextUrl = data.next || null;
+    }
+
+    // Return axios-like shape for compatibility
+    return { data: { results: aggregated, count: aggregated.length } };
+  },
   // Get monthly counts for a category - Using query parameter approach
   // Supports ml_threshold parameter (0.0-1.0, default: 0.5) for ML prediction filtering
   // Usage: getMonthlyCounts(6, { ml_threshold: '0.8' })
