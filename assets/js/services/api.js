@@ -163,33 +163,53 @@ export const categoryService = {
   },
   // Get categories by IDs and aggregate all paginated results (follows `next` links)
   getCategoriesByIdsAll: async (ids = [], params = {}) => {
-    const idsCsv = Array.isArray(ids) ? ids.join(',') : String(ids);
-    const baseParams = new URLSearchParams({
-      format: 'json',
-      include_authors: 'true',
-      max_authors: '10',
-      team_id: 1,
-      get_categories: idsCsv,
-      ...params
-    });
+    const idList = Array.isArray(ids) ? ids.slice() : String(ids).split(',').map(s => Number(s.trim())).filter(Boolean);
+    if (idList.length === 0) return { data: { results: [], count: 0 } };
 
-    // Optionally bump page_size to reduce number of requests, still follow pagination just in case
-    if (!baseParams.has('page_size')) {
-      baseParams.set('page_size', '100');
+    const CHUNK_SIZE = 30; // safeguard against backend limits on long lists
+    const chunks = [];
+    for (let i = 0; i < idList.length; i += CHUNK_SIZE) {
+      chunks.push(idList.slice(i, i + CHUNK_SIZE));
     }
 
-    let nextUrl = `/categories/?${baseParams.toString()}`;
     const aggregated = [];
 
-    while (nextUrl) {
-      const resp = await apiClient.get(nextUrl);
-      const data = resp?.data || {};
-      if (Array.isArray(data.results)) aggregated.push(...data.results);
-      nextUrl = data.next || null;
+    const fetchChunk = async (chunkIds) => {
+      const idsCsv = chunkIds.join(',');
+      const baseParams = new URLSearchParams({
+        format: 'json',
+        include_authors: 'true',
+        max_authors: '10',
+        team_id: 1,
+        get_categories: idsCsv,
+        ...params
+      });
+
+      if (!baseParams.has('page_size')) {
+        baseParams.set('page_size', '100');
+      }
+
+      let nextUrl = `/categories/?${baseParams.toString()}`;
+      while (nextUrl) {
+        const resp = await apiClient.get(nextUrl);
+        const data = resp?.data || {};
+        if (Array.isArray(data.results)) aggregated.push(...data.results);
+        nextUrl = data.next || null;
+      }
+    };
+
+    // Fetch chunks sequentially to avoid overwhelming the API
+    for (const chunk of chunks) {
+      // eslint-disable-next-line no-await-in-loop
+      await fetchChunk(chunk);
     }
 
-    // Return axios-like shape for compatibility
-    return { data: { results: aggregated, count: aggregated.length } };
+    // De-duplicate by id in case of overlaps across chunks
+    const byId = new Map();
+    for (const c of aggregated) byId.set(c.id, c);
+
+    const results = Array.from(byId.values());
+    return { data: { results, count: results.length } };
   },
   // Get monthly counts for a category - Using query parameter approach
   // Supports ml_threshold parameter (0.0-1.0, default: 0.5) for ML prediction filtering
