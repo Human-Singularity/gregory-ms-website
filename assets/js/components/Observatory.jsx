@@ -178,42 +178,30 @@ function Observatory({ config = DEFAULT_CONFIG }) {
       if (tagsFromUrl.length > 0) setSelectedTags(tagsFromUrl);
 
       try {
-        // Fetch all categories once (with generous page size) and filter client-side to our curated list
-        const respAll = await categoryService.getCategories({ 
+        // Fetch curated categories in a single request using the new get_categories param
+        const ids = CATEGORY_IDS.map(x => x.id);
+  const respAll = await categoryService.getCategoriesByIdsAll(ids, { 
           team_id: config.TEAM_ID,
-          subject_id: config.SUBJECT_ID,
-          include_authors: 'true', 
-          max_authors: '10',
-          page_size: '200'
+          subject_id: config.SUBJECT_ID
         });
         const allResults = respAll?.data?.results || [];
-        let fetchedCats = allResults
-          .filter(cat => CURATED_ID_SET.has(cat.id))
-          .map(mapApiCategoryToUi);
+        let fetchedCats = allResults.map(mapApiCategoryToUi);
 
         // If any curated IDs are missing, fetch them individually
-  const fetchedIds = new Set(fetchedCats.map(c => c.id));
-  const missingIds = CATEGORY_IDS.map(x => x.id).filter(id => !fetchedIds.has(id));
-        if (missingIds.length > 0) {
-          const missingFetches = await Promise.all(
-            missingIds.map(async (id) => {
-              try {
-                const resp = await categoryService.getCategories({ 
-                  category_id: id, 
-                  team_id: config.TEAM_ID,
-                  subject_id: config.SUBJECT_ID,
-                  include_authors: 'true', 
-                  max_authors: '10' 
-                });
-                const result = resp?.data?.results?.[0];
-                return result ? mapApiCategoryToUi(result) : null;
-              } catch (e) {
-                console.warn(`Failed to fetch category id ${id}:`, e?.message || e);
-                return null;
-              }
-            })
-          );
-          fetchedCats = [...fetchedCats, ...missingFetches.filter(Boolean)];
+        const fetchedIds = new Set(fetchedCats.map(c => c.id));
+        const missingIds = CATEGORY_IDS.map(x => x.id).filter(id => !fetchedIds.has(id));
+    if (missingIds.length > 0) {
+          try {
+      const missResp = await categoryService.getCategoriesByIdsAll(missingIds, { 
+              team_id: config.TEAM_ID,
+              subject_id: config.SUBJECT_ID
+            });
+            const missResults = missResp?.data?.results || [];
+            const missCats = missResults.map(mapApiCategoryToUi);
+            fetchedCats = [...fetchedCats, ...missCats];
+          } catch (e) {
+            console.warn('Failed batch fetch for missing categories:', e?.message || e);
+          }
         }
 
         if (isMounted) {
