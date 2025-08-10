@@ -256,50 +256,61 @@ export function SingleArticle() {
   }
 
   return (
-      <article>
-        <header>
-          <h1 className="mb-3 mt-5 pt-5">{article.title}</h1>
-          {article.subtitle && <h2 className="text-muted mb-4">{article.subtitle}</h2>}
+      <div className="container">
+        <div className="row justify-content-center">
+          <div className="col-12 col-lg-10 col-xl-9">
+            <article>
+              <header>
+                {/* Responsive Title: smaller on mobile, larger on desktop */}
+                <h1 className="mb-2 mt-5 d-block d-md-none h3">{article.title}</h1>
+                <h1 className="mb-3 mt-5 pt-3 d-none d-md-block h2">{article.title}</h1>
+                {/* Responsive Subtitle */}
+                {article.subtitle && (
+                  <>
+                    <h2 className="text-muted mb-3 d-block d-md-none h5">{article.subtitle}</h2>
+                    <h2 className="text-muted mb-4 d-none d-md-block h3">{article.subtitle}</h2>
+                  </>
+                )}
           
-          <div className="article-meta">
-            <div className="article-meta-item">
-              <i className="far fa-calendar-alt mr-1"></i>
-              <time dateTime={article.published_date || article.date}>
-                {formatDate(article.published_date || article.date)}
-              </time>
-            </div>
-            {article.reading_time && (
-              <div className="article-meta-item">
-                <i className="far fa-clock mr-1"></i>
-                <span>{article.reading_time} min read</span>
-              </div>
-            )}
-            {article.container_title && (
-              <div className="article-meta-item">
-                <i className="far fa-newspaper mr-1"></i>
-                <span>{article.container_title}</span>
-              </div>
-            )}
-            {article.doi && (
-              <div className="article-meta-item">
-                <i className="fas fa-link mr-1"></i>
-                <span>DOI: <a href={`https://doi.org/${article.doi}`} target="_blank" rel="noopener noreferrer">{article.doi}</a></span>
-              </div>
-            )}
-            {article.publisher && (
-              <div className="article-meta-item">
-                <i className="fas fa-building mr-1"></i>
-                <span>{article.publisher}</span>
-              </div>
-            )}
-            {article.access && (
-              <div className="article-meta-item">
-                <i className="fas fa-lock-open mr-1"></i>
-                <span>Access: {article.access}</span>
-              </div>
-            )}
-          </div>
-        </header>
+                <div className="article-meta">
+                  <div className="article-meta-item">
+                    <i className="far fa-calendar-alt mr-1"></i>
+                    <time dateTime={article.published_date || article.date}>
+                      {formatDate(article.published_date || article.date)}
+                    </time>
+                  </div>
+                  {article.reading_time && (
+                    <div className="article-meta-item">
+                      <i className="far fa-clock mr-1"></i>
+                      <span>{article.reading_time} min read</span>
+                    </div>
+                  )}
+                  {article.container_title && (
+                    <div className="article-meta-item">
+                      <i className="far fa-newspaper mr-1"></i>
+                      <span>{article.container_title}</span>
+                    </div>
+                  )}
+                  {article.doi && (
+                    <div className="article-meta-item">
+                      <i className="fas fa-link mr-1"></i>
+                      <span>DOI: <a href={`https://doi.org/${article.doi}`} target="_blank" rel="noopener noreferrer">{article.doi}</a></span>
+                    </div>
+                  )}
+                  {article.publisher && (
+                    <div className="article-meta-item">
+                      <i className="fas fa-building mr-1"></i>
+                      <span>{article.publisher}</span>
+                    </div>
+                  )}
+                  {article.access && (
+                    <div className="article-meta-item">
+                      <i className="fas fa-lock-open mr-1"></i>
+                      <span>Access: {article.access}</span>
+                    </div>
+                  )}
+                </div>
+              </header>
         
         {/* Authors section with profile and ORCID links */}
         {article.authors && article.authors.length > 0 && (
@@ -339,12 +350,28 @@ export function SingleArticle() {
           </div>
         )}
         
-        {/* Abstract section */}
+        {/* Abstract section - smaller text on mobile */}
         {article.summary && (
-          <div className="article-abstract" id="abstract">
-            <h4>Abstract</h4>
-            <div dangerouslySetInnerHTML={{ __html: article.summary }} />
-          </div>
+          <>
+            {/* Mobile */}
+            <div className="article-abstract d-block d-md-none">
+              <h5 className="mb-2">Abstract</h5>
+              <div
+                className="abstract-text"
+                style={{ fontSize: '0.95rem', lineHeight: 1.6 }}
+                dangerouslySetInnerHTML={{ __html: article.summary }}
+              />
+            </div>
+            {/* Desktop */}
+            <div className="article-abstract d-none d-md-block" id="abstract">
+              <h4 className="h5 mb-3">Abstract</h4>
+              <div
+                className="abstract-text"
+                style={{ fontSize: '0.95rem', lineHeight: 1.7 }}
+                dangerouslySetInnerHTML={{ __html: article.summary }}
+              />
+            </div>
+          </>
         )}
         
         {/* Main article content will be rendered from the server-side template or injected via JavaScript */}
@@ -388,7 +415,10 @@ export function SingleArticle() {
             <BadgeExplanation />
           </div>
         )}
-      </article>
+            </article>
+          </div>
+        </div>
+      </div>
   );
 }
 
