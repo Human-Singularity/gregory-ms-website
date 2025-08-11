@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useArticle } from '../hooks/useApi';
 import { formatDate, updateTitleAndMeta, removeSpecifiedNodes, generateAuthorURL } from '../utils';
+import { formatOrcidUrl } from '../utils/searchUtils';
 import BadgeExplanation from './BadgeExplanation';
 import { 
   getMostRecentPredictions, 
@@ -86,7 +87,7 @@ export function SingleArticle() {
           // Add ORCID link if available
           if (author.ORCID) {
             const orcidLink = document.createElement('a');
-            orcidLink.href = author.ORCID;
+            orcidLink.href = formatOrcidUrl(author.ORCID);
             orcidLink.className = 'author-orcid';
             orcidLink.target = '_blank';
             orcidLink.rel = 'noopener noreferrer';
@@ -331,7 +332,7 @@ export function SingleArticle() {
                     <span className="author-name">{author.full_name || `${author.given_name} ${author.family_name}`}</span>
                   )}
                   {author.ORCID && (
-                    <a href={author.ORCID} className="author-orcid ml-1" target="_blank" rel="noopener noreferrer" title={`ORCID: ${author.ORCID}`}>
+                    <a href={formatOrcidUrl(author.ORCID)} className="author-orcid ml-1" target="_blank" rel="noopener noreferrer" title={`ORCID: ${author.ORCID}`}>
                       <i className="fab fa-orcid"></i>
                     </a>
                   )}

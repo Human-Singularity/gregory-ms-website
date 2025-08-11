@@ -7,6 +7,7 @@ import AuthorArticleChart from './AuthorArticleChart';
 import DownloadButton from './DownloadButton';
 import Pagination from './Pagination';
 import { removeSpecifiedNodes, formatNumber } from '../utils.jsx';
+import { formatOrcidUrl } from '../utils/searchUtils';
 
 /**
  * AuthorProfile component - Displays author information, chart, and their articles
@@ -243,7 +244,7 @@ export function AuthorProfile() {
                               <div className="text-muted mb-3">
                                 <i className="fab fa-orcid mr-2"></i>
                                 <a 
-                                  href={author.ORCID}
+                                  href={formatOrcidUrl(author.ORCID)}
                                   target='_blank' 
                                   rel='noreferrer'
                                   className="text-decoration-none text-muted"

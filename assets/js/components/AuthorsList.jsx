@@ -2,6 +2,7 @@
  * AuthorsList component - Displays a list of top authors for a specific category
  */
 import React, { useState, useEffect } from 'react';
+import { formatOrcidUrl } from '../utils/searchUtils';
 import axios from 'axios';
 
 /**
@@ -288,7 +289,7 @@ function AuthorsList({ category, config, isActive }) {
                       </a>
                       {author.ORCID && (
                         <a 
-                          href={author.ORCID} 
+                          href={formatOrcidUrl(author.ORCID)} 
                           target="_blank" 
                           rel="noopener noreferrer"
                           className="ml-2"
