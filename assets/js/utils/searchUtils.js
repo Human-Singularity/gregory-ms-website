@@ -172,3 +172,17 @@ export function isValidOrcid(orcid) {
   
   return orcidPattern.test(cleanedOrcid);
 }
+
+/**
+ * Format an ORCID value into a clickable URL
+ * Accepts raw IDs (0000-0000-0000-0000) or full/partial URLs and
+ * always returns a URL like https://orcid.org/0000-0000-0000-0000
+ * @param {string} orcid - ORCID identifier or URL
+ * @returns {string} - Formatted ORCID profile URL, or empty string if missing
+ */
+export function formatOrcidUrl(orcid) {
+  if (!orcid) return '';
+  const id = cleanOrcid(orcid);
+  if (!id) return '';
+  return `https://orcid.org/${id}`;
+}

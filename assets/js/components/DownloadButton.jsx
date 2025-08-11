@@ -231,9 +231,9 @@ export function DownloadButton({
   };
 
   return (
-    <div className="download-button-container mb-4">
+    <div className="download-button-container">
       <button
-        className="btn btn-success"
+        className="btn btn-success mr-2"
         onClick={handleDownload}
         disabled={isLoading}
         data-umami-event="click--download-csv"

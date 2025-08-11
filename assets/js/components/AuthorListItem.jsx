@@ -1,5 +1,6 @@
 import React from 'react';
 import { formatNumber } from '../utils.jsx';
+import { formatOrcidUrl } from '../utils/searchUtils';
 
 /**
  * AuthorListItem component - Displays a single author in search results
@@ -45,11 +46,11 @@ function AuthorListItem({ author, isSearchResult = false }) {
                   </p>
                 )}
                 
-                {author.ORCID && (
+        {author.ORCID && (
                   <p className="mb-1">
                     <i className="fab fa-orcid mr-2 text-success"></i>
                     <a 
-                      href={`${author.ORCID}`} 
+          href={formatOrcidUrl(author.ORCID)} 
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="text-success"
