@@ -7,7 +7,7 @@ import AuthorArticleChart from './AuthorArticleChart';
 import DownloadButton from './DownloadButton';
 import Pagination from './Pagination';
 import { removeSpecifiedNodes, formatNumber } from '../utils.jsx';
-import { formatOrcidUrl } from '../utils/searchUtils';
+import { formatOrcidUrl, cleanOrcid } from '../utils/searchUtils';
 
 /**
  * AuthorProfile component - Displays author information, chart, and their articles
@@ -20,6 +20,7 @@ export function AuthorProfile() {
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [articlesPerPage] = useState(10);
+  const [copied, setCopied] = useState(false);
   const { authorId } = useParams();
 
   // Fallback to get authorId from URL if useParams doesn't work
@@ -40,6 +41,33 @@ export function AuthorProfile() {
   };
 
   const currentAuthorId = getAuthorId();
+
+  // Helper values derived from author
+  const cleanedOrcid = author?.ORCID ? cleanOrcid(author.ORCID) : '';
+  const rssUrl = cleanedOrcid ? `http://api.gregory-ms.com/feed/author/${cleanedOrcid}` : '';
+
+  const handleCopyRss = async () => {
+    if (!rssUrl) return;
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(rssUrl);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      } else {
+        // Fallback copy method
+        const temp = document.createElement('input');
+        temp.value = rssUrl;
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand('copy');
+        document.body.removeChild(temp);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      }
+    } catch (e) {
+      console.error('Failed to copy RSS URL', e);
+    }
+  };
 
   useEffect(() => {
     async function fetchData() {
@@ -208,62 +236,84 @@ export function AuthorProfile() {
               <div className="col-12">
                 <div className="card border-0 shadow-sm">
                   <div className="card-body py-4">
-                    <div className="row align-items-center">
-                      <div className="col-lg-8 col-md-7">
-                        <div className="d-flex flex-column flex-sm-row align-items-center align-items-sm-start">
-                          <div className="mb-3 mb-sm-0 me-sm-4 text-center">
-                            <img
-                              src={generateAvatarUrl(author)}
-                              alt={`${author.full_name || author.name || `${author.given_name || ''} ${author.family_name || ''}`.trim() || 'Unknown Author'} avatar`}
-                              className="rounded-circle shadow"
-                              width="120"
-                              height="120"
-                              style={{ objectFit: 'cover' }}
-                            />
-                          </div>
-                          <div className="text-center text-sm-start flex-grow-1">
-                            <h1 className="mb-3 display-6 text-primary">
-                              {author.full_name || 
-                               author.name || 
-                               `${author.given_name || ''} ${author.family_name || ''}`.trim() ||
-                               'Unknown Author'}
-                            </h1>
-                            <div className="d-flex flex-wrap justify-content-center justify-content-sm-start gap-3 align-items-center mb-3">
-                              <span className="badge bg-primary fs-6 px-3 py-2">
-                                <i className="fas fa-file-alt mr-2"></i>
-                                {formatNumber(author.articles_count)} Articles
+                    <div className="d-flex flex-column flex-md-row align-items-center justify-content-between">
+                      {/* Identity block */}
+                      <div className="d-flex align-items-center text-center text-md-left w-100">
+                        <div className="mr-3 mr-sm-4 text-center">
+                          <img
+                            src={generateAvatarUrl(author)}
+                            alt={`${author.full_name || author.name || `${author.given_name || ''} ${author.family_name || ''}`.trim() || 'Unknown Author'} avatar`}
+                            className="rounded-circle shadow"
+                            width="120"
+                            height="120"
+                            style={{ objectFit: 'cover' }}
+                          />
+                        </div>
+                        <div className="flex-grow-1">
+                          {/* Responsive name size for balance */}
+                          <h1 className="mb-2 mb-md-3 h2 text-primary">
+                            {author.full_name || author.name || `${author.given_name || ''} ${author.family_name || ''}`.trim() || 'Unknown Author'}
+                          </h1>
+                          <div className="d-flex flex-wrap align-items-center mb-2">
+                            <span className="badge bg-primary fs-6 px-3 py-2 mr-2 mb-2">
+                              <i className="fas fa-file-alt mr-2"></i>
+                              {formatNumber(author.articles_count)} Articles
+                            </span>
+                            {author.country && (
+                              <span className="text-muted fs-6 mb-2">
+                                <i className="fas fa-globe mr-2"></i>
+                                {author.country}
                               </span>
-                              {author.country && (
-                                <span className="text-muted fs-6">
-                                  <i className="fas fa-globe mr-2"></i>
-                                  {author.country}
-                                </span>
-                              )}
-                            </div>
-                            {author.ORCID && (
-                              <div className="text-muted mb-3">
-                                <i className="fab fa-orcid mr-2"></i>
-                                <a 
-                                  href={formatOrcidUrl(author.ORCID)}
-                                  target='_blank' 
-                                  rel='noreferrer'
-                                  className="text-decoration-none text-muted"
-                                  data-umami-event="click--author-orcid"
-                                  data-umami-event-author={author.name}
-                                >
-                                  ORCID: {author.ORCID}
-                                </a>
-                              </div>
                             )}
                           </div>
+                          {author.ORCID && (
+                            <div className="text-muted small">
+                              <i className="fas fa-id-badge mr-2"></i>
+                              <a 
+                                href={formatOrcidUrl(author.ORCID)}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="text-decoration-none text-muted"
+                                data-umami-event="click--author-orcid"
+                                data-umami-event-author={author.name}
+                              >
+                                ORCID: {author.ORCID}
+                              </a>
+                            </div>
+                          )}
                         </div>
                       </div>
-                      <div className="col-lg-4 col-md-5 mt-4 mt-md-0">
-                        <div className="text-center text-md-end">
+
+                      {/* Actions block */}
+                      <div className="d-flex w-100 w-md-auto mt-4 mt-md-0 ml-md-auto justify-content-end">
+                        <div className="d-flex align-items-center flex-wrap justify-content-end">
                           <DownloadButton
                             apiEndpoint={`https://api.gregory-ms.com/articles/?author_id=${currentAuthorId}`}
-                            className="btn btn-outline-primary"
                           />
+                          {rssUrl && (
+                            <>
+                              <a
+                                href={rssUrl}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="btn btn-warning mr-2 mb-2"
+                                title="Subscribe to this author's new papers via RSS"
+                                data-umami-event="click--author-rss-feed"
+                                data-umami-event-author={author.name}
+                              >
+                                <i className="fas fa-rss mr-2"></i>
+                                Subscribe via RSS
+                              </a>
+                              <button
+                                type="button"
+                                className="btn btn-secondary mr-3 mb-2"
+                                onClick={handleCopyRss}
+                                title="Copy RSS link"
+                              >
+                                {copied ? <i className="fas fa-check"></i> : <i className="far fa-copy"></i>}
+                              </button>
+                            </>
+                          )}
                         </div>
                       </div>
                     </div>
