@@ -7,7 +7,7 @@ import AuthorArticleChart from './AuthorArticleChart';
 import DownloadButton from './DownloadButton';
 import Pagination from './Pagination';
 import { removeSpecifiedNodes, formatNumber } from '../utils.jsx';
-import { formatOrcidUrl, cleanOrcid } from '../utils/searchUtils';
+import { formatOrcidUrl, cleanOrcid, isValidOrcid } from '../utils/searchUtils';
 
 /**
  * AuthorProfile component - Displays author information, chart, and their articles
@@ -21,26 +21,18 @@ export function AuthorProfile() {
   const [currentPage, setCurrentPage] = useState(1);
   const [articlesPerPage] = useState(10);
   const [copied, setCopied] = useState(false);
+  const [resolvedAuthorId, setResolvedAuthorId] = useState(null);
   const { authorId } = useParams();
 
-  // Fallback to get authorId from URL if useParams doesn't work
-  const getAuthorId = () => {
-    if (authorId && /^\d+$/.test(authorId)) return authorId;
-    
-    // Try to get from URL path for /authors/123/ pattern - only numeric IDs
-    const path = window.location.pathname;
-    const match = path.match(/\/authors\/(\d+)\/?$/);
-    if (match) return match[1];
-    
-    // Legacy: Try to get from query parameter (for backward compatibility)
-    const urlParams = new URLSearchParams(window.location.search);
-    const queryId = urlParams.get('id');
-    if (queryId && /^\d+$/.test(queryId)) return queryId;
-    
-    return null;
+  // Determine identifier from route or path: numeric => author_id, else ORCID
+  const getRouteIdentifier = () => {
+    if (authorId) return authorId;
+    const path = window.location.pathname.replace(/\/$/, '');
+    const parts = path.split('/');
+    const last = parts[parts.length - 1];
+    return last || null;
   };
-
-  const currentAuthorId = getAuthorId();
+  const routeIdentifier = getRouteIdentifier();
 
   // Helper values derived from author
   const cleanedOrcid = author?.ORCID ? cleanOrcid(author.ORCID) : '';
@@ -71,8 +63,8 @@ export function AuthorProfile() {
 
   useEffect(() => {
     async function fetchData() {
-      if (!currentAuthorId) {
-        setError(new Error('No author ID provided'));
+  if (!routeIdentifier) {
+        setError(new Error('No author identifier provided'));
         setLoading(false);
         return;
       }
@@ -81,45 +73,63 @@ export function AuthorProfile() {
       setError(null);
 
       try {
-        console.log('Fetching author:', currentAuthorId);
-        
-        // Fetch author details using axios (back to original approach)
-        const authorResponse = await axios.get(`https://api.gregory-ms.com/authors/?author_id=${currentAuthorId}&format=json`);
-        
-        console.log('Author response:', authorResponse.data);
-        
-        // Handle the response - it might be an array or a single object
-        let authorData;
-        if (Array.isArray(authorResponse.data)) {
-          authorData = authorResponse.data[0];
-        } else if (authorResponse.data.results && Array.isArray(authorResponse.data.results)) {
-          authorData = authorResponse.data.results[0];
+        let authorData = null;
+        let authorIdToUse = null;
+
+        if (/^\d+$/.test(routeIdentifier)) {
+          // Numeric id => fetch by author_id
+          console.log('Fetching author by ID:', routeIdentifier);
+          const authorResponse = await axios.get(`https://api.gregory-ms.com/authors/?author_id=${routeIdentifier}&format=json`);
+          const data = authorResponse.data;
+          if (Array.isArray(data)) {
+            authorData = data[0];
+          } else if (data && Array.isArray(data.results)) {
+            authorData = data.results[0];
+          } else {
+            authorData = data;
+          }
+          if (!authorData) {
+            throw new Error('Author not found in API response');
+          }
+          authorIdToUse = authorData.author_id || authorData.id || null;
         } else {
-          authorData = authorResponse.data;
+          // Non-numeric => treat as ORCID
+          const orcid = cleanOrcid(routeIdentifier);
+          if (!isValidOrcid(orcid)) {
+            throw new Error('Invalid ORCID provided in URL');
+          }
+          console.log('Fetching author by ORCID:', orcid);
+          const authorResponse = await axios.get(`https://api.gregory-ms.com/authors/?orcid=${orcid}&format=json`);
+          const data = authorResponse.data;
+          if (Array.isArray(data)) {
+            authorData = data[0];
+          } else if (data && Array.isArray(data.results)) {
+            authorData = data.results[0];
+          } else {
+            authorData = data;
+          }
+          if (!authorData) {
+            throw new Error('Author not found for provided ORCID');
+          }
+          authorIdToUse = authorData.author_id || authorData.id || null;
         }
-        
-        console.log('Processed author data:', authorData);
-        
-        if (!authorData) {
-          throw new Error('Author not found in API response');
-        }
-        
+
+        // Set author and resolved author_id for downstream requests
         setAuthor(authorData);
-        
-        // Fetch all articles for this author
+        setResolvedAuthorId(authorIdToUse);
+
+        // Fetch all articles for this author_id (resolved)
         let allArticles = [];
         let page = 1;
         let hasMore = true;
-        
-        while (hasMore) {
-          const articlesResponse = await axios.get(`https://api.gregory-ms.com/articles/?author_id=${currentAuthorId}&format=json&page=${page}`);
+        while (hasMore && authorIdToUse) {
+          const articlesResponse = await axios.get(`https://api.gregory-ms.com/articles/?author_id=${authorIdToUse}&format=json&page=${page}`);
           const pageResults = articlesResponse.data.results || [];
           allArticles = [...allArticles, ...pageResults];
-          
           hasMore = articlesResponse.data.next !== null;
           page++;
         }
-        
+
         setArticles(allArticles);
         setLoading(false);
         
@@ -146,7 +156,7 @@ export function AuthorProfile() {
     }
 
     fetchData();
-  }, [currentAuthorId]);
+  }, [routeIdentifier]);
 
   const generateAvatarUrl = (author) => {
     // Generate a generic avatar based on initials
@@ -288,7 +298,7 @@ export function AuthorProfile() {
                       <div className="d-flex w-100 w-md-auto mt-4 mt-md-0 ml-md-auto justify-content-end">
                         <div className="d-flex align-items-center flex-wrap justify-content-end">
                           <DownloadButton
-                            apiEndpoint={`https://api.gregory-ms.com/articles/?author_id=${currentAuthorId}`}
+                            apiEndpoint={`https://api.gregory-ms.com/articles/?author_id=${resolvedAuthorId || ''}`}
                           />
                           {rssUrl && (
                             <>
@@ -334,7 +344,7 @@ export function AuthorProfile() {
                     <small className="text-muted">Monthly publication activity over time</small>
                   </div>
                   <div className="card-body">
-                    <AuthorArticleChart authorId={currentAuthorId} articles={articles} />
+                    <AuthorArticleChart authorId={resolvedAuthorId} articles={articles} />
                   </div>
                 </div>
               </div>
