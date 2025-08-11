@@ -1,6 +1,6 @@
 import React from 'react';
 import { formatNumber } from '../utils.jsx';
-import { formatOrcidUrl } from '../utils/searchUtils';
+import { formatOrcidUrl, cleanOrcid } from '../utils/searchUtils';
 
 /**
  * AuthorListItem component - Displays a single author in search results
@@ -12,8 +12,9 @@ import { formatOrcidUrl } from '../utils/searchUtils';
 function AuthorListItem({ author, isSearchResult = false }) {
   if (!author) return null;
 
-  // Create the author profile URL
-  const authorUrl = `/authors/${author.author_id}/`;
+  // Create the author profile URL (prefer ORCID when available)
+  const orcidId = author.ORCID ? cleanOrcid(author.ORCID) : null;
+  const authorUrl = orcidId ? `/authors/${orcidId}/` : `/authors/${author.author_id}/`;
 
   return (
     <div className="list-group-item list-group-item-action author-item">
