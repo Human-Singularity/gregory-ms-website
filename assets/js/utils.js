@@ -23,10 +23,17 @@ export function generateArticleURL(article) {
  * @returns {string} - URL for the author profile
  */
 export function generateAuthorURL(author) {
-  if (!author || !author.author_id) {
-    return '#';
+  if (!author) return '#';
+  // Prefer ORCID when available; fall back to author_id
+  const orcid = author.ORCID || author.orcid;
+  if (orcid) {
+    const id = String(orcid).replace(/^https?:\/\/orcid\.org\//, '');
+    return `/authors/${id}/`;
   }
-  return `/authors/${author.author_id}/`;
+  if (author.author_id) {
+    return `/authors/${author.author_id}/`;
+  }
+  return '#';
 }
 
 /**
