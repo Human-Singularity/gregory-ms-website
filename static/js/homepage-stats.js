@@ -5,7 +5,8 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 async function updateHomepageStats() {
-    console.log('Fetching homepage statistics...');
+    const dbgEnabled = isDebugEnabled();
+    dbg(dbgEnabled, 'Fetching homepage statistics...');
     
     // Fetch all data in parallel for better performance
     const promises = [
@@ -17,7 +18,7 @@ async function updateHomepageStats() {
     
     // Wait for all promises to complete (but don't fail if one fails)
     await Promise.allSettled(promises);
-    console.log('Homepage stats update complete');
+    dbg(dbgEnabled, 'Homepage stats update complete');
 }
 
 async function fetchTrialsData() {
@@ -79,21 +80,38 @@ async function fetchAuthorsData() {
 
 async function fetchDonationsData() {
     try {
+        const dbgEnabled = isDebugEnabled();
+        console.time('fetchDonationsData');
+        dbg(dbgEnabled, 'Starting donations fetch to https://stripe-transparency.dash-tech-daf.workers.dev');
         const response = await Promise.race([
             fetch('https://stripe-transparency.dash-tech-daf.workers.dev'),
             new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 5000))
         ]);
         
+        dbg(dbgEnabled, 'Donations fetch response', { ok: response.ok, status: response.status });
         if (response.ok) {
             const data = await response.json();
-            const totalAmount = data.current_year?.total_amount || data.total_amount_paid || 270;
+            dbg(dbgEnabled, 'Donations payload', data);
+            const currentYear = data.current_year || null;
+            const totalAmount = (currentYear && typeof currentYear.total_amount !== 'undefined')
+                ? currentYear.total_amount
+                : (typeof data.total_amount_paid !== 'undefined' ? data.total_amount_paid : 270);
             const goalAmount = 500;
             const percentage = Math.round(Math.min((totalAmount / goalAmount) * 100, 100));
             
             updateDonationCard(totalAmount, goalAmount, percentage);
-            console.log('Donations updated:', totalAmount, 'Goal:', goalAmount, 'Percentage:', percentage);
+            dbg(dbgEnabled, 'Donations updated', { totalAmount, goalAmount, percentage, usedCurrentYear: !!currentYear });
+            if (!currentYear) {
+                console.warn('[HomepageStats] Donations payload missing current_year; falling back to total_amount_paid');
+            } else if (typeof currentYear.total_amount === 'undefined') {
+                console.warn('[HomepageStats] current_year object missing total_amount');
+            }
+            console.timeEnd('fetchDonationsData');
+        } else {
+            console.warn('[HomepageStats] Donations fetch returned non-OK status', response.status);
         }
     } catch (error) {
+        console.error('[HomepageStats] Donations fetch error', error);
         console.log('Using fallback for donations data:', error.message);
         updateDonationCard(270, 500, 54);
     }
@@ -118,10 +136,14 @@ function updateStatCard(elementId, value) {
 }
 
 function updateDonationCard(totalAmount, goalAmount, percentage) {
+    const dbgEnabled = isDebugEnabled();
+    dbg(dbgEnabled, 'Updating donation UI', { totalAmount, goalAmount, percentage });
     // Update donation amount
     const donationElement = document.getElementById('donation-amount');
     if (donationElement) {
         donationElement.textContent = `€${totalAmount} Raised`;
+    } else {
+        console.warn('[HomepageStats] donation-amount element not found');
     }
     
     // Update goal text
@@ -132,6 +154,8 @@ function updateDonationCard(totalAmount, goalAmount, percentage) {
         } else {
             goalElement.textContent = `of €${goalAmount} goal (${percentage}%)`;
         }
+    } else {
+        console.warn('[HomepageStats] donation-goal element not found');
     }
     
     // Update progress bar
@@ -151,9 +175,30 @@ function updateDonationCard(totalAmount, goalAmount, percentage) {
         } else {
             progressBar.classList.add('bg-success');
         }
+        dbg(dbgEnabled, 'Progress bar updated');
+    } else {
+        console.warn('[HomepageStats] donation-progress element not found');
     }
 }
 
 function formatNumber(num) {
     return num.toLocaleString('en-US');
+}
+
+// Debug helpers
+function isDebugEnabled() {
+    try {
+        const params = new URLSearchParams(window.location.search);
+        if (params.has('debug') && (params.get('debug') === '1' || params.get('debug') === 'true')) return true;
+        const stored = window.localStorage ? localStorage.getItem('gregoryDebug') : null;
+        return stored === '1' || stored === 'true';
+    } catch (e) {
+        return false;
+    }
+}
+
+function dbg(enabled, ...args) {
+    if (!enabled) return;
+    const ts = new Date().toISOString();
+    console.log('[HomepageStats]', ts, ...args);
 }
