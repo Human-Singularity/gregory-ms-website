@@ -1,0 +1,150 @@
+{{/*
+  Shortcode: articles-table
+  Params:
+    - subject_id (required): numeric subject id to filter articles
+    - external (optional): true|false, when true links go to original article with UTM tags; when false links go to internal SingleArticle view. Default: false
+*/}}
+{{ $subject := .Get "subject_id" }}
+{{ $external := .Get "external" | default "false" }}
+
+{{ if not $subject }}
+<div class="alert alert-warning" role="alert">
+  Missing required parameter: subject_id
+  {{/* Provide usage example for editors */}}
+  <div class="small text-muted mt-2">Usage: {{`{{< articles-table subject_id="1" external="false" >}}`}}</div>
+  </div>
+{{ else }}
+<div class="table-responsive mb-3" data-subject="{{ $subject }}" data-external="{{ $external }}">
+  <table class="table table-sm table-striped table-hover">
+    <caption class="sr-only">Latest articles</caption>
+  <thead class="thead-light">
+      <tr>
+    <th scope="col" class="text-left">Title</th>
+        <th scope="col" style="width: 180px;">Published</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td colspan="2" class="text-center text-muted py-4">
+          <div class="spinner-border text-primary mr-2" role="status" aria-hidden="true" style="width: 1.25rem; height: 1.25rem;"></div>
+          Loading articles...
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<script>
+(function() {
+  // Find root wrapper (the element just before this script tag)
+  var root = (document.currentScript && document.currentScript.previousElementSibling) || null;
+  if (!root || !root.hasAttribute('data-subject')) { return; }
+
+  // Config from data attributes
+  var SUBJECT_ID = root.getAttribute('data-subject');
+  var EXTERNAL = String(root.getAttribute('data-external') || 'false').toLowerCase() === 'true';
+
+  function log() { /* silent in prod; uncomment for debug */ /* console.log.apply(console, ['[articles-table]'].concat(Array.from(arguments))); */ }
+
+  function sanitizeSlug(title) {
+    try {
+      return String(title)
+        .replace(/[^\w\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .toLowerCase();
+    } catch (e) { return ''; }
+  }
+
+  function formatDate(dateStr) {
+    try {
+      var d = new Date(dateStr);
+      if (isNaN(d.getTime())) return '';
+      return d.toLocaleDateString('en-UK', { year: 'numeric', month: 'long', day: 'numeric' });
+    } catch (e) { return ''; }
+  }
+
+  function withUtm(url) {
+    try {
+      var u = new URL(url);
+      u.searchParams.set('utm_source', 'gregory-ms.com');
+      u.searchParams.set('utm_medium', 'web');
+      u.searchParams.set('utm_campaign', 'unsolicited_traffic');
+      u.searchParams.set('utm_content', 'external_link');
+      return u.toString();
+    } catch (e) {
+      // Fallback string append if URL parsing fails
+      var sep = (url.indexOf('?') >= 0) ? '&' : '?';
+      return url + sep + 'utm_source=gregory-ms.com&utm_medium=web&utm_campaign=unsolicited_traffic&utm_content=external_link';
+    }
+  }
+
+  function buildRow(article) {
+    var title = article && article.title ? article.title : 'Untitled';
+    var published = article && article.published_date ? formatDate(article.published_date) : '';
+    var href = '#';
+    var attrs = '';
+
+    if (EXTERNAL && article && article.link) {
+      href = withUtm(article.link);
+      attrs = ' target="_blank" rel="noopener noreferrer"';
+    } else if (article && article.article_id) {
+      var slug = sanitizeSlug(title);
+      href = '/articles/' + article.article_id + '/' + slug;
+    }
+
+    var safeTitle = title.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    var safePublished = (published || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+    return '<tr>' +
+             '<td class="align-middle text-left"><a href="' + href + '" class="text-dark"' + attrs + '>' + safeTitle + '</a></td>' +
+             '<td class="align-middle"><span class="text-secondary">' + safePublished + '</span></td>' +
+           '</tr>';
+  }
+
+  function renderRows(rowsHtml) {
+    var tbody = root.querySelector('tbody');
+    if (!tbody) return;
+    tbody.innerHTML = rowsHtml;
+  }
+
+  function renderError(message) {
+    renderRows('<tr><td colspan="2" class="text-center text-danger py-4">' + (message || 'Failed to load articles.') + '</td></tr>');
+  }
+
+  function fetchArticles() {
+    var url = 'https://api.gregory-ms.com/articles/?format=json&team_id=1&subject_id=' + encodeURIComponent(SUBJECT_ID) + '&ordering=-published_date&page_size=10';
+    log('Fetching', url);
+    // 7s timeout safety
+    var controller = window.AbortController ? new AbortController() : null;
+    var timeout = setTimeout(function(){ if (controller) controller.abort(); }, 7000);
+
+    fetch(url, controller ? { signal: controller.signal } : undefined)
+      .then(function(resp){
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        return resp.json();
+      })
+      .then(function(data){
+        log('Payload', data);
+        var results = Array.isArray(data) ? data : (Array.isArray(data.results) ? data.results : []);
+        if (!results.length) {
+          renderRows('<tr><td colspan="2" class="text-center text-muted py-4">No articles found.</td></tr>');
+          return;
+        }
+        var rows = results.slice(0, 10).map(buildRow).join('');
+        renderRows(rows);
+      })
+      .catch(function(err){
+        log('Error', err);
+        renderError('Unable to load articles.');
+      })
+      .finally(function(){ clearTimeout(timeout); });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', fetchArticles);
+  } else {
+    fetchArticles();
+  }
+})();
+</script>
+{{ end }}

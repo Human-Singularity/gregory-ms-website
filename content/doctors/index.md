@@ -44,6 +44,20 @@ scripts:
 </div>  
 
 </div>
+<!-- systematic reviews -->
+<div class="container-fluid bg-white py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-10 text-center">
+        <div class="d-flex align-items-center mb-3">
+          <h3 class="mb-0 mx-auto">Latest Systematic Reviews</h3>
+        </div>
+        {{< articles-table subject_id="9" external="false" >}}
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /systematic reviews -->
 
 <div class="row justify-content-center align-self-center mb-5 p-md-5 bg-grey">
 <div class="col-md-5 col-12 justify-content-center align-self-center ">
