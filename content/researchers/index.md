@@ -76,6 +76,21 @@ Our open-source machine-learning model—refined with the help of <a href="https
   </div>
 </div>
 
+<!-- systematic reviews -->
+<div class="container-fluid bg-white py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-10 text-center">
+        <div class="d-flex align-items-center mb-3">
+          <h3 class="mb-0 mx-auto">Latest Systematic Reviews</h3>
+        </div>
+        {{< articles-table subject_id="9" external="false" >}}
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /systematic reviews -->
+
 <div class="row justify-content-center align-self-center p-md-5 bg-grey">
   <div class="col-md-5 col-12 justify-content-center align-self-center ">
       <div class="col-md-12 ml-auto mr-auto">
@@ -87,10 +102,7 @@ Our open-source machine-learning model—refined with the help of <a href="https
   </div>  
 </div>
 
-
-
-
-
+<!-- observatory section -->
 <div class="row justify-content-center align-self-center mb-5 p-md-5">
 <div class="col-md-5 col-12 justify-content-center align-self-center align-right ">
   <img src="images/undraw_medicine_b1ol.svg" class="w-50 align-middle d-none d-md-block float-left" alt="medical doctors" loading="lazy" />
@@ -104,6 +116,9 @@ Our open-source machine-learning model—refined with the help of <a href="https
   <a href='{{< ref "/observatory/_index.md" >}}' class="btn btn-success btn-round btn-lg font-weight-bold " data-umami-event="click--observatory-researchers-page">Observatory <i class="fas fa-arrow-circle-right"></i></a>
 </div>  
 </div>
+
+<!-- /observatory section -->
+
 
 
 <!-- Data Sources Section -->
