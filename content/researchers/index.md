@@ -91,15 +91,13 @@ Our open-source machine-learning model—refined with the help of <a href="https
 </div>
 <!-- /systematic reviews -->
 
-<div class="row justify-content-center align-self-center p-md-5 bg-grey">
-  <div class="col-md-5 col-12 justify-content-center align-self-center ">
-      <div class="col-md-12 ml-auto mr-auto">
-                {{< subscribe-form >}}
+<div class="row justify-content-center align-self-center mb-5 p-md-5 bg-grey">
+<div class="col-md-12 col-12 justify-content-center align-self-center ">
+  <div class="col-md-12 ml-auto mr-auto">
+              <h3 class="mb-3">Subscribe to our free research updates</h3>
+                {{< subscribe-form-horizontal >}}
               </div>
-  </div>
-  <div class="col-md-5 col-12 justify-content-center align-self-center">
-    <img src="images/undraw_subscribe_vspl.svg" class="w-50 align-middle d-none d-md-block ml-auto mr-auto" alt="Email newsletter" loading="lazy"/>
-  </div>  
+</div>
 </div>
 
 <!-- observatory section -->
@@ -190,7 +188,7 @@ Our open-source machine-learning model—refined with the help of <a href="https
                   <!-- CTA Button -->
                   <div class="d-flex flex-column flex-sm-row align-items-start">
                     <a href='{{< ref "/sources/index.md" >}}' 
-                       class="btn btn-primary btn-lg font-weight-bold shadow-sm mb-3 mb-sm-0 mr-sm-3" 
+                       class="btn btn-info btn-lg font-weight-bold shadow-sm mb-3 mb-sm-0 mr-sm-3" 
                        data-umami-event="click--more-info-on-sources-researchers-page">
                       <i class="fas fa-database mr-2"></i>Explore Data Sources
                     </a>
