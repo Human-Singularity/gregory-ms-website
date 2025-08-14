@@ -249,19 +249,19 @@ export function AuthorProfile() {
                     <div className="d-flex flex-column flex-md-row align-items-center justify-content-between">
                       {/* Identity block */}
                       <div className="d-flex align-items-center text-center text-md-left w-100">
-                        <div className="mr-3 mr-sm-4 text-center">
+                        <div className="mr-3 mr-sm-4 text-center" style={{ flex: '0 0 auto', minWidth: '120px' }}>
                           <img
                             src={generateAvatarUrl(author)}
                             alt={`${author.full_name || author.name || `${author.given_name || ''} ${author.family_name || ''}`.trim() || 'Unknown Author'} avatar`}
                             className="rounded-circle shadow"
                             width="120"
                             height="120"
-                            style={{ objectFit: 'cover' }}
+                            style={{ objectFit: 'cover', display: 'block' }}
                           />
                         </div>
                         <div className="flex-grow-1">
                           {/* Responsive name size for balance */}
-                          <h1 className="mb-2 mb-md-3 h2 text-primary">
+                          <h1 className="mb-2 mb-md-3 h2 text-primary" style={{ wordBreak: 'break-word', overflowWrap: 'anywhere' }}>
                             {author.full_name || author.name || `${author.given_name || ''} ${author.family_name || ''}`.trim() || 'Unknown Author'}
                           </h1>
                           <div className="d-flex flex-wrap align-items-center mb-2">
@@ -295,7 +295,7 @@ export function AuthorProfile() {
                       </div>
 
                       {/* Actions block */}
-                      <div className="d-flex w-100 w-md-auto mt-4 mt-md-0 ml-md-auto justify-content-end">
+                      <div className="d-flex w-100 w-md-auto mt-4 mt-md-0 ml-md-auto justify-content-end align-items-center">
                         <div className="d-flex align-items-center flex-wrap justify-content-end">
                           <DownloadButton
                             apiEndpoint={`https://api.gregory-ms.com/articles/?author_id=${resolvedAuthorId || ''}`}
@@ -316,9 +316,10 @@ export function AuthorProfile() {
                               </a>
                               <button
                                 type="button"
-                                className="btn btn-secondary mr-3 mb-2"
+                                className="btn btn-secondary d-inline-flex align-items-center justify-content-center mr-3 mb-2"
                                 onClick={handleCopyRss}
                                 title="Copy RSS link"
+                                style={{ width: '44px', height: '44px' }}
                               >
                                 {copied ? <i className="fas fa-check"></i> : <i className="far fa-copy"></i>}
                               </button>
