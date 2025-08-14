@@ -264,7 +264,7 @@
 			  </div>
 			  <div class="card card-raised card-form-horizontal">
 				<div class="card-body">
-					<form id="footerSubscribeForm" action="{{ $.Site.Params.tinyletter }}" method="post" target="popupwindow" onsubmit="window.open('{{ $.Site.Params.tinyletter }}', 'popupwindow', 'scrollbars=yes,width=800,height=600');return true">
+					<form id="footerSubscribeForm" action="{{ $.Site.Params.tinyletter }}" method="post" target="popupwindow" data-umami-event="submit--subscribe" data-umami-form-type="footer" data-umami-page="{{ .RelPermalink }}" onsubmit="window.open('{{ $.Site.Params.tinyletter }}', 'popupwindow', 'scrollbars=yes,width=800,height=600');return true">
 					<div class="row">
 					  <div class="col-sm-8 mr-0 pr-0">
 						<div class="input-group">
@@ -272,11 +272,11 @@
 							<span class="input-group-text"><i class="now-ui-icons ui-1_email-85"></i></span>
 						  </div>
 						  <label for="subscribeEmail" class="sr-only">Enter your email</label>
-						  <input id="subscribeEmail" type="text" class="form-control" placeholder="Email ...">
+						<input id="subscribeEmail" type="text" class="form-control" placeholder="Email ...">
 						</div>
 					  </div>
 					  <div class="col-sm-4 ml-0 pl-0">
-						<input type="submit" class="btn btn-primary btn-block" value="{{- i18n "subscribe_label" -}}">
+						<input type="submit" class="btn btn-primary btn-block" value="{{- i18n "subscribe_label" -}}" data-umami-event="click--subscribe-newsletter-footer" data-umami-form-type="footer">
 					  </div>
 					</div>
 				  </form>
@@ -430,6 +430,22 @@
 				{{- . | safeHTML -}}
 			{{- end -}}
 		{{- end -}}
+		<!-- Umami: track footer subscribe form submit -->
+		<script>
+		  document.addEventListener('DOMContentLoaded', function() {
+		    var f = document.getElementById('footerSubscribeForm');
+		    if (!f) return;
+		    f.addEventListener('submit', function() {
+		      try {
+		        if (typeof umami !== 'undefined') {
+		          var formType = f.getAttribute('data-umami-form-type') || 'footer';
+		          var page = f.getAttribute('data-umami-page') || (window.location && window.location.pathname) || '';
+		          umami.track('subscribe-newsletter-submit', { formType: formType, page: page });
+		        }
+		      } catch (e) { /* noop */ }
+		    }, { passive: true });
+		  });
+		</script>
 			{{ if eq .Site.Params.umami.active true }}
 			<script async defer data-website-id="{{.Site.Params.umami.siteId}}" src="{{.Site.Params.umami.src}}"></script>
 			{{ end }}

@@ -1,6 +1,6 @@
 <div class="card card-contact shadow-none" id="subscribe">
   <div class="anchor-target" id="subscribe-anchor"></div>
-  <form role="form" id="contact-form-horizontal" method="post" action="https://api.gregory-ms.com/subscriptions/new/">
+  <form role="form" id="contact-form-horizontal" method="post" action="https://api.gregory-ms.com/subscriptions/new/" data-umami-event="submit--subscribe" data-umami-form-type="horizontal" data-umami-page="{{ .Page.RelPermalink }}">
     <div class="card-body">
       <div class="row align-items-center">
         <div class="col-md-3">
@@ -37,7 +37,7 @@
           </div>
         </div>
         <div class="col-md-3 text-center">
-          <button type="submit" class="btn btn-success btn-round font-weight-bold" data-umami-event="click--subscribe-newsletter-horizontal">Subscribe Now</button>
+          <button type="submit" class="btn btn-success btn-round font-weight-bold" data-umami-event="click--subscribe-newsletter-horizontal" data-umami-form-type="horizontal">Subscribe Now</button>
         </div>
       </div>
       <div class="row mt-3">
@@ -70,6 +70,8 @@ document.addEventListener('DOMContentLoaded', function() {
   const form = document.getElementById('contact-form-horizontal');
   const checkboxes = form.querySelectorAll('.subscription-option');
   const errorMessage = document.getElementById('checkbox-error');
+  const formType = form.getAttribute('data-umami-form-type') || 'horizontal';
+  const page = form.getAttribute('data-umami-page') || (window.location && window.location.pathname) || '';
   
   form.addEventListener('submit', function(event) {
     let isChecked = false;
@@ -88,10 +90,11 @@ document.addEventListener('DOMContentLoaded', function() {
       errorMessage.classList.add('d-block');
       
       // Track failed subscription attempt
-      if (typeof umami !== 'undefined') {
+    if (typeof umami !== 'undefined') {
         umami.track('subscribe-newsletter-error', {
           error: 'no_list_selected',
-          formType: 'horizontal'
+      formType: formType,
+      page: page
         });
       }
     } else {
@@ -99,12 +102,13 @@ document.addEventListener('DOMContentLoaded', function() {
       errorMessage.classList.remove('d-block');
       
       // Track successful form submission
-      if (typeof umami !== 'undefined') {
+    if (typeof umami !== 'undefined') {
         const formData = new FormData(form);
         umami.track('subscribe-newsletter-submit', {
           profile: formData.get('profile') || 'not_selected',
           lists: selectedLists.join(','),
-          formType: 'horizontal'
+      formType: formType,
+      page: page
         });
       }
     }
