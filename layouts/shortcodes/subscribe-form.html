@@ -1,6 +1,6 @@
 <div class="card card-contact card-raised" id="subscribe">
   <div class="anchor-target" id="subscribe-anchor"></div>
-  <form role="form" id="contact-form1" method="post" action="https://api.gregory-ms.com/subscriptions/new/">
+  <form role="form" id="contact-form1" method="post" action="https://api.gregory-ms.com/subscriptions/new/" data-umami-event="submit--subscribe" data-umami-form-type="vertical" data-umami-page="{{ .Page.RelPermalink }}">
     <div class="card-header text-center">
       <h4 class="card-title font-weight-bold">Stay updated</h4>
       <p class="p-3">Choose which alerts you want to receive.</p>
@@ -70,7 +70,7 @@
       </div>
       <div class="row">
         <div class="col-md-12 ml-auto mr-auto text-center">
-          <button type="submit" class="btn btn-primary btn-round mr-auto ml-auto font-weight-bold" data-umami-event="click--subscribe-newsletter">Subscribe Now</button>
+          <button type="submit" class="btn btn-primary btn-round mr-auto ml-auto font-weight-bold" data-umami-event="click--subscribe-newsletter" data-umami-form-type="vertical">Subscribe Now</button>
         </div>
       </div>
     </div>
@@ -82,6 +82,8 @@ document.addEventListener('DOMContentLoaded', function() {
   const form = document.getElementById('contact-form1');
   const checkboxes = form.querySelectorAll('.subscription-option-vertical');
   const errorMessage = document.getElementById('checkbox-error-vertical');
+  const formType = form.getAttribute('data-umami-form-type') || 'vertical';
+  const page = form.getAttribute('data-umami-page') || (window.location && window.location.pathname) || '';
   
   form.addEventListener('submit', function(event) {
     let isChecked = false;
@@ -100,10 +102,11 @@ document.addEventListener('DOMContentLoaded', function() {
       errorMessage.classList.add('d-block');
       
       // Track failed subscription attempt
-      if (typeof umami !== 'undefined') {
+    if (typeof umami !== 'undefined') {
         umami.track('subscribe-newsletter-error', {
           error: 'no_list_selected',
-          formType: 'vertical'
+      formType: formType,
+      page: page
         });
       }
     } else {
@@ -111,12 +114,13 @@ document.addEventListener('DOMContentLoaded', function() {
       errorMessage.classList.remove('d-block');
       
       // Track successful form submission
-      if (typeof umami !== 'undefined') {
+    if (typeof umami !== 'undefined') {
         const formData = new FormData(form);
         umami.track('subscribe-newsletter-submit', {
           profile: formData.get('profile') || 'not_selected',
           lists: selectedLists.join(','),
-          formType: 'vertical'
+      formType: formType,
+      page: page
         });
       }
     }
