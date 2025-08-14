@@ -103,7 +103,7 @@ Our open-source machine-learning model—refined with the help of <a href="https
 <!-- observatory section -->
 <div class="row justify-content-center align-self-center mb-5 p-md-5">
 <div class="col-md-5 col-12 justify-content-center align-self-center align-right ">
-  <img src="images/undraw_medicine_b1ol.svg" class="w-50 align-middle d-none d-md-block float-left" alt="medical doctors" loading="lazy" />
+  <img src="/observatory/lucas-vasques-9vnACvX2748-unsplash.jpeg" class="w-50 align-middle d-none d-md-block float-left" alt="medical doctors" loading="lazy" />
   </div>
   <div class="col-md-5 col-12 justify-content-center align-self-center">
   
