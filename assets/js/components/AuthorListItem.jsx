@@ -1,5 +1,5 @@
 import React from 'react';
-import { formatNumber } from '../utils.jsx';
+import { formatNumber, generateAuthorURL } from '../utils.jsx';
 import { formatOrcidUrl, cleanOrcid } from '../utils/searchUtils';
 
 /**
@@ -12,9 +12,8 @@ import { formatOrcidUrl, cleanOrcid } from '../utils/searchUtils';
 function AuthorListItem({ author, isSearchResult = false }) {
   if (!author) return null;
 
-  // Create the author profile URL (prefer ORCID when available)
-  const orcidId = author.ORCID ? cleanOrcid(author.ORCID) : null;
-  const authorUrl = orcidId ? `/authors/${orcidId}/` : `/authors/${author.author_id}/`;
+  // Use the centralized URL generation utility
+  const authorUrl = generateAuthorURL(author);
 
   return (
     <div className="list-group-item list-group-item-action author-item">

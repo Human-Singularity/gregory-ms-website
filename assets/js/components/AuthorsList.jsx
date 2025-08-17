@@ -3,6 +3,7 @@
  */
 import React, { useState, useEffect } from 'react';
 import { formatOrcidUrl } from '../utils/searchUtils';
+import { generateAuthorURL } from '../utils.jsx';
 import axios from 'axios';
 
 /**
@@ -278,7 +279,7 @@ function AuthorsList({ category, config, isActive }) {
                     <th scope="row" className="text-muted">{index + 1}</th>
                     <td>
                       <a 
-                        href={`/authors/${author.author_slug || author.slug || author.author_id}/`}
+                        href={generateAuthorURL(author)}
                         className="text-decoration-none"
                         title="View author profile"
                         data-umami-event={`click--author-${(author.author_slug || author.slug || author.author_id)}`}

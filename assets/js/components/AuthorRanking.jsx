@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { formatNumber } from '../utils.jsx';
+import { formatNumber, generateAuthorURL } from '../utils.jsx';
 
 /**
  * AuthorRanking component - Displays a high score ranking table of authors
@@ -142,7 +142,7 @@ export function AuthorRanking() {
                     </td>
                     <td>
                       <a
-                        href={`/authors/${author.author_id}/`}
+                        href={generateAuthorURL(author)}
                         className="d-inline-block"
                         title={`View ${author.full_name || `${author.given_name} ${author.family_name}`}'s profile`}
                         data-umami-event={`click--author-avatar-${author.author_id}`}
@@ -162,7 +162,7 @@ export function AuthorRanking() {
                     <td>
                       <div>
                         <a
-                          href={`/authors/${author.author_id}/`}
+                          href={generateAuthorURL(author)}
                           className="text-decoration-underline fw-semibold text-primary"
                           data-umami-event={`click--author-name-${author.author_id}`}
                           data-umami-event-name={author.full_name || `${author.given_name} ${author.family_name}`}
@@ -209,7 +209,7 @@ export function AuthorRanking() {
                             #{index + 1}
                           </span>
                           <a
-                            href={`/authors/${author.author_id}/`}
+                            href={generateAuthorURL(author)}
                             className="d-block"
                             title={`View ${author.full_name || `${author.given_name} ${author.family_name}`}'s profile`}
                             data-umami-event={`click--author-mobile-avatar-${author.author_id}`}
@@ -229,7 +229,7 @@ export function AuthorRanking() {
                         <div className="flex-grow-1">
                           <h6 className="mb-2">
                             <a
-                              href={`/authors/${author.author_id}/`}
+                              href={generateAuthorURL(author)}
                               className="text-decoration-underline fw-semibold text-primary"
                               data-umami-event={`click--author-mobile-name-${author.author_id}`}
                               data-umami-event-name={author.full_name || `${author.given_name} ${author.family_name}`}
