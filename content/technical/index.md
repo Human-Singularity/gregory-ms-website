@@ -18,9 +18,7 @@ tags:
 categories: 
   - 
 title: "Technical details"
-menu:
-  column_1:
-   
+
 options:
   unlisted: false
   showHeader: true

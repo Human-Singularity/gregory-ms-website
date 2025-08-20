@@ -13,10 +13,6 @@ enableMathJax: false
 disableToC: false
 disableAutoCollapse: true
 
-menu:
-  column_1:
-    name: Academia
-
 options:
   unlisted: false
   header: mini

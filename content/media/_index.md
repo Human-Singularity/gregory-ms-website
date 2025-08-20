@@ -13,9 +13,6 @@ enableMathJax: false
 disableToC: false
 disableAutoCollapse: true
 
-menu:
-    column_1:
-        Name: Media
 cta:
   - label: <i class="fa fa-download" aria-hidden="true"></i> &nbsp;Download the Press Kit
     url: https://gregory-ms.com/gregoryai_press.zip
