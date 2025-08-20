@@ -152,7 +152,7 @@ headerPhoto = ""
 
   [[menu.column_1]]
   name = "Team"
-  pageRef = "authors/_index.md"
+  pageRef = "team/_index.md"
   weight = 8
 
   # [[menu.column_1]]
@@ -258,7 +258,7 @@ tag = "tags"
     notAlternative = true
 
 [security]
-  enableInlineShortcodes = false
+  enableInlineShortcodes = true
   [security.exec]
     allow = ['^dart-sass-embedded$', '^go$', '^postcss$']
     osEnv = ['(?i)^(PATH|PATHEXT|APPDATA|TMP|TEMP|TERM|GETENV)$']
