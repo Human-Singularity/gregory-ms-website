@@ -12,10 +12,6 @@ categories: []
 tags: []
 layout: page
 
-menu:
-  column_1:
-    Name: Developers
-
 draft: false
 enableDisqus : true
 enableMathJax: false

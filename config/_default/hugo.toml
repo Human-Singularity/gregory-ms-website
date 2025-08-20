@@ -98,11 +98,22 @@ headerPhoto = ""
   pageRef = "post/_index.md"
   weight = 9
 
+  # [[menu.main]]
+  # name = "Recent Donations"
+  # pageRef = "donations/recent.md"
+  # weight = 25
+  # Note: Disabled because donations/recent.md is marked as draft
+
+  [[menu.main]]
+    name = "Support"
+    pageRef = "support/_index.md"
+    weight = 10
+
   [[menu.main]]
   name = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16"> <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/> </svg>'
   pageRef = "search/index.md"
   title = "Seek and you will find"
-  weight = 10
+  weight = 11
 
   [[menu.column_1]]
   name = 'About'
@@ -110,14 +121,45 @@ headerPhoto = ""
   weight = 1
 
   [[menu.column_1]]
+  name = "Academia"
+  pageRef = "academia/_index.md"
+  weight = 2
+
+  [[menu.column_1]]
   name = 'Author Ranking'
   pageRef = "ranking/_index.md"
-  weight = 2
+  weight = 3
 
   [[menu.column_1]]
   name = 'Contact'
   pageRef = "contacts/_index.md"
-  weight = 3
+  weight = 4
+
+  [[menu.column_1]]
+  name = "Developers"
+  pageRef = "developers/index.md"
+  weight = 5
+
+  [[menu.column_1]]
+  name = "Media"
+  pageRef = "media/_index.md"
+  weight = 6
+
+  [[menu.column_1]]
+  name = "Support"
+  pageRef = "support/_index.md"
+  weight = 7
+
+  [[menu.column_1]]
+  name = "Team"
+  pageRef = "authors/_index.md"
+  weight = 8
+
+  # [[menu.column_1]]
+  # name = "Technical Details"
+  # pageRef = "technical/index.md"
+  # weight = 9
+  # Note: Disabled because technical/index.md is marked as draft
 
   [[menu.column_2]]
   name = '<img src="/images/powered_by_project_galileo.png" height="96" width="255" alt="Support by CloudFlare, Project Galileo" loading="lazy" />'
@@ -161,7 +203,7 @@ headerPhoto = ""
   [[menu.column_3]]
   name = "Website stats"
   url = "https://analytics.gregory-ms.com/share/bEuESUpF/GregoryMS"
-  weight = 6
+  weight = 7
 
 [social]
   github = "https://github.com/brunoamaral/gregory"

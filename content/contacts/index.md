@@ -18,9 +18,6 @@ disableAutoCollapse: true
 url: contacts
 scripts:
   - '<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>'
-menu:
-  column_1:
-    Name: Contacts
 options:
   header: mini
   unlisted: false
