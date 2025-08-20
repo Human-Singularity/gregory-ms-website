@@ -106,7 +106,7 @@ headerPhoto = ""
 
   [[menu.main]]
     name = "Support"
-    pageRef = "support/index.md"
+    pageRef = "support/_index.md"
     weight = 10
 
   [[menu.main]]
@@ -147,7 +147,7 @@ headerPhoto = ""
 
   [[menu.column_1]]
   name = "Support"
-  pageRef = "support/index.md"
+  pageRef = "support/_index.md"
   weight = 7
 
   [[menu.column_1]]
