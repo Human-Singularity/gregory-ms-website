@@ -22,7 +22,7 @@ tags:
 categories: 
   - 
 title: "Support"
-
+url: "/support/"
 options:
   unlisted: false
   showHeader: true
