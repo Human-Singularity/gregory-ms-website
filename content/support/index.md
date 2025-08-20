@@ -33,7 +33,7 @@ options:
 scripts:
   - 
 ---
-
+<!-- kickstart -->
 </div>
 
 <div class="row justify-content-center align-self-center mb-5 mt-5 p-md-5">
