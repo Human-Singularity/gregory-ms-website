@@ -5,7 +5,6 @@ DefaultContentLanguage = "en"
 enableEmoji = true
 enableInlineShortcodes = true
 enableRobotsTXT = true
-googleAnalytics = ""
 languageCode = "en"
 theme = ["Hugo-Now-UI-Pro"]
 title = "Multiple Sclerosis research by Gregory MS"
@@ -26,7 +25,7 @@ headerPhoto = ""
     term = [ "HTML", "RSS"]
 
 [params]
-  defaultImage = "/images/gregory_illustration_full.png"
+  defaultImage = "/images/gregoryai_1000x.png"
   author = "Bruno Amaral"
   enableComments = false 
   defaultAuthor = "authors/bruno-amaral"
