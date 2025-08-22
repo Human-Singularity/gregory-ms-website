@@ -2,7 +2,7 @@
 authors:
   - bruno-amaral
 date: 2025-05-25T12:00:00Z
-description: "Gregory AI has undergone significant improvements, introducing more accurate and tailored algorithms to help Multiple Sclerosis (MS) researchers quickly identify relevant studies."
+description: "GregoryAi has undergone significant improvements, introducing more accurate and tailored algorithms to help Multiple Sclerosis (MS) researchers quickly identify relevant studies."
 draft: false
 resources: 
 - src: images/gregory-ai-research-papers-systematic-review.jpeg
@@ -13,7 +13,7 @@ resources:
 slug: gregory-ai-update-better-algorithms-ms-researchers
 subtitle: "Better Algorithms to Help MS Researchers Find Relevant Studies Faster"
 tags: 
-  - Gregory AI
+  - GregoryAi
   - Multiple Sclerosis
   - Research
   - Nova SBE
@@ -21,7 +21,7 @@ tags:
   - Clinical Trials
 categories: 
   - Updates
-title: "Smarter MS Insights: Gregory AI’s Latest Upgrade"
+title: "Smarter MS Insights: GregoryAi’s Latest Upgrade"
 layout: single
 options:
   unlisted: false
@@ -33,9 +33,9 @@ scripts:
   -
 ---
 
-Gregory AI went through significant improvements this week. We implemented more accurate algorithms to help Multiple Sclerosis (MS) researchers receive relevant studies, and added multi-team and multi-subject support so that Gregory can cover more than just MS. These updates, made possible by collaboration with Nova SBE, improve flexibility, performance, and accuracy, to the direct benefit of the MS community.
+GregoryAi went through significant improvements this week. We implemented more accurate algorithms to help Multiple Sclerosis (MS) researchers receive relevant studies, and added multi-team and multi-subject support so that Gregory can cover more than just MS. These updates, made possible by collaboration with Nova SBE, improve flexibility, performance, and accuracy, to the direct benefit of the MS community.
 
-Gregory AI was created with a clear mission: to help Multiple Sclerosis (MS) researchers, patients, and caregivers find and track relevant scientific papers and clinical trials. Today, we're a tiny step closer to that goal.
+GregoryAi was created with a clear mission: to help Multiple Sclerosis (MS) researchers, patients, and caregivers find and track relevant scientific papers and clinical trials. Today, we're a tiny step closer to that goal.
 
 ### A Long-Overdue Improvement
 
@@ -43,7 +43,7 @@ We know this update was long overdue, and the reason was the substantial amount 
 
 ### Thanks to Nova SBE
 
-This milestone was made possible thanks to the expertise provided by NOVA School of Business and Economics (Nova SBE). They were instrumental in driving the research of new algorithms to enhance Gregory AI.
+This milestone was made possible thanks to the expertise provided by NOVA School of Business and Economics (Nova SBE). They were instrumental in driving the research of new algorithms to enhance GregoryAi.
 
 We extend our heartfelt thanks to:
 
@@ -55,7 +55,7 @@ We extend our heartfelt thanks to:
 
 #### More Accurate Results
 
-Gregory AI can now more accurately identify studies relevant to MS and other research subjects, as long as we have enough training data. This means less time filtering through unrelated content, making it easier and faster for patients and researchers to access new research.
+GregoryAi can now more accurately identify studies relevant to MS and other research subjects, as long as we have enough training data. This means less time filtering through unrelated content, making it easier and faster for patients and researchers to access new research.
 
 
 #### Improved Flexibility
@@ -83,7 +83,7 @@ We would never have been able to add the new features without the help of GenAI 
 * **Researchers**: Faster and more precise access to relevant MS research.
 * **Patients and MS Communities**: Stay informed effortlessly about new and relevant clinical findings.
 
-### Stay Informed with Gregory AI
+### Stay Informed with GregoryAi
 
 Don't forget, you can subscribe to our free newsletters:
 
@@ -92,7 +92,7 @@ Don't forget, you can subscribe to our free newsletters:
 
 ### Join Us in Shaping the Future
 
-Gregory AI is fueled by hope and community support and we welcome any contribution in any form.
+GregoryAi is fueled by hope and community support and we welcome any contribution in any form.
 
 [You can support the project with a donation](https://donate.stripe.com/6oEeVmf1tdHIdOw7ss) and by sharing it with your network.
 
@@ -100,7 +100,7 @@ There is also a BlueSky and Mastodon account where you can follow us for updates
 
 For more details or to contribute, visit our website or reach out directly to [team@gregory-ms.com](mailto:team@gregory-ms.com).
 
-Thank you again to everyone who continues to support Gregory AI! 
+Thank you again to everyone who continues to support GregoryAi! 
 
 — Bruno.
 

@@ -7,7 +7,7 @@ author: Bruno Amaral
 options:
   unlisted: false
   header: mini
-description: Gregory AI, information for developers researching multiple sclerosis and other diseases
+description: GregoryAi, information for developers researching multiple sclerosis and other diseases
 categories: []
 tags: []
 layout: page
@@ -23,7 +23,7 @@ resources:
     name: header
 
 cta:
-  - label: Gregory AI <i class="fas fa-external-link-alt text-xs ms-1" aria-hidden="true"></i>
+  - label: GregoryAi <i class="fas fa-external-link-alt text-xs ms-1" aria-hidden="true"></i>
     url: https://gregory-ai.com/
     classes: btn btn-info umami--click--gregory-ai-header-button
 
@@ -37,7 +37,7 @@ For detailed documentation to install Gregory on your server and up to date info
 
 If you have any questions, please open an [issue](https://github.com/brunoamaral/gregory/issues) or [discussion](https://github.com/brunoamaral/gregory/discussions) on GitHub
 
-## Installing Gregory AI
+## Installing GregoryAi
 
 [This software is open source and available on GitHub, with instructions to install it using docker images](https://github.com/brunoamaral/gregory#install).
 
