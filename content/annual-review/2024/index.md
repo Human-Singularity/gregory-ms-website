@@ -2,7 +2,7 @@
 authors:
   - bruno-amaral
 date: 2025-04-11T22:24:11Z
-description: "Gregory AI for Multiple Sclerosis research. Activities, and accounts for the project in 2024."
+description: "GregoryAi for Multiple Sclerosis research. Activities, and accounts for the project in 2024."
 draft: false
 resources: 
 - src: images/gregory-ms-2024.png
@@ -33,7 +33,7 @@ scripts:
 
 ## Executive Summary{.title .text-info}
 
-**2024 marked a pivotal year for Gregory AI**, with significant expansions in functionality, partnerships, and community reach. Key achievements include enhanced clinical trial coverage, and our first year of financial self-sustainability.
+**2024 marked a pivotal year for GregoryAi**, with significant expansions in functionality, partnerships, and community reach. Key achievements include enhanced clinical trial coverage, and our first year of financial self-sustainability.
 
 ## Key Metrics for 2024{.title .text-info}
 
@@ -110,10 +110,10 @@ scripts:
         <div class="card h-100 border-0 shadow-sm">
           <div class="card-body">
             <div class="d-flex align-items-center mb-3">
-              <h5 class="mb-0 title" > <i class="fas fa-brain text-primary"></i> Gregory AI Enhancements</h5>
+              <h5 class="mb-0 title" > <i class="fas fa-brain text-primary"></i> GregoryAi Enhancements</h5>
             </div>
             <p class="">
-              We expanded Gregory AI's capabilities to support multiple research subjects on a single platform. This flexible approach benefits not just MS research but also other areas such as brain regeneration, enabling diverse research teams to tap into up-to-date data and findings.
+              We expanded GregoryAi's capabilities to support multiple research subjects on a single platform. This flexible approach benefits not just MS research but also other areas such as brain regeneration, enabling diverse research teams to tap into up-to-date data and findings.
             </p>
           </div>
         </div>
@@ -137,7 +137,7 @@ scripts:
               <h5 class="mb-0 title"><i class="fas fa-clipboard-list text-success"></i> New Clinical Trial Registry</h5>
             </div>
             <p class="">
-              Adding the <a class="text-info font-weight-bold" style="text-decoration: underline;" href="https://euclinicaltrials.eu/" target="_blank">Clinical Trial Information System (CTIS)</a> as a source means users get even more complete coverage of trials around the globe. Gregory AI can now track changes or new listings from the largest registries worldwide.
+              Adding the <a class="text-info font-weight-bold" style="text-decoration: underline;" href="https://euclinicaltrials.eu/" target="_blank">Clinical Trial Information System (CTIS)</a> as a source means users get even more complete coverage of trials around the globe. GregoryAi can now track changes or new listings from the largest registries worldwide.
             </p>
           </div>
         </div>
@@ -149,7 +149,7 @@ scripts:
               <h5 class="mb-0 title"><i class="fas fa-handshake text-warning"></i> REGENERAR and GENIE Collaborations</h5>
             </div>
             <p class="">
-              Two new clinical research groups — <a class="text-info font-weight-bold" style="text-decoration: underline;" href="https://research.regenerar.eu/" target="_blank">REGENERAR for brain regeneration</a> and <a class="text-info font-weight-bold" style="text-decoration: underline;" href="https://investigacao.encefalites.pt/" target="_blank">GENIE for autoimmune encephalitis</a> — are using Gregory AI as a real-time map of relevant studies.
+              Two new clinical research groups — <a class="text-info font-weight-bold" style="text-decoration: underline;" href="https://research.regenerar.eu/" target="_blank">REGENERAR for brain regeneration</a> and <a class="text-info font-weight-bold" style="text-decoration: underline;" href="https://investigacao.encefalites.pt/" target="_blank">GENIE for autoimmune encephalitis</a> — are using GregoryAi as a real-time map of relevant studies.
             </p>
           </div>
         </div>
@@ -170,7 +170,7 @@ scripts:
               <h5 class="mb-0 title"><i class="fas fa-microscope text-primary"></i> Brain Regeneration Focus</h5>
             </div>
             <p class="text-muted">
-              Following our conversations with the Horizon Europe-funded REGENERAR project, we launched a dedicated instance of Gregory AI to gather and share studies about neurological repair. This marks a step toward assisting other neurodegenerative conditions beyond MS.
+              Following our conversations with the Horizon Europe-funded REGENERAR project, we launched a dedicated instance of GregoryAi to gather and share studies about neurological repair. This marks a step toward assisting other neurodegenerative conditions beyond MS.
             </p>
           </div>
         </div>
@@ -234,7 +234,7 @@ scripts:
               <h5 class="mb-0 title"><i class="fas fa-hand-holding-heart text-success"></i> First Year of Self-Sustainability</h5>
             </div>
             <p class="text-muted mb-3">
-              Thanks to generous donations from our community, Gregory AI achieved its first year of financial self-sustainability, covering hosting costs, email services, and platform improvements without external funding.
+              Thanks to generous donations from our community, GregoryAi achieved its first year of financial self-sustainability, covering hosting costs, email services, and platform improvements without external funding.
             </p>
             <p class="text-muted mb-0">
               <strong>Community Growth:</strong> We welcomed over 160 new subscribers in 2024, with the majority identifying as patients, alongside a growing segment of doctors, researchers, and clinical centers.

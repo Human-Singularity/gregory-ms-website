@@ -16,7 +16,7 @@ resources:
 slug:
 layout: single
 tags: 
-  - Gregory AI
+  - GregoryAi
   - Multiple Sclerosis
   - Clinical Trials
   - Machine Learning
@@ -39,7 +39,7 @@ scripts:
 
 Tuesday, July 1st, we sent out the weekly email with the list of relevant articles for People with MS (PwMS). Only this time, the email had 249 articles, making it unusable.
 
-This happened not because of an error but because we underestimated the amount of new relevant articles we would be picking up. Our previous improvements to Gregory AI included better algorithms and a few tweaks to the way we fetch articles. This was the real cause of the deluge. 
+This happened not because of an error but because we underestimated the amount of new relevant articles we would be picking up. Our previous improvements to GregoryAi included better algorithms and a few tweaks to the way we fetch articles. This was the real cause of the deluge. 
 
 We apologise for this and have taken steps to prevent it from happening again.
 
@@ -49,7 +49,7 @@ Since we are now indexing more scientific papers, there is a small chance that o
 
 ### Improvements to the Website{.title}
 
-Gregory AI has been growing, and some of those improvements still weren’t visible on the website. So last week we did a full review of the content and how it is presented.
+GregoryAi has been growing, and some of those improvements still weren’t visible on the website. So last week we did a full review of the content and how it is presented.
 
 ### Improvements to Articles{.title}
 
@@ -85,7 +85,7 @@ For Clinical Trials, we have added an indication of their status.
 
 Trials are one of the biggest sources of hope for PwMS, and with that in mind, we also redesigned the listing of trials in our database.
 
-At Gregory AI, we’re pulling clinical-trial data from several trusted registries to ensure we have the most up-to-date information. Right now, we’re extracting data from:
+At GregoryAi, we’re pulling clinical-trial data from several trusted registries to ensure we have the most up-to-date information. Right now, we’re extracting data from:
 
 - **[EU Clinical Trials Information System (CTIS) Public API](https://euclinicaltrials.eu/ctis-public-api/)**
 
@@ -105,13 +105,13 @@ At Gregory AI, we’re pulling clinical-trial data from several trusted registri
 
   This is a manual update.
 
-Each of these registries has its own database model, and we do our best to consolidate all their information into Gregory AI. Still, issues may occur. 
+Each of these registries has its own database model, and we do our best to consolidate all their information into GregoryAi. Still, issues may occur. 
 
-In the future, the EU will migrate their data to CTIS. Right now, Gregory AI already has full support for when it happens.
+In the future, the EU will migrate their data to CTIS. Right now, GregoryAi already has full support for when it happens.
 
 ### More Information About Authors{.title}
 
-Gregory AI fetched information on more than 200,418 authors who have published research about MS and related disorders. The new update brings that information to the spotlight by allowing us to know who are the top authors and the articles they published.
+GregoryAi fetched information on more than 200,418 authors who have published research about MS and related disorders. The new update brings that information to the spotlight by allowing us to know who are the top authors and the articles they published.
 
 You can find them on the new [author ranking page](/authors/ranking/), where we give you real-time data on who has made the most contributions.
 
@@ -153,7 +153,7 @@ They all did more than just explore a dataset. Their questions and rhythm in tak
 
 ### What is Next{.title}
 
-This website and the whole of Gregory AI are still the work of a very small team. I have been taking care of the programming and development of new features, with the guidance of friends with much more knowledge than me.
+This website and the whole of GregoryAi are still the work of a very small team. I have been taking care of the programming and development of new features, with the guidance of friends with much more knowledge than me.
 
 The plan for the next months is to rebuild the Observatory page where we were listing research per category and medication. In the meantime, these last improvements forced us to remove that page for now.
 

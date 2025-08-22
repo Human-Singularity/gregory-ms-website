@@ -2,7 +2,7 @@
 authors:
   - bruno-amaral
 date: 2024-02-27T10:06:39Z
-description: "Gregory AI for Multiple Sclerosis research. Activities, and accounts for the project in 2023."
+description: "GregoryAi for Multiple Sclerosis research. Activities, and accounts for the project in 2023."
 draft: false
 resources: 
 - src: images/gregory-2023.png
@@ -41,7 +41,7 @@ scripts:
 
 Our Annual Review of 2023 outlines significant progress in multiple sclerosis (MS) research, advancements in technology, and our contributions to the academic community. Key highlights from the report include:
 
-1. **Developmental Milestones and Collaborations**: Gregory AI and Gregory MS have made substantial advancements, including improvements in machine learning, data management, and user interface enhancements. A notable academic contribution is a paper co-authored by António Lopes and Bruno Amaral, detailing the use of Gregory for processing data into usable information for MS research stakeholders. Collaborations with [Nova SBE Data Science Knowledge Center](https://www.novasbe.unl.pt/en/data-science/overview) and the integration of World Health Organization (WHO) data are also notable accomplishments from last year. 
+1. **Developmental Milestones and Collaborations**: GregoryAi and Gregory MS have made substantial advancements, including improvements in machine learning, data management, and user interface enhancements. A notable academic contribution is a paper co-authored by António Lopes and Bruno Amaral, detailing the use of Gregory for processing data into usable information for MS research stakeholders. Collaborations with [Nova SBE Data Science Knowledge Center](https://www.novasbe.unl.pt/en/data-science/overview) and the integration of World Health Organization (WHO) data are also notable accomplishments from last year. 
 
 2. **Observatory and Research Insights**: The report introduces the MS Observatory, an innovative approach offering detailed insights into medicines and research areas related to MS. Analysis of the MS research landscape has yielded valuable insights, despite challenges in mapping research contributions by country due to limitations in data availability.
 
