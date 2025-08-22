@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { searchService } from '../services/searchService';
 import { stripHtml, truncateText, formatDate, cleanOrcid, isValidOrcid } from '../utils/searchUtils';
 import { urlUtils } from '../utils/urlUtils';
@@ -797,162 +798,169 @@ function SearchApp() {
   };
   
   return (
-    <div className="search-app container mt-5">
-      {/* Search Form Container - Centered */}
-      <div className="row justify-content-center">
-        <div className="col-lg-10">
-          {/* Search Form Card with Tabs */}
-          <div className="card mb-4">
-            <div className="card-header bg-light">
-              <h3 className="mb-0 text-primary ml-3">Search GregoryMS Database</h3>
-            </div>
-            
-            {/* Tab Navigation */}
-            <div className="card-header p-0">
-              <ul className="nav nav-tabs card-header-tabs" role="tablist">
-                <li className="nav-item">
-                  <button
-                    className={`nav-link ${searchType === 'articles' ? 'active' : ''}`}
-                    onClick={() => {
-                      setSearchType('articles');
-                      setActiveTab('articles');
-                      // Update URL parameters for new search type
-                      urlUtils.updateSearchParams({
-                        type: 'articles',
-                        q: searchTerm,
-                        field: searchField,
-                        page: 1
-                      });
-                      // Reset results when switching tabs
-                      setResults([]);
-                      setCurrentPage(1);
-                      setTotalPages(1);
-                      setTotalCount(0);
-                      setHasSearched(false);
-                    }}
-                    type="button"
-                    data-umami-event="click--search-tab-articles"
-                  >
-                    <i className="fas fa-file-alt mr-2"></i>
-                    Research Articles
-                  </button>
-                </li>
-                <li className="nav-item">
-                  <button
-                    className={`nav-link ${searchType === 'trials' ? 'active' : ''}`}
-                    onClick={() => {
-                      setSearchType('trials');
-                      setActiveTab('trials');
-                      // Update URL parameters for new search type
-                      urlUtils.updateSearchParams({
-                        type: 'trials',
-                        q: searchTerm,
-                        status: trialStatus,
-                        page: 1
-                      });
-                      // Reset results when switching tabs
-                      setResults([]);
-                      setCurrentPage(1);
-                      setTotalPages(1);
-                      setTotalCount(0);
-                      setHasSearched(false);
-                    }}
-                    type="button"
-                    data-umami-event="click--search-tab-trials"
-                  >
-                    <i className="fas fa-flask mr-2"></i>
-                    Clinical Trials
-                  </button>
-                </li>
-                <li className="nav-item">
-                  <button
-                    className={`nav-link ${searchType === 'authors' ? 'active' : ''}`}
-                    onClick={() => {
-                      setSearchType('authors');
-                      setActiveTab('authors');
-                      // Update URL parameters for new search type
-                      const urlParams = {
-                        type: 'authors',
-                        page: 1
-                      };
-                      
-                      if (authorSearchType === 'orcid' && orcidSearch) {
-                        urlParams.orcid = cleanOrcid(orcidSearch);
-                      } else if (searchTerm) {
-                        urlParams.q = searchTerm;
-                        urlParams.field = searchField;
-                      }
-                      
-                      urlUtils.updateSearchParams(urlParams);
-                      // Reset results when switching tabs
-                      setResults([]);
-                      setCurrentPage(1);
-                      setTotalPages(1);
-                      setTotalCount(0);
-                      setHasSearched(false);
-                    }}
-                    type="button"
-                    data-umami-event="click--search-tab-authors"
-                  >
-                    <i className="fas fa-user-graduate mr-2"></i>
-                    Authors
-                  </button>
-                </li>
-              </ul>
-            </div>
-
-            {/* Tab Content */}
-            <div className="card-body">
-              <div className="tab-content">
-                {/* Articles Tab */}
-                {searchType === 'articles' && (
-                  <div className="tab-pane fade show active">
-                    <div className="mb-3">
-                      <h5 className="text-primary mb-3">
-                        <i className="fas fa-file-alt mr-2"></i>
-                        Search Research Articles
-                      </h5>
-                      <p className="text-muted">Find peer-reviewed research articles about Multiple Sclerosis treatments, studies, and findings.</p>
-                    </div>
-                    
-                    <form onSubmit={handleSearch}>
-                      <div className="row">
-                        <div className="col-md-8 mb-3">
-                          <div className="form-group">
-                            <label htmlFor="searchTerm">Search Terms</label>
-                            <input
-                              type="text"
-                              className="form-control form-control-lg"
-                              id="searchTerm"
-                              placeholder="Enter keywords, treatments, or research topics..."
-                              value={searchTerm}
-                              onChange={(e) => setSearchTerm(e.target.value)}
-                              required
-                            />
-                          </div>
-                        </div>
+    <HelmetProvider>
+      <Helmet>
+        <title>{searchTerm ? `Search results for "${searchTerm}"` : 'Search'} | Gregory MS</title>
+        <meta property="og:title" content={`${searchTerm ? `Search results for "${searchTerm}"` : 'Search'} | Gregory MS`} />
+        <meta name="description" content={`Find scientific articles, clinical trials, and authors related to Multiple Sclerosis. Search for "${searchTerm}".`} />
+        <meta property="og:description" content={`Find scientific articles, clinical trials, and authors related to Multiple Sclerosis. Search for "${searchTerm}".`} />
+      </Helmet>
+      <div className="search-app container mt-5">
+        {/* Search Form Container - Centered */}
+        <div className="row justify-content-center">
+          <div className="col-lg-10">
+            {/* Search Form Card with Tabs */}
+            <div className="card mb-4">
+              <div className="card-header bg-light">
+                <h3 className="mb-0 text-primary ml-3">Search GregoryMS Database</h3>
+              </div>
+              
+              {/* Tab Navigation */}
+              <div className="card-header p-0">
+                <ul className="nav nav-tabs card-header-tabs" role="tablist">
+                  <li className="nav-item">
+                    <button
+                      className={`nav-link ${searchType === 'articles' ? 'active' : ''}`}
+                      onClick={() => {
+                        setSearchType('articles');
+                        setActiveTab('articles');
+                        // Update URL parameters for new search type
+                        urlUtils.updateSearchParams({
+                          type: 'articles',
+                          q: searchTerm,
+                          field: searchField,
+                          page: 1
+                        });
+                        // Reset results when switching tabs
+                        setResults([]);
+                        setCurrentPage(1);
+                        setTotalPages(1);
+                        setTotalCount(0);
+                        setHasSearched(false);
+                      }}
+                      type="button"
+                      data-umami-event="click--search-tab-articles"
+                    >
+                      <i className="fas fa-file-alt mr-2"></i>
+                      Research Articles
+                    </button>
+                  </li>
+                  <li className="nav-item">
+                    <button
+                      className={`nav-link ${searchType === 'trials' ? 'active' : ''}`}
+                      onClick={() => {
+                        setSearchType('trials');
+                        setActiveTab('trials');
+                        // Update URL parameters for new search type
+                        urlUtils.updateSearchParams({
+                          type: 'trials',
+                          q: searchTerm,
+                          status: trialStatus,
+                          page: 1
+                        });
+                        // Reset results when switching tabs
+                        setResults([]);
+                        setCurrentPage(1);
+                        setTotalPages(1);
+                        setTotalCount(0);
+                        setHasSearched(false);
+                      }}
+                      type="button"
+                      data-umami-event="click--search-tab-trials"
+                    >
+                      <i className="fas fa-flask mr-2"></i>
+                      Clinical Trials
+                    </button>
+                  </li>
+                  <li className="nav-item">
+                    <button
+                      className={`nav-link ${searchType === 'authors' ? 'active' : ''}`}
+                      onClick={() => {
+                        setSearchType('authors');
+                        setActiveTab('authors');
+                        // Update URL parameters for new search type
+                        const urlParams = {
+                          type: 'authors',
+                          page: 1
+                        };
                         
-                        <div className="col-md-4 mb-3">
-                          <div className="form-group">
-                            <label htmlFor="searchField">Search In</label>
-                            <select 
-                              className="form-control"
-                              id="searchField"
-                              value={searchField}
-                              onChange={(e) => {
-                                setSearchField(e.target.value);
-                                // Track field selection change
-                                if (typeof umami !== 'undefined') {
-                                  umami.track('search-field-change', {
-                                    field: e.target.value,
-                                    type: searchType
-                                  });
-                                }
-                              }}
-                            >
-                              <option value="all">All Fields</option>
-                              <option value="title">Title Only</option>
-                              <option value="summary">Abstract/Summary Only</option>
+                        if (authorSearchType === 'orcid' && orcidSearch) {
+                          urlParams.orcid = cleanOrcid(orcidSearch);
+                        } else if (searchTerm) {
+                          urlParams.q = searchTerm;
+                          urlParams.field = searchField;
+                        }
+                        
+                        urlUtils.updateSearchParams(urlParams);
+                        // Reset results when switching tabs
+                        setResults([]);
+                        setCurrentPage(1);
+                        setTotalPages(1);
+                        setTotalCount(0);
+                        setHasSearched(false);
+                      }}
+                      type="button"
+                      data-umami-event="click--search-tab-authors"
+                    >
+                      <i className="fas fa-user-graduate mr-2"></i>
+                      Authors
+                    </button>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Tab Content */}
+              <div className="card-body">
+                <div className="tab-content">
+                  {/* Articles Tab */}
+                  {searchType === 'articles' && (
+                    <div className="tab-pane fade show active">
+                      <div className="mb-3">
+                        <h5 className="text-primary mb-3">
+                          <i className="fas fa-file-alt mr-2"></i>
+                          Search Research Articles
+                        </h5>
+                        <p className="text-muted">Find peer-reviewed research articles about Multiple Sclerosis treatments, studies, and findings.</p>
+                      </div>
+                      
+                      <form onSubmit={handleSearch}>
+                        <div className="row">
+                          <div className="col-md-8 mb-3">
+                            <div className="form-group">
+                              <label htmlFor="searchTerm">Search Terms</label>
+                              <input
+                                type="text"
+                                className="form-control form-control-lg"
+                                id="searchTerm"
+                                placeholder="Enter keywords, treatments, or research topics..."
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                                required
+                              />
+                            </div>
+                          </div>
+                          
+                          <div className="col-md-4 mb-3">
+                            <div className="form-group">
+                              <label htmlFor="searchField">Search In</label>
+                              <select 
+                                className="form-control"
+                                id="searchField"
+                                value={searchField}
+                                onChange={(e) => {
+                                  setSearchField(e.target.value);
+                                  // Track field selection change
+                                  if (typeof umami !== 'undefined') {
+                                    umami.track('search-field-change', {
+                                      field: e.target.value,
+                                      type: searchType
+                                    });
+                                  }
+                                }}
+                              >
+                                <option value="all">All Fields</option>
+                                <option value="title">Title Only</option>
+                                <option value="summary">Abstract/Summary Only</option>
                             </select>
                           </div>
                         </div>
@@ -982,57 +990,57 @@ function SearchApp() {
                       </div>
                     </form>
                   </div>
-                )}
+                  )}
 
-                {/* Clinical Trials Tab */}
-                {searchType === 'trials' && (
-                  <div className="tab-pane fade show active">
-                    <div className="mb-3">
-                      <h5 className="text-primary mb-3">
-                        <i className="fas fa-flask mr-2"></i>
-                        Search Clinical Trials
-                      </h5>
-                      <p className="text-muted">Find ongoing and completed clinical trials for Multiple Sclerosis treatments and research studies.</p>
-                    </div>
-                    
-                    <form onSubmit={handleSearch}>
-                      <div className="row">
-                        <div className="col-md-6 mb-3">
-                          <div className="form-group">
-                            <label htmlFor="searchTerm">Search Terms</label>
-                            <input
-                              type="text"
-                              className="form-control form-control-lg"
-                              id="searchTerm"
-                              placeholder="Enter treatment names, trial topics..."
-                              value={searchTerm}
-                              onChange={(e) => setSearchTerm(e.target.value)}
-                              required
-                            />
+                  {/* Clinical Trials Tab */}
+                  {searchType === 'trials' && (
+                    <div className="tab-pane fade show active">
+                      <div className="mb-3">
+                        <h5 className="text-primary mb-3">
+                          <i className="fas fa-flask mr-2"></i>
+                          Search Clinical Trials
+                        </h5>
+                        <p className="text-muted">Find ongoing and completed clinical trials for Multiple Sclerosis treatments and research studies.</p>
+                      </div>
+                      
+                      <form onSubmit={handleSearch}>
+                        <div className="row">
+                          <div className="col-md-6 mb-3">
+                            <div className="form-group">
+                              <label htmlFor="searchTerm">Search Terms</label>
+                              <input
+                                type="text"
+                                className="form-control form-control-lg"
+                                id="searchTerm"
+                                placeholder="Enter treatment names, trial topics..."
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                                required
+                              />
+                            </div>
                           </div>
-                        </div>
-                        
-                        <div className="col-md-3 mb-3">
-                          <div className="form-group">
-                            <label htmlFor="searchField">Search In</label>
-                            <select 
-                              className="form-control"
-                              id="searchField"
-                              value={searchField}
-                              onChange={(e) => {
-                                setSearchField(e.target.value);
-                                // Track field selection change
-                                if (typeof umami !== 'undefined') {
-                                  umami.track('search-field-change', {
-                                    field: e.target.value,
-                                    type: searchType
-                                  });
-                                }
-                              }}
-                            >
-                              <option value="all">All Fields</option>
-                              <option value="title">Title Only</option>
-                              <option value="summary">Abstract/Summary Only</option>
+                          
+                          <div className="col-md-3 mb-3">
+                            <div className="form-group">
+                              <label htmlFor="searchField">Search In</label>
+                              <select 
+                                className="form-control"
+                                id="searchField"
+                                value={searchField}
+                                onChange={(e) => {
+                                  setSearchField(e.target.value);
+                                  // Track field selection change
+                                  if (typeof umami !== 'undefined') {
+                                    umami.track('search-field-change', {
+                                      field: e.target.value,
+                                      type: searchType
+                                    });
+                                  }
+                                }}
+                              >
+                                <option value="all">All Fields</option>
+                                <option value="title">Title Only</option>
+                                <option value="summary">Abstract/Summary Only</option>
                             </select>
                           </div>
                         </div>
@@ -1089,176 +1097,177 @@ function SearchApp() {
                       </div>
                     </form>
                   </div>
-                )}
+                  )}
 
-                {/* Authors Tab */}
-                {searchType === 'authors' && (
-                  <div className="tab-pane fade show active">
-                    <div className="mb-3">
-                      <h5 className="text-primary mb-3">
-                        <i className="fas fa-user-graduate mr-2"></i>
-                        Search Authors
-                      </h5>
-                      <p className="text-muted">Find researchers and authors who have published Multiple Sclerosis research articles.</p>
-                    </div>
-                    
-                    {/* Author Search Type Selection */}
-                    <div className="mb-4">
-                      <div className="btn-group w-100" role="group" aria-label="Author search type">
-                        <button
-                          type="button"
-                          className={`btn ${authorSearchType === 'name' ? 'btn-primary' : 'btn-outline-primary'}`}
-                          onClick={() => {
-                            setAuthorSearchType('name');
-                            // Track search type change
-                            if (typeof umami !== 'undefined') {
-                              umami.track('search-author-type-change', {
-                                type: 'name'
-                              });
-                            }
-                          }}
-                        >
-                          <i className="fas fa-user mr-2"></i>
-                          Search by Name
-                        </button>
-                        <button
-                          type="button"
-                          className={`btn ${authorSearchType === 'orcid' ? 'btn-primary' : 'btn-outline-primary'}`}
-                          onClick={() => {
-                            setAuthorSearchType('orcid');
-                            // Track search type change
-                            if (typeof umami !== 'undefined') {
-                              umami.track('search-author-type-change', {
-                                type: 'orcid'
-                              });
-                            }
-                          }}
-                        >
-                          <i className="fas fa-id-badge mr-2"></i>
-                          Search by ORCID
-                        </button>
+                  {/* Authors Tab */}
+                  {searchType === 'authors' && (
+                    <div className="tab-pane fade show active">
+                      <div className="mb-3">
+                        <h5 className="text-primary mb-3">
+                          <i className="fas fa-user-graduate mr-2"></i>
+                          Search Authors
+                        </h5>
+                        <p className="text-muted">Find researchers and authors who have published Multiple Sclerosis research articles.</p>
                       </div>
-                    </div>
-                    
-                    <form onSubmit={handleSearch}>
-                      {authorSearchType === 'name' ? (
-                        <div className="row">
-                          <div className="col-md-8 mb-3">
-                            <div className="form-group">
-                              <label htmlFor="searchTerm">Author Name</label>
-                              <input
-                                type="text"
-                                className="form-control form-control-lg"
-                                id="searchTerm"
-                                placeholder="Enter author's full name or partial name..."
-                                value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
-                                required
-                              />
-                            </div>
-                          </div>
-                          
-                          <div className="col-md-4 mb-3 d-flex align-items-end">
-                            <div className="form-group w-100">
-                              <small className="text-muted">
-                                <i className="fas fa-info-circle mr-1"></i>
-                                Search by first name, last name, or full name
-                              </small>
-                            </div>
-                          </div>
-                        </div>
-                      ) : (
-                        <div className="row">
-                          <div className="col-md-8 mb-3">
-                            <div className="form-group">
-                              <label htmlFor="orcidSearch">ORCID Identifier</label>
-                              <input
-                                type="text"
-                                className="form-control form-control-lg"
-                                id="orcidSearch"
-                                placeholder="Enter ORCID ID (e.g., 0000-0000-0000-0000 or https://orcid.org/0000-0000-0000-0000)"
-                                value={orcidSearch}
-                                onChange={(e) => setOrcidSearch(e.target.value)}
-                                required
-                              />
-                            </div>
-                          </div>
-                          
-                          <div className="col-md-4 mb-3 d-flex align-items-end">
-                            <div className="form-group w-100">
-                              <small className="text-muted">
-                                <i className="fas fa-info-circle mr-1"></i>
-                                ORCID URL prefixes will be automatically removed
-                              </small>
-                            </div>
-                          </div>
-                        </div>
-                      )}
                       
-                      <div className="text-center">
-                        <button 
-                          type="submit" 
-                          className="btn btn-primary btn-lg px-5"
-                          disabled={isLoading}
-                          data-umami-event="click--search-authors-button"
-                          data-umami-event-term={authorSearchType === 'name' ? searchTerm : cleanOrcid(orcidSearch)}
-                          data-umami-event-type={authorSearchType}
-                        >
-                          {isLoading ? (
-                            <>
-                              <span className="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>
-                              Searching Authors...
-                            </>
-                          ) : (
-                            <>
-                              <i className="fas fa-search mr-2"></i>
-                              Search Authors
-                            </>
-                          )}
-                        </button>
+                      {/* Author Search Type Selection */}
+                      <div className="mb-4">
+                        <div className="btn-group w-100" role="group" aria-label="Author search type">
+                          <button
+                            type="button"
+                            className={`btn ${authorSearchType === 'name' ? 'btn-primary' : 'btn-outline-primary'}`}
+                            onClick={() => {
+                              setAuthorSearchType('name');
+                              // Track search type change
+                              if (typeof umami !== 'undefined') {
+                                umami.track('search-author-type-change', {
+                                  type: 'name'
+                                });
+                              }
+                            }}
+                          >
+                            <i className="fas fa-user mr-2"></i>
+                            Search by Name
+                          </button>
+                          <button
+                            type="button"
+                            className={`btn ${authorSearchType === 'orcid' ? 'btn-primary' : 'btn-outline-primary'}`}
+                            onClick={() => {
+                              setAuthorSearchType('orcid');
+                              // Track search type change
+                              if (typeof umami !== 'undefined') {
+                                umami.track('search-author-type-change', {
+                                  type: 'orcid'
+                                });
+                              }
+                            }}
+                          >
+                            <i className="fas fa-id-badge mr-2"></i>
+                            Search by ORCID
+                          </button>
+                        </div>
                       </div>
-                    </form>
-                  </div>
-                )}
+                      
+                      <form onSubmit={handleSearch}>
+                        {authorSearchType === 'name' ? (
+                          <div className="row">
+                            <div className="col-md-8 mb-3">
+                              <div className="form-group">
+                                <label htmlFor="searchTerm">Author Name</label>
+                                <input
+                                  type="text"
+                                  className="form-control form-control-lg"
+                                  id="searchTerm"
+                                  placeholder="Enter author's full name or partial name..."
+                                  value={searchTerm}
+                                  onChange={(e) => setSearchTerm(e.target.value)}
+                                  required
+                                />
+                              </div>
+                            </div>
+                            
+                            <div className="col-md-4 mb-3 d-flex align-items-end">
+                              <div className="form-group w-100">
+                                <small className="text-muted">
+                                  <i className="fas fa-info-circle mr-1"></i>
+                                  Search by first name, last name, or full name
+                                </small>
+                              </div>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="row">
+                            <div className="col-md-8 mb-3">
+                              <div className="form-group">
+                                <label htmlFor="orcidSearch">ORCID Identifier</label>
+                                <input
+                                  type="text"
+                                  className="form-control form-control-lg"
+                                  id="orcidSearch"
+                                  placeholder="Enter ORCID ID (e.g., 0000-0000-0000-0000 or https://orcid.org/0000-0000-0000-0000)"
+                                  value={orcidSearch}
+                                  onChange={(e) => setOrcidSearch(e.target.value)}
+                                  required
+                                />
+                              </div>
+                            </div>
+                            
+                            <div className="col-md-4 mb-3 d-flex align-items-end">
+                              <div className="form-group w-100">
+                                <small className="text-muted">
+                                  <i className="fas fa-info-circle mr-1"></i>
+                                  ORCID URL prefixes will be automatically removed
+                                </small>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                        
+                        <div className="text-center">
+                          <button 
+                            type="submit" 
+                            className="btn btn-primary btn-lg px-5"
+                            disabled={isLoading}
+                            data-umami-event="click--search-authors-button"
+                            data-umami-event-term={authorSearchType === 'name' ? searchTerm : cleanOrcid(orcidSearch)}
+                            data-umami-event-type={authorSearchType}
+                          >
+                            {isLoading ? (
+                              <>
+                                <span className="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>
+                                Searching Authors...
+                              </>
+                            ) : (
+                              <>
+                                <i className="fas fa-search mr-2"></i>
+                                Search Authors
+                              </>
+                            )}
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        {/* Search Results */}
+        <div className="d-flex justify-content-center">
+          <div className="col-lg-10 mx-auto">
+            {renderResults()}
+          </div>
+        </div>
+        
+        {/* Search Tips - Now appears after results */}
+        <div className="row justify-content-center mt-4">
+          <div className="col-lg-8">
+            <div className="card mb-4">
+              <div className="card-header bg-light">
+                <h3 className="mb-0 text-primary ml-3">Search Tips</h3>
+              </div>
+              <div className="card-body">
+                <p className="lead">Use this search tool to find research articles, clinical trials, or authors related to Multiple Sclerosis.</p>
+                
+                <h5>Tips for effective searching:</h5>
+                <ul className="list-group list-group-flush mb-3">
+                  <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> First, select whether you want to search for research articles, clinical trials, or authors</li>
+                  <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> Use specific terms related to treatments, symptoms, or research topics</li>
+                  <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> Try different spellings or related terms if you don't find what you're looking for</li>
+                  <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> For articles and trials, use the field selector to search in titles only for more specific results</li>
+                  <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> For authors, search by full name or use their ORCID identifier for precise results</li>
+                  <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> ORCID searches accept both the ID (0000-0000-0000-0000) and full URLs</li>
+                  <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> For clinical trials, you can filter by recruitment status to find active research opportunities</li>
+                  <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> Export your results to CSV for offline reading or sharing</li>
+                </ul>
               </div>
             </div>
           </div>
         </div>
       </div>
-      
-      {/* Search Results */}
-      <div className="d-flex justify-content-center">
-        <div className="col-lg-10 mx-auto">
-          {renderResults()}
-        </div>
-      </div>
-      
-      {/* Search Tips - Now appears after results */}
-      <div className="row justify-content-center mt-4">
-        <div className="col-lg-8">
-          <div className="card mb-4">
-            <div className="card-header bg-light">
-              <h3 className="mb-0 text-primary ml-3">Search Tips</h3>
-            </div>
-            <div className="card-body">
-              <p className="lead">Use this search tool to find research articles, clinical trials, or authors related to Multiple Sclerosis.</p>
-              
-              <h5>Tips for effective searching:</h5>
-              <ul className="list-group list-group-flush mb-3">
-                <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> First, select whether you want to search for research articles, clinical trials, or authors</li>
-                <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> Use specific terms related to treatments, symptoms, or research topics</li>
-                <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> Try different spellings or related terms if you don't find what you're looking for</li>
-                <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> For articles and trials, use the field selector to search in titles only for more specific results</li>
-                <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> For authors, search by full name or use their ORCID identifier for precise results</li>
-                <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> ORCID searches accept both the ID (0000-0000-0000-0000) and full URLs</li>
-                <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> For clinical trials, you can filter by recruitment status to find active research opportunities</li>
-                <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> Export your results to CSV for offline reading or sharing</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    </HelmetProvider>
   );
 }
 

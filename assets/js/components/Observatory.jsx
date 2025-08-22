@@ -4,6 +4,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { categoryService } from '../services/api';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 import CategoryCard from './CategoryCard';
 import CategoryDetail from './CategoryDetail';
 
@@ -428,147 +429,165 @@ function Observatory({ config = DEFAULT_CONFIG }) {
   }
 
   return (
-    <div className="container mt-4">
-      {selectedCategory ? (
-        <CategoryDetail 
-          category={selectedCategory} 
-          config={config}
-          onBack={handleBackToList}
-        />
-      ) : (
-        <div className="row">
-          <div className="col-md-12">
-            {/* Search Bar */}
-            <div className="row justify-content-center mb-4">
-              <div className="col-md-6">
-                <form onSubmit={handleSearchSubmit} className="observatory-search">
-                  <div className="input-group">
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="Search treatments (e.g., 'Fingolimod', 'stem cell', 'remyelination')"
-                      value={searchTerm}
-                      onChange={handleSearchChange}
-                    />
-                    <div className="input-group-append">
-                      {searchTerm ? (
-                        <button
-                          className="input-group-text"
-                          type="button"
-                          onClick={handleClearSearch}
-                          title="Clear search"
-                          style={{ 
-                            border: '1px solid #ced4da',
-                            borderLeft: 'none',
-                            backgroundColor: '#f8f9fa',
-                            width: '38px',
-                            minWidth: '38px',
-                            height: '38px',
-                            padding: '0',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            cursor: 'pointer'
-                          }}
-                        >
-                          <i className="fa fa-times"></i>
-                        </button>
-                      ) : (
-                        <span className="input-group-text" style={{ 
-                          width: '38px',
-                          minWidth: '38px',
-                          height: '38px',
-                          padding: '0',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center'
-                        }}>
-                          <i className="fa fa-search"></i>
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </form>
-                <div className="observatory-filters-status mt-2">
-                  <div className="d-flex justify-content-between align-items-center">
-                    <small className="text-muted">
-                      Showing {filteredCategories.length} of {categories.length} treatments
-                    </small>
-                    <button
-                      className={`btn btn-sm ${(searchTerm || selectedTags.length > 0) ? 'btn-outline-secondary' : 'btn-outline-light'}`}
-                      onClick={handleClearAllFilters}
-                      disabled={!searchTerm && selectedTags.length === 0}
-                      title="Clear all filters"
-                    >
-                      <i className="fa fa-times mr-1"></i>
-                      Clear all filters
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Tag Filter Pills */}
-            {allTags.length > 0 && (
-              <div className="row justify-content-center mb-4">
-                <div className="col-md-8">
-                  <div className="observatory-tag-filters">
-                    <div className="d-flex flex-wrap justify-content-center">
-                      <p className="text-muted align-self-center mr-2">Filter by:</p>
-                      {allTags.map(tag => (
-                        <button
-                          key={tag}
-                          className={`btn btn-sm ${selectedTags.includes(tag) ? 'btn-primary' : 'btn-outline-primary'}`}
-                          onClick={() => handleTagToggle(tag)}
-                          style={{ borderRadius: '20px', fontSize: '0.85rem' }}
-                        >
-                          {tag}
-                          {selectedTags.includes(tag) && (
-                            <i className="fa fa-check ml-1"></i>
+    <HelmetProvider>
+      <div className="container mt-4">
+        {selectedCategory ? (
+          <>
+            <Helmet>
+              <title>{selectedCategory.name} | Gregory MS Observatory</title>
+              <meta property="og:title" content={`${selectedCategory.name} | Gregory MS Observatory`} />
+              <meta name="description" content={selectedCategory.description} />
+              <meta property="og:description" content={selectedCategory.description} />
+            </Helmet>
+            <CategoryDetail 
+              category={selectedCategory} 
+              config={config}
+              onBack={handleBackToList}
+            />
+          </>
+        ) : (
+          <>
+            <Helmet>
+              <title>MS Research Observatory | Gregory MS</title>
+              <meta property="og:title" content="MS Research Observatory | Gregory MS" />
+              <meta name="description" content="Track the latest research on treatments and therapies for Multiple Sclerosis." />
+              <meta property="og:description" content="Track the latest research on treatments and therapies for Multiple Sclerosis." />
+            </Helmet>
+            <div className="row">
+              <div className="col-md-12">
+                {/* Search Bar */}
+                <div className="row justify-content-center mb-4">
+                  <div className="col-md-6">
+                    <form onSubmit={handleSearchSubmit} className="observatory-search">
+                      <div className="input-group">
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="Search treatments (e.g., 'Fingolimod', 'stem cell', 'remyelination')"
+                          value={searchTerm}
+                          onChange={handleSearchChange}
+                        />
+                        <div className="input-group-append">
+                          {searchTerm ? (
+                            <button
+                              className="input-group-text"
+                              type="button"
+                              onClick={handleClearSearch}
+                              title="Clear search"
+                              style={{ 
+                                border: '1px solid #ced4da',
+                                borderLeft: 'none',
+                                backgroundColor: '#f8f9fa',
+                                width: '38px',
+                                minWidth: '38px',
+                                height: '38px',
+                                padding: '0',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                cursor: 'pointer'
+                              }}
+                            >
+                              <i className="fa fa-times"></i>
+                            </button>
+                          ) : (
+                            <span className="input-group-text" style={{ 
+                              width: '38px',
+                              minWidth: '38px',
+                              height: '38px',
+                              padding: '0',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center'
+                            }}>
+                              <i className="fa fa-search"></i>
+                            </span>
                           )}
+                        </div>
+                      </div>
+                    </form>
+                    <div className="observatory-filters-status mt-2">
+                      <div className="d-flex justify-content-between align-items-center">
+                        <small className="text-muted">
+                          Showing {filteredCategories.length} of {categories.length} treatments
+                        </small>
+                        <button
+                          className={`btn btn-sm ${(searchTerm || selectedTags.length > 0) ? 'btn-outline-secondary' : 'btn-outline-light'}`}
+                          onClick={handleClearAllFilters}
+                          disabled={!searchTerm && selectedTags.length === 0}
+                          title="Clear all filters"
+                        >
+                          <i className="fa fa-times mr-1"></i>
+                          Clear all filters
                         </button>
-                      ))}
+                      </div>
                     </div>
                   </div>
                 </div>
+
+                {/* Tag Filter Pills */}
+                {allTags.length > 0 && (
+                  <div className="row justify-content-center mb-4">
+                    <div className="col-md-8">
+                      <div className="observatory-tag-filters">
+                        <div className="d-flex flex-wrap justify-content-center">
+                          <p className="text-muted align-self-center mr-2">Filter by:</p>
+                          {allTags.map(tag => (
+                            <button
+                              key={tag}
+                              className={`btn btn-sm ${selectedTags.includes(tag) ? 'btn-primary' : 'btn-outline-primary'}`}
+                              onClick={() => handleTagToggle(tag)}
+                              style={{ borderRadius: '20px', fontSize: '0.85rem' }}
+                            >
+                              {tag}
+                              {selectedTags.includes(tag) && (
+                                <i className="fa fa-check ml-1"></i>
+                              )}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-          
-          <div className="row observatory-card">
-            {filteredCategories.map((category) => (
-              <div key={category.slug} className="col-sm-6 col-md-4 col-lg-3 mb-4">
-                <CategoryCard 
-                  category={category}
-                  onSelect={handleCategorySelect}
-                />
+              
+              <div className="row observatory-card">
+                {filteredCategories.map((category) => (
+                  <div key={category.slug} className="col-sm-6 col-md-4 col-lg-3 mb-4">
+                    <CategoryCard 
+                      category={category}
+                      onSelect={handleCategorySelect}
+                    />
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-          
-          {filteredCategories.length === 0 && (searchTerm || selectedTags.length > 0) && (
-            <div className="col-md-12">
-              <div className="alert alert-info text-center">
-                <h5>No treatments found</h5>
-                <p>
-                  No treatments match your 
-                  {searchTerm && ` search for "${searchTerm}"`}
-                  {searchTerm && selectedTags.length > 0 && ' and '}
-                  {selectedTags.length > 0 && `selected tags: ${selectedTags.join(', ')}`}
-                </p>
-                <p>Try:</p>
-                <ul className="list">
-                  <li>Specific drug names (e.g., "Tecfidera", "Ocrelizumab")</li>
-                  <li>Treatment types (e.g., "stem cell", "antibody")</li>
-                  <li>Mechanisms (e.g., "remyelination", "neuroprotection")</li>
-                  <li>Removing some filters</li>
-                </ul>
-              </div>
+              
+              {filteredCategories.length === 0 && (searchTerm || selectedTags.length > 0) && (
+                <div className="col-md-12">
+                  <div className="alert alert-info text-center">
+                    <h5>No treatments found</h5>
+                    <p>
+                      No treatments match your 
+                      {searchTerm && ` search for "${searchTerm}"`}
+                      {searchTerm && selectedTags.length > 0 && ' and '}
+                      {selectedTags.length > 0 && `selected tags: ${selectedTags.join(', ')}`}
+                    </p>
+                    <p>Try:</p>
+                    <ul className="list">
+                      <li>Specific drug names (e.g., "Tecfidera", "Ocrelizumab")</li>
+                      <li>Treatment types (e.g., "stem cell", "antibody")</li>
+                      <li>Mechanisms (e.g., "remyelination", "neuroprotection")</li>
+                      <li>Removing some filters</li>
+                    </ul>
+                  </div>
+                </div>
+              )}
             </div>
-          )}
-        </div>
-      )}
-    </div>
+          </>
+        )}
+      </div>
+    </HelmetProvider>
   );
 }
 
