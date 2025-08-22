@@ -26,7 +26,7 @@ headerPhoto = ""
     term = [ "HTML", "RSS"]
 
 [params]
-  defaultImage = "/gregory-thumb.png"
+  defaultImage = "/images/gregory_illustration_full.png"
   author = "Bruno Amaral"
   enableComments = false 
   defaultAuthor = "authors/bruno-amaral"
