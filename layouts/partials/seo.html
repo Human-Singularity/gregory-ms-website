@@ -4,10 +4,10 @@
 <meta name="twitter:title" content="{{ . }}" />
 {{- end }}
 
-{{- with .Description | default .Params.description | default .Summary }}
-<meta name="description" content="{{ . }}" />
-<meta property="og:description" content="{{ . }}" />
-<meta name="twitter:description" content="{{ . }}" />
+{{- with .Description | default .Params.description | default .Summary | default .Site.Params.description }}
+<meta name="description" content="{{ . | plainify | htmlUnescape | replaceRE `\s+` ` ` | strings.TrimSpace }}" />
+<meta property="og:description" content="{{ . | plainify | htmlUnescape | replaceRE `\s+` ` ` | strings.TrimSpace }}" />
+<meta name="twitter:description" content="{{ . | plainify | htmlUnescape | replaceRE `\s+` ` ` | strings.TrimSpace }}" />
 {{- end }}
 
 <meta property="og:url" content="{{ .Permalink }}" />
