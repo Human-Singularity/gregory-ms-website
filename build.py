@@ -202,9 +202,22 @@ def build_website():
             print("You may need to run this script with sudo or create the directory manually.")
             return
     
+    # Get user and group info for file ownership
+    try:
+        import pwd
+        import grp
+        uid = pwd.getpwnam('gregory').pw_uid
+        gid = grp.getgrnam('www-data').gr_gid
+        user_opts = ["--user", f"{uid}:{gid}"]
+    except (KeyError, ImportError):
+        print("Warning: Could not determine UID/GID for gregory:www-data. Files may be owned by root.")
+        print("Ensure user 'gregory' and group 'www-data' exist on the host system.")
+        user_opts = []
+
     # Use Docker to run Hugo with proper environment variables and volume mounts
     docker_command = [
         "docker", "run", "--rm",
+        *user_opts,
         "-v", f"{current_dir}:/src",  # Mount source code
         "-v", f"{website_path}:/output",  # Mount output directory
         "-e", "NODE_ENV=production",  # Ensure production mode for JS builds
