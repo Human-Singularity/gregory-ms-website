@@ -35,8 +35,8 @@ export function AuthorProfile() {
   };
   const routeIdentifier = getRouteIdentifier();
 
-  // Helper values derived from author
-  const cleanedOrcid = cleanOrcid(orcid);
+  // Helper values derived from author (computed when author is available)
+  const cleanedOrcid = author?.ORCID ? cleanOrcid(author.ORCID) : null;
   const rssUrl = cleanedOrcid ? `${API_URL()}/feed/author/${cleanedOrcid}` : '';
 
   const handleCopyRss = async () => {
