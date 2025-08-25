@@ -36,7 +36,7 @@ export function AuthorProfile() {
 
   // Helper values derived from author
   const cleanedOrcid = author?.ORCID ? cleanOrcid(author.ORCID) : '';
-  const rssUrl = cleanedOrcid ? `http://api.gregory-ms.com/feed/author/${cleanedOrcid}` : '';
+  const rssUrl = cleanedOrcid ? `https://api.gregory-ms.com/feed/author/${cleanedOrcid}` : '';
 
   const handleCopyRss = async () => {
     if (!rssUrl) return;
