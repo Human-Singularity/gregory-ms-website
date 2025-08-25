@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { ComposedChart, Bar, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer, Legend } from 'recharts';
+import { articleService, API_URL } from '../services/api';
 
 /**
  * AuthorArticleChart component - Chart showing cumulative articles and ML predictions per month
@@ -173,7 +174,7 @@ export function AuthorArticleChart({ authorId, articles: providedArticles }) {
         let hasMore = true;
         
         while (hasMore) {
-          const response = await axios.get(`https://api.gregory-ms.com/articles/?author_id=${authorId}&format=json&page=${page}`);
+          const response = await articleService.getArticlesByAuthor(authorId, page);
           const pageResults = response.data.results || [];
           allArticles = [...allArticles, ...pageResults];
           
