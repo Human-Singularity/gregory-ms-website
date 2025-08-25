@@ -4,8 +4,39 @@
  */
 import axios from 'axios';
 
-// Base API URL
-const API_URL = 'https://api.gregory-ms.com';
+// Base API URL - Smart environment detection with HTTPS enforcement
+const getApiUrl = () => {
+  // If window.ENV_API_URL is explicitly set, use it
+  if (typeof window !== 'undefined' && window.ENV_API_URL) {
+    return window.ENV_API_URL.replace(/^http:/, 'https:');
+  }
+  
+  // Default to production API
+  return 'https://api.gregory-ms.com';
+};
+
+// Create axios instance with dynamic baseURL getter
+const apiClient = axios.create({
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+// Add request interceptor to dynamically set baseURL and ensure HTTPS
+apiClient.interceptors.request.use(
+  (config) => {
+    const baseURL = getApiUrl();
+    config.baseURL = baseURL;
+    // Ensure the final URL is HTTPS
+    if (config.url && config.url.startsWith('http://')) {
+      config.url = config.url.replace(/^http:/, 'https:');
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 // Default configuration constants
 export const API_CONFIG = {
@@ -14,14 +45,6 @@ export const API_CONFIG = {
   DEFAULT_FORMAT: 'json',
   DEFAULT_PAGE_SIZE: 10,
 };
-
-// Create axios instance with default config
-const apiClient = axios.create({
-  baseURL: API_URL,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
 
 // Add response interceptor to handle deprecation warnings
 apiClient.interceptors.response.use(
@@ -473,3 +496,7 @@ export default {
   subjectService,
   sourceService,
 };
+
+// Export dynamic API_URL getter for components that need direct access
+export const API_URL = getApiUrl;
+export { getApiUrl };

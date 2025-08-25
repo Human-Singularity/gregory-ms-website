@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { formatNumber, generateAuthorURL } from '../utils.jsx';
+import { authorService, API_URL } from '../services/api';
 
 /**
  * AuthorRanking component - Displays a high score ranking table of authors
@@ -25,16 +26,11 @@ export function AuthorRanking() {
 
     try {
       // Build query parameters for the correct endpoint
-      const params = new URLSearchParams({
-        team_id: teamId,
-        subject_id: subjectId,
+      const response = await authorService.getAuthorsByTeamSubject(teamId, subjectId, {
         sort_by: 'article_count',
         order: 'desc',
-        format: 'json',
         timeframe: 'year'
       });
-
-      const response = await axios.get(`https://api.gregory-ms.com/authors/?${params.toString()}`);
 
       // Take only the top 10 authors
       const authors = response.data.results || [];

@@ -7,7 +7,7 @@ import { BrowserRouter as Router, Route, Routes, useParams } from 'react-router-
 import axios from 'axios';
 import { ComposedChart, Bar, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer, Label, Legend } from 'recharts';
 import * as d3 from 'd3';
-import { categoryService, trialService } from '../services/api';
+import { categoryService, trialService, API_URL } from '../services/api';
 import ArticleList from '../components/ArticleList';
 import TrialsList from '../components/TrialsList';
 import DownloadButton from '../components/DownloadButton';
@@ -208,14 +208,14 @@ function CategoryPage() {
           <div className="col-md-6">
             <h4>Articles</h4>
             <DownloadButton 
-              apiEndpoint={`https://api.gregory-ms.com/articles/?team_id=1&category_slug=${category}&format=csv&all_results=true`}
+              apiEndpoint={`${API_URL()}/articles/?team_id=1&category_slug=${category}&format=csv&all_results=true`}
               fileName={`gregory-ms-${category}-articles.csv`}
             />
           </div>
           <div className="col-md-6">
             <h4>Clinical Trials</h4>
             <DownloadButton 
-              apiEndpoint={`https://api.gregory-ms.com/trials/?team_id=1&category_slug=${category}&format=csv&all_results=true`}
+              apiEndpoint={`${API_URL()}/trials/?team_id=1&category_slug=${category}&format=csv&all_results=true`}
               fileName={`gregory-ms-${category}-trials.csv`}
             />
           </div>

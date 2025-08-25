@@ -10,7 +10,7 @@ import CategoryDetail from './CategoryDetail';
 
 // Default configuration - make these configurable
 const DEFAULT_CONFIG = {
-  API_URL: (window.ENV_API_URL || 'https://api.gregory-ms.com').replace(/^http:/, 'https:'),
+  API_URL: window.ENV_API_URL || 'https://api.gregory-ms.com',
   TEAM_ID: window.ENV_TEAM_ID || 1,
   SUBJECT_ID: window.ENV_SUBJECT_ID || 1
 };
@@ -130,6 +130,7 @@ function Observatory({ config = DEFAULT_CONFIG }) {
       try {
         // Fetch curated categories in a single request using the new get_categories param
         const ids = CATEGORY_IDS.map(x => x.id);
+        
   const respAll = await categoryService.getCategoriesByIdsAll(ids, { 
           team_id: config.TEAM_ID,
           subject_id: config.SUBJECT_ID

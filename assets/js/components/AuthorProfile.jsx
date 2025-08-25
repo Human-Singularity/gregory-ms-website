@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { authorService, articleService, API_URL } from '../services/api';
 import ArticleList from './ArticleList';
 import ArticleListItem from './ArticleListItem';
 import AuthorArticleChart from './AuthorArticleChart';
@@ -35,8 +36,8 @@ export function AuthorProfile() {
   const routeIdentifier = getRouteIdentifier();
 
   // Helper values derived from author
-  const cleanedOrcid = author?.ORCID ? cleanOrcid(author.ORCID) : '';
-  const rssUrl = cleanedOrcid ? `https://api.gregory-ms.com/feed/author/${cleanedOrcid}` : '';
+  const cleanedOrcid = cleanOrcid(orcid);
+  const rssUrl = cleanedOrcid ? `${API_URL()}/feed/author/${cleanedOrcid}` : '';
 
   const handleCopyRss = async () => {
     if (!rssUrl) return;
@@ -79,7 +80,7 @@ export function AuthorProfile() {
         if (/^\d+$/.test(routeIdentifier)) {
           // Numeric id => fetch by author_id
           console.log('Fetching author by ID:', routeIdentifier);
-          const authorResponse = await axios.get(`https://api.gregory-ms.com/authors/?author_id=${routeIdentifier}&format=json`);
+          const authorResponse = await authorService.getAuthors({ author_id: routeIdentifier });
           const data = authorResponse.data;
           if (Array.isArray(data)) {
             authorData = data[0];
@@ -99,7 +100,7 @@ export function AuthorProfile() {
             throw new Error('Invalid ORCID provided in URL');
           }
           console.log('Fetching author by ORCID:', orcid);
-          const authorResponse = await axios.get(`https://api.gregory-ms.com/authors/?orcid=${orcid}&format=json`);
+          const authorResponse = await authorService.getAuthors({ orcid: orcid });
           const data = authorResponse.data;
           if (Array.isArray(data)) {
             authorData = data[0];
@@ -123,7 +124,7 @@ export function AuthorProfile() {
         let page = 1;
         let hasMore = true;
         while (hasMore && authorIdToUse) {
-          const articlesResponse = await axios.get(`https://api.gregory-ms.com/articles/?author_id=${authorIdToUse}&format=json&page=${page}`);
+          const articlesResponse = await articleService.getArticlesByAuthor(authorIdToUse, page);
           const pageResults = articlesResponse.data.results || [];
           allArticles = [...allArticles, ...pageResults];
           hasMore = articlesResponse.data.next !== null;
@@ -298,7 +299,7 @@ export function AuthorProfile() {
                       <div className="d-flex w-100 w-md-auto mt-4 mt-md-0 ml-md-auto justify-content-end align-items-center">
                         <div className="d-flex align-items-center flex-wrap justify-content-end">
                           <DownloadButton
-                            apiEndpoint={`https://api.gregory-ms.com/articles/?author_id=${resolvedAuthorId || ''}`}
+                            apiEndpoint={`${API_URL()}/articles/?author_id=${resolvedAuthorId || ''}`}
                           />
                           {rssUrl && (
                             <>
