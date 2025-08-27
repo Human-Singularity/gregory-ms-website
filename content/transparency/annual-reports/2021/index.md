@@ -2,7 +2,8 @@
 authors:
   - bruno-amaral
 date: 2022-01-20T23:37:41Z
-description: ""
+description: "Gregory MS 2021 annual report covering platform launch, initial community growth, technical development milestones, and financial transparency for our first year of operation."
+summary: "Gregory MS's inaugural year report: platform launch, community building, technical foundations, and complete financial transparency for 2021 operations."
 draft: false
 resources: 
 - src: images/gregoryai_background.png
@@ -10,7 +11,7 @@ resources:
 - src: "images/report_bg_2021.png"
   name: thumb
 slug:
-subtitle: 
+subtitle: "Platform launch and first year achievements"
 tags: 
   - 
 categories: 

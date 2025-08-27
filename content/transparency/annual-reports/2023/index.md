@@ -3,6 +3,7 @@ authors:
   - bruno-amaral
 date: 2024-02-27T10:06:39Z
 description: "GregoryAi for Multiple Sclerosis research. Activities, and accounts for the project in 2023."
+summary: "Gregory MS 2023 annual review: platform enhancements, research database growth, international reach expansion, and comprehensive financial accountability."
 draft: false
 resources: 
 - src: images/gregory-2023.png
@@ -12,7 +13,7 @@ resources:
 
 slug:
 
-subtitle: 
+subtitle: "Enhanced features and global expansion"
 tags: 
   - 
 categories: 

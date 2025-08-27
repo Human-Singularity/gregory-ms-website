@@ -195,14 +195,19 @@ headerPhoto = ""
   weight = 4
 
   [[menu.column_3]]
+  name = "Issue Tracker"
+  pageRef = "transparency/issue-tracker.html"
+  weight = 5
+
+  [[menu.column_3]]
   name = "Privacy Policy"
   pageRef = "transparency/privacy-policy/index.md"
-  weight = 5
+  weight = 6
 
   [[menu.column_3]]
   name = "Transparency"
   pageRef = "transparency/_index.html"
-  weight = 6
+  weight = 7
 
   [[menu.column_3]]
   name = "Website stats"

@@ -1,6 +1,7 @@
 ---
 title: "Transparency"
 description: "Gregory MS maintains full transparency in our operations, funding, data sources, and development process. Explore our commitment to openness."
+summary: "Complete operational transparency: open-source development, public funding records, data source transparency, annual reports, privacy protection, community accountability."
 draft: false
 layout: page
 url: "transparency"
@@ -18,10 +19,10 @@ options:
   navbar: navbar navbar-expand-lg bg-white fixed-top font-weight-bold
 ---
 
+
 <div class="container-fluid">
 	<div class="row justify-content-center mt-5 mb-5 p-md-5">
 		<div class="col-lg-10">
-			
 			<!-- Header Section -->
 			<div class="row mb-5">
 				<div class="col-md-8">
@@ -36,13 +37,11 @@ options:
 					</div>
 				</div>
 			</div>
-
 			<!-- Transparency Sections -->
 			<div class="row">
 				<div class="col-12">
 					<h2 class="h4 mb-4">Explore Our Transparency</h2>
 					<div class="row g-4">
-						
 						<div class="col-md-6 col-lg-4">
 							<div class="card h-100 border-0 shadow-sm">
 								<div class="card-body text-center p-4">
@@ -53,7 +52,6 @@ options:
 								</div>
 							</div>
 						</div>
-
 						<div class="col-md-6 col-lg-4">
 							<div class="card h-100 border-0 shadow-sm">
 								<div class="card-body text-center p-4">
@@ -64,7 +62,6 @@ options:
 								</div>
 							</div>
 						</div>
-
 						<div class="col-md-6 col-lg-4">
 							<div class="card h-100 border-0 shadow-sm">
 								<div class="card-body text-center p-4">
@@ -75,7 +72,6 @@ options:
 								</div>
 							</div>
 						</div>
-
 						<div class="col-md-6 col-lg-4">
 							<div class="card h-100 border-0 shadow-sm">
 								<div class="card-body text-center p-4">
@@ -86,7 +82,6 @@ options:
 								</div>
 							</div>
 						</div>
-
 						<div class="col-md-6 col-lg-4">
 							<div class="card h-100 border-0 shadow-sm">
 								<div class="card-body text-center p-4">
@@ -97,7 +92,6 @@ options:
 								</div>
 							</div>
 						</div>
-
 						<div class="col-md-6 col-lg-4">
 							<div class="card h-100 border-0 shadow-sm">
 								<div class="card-body text-center p-4">
@@ -108,11 +102,9 @@ options:
 								</div>
 							</div>
 						</div>
-
 					</div>
 				</div>
 			</div>
-
 			<!-- Open Source Commitment -->
 			<div class="row mt-5">
 				<div class="col-12">
@@ -145,7 +137,6 @@ options:
 					</div>
 				</div>
 			</div>
-
 		</div>
 	</div>
 </div>

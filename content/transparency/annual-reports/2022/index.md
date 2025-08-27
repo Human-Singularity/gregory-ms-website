@@ -3,6 +3,7 @@ authors:
   - bruno-amaral
 date: 2023-05-05T20:44:22Z
 description: "Multiple Sclerosis research, activities, and accounts for the GregoryMS project."
+summary: "Gregory MS 2022 review: platform growth, research expansion, community engagement metrics, and detailed financial transparency including expenses and donations."
 draft: false
 resources: 
 - src: images/report_bg_2022.png
@@ -11,7 +12,7 @@ resources:
   name: "header"
 
 slug:
-subtitle: 
+subtitle: "Platform growth and community expansion"
 tags: 
   - 
 categories: 
