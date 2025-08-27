@@ -3,6 +3,7 @@ authors:
   - bruno-amaral
 date: 2025-04-11T22:24:11Z
 description: "GregoryAi for Multiple Sclerosis research. Activities, and accounts for the project in 2024."
+summary: "Gregory MS 2024 review: financial sustainability achievement, major platform improvements, community growth milestones, and transparent expense reporting."
 draft: false
 resources: 
 - src: images/gregory-ms-2024.png
@@ -12,7 +13,7 @@ resources:
 
 slug:
 
-subtitle: 
+subtitle: "Financial sustainability and platform maturity"
 tags: 
   - 
 categories: 
