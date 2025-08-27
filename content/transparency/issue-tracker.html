@@ -1,0 +1,189 @@
+---
+title: "Issue Tracker"
+description: "Public issue tracker for Gregory MS - report bugs, request features, and track development progress on GitHub."
+draft: false
+layout: page
+url: "transparency/issue-tracker"
+slug: issue-tracker
+subtitle: "Public Bug Tracker & Issue Reporting"
+options:
+  unlisted: false
+  showHeader: true
+  hideFooter: false
+  hideSubscribeForm: false
+  header: mini
+  navbar: navbar navbar-expand-lg bg-white fixed-top font-weight-bold
+---
+
+<div class="container-fluid">
+	<div class="row justify-content-center mt-5 mb-5 p-md-5">
+		<div class="col-lg-10">
+			
+			<!-- Header Section -->
+			<div class="row mb-5">
+				<div class="col-md-8">
+					<h1 class="display-4 font-weight-bold">Public Issue Tracker</h1>
+					<p class="lead">At Gregory MS, we believe in transparent development. Every bug report, feature request, and improvement is tracked publicly on GitHub, allowing our community to participate in making the platform better.</p>
+				</div>
+				<div class="col-md-4 text-center">
+					<div class="bg-light rounded p-4">
+						<i class="fab fa-github text-dark" style="font-size: 3rem;"></i>
+						<h5 class="mt-3">Open Development</h5>
+						<p class="small text-muted">Transparent, community-driven improvements</p>
+					</div>
+				</div>
+			</div>
+
+			<!-- Quick Actions -->
+			<div class="row mb-5">
+				<div class="col-12">
+					<h3 class="h4 mb-4">
+						<i class="fas fa-bolt text-warning me-2"></i>
+						Quick Actions
+					</h3>
+					<div class="row g-3">
+						<div class="col-sm-6 col-lg-3">
+							<a href="https://github.com/Human-Singularity/gregory-ms-website/issues/new?template=bug_report.md" 
+							   class="card border-0 shadow-sm text-decoration-none h-100"
+							   target="_blank" rel="noopener noreferrer">
+								<div class="card-body text-center p-4">
+									<i class="fas fa-bug text-danger mb-3" style="font-size: 2rem;"></i>
+									<strong class="d-block">Report a Bug</strong>
+									<small class="text-muted">Something isn't working?</small>
+								</div>
+							</a>
+						</div>
+						<div class="col-sm-6 col-lg-3">
+							<a href="https://github.com/Human-Singularity/gregory-ms-website/issues/new?template=feature_request.md" 
+							   class="card border-0 shadow-sm text-decoration-none h-100"
+							   target="_blank" rel="noopener noreferrer">
+								<div class="card-body text-center p-4">
+									<i class="fas fa-lightbulb text-warning mb-3" style="font-size: 2rem;"></i>
+									<strong class="d-block">Request Feature</strong>
+									<small class="text-muted">Have an idea?</small>
+								</div>
+							</a>
+						</div>
+						<div class="col-sm-6 col-lg-3">
+							<a href="https://github.com/Human-Singularity/gregory-ms-website/discussions" 
+							   class="card border-0 shadow-sm text-decoration-none h-100"
+							   target="_blank" rel="noopener noreferrer">
+								<div class="card-body text-center p-4">
+									<i class="fas fa-comments text-info mb-3" style="font-size: 2rem;"></i>
+									<strong class="d-block">Start Discussion</strong>
+									<small class="text-muted">Ask questions</small>
+								</div>
+							</a>
+						</div>
+						<div class="col-sm-6 col-lg-3">
+							<a href="https://github.com/Human-Singularity/gregory-ms-website" 
+							   class="card border-0 shadow-sm text-decoration-none h-100"
+							   target="_blank" rel="noopener noreferrer">
+								<div class="card-body text-center p-4">
+									<i class="fas fa-code text-success mb-3" style="font-size: 2rem;"></i>
+									<strong class="d-block">View Code</strong>
+									<small class="text-muted">Open source</small>
+								</div>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Why Transparency Matters -->
+			<div class="row mb-5">
+				<div class="col-12">
+					<h3 class="h4 mb-4">
+						<i class="fas fa-heart text-primary me-2"></i>
+						Why Transparency Matters
+					</h3>
+					<div class="row g-4">
+						<div class="col-md-4">
+							<div class="text-center">
+								<i class="fas fa-handshake text-primary mb-3" style="font-size: 2rem;"></i>
+								<h6>Community Trust</h6>
+								<p class="text-muted small">Open development builds trust with our users and the MS community.</p>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="text-center">
+								<i class="fas fa-rocket text-success mb-3" style="font-size: 2rem;"></i>
+								<h6>Faster Improvements</h6>
+								<p class="text-muted small">Public tracking helps us prioritize and resolve issues more efficiently.</p>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="text-center">
+								<i class="fas fa-users text-info mb-3" style="font-size: 2rem;"></i>
+								<h6>Collaboration</h6>
+								<p class="text-muted small">Everyone can contribute ideas and solutions to help improve Gregory MS.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- GitHub Issues Component -->
+			<div class="row mb-5">
+				<div class="col-12">
+					<div id="github-issues-container">
+						<div class="text-center p-4">
+							<div class="spinner-border text-primary" role="status">
+								<span class="visually-hidden">Loading...</span>
+							</div>
+							<p class="mt-2 text-muted">Loading GitHub issues...</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- How to Report Issues -->
+			<div class="row">
+				<div class="col-12">
+					<h3 class="h4 mb-4">
+						<i class="fas fa-question-circle text-info me-2"></i>
+						How to Report Issues
+					</h3>
+					<div class="row">
+						<div class="col-md-6">
+							<h6 class="text-danger">
+								<i class="fas fa-bug me-1"></i>
+								For Bugs:
+							</h6>
+							<ul class="list-unstyled ms-3">
+								<li class="mb-1"><i class="fas fa-check-circle text-success me-2"></i>Describe what you expected to happen</li>
+								<li class="mb-1"><i class="fas fa-check-circle text-success me-2"></i>Explain what actually happened</li>
+								<li class="mb-1"><i class="fas fa-check-circle text-success me-2"></i>Include steps to reproduce the issue</li>
+								<li class="mb-1"><i class="fas fa-check-circle text-success me-2"></i>Mention your browser and operating system</li>
+							</ul>
+						</div>
+						<div class="col-md-6">
+							<h6 class="text-warning">
+								<i class="fas fa-lightbulb me-1"></i>
+								For Feature Requests:
+							</h6>
+							<ul class="list-unstyled ms-3">
+								<li class="mb-1"><i class="fas fa-check-circle text-success me-2"></i>Describe the feature you'd like to see</li>
+								<li class="mb-1"><i class="fas fa-check-circle text-success me-2"></i>Explain why it would be useful</li>
+								<li class="mb-1"><i class="fas fa-check-circle text-success me-2"></i>Provide examples if possible</li>
+								<li class="mb-1"><i class="fas fa-check-circle text-success me-2"></i>Consider how it fits with Gregory MS's mission</li>
+							</ul>
+						</div>
+					</div>
+					<div class="mt-4 p-3 bg-light rounded">
+						<p class="mb-2">
+							<i class="fas fa-envelope text-primary me-2"></i>
+							<strong>Need help reporting an issue?</strong>
+						</p>
+						<p class="mb-0">
+							<a href="mailto:team@gregory-ms.com" class="text-decoration-none">Contact us</a> and we'll help you get your report submitted properly.
+						</p>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+{{< github-issues >}}

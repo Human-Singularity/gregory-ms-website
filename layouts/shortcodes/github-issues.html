@@ -1,0 +1,31 @@
+{{- /* 
+  GitHub Issues Shortcode - Renders a React app for displaying GitHub issues
+  Usage: {{< github-issues repository="gregory-ms-website" owner="Human-Singularity" state="open" >}}
+  Parameters:
+    - repository: GitHub repository name (required)
+    - owner: GitHub repository owner (required)
+    - label: Filter by label (optional)
+    - state: Issue state - "open", "closed", or "all" (default: "open")
+*/ -}}
+
+{{- $repository := .Get "repository" | default "gregory-ms-website" -}}
+{{- $owner := .Get "owner" | default "Human-Singularity" -}}
+{{- $label := .Get "label" | default "" -}}
+{{- $state := .Get "state" | default "open" -}}
+
+<div id="github-issues-app" 
+     data-repository="{{ $repository }}"
+     data-owner="{{ $owner }}"
+     {{- if $label }}data-label="{{ $label }}"{{ end }}
+     data-state="{{ $state }}"
+     class="mt-4">
+  <!-- GitHub Issues will be rendered here -->
+  <div class="text-center py-4">
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Loading GitHub issues...</span>
+    </div>
+    <p class="mt-2 text-muted">Loading GitHub issues...</p>
+  </div>
+</div>
+
+{{ partial "react-app-loader.html" (dict "app" "githubIssues") }}
