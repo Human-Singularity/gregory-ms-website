@@ -187,7 +187,7 @@ Our open-source machine-learning model—refined with the help of <a href="https
                   </div>
                   <!-- CTA Button -->
                   <div class="d-flex flex-column flex-sm-row align-items-start">
-                    <a href='{{< ref "/sources/index.md" >}}' 
+                    <a href='/transparency/data-sources/' 
                        class="btn btn-info btn-lg font-weight-bold shadow-sm mb-3 mb-sm-0 mr-sm-3" 
                        data-umami-event="click--more-info-on-sources-researchers-page">
                       <i class="fas fa-database mr-2"></i>Explore Data Sources
