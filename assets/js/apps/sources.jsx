@@ -30,6 +30,21 @@ function App() {
           } 
         />
         <Route 
+          path="/transparency/data-sources/" 
+          element={
+            <div className="container-fluid">
+              <div className="row">
+                <div className="col-12">
+                  <SourceList 
+                    type="all" 
+                    pagePath="/transparency/data-sources" 
+                  />
+                </div>
+              </div>
+            </div>
+          } 
+        />
+        <Route 
           path="/sources/page/:pageNumber" 
           element={
             <div className="container-fluid">
@@ -38,6 +53,21 @@ function App() {
                   <SourceList 
                     type="all" 
                     pagePath="/sources" 
+                  />
+                </div>
+              </div>
+            </div>
+          } 
+        />
+        <Route 
+          path="/transparency/data-sources/page/:pageNumber" 
+          element={
+            <div className="container-fluid">
+              <div className="row">
+                <div className="col-12">
+                  <SourceList 
+                    type="all" 
+                    pagePath="/transparency/data-sources" 
                   />
                 </div>
               </div>
@@ -68,6 +98,27 @@ function App() {
           } 
         />
         <Route 
+          path="/transparency/data-sources/science-papers" 
+          element={
+            <div className="container-fluid">
+              <div className="row">
+                <div className="col-12">
+                  <div className="mb-4">
+                    <h1 className="text-center mb-3">Science Paper Sources</h1>
+                    <p className="text-center text-muted lead">
+                      Academic and research sources for scientific papers and studies
+                    </p>
+                  </div>
+                  <SourceList 
+                    type="science paper" 
+                    pagePath="/transparency/data-sources/science-papers" 
+                  />
+                </div>
+              </div>
+            </div>
+          } 
+        />
+        <Route 
           path="/sources/science-papers/page/:pageNumber" 
           element={
             <div className="container-fluid">
@@ -82,6 +133,27 @@ function App() {
                   <SourceList 
                     type="science paper" 
                     pagePath="/sources/science-papers" 
+                  />
+                </div>
+              </div>
+            </div>
+          } 
+        />
+        <Route 
+          path="/transparency/data-sources/science-papers/page/:pageNumber" 
+          element={
+            <div className="container-fluid">
+              <div className="row">
+                <div className="col-12">
+                  <div className="mb-4">
+                    <h1 className="text-center mb-3">Science Paper Sources</h1>
+                    <p className="text-center text-muted lead">
+                      Academic and research sources for scientific papers and studies
+                    </p>
+                  </div>
+                  <SourceList 
+                    type="science paper" 
+                    pagePath="/transparency/data-sources/science-papers" 
                   />
                 </div>
               </div>
@@ -111,6 +183,27 @@ function App() {
           } 
         />
         <Route 
+          path="/transparency/data-sources/trials" 
+          element={
+            <div className="container-fluid">
+              <div className="row">
+                <div className="col-12">
+                  <div className="mb-4">
+                    <h1 className="text-center mb-3">Clinical Trial Sources</h1>
+                    <p className="text-center text-muted lead">
+                      Registries and databases for clinical trials and medical studies
+                    </p>
+                  </div>
+                  <SourceList 
+                    type="trials" 
+                    pagePath="/transparency/data-sources/trials" 
+                  />
+                </div>
+              </div>
+            </div>
+          } 
+        />
+        <Route 
           path="/sources/trials/page/:pageNumber" 
           element={
             <div className="container-fluid">
@@ -125,6 +218,27 @@ function App() {
                   <SourceList 
                     type="trials" 
                     pagePath="/sources/trials" 
+                  />
+                </div>
+              </div>
+            </div>
+          } 
+        />
+        <Route 
+          path="/transparency/data-sources/trials/page/:pageNumber" 
+          element={
+            <div className="container-fluid">
+              <div className="row">
+                <div className="col-12">
+                  <div className="mb-4">
+                    <h1 className="text-center mb-3">Clinical Trial Sources</h1>
+                    <p className="text-center text-muted lead">
+                      Registries and databases for clinical trials and medical studies
+                    </p>
+                  </div>
+                  <SourceList 
+                    type="trials" 
+                    pagePath="/transparency/data-sources/trials" 
                   />
                 </div>
               </div>

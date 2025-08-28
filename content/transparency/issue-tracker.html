@@ -1,0 +1,85 @@
+---
+title: "Issue Tracker"
+description: "Public issue tracker for Gregory MS - report bugs, request features, and track development progress on GitHub. Complete transparency in platform development with community participation in bug reporting and feature requests."
+summary: "Public GitHub issue tracking: report bugs, request features, monitor development progress, community-driven platform improvements with full transparency."
+draft: false
+layout: page
+url: "transparency/issue-tracker"
+slug: issue-tracker
+subtitle: "Public Bug Tracker & Issue Reporting"
+options:
+  unlisted: false
+  showHeader: true
+  hideFooter: false
+  hideSubscribeForm: false
+  header: mini
+  navbar: navbar navbar-expand-lg bg-white fixed-top font-weight-bold
+---
+
+<div class="section">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="content">
+          <h2 class="mb-4">Public Development Transparency</h2>
+          
+          <p class="lead mb-4">
+            Gregory MS operates with complete transparency in our development process. Every bug report, feature request, and platform improvement is tracked publicly on GitHub, allowing our community to participate directly in making the platform better.
+          </p>
+          
+          <p class="mb-5">
+            This open development approach ensures accountability and gives users insight into how Gregory MS evolves to serve the multiple sclerosis community.
+          </p>
+          
+          <div class="row mb-5">
+            <div class="col-md-6 mb-4">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h5 class="card-title">
+                    <i class="fas fa-bug text-danger mr-2"></i>Report a Bug
+                  </h5>
+                  <p class="card-text">
+                    Found something not working correctly? Help us improve by reporting bugs you encounter while using Gregory MS.
+                  </p>
+                  <a href="https://github.com/Human-Singularity/gregory-ms-website/issues/new?template=bug_report.md" 
+                     class="btn btn-outline-danger"
+                     target="_blank" 
+                     rel="noopener noreferrer">
+                    Report Bug
+                  </a>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-md-6 mb-4">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h5 class="card-title">
+                    <i class="fas fa-lightbulb text-warning mr-2"></i>Request a Feature
+                  </h5>
+                  <p class="card-text">
+                    Have an idea for improving Gregory MS? We welcome feature requests from our community to make the platform better.
+                  </p>
+                  <a href="https://github.com/Human-Singularity/gregory-ms-website/issues/new?template=feature_request.md" 
+                     class="btn btn-outline-warning"
+                     target="_blank" 
+                     rel="noopener noreferrer">
+                    Request Feature
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <h3 class="mb-4">Current Issues & Development Progress</h3>
+          
+          <p class="mb-4">
+            View all open issues, bug reports, and feature requests below. You can also see what we're currently working on and upcoming improvements.
+          </p>
+          
+          {{< github-issues >}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
