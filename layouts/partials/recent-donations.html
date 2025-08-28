@@ -1,0 +1,290 @@
+<!-- Recent Donations Section -->
+<section class="py-5 bg-light">
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-lg-8 text-center mx-auto pb-4">
+				<h3 class="text-gradient text-primary">Recent Donations</h3>
+				<p class="mb-1 text-success">Updated in real time - Thank you for your support!</p>
+				<p class="text-muted">Your donations help keep Gregory-MS running and accessible to everyone.</p>
+			</div>
+		</div>
+		
+		<!-- Financial Summary Cards (Annual Review Style) -->
+		<div class="row mb-5">
+			<div class="col-md-3 mb-3">
+				<div class="card border-0 bg-gradient-success text-white h-100">
+					<div class="card-body text-center py-4">
+						<div class="icon icon-shape bg-white text-success rounded-circle mb-3 mx-auto">
+							<i class="fas fa-euro-sign"></i>
+						</div>
+						<h4 class="text-white mb-1" id="totalDonations">€0</h4>
+						<p class="mb-0 opacity-8 small">Total Raised This Year</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3 mb-3">
+				<div class="card border-0 bg-gradient-info text-white h-100">
+					<div class="card-body text-center py-4">
+						<div class="icon icon-shape bg-white text-info rounded-circle mb-3 mx-auto">
+							<i class="fas fa-users"></i>
+						</div>
+						<h4 class="text-white mb-1" id="donorCount">0</h4>
+						<p class="mb-0 opacity-8 small">Generous Contributors</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3 mb-3">
+				<div class="card border-0 bg-gradient-warning text-white h-100">
+					<div class="card-body text-center py-4">
+						<div class="icon icon-shape bg-white text-warning rounded-circle mb-3 mx-auto">
+							<i class="fas fa-server"></i>
+						</div>
+						<h4 class="text-white mb-1">€334</h4>
+						<p class="mb-0 opacity-8 small">Annual Running Costs</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3 mb-3">
+				<div class="card border-0 bg-gradient-primary text-white h-100">
+					<div class="card-body text-center py-4">
+						<div class="icon icon-shape bg-white text-primary rounded-circle mb-3 mx-auto">
+							<i class="fas fa-chart-line"></i>
+						</div>
+						<h4 class="text-white mb-1" id="coveragePercentage">0%</h4>
+						<p class="mb-0 opacity-8 small">Annual Costs Covered</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row justify-content-center">
+			<div class="col-lg-10">
+				<!-- Action Bar with Download and Stats -->
+				<div class="d-flex justify-content-between align-items-center mb-4">
+					<div>
+						<h5 class="mb-1">Recent Contributors</h5>
+						<small class="text-muted">
+							<i class="fas fa-clock me-1"></i>
+							<span id="donationsCount">Loading...</span> • Live updates
+						</small>
+					</div>
+					<div class="d-flex gap-2">
+						<a href="/transparency/" 
+						   class="btn btn-outline-primary btn-sm"
+						   title="View complete financial transparency">
+							<i class="fas fa-chart-line me-1"></i>
+							Full Report
+						</a>
+						<a href="https://donate.stripe.com/6oEeVmf1tdHIdOw7ss" 
+						   target="_blank" 
+						   class="btn btn-success btn-sm"
+						   data-umami-event="click--donate-button--recent-donations-section">
+							<i class="fas fa-heart me-1"></i>
+							Make a Donation
+							<i class="fas fa-external-link-alt ms-1" style="font-size: 0.8em;"></i>
+						</a>
+					</div>
+				</div>
+
+				<div class="card shadow-lg border-0">
+					<div class="card-body p-0">
+						<div class="table-responsive">
+							<table class="table align-items-center mb-0" id="RecentDonationsTable">
+								<thead class="bg-gray-50">
+									<tr>
+										<th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 ps-3">Contributor</th>
+										<th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 ps-3">Amount</th>
+										<th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 ps-3">Date</th>
+									</tr>
+								</thead>
+								<tbody>
+									<!-- Donations will be loaded here -->
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="card-footer bg-gray-50 text-center py-3">
+						<div class="row align-items-center">
+							<div class="col-md-8 text-md-start text-center mb-3 mb-md-0">
+								<small class="text-muted">
+									<i class="fas fa-info-circle me-1"></i>
+									Only showing donations with public permission • All financial data is publicly audited
+								</small>
+							</div>
+							<div class="col-md-4 text-md-end text-center">
+								<a href="/annual-review/" class="btn btn-outline-secondary btn-sm me-2">
+									<i class="fas fa-file-alt me-1"></i>
+									Annual Reports
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<script>
+(function() {
+	'use strict';
+	
+	function loadRecentDonations() {
+		const tableBody = document.querySelector('#RecentDonationsTable tbody');
+		const donationsCount = document.getElementById('donationsCount');
+		const totalDonationsEl = document.getElementById('totalDonations');
+		const donorCountEl = document.getElementById('donorCount');
+		
+		if (!tableBody) return;
+		
+		// Show loading state
+		tableBody.innerHTML = `
+			<tr>
+				<td colspan="3" class="text-center py-4">
+					<div class="spinner-border text-primary" role="status">
+						<span class="sr-only">Loading donations...</span>
+					</div>
+					<p class="text-muted mt-2 mb-0">Loading recent donations...</p>
+				</td>
+			</tr>
+		`;
+		
+		fetch('https://stripe-transparency.dash-tech-daf.workers.dev')
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(`HTTP error! status: ${response.status}`);
+				}
+				return response.json();
+			})
+			.then(donations => {
+				// Clear loading state
+				tableBody.innerHTML = '';
+				
+				if (donations.length === 0) {
+					tableBody.innerHTML = `
+						<tr>
+							<td colspan="3" class="text-center py-4">
+								<i class="fas fa-heart text-muted mb-2" style="font-size: 2rem;"></i>
+								<p class="text-muted mb-0">No donations to display yet.</p>
+								<small class="text-muted">Be the first to support Gregory-MS!</small>
+							</td>
+						</tr>
+					`;
+					return;
+				}
+				
+				// Sort by date (most recent first) and limit to recent donations
+				const recentDonations = donations
+					.sort((a, b) => new Date(b.charge_date) - new Date(a.charge_date))
+					.slice(0, 10); // Show only last 10 donations
+				
+				// Calculate totals
+				const currentYear = new Date().getFullYear();
+				const yearlyDonations = donations.filter(d => 
+					new Date(d.charge_date).getFullYear() === currentYear
+				);
+				const totalAmount = yearlyDonations.reduce((sum, d) => {
+					return sum + parseFloat(d.amount_paid || 0);
+				}, 0);
+				const uniqueDonors = new Set(donations.map(d => d.email)).size;
+				const annualCosts = 334; // Annual running costs in euros
+				const coveragePercentage = Math.min(100, Math.round((totalAmount / annualCosts) * 100));
+				
+				// Update summary cards
+				if (totalDonationsEl) totalDonationsEl.textContent = `€${totalAmount.toFixed(2)}`;
+				if (donorCountEl) donorCountEl.textContent = uniqueDonors;
+				if (donationsCount) donationsCount.textContent = `${recentDonations.length} recent donations`;
+				
+				// Update coverage percentage
+				const coverageEl = document.getElementById('coveragePercentage');
+				if (coverageEl) {
+					coverageEl.textContent = `${coveragePercentage}%`;
+					// Add visual indicator based on coverage
+					const coverageCard = coverageEl.closest('.card');
+					if (coveragePercentage >= 100) {
+						coverageCard.className = coverageCard.className.replace('bg-gradient-primary', 'bg-gradient-success');
+					} else if (coveragePercentage >= 75) {
+						coverageCard.className = coverageCard.className.replace('bg-gradient-primary', 'bg-gradient-info');
+					} else if (coveragePercentage >= 50) {
+						coverageCard.className = coverageCard.className.replace('bg-gradient-primary', 'bg-gradient-warning');
+					}
+				}
+				
+				// Populate table
+				recentDonations.forEach(donation => {
+					const row = document.createElement('tr');
+					row.className = 'border-bottom';
+					
+					// Contributor name (with privacy consideration)
+					const nameCell = document.createElement('td');
+					nameCell.className = 'ps-3';
+					const displayName = donation.name || 'Anonymous Supporter';
+					nameCell.innerHTML = `
+						<div class="d-flex align-items-center">
+							<div class="avatar avatar-sm bg-gradient-primary rounded-circle me-2">
+								<span class="text-white text-xs font-weight-bold">
+									${displayName.charAt(0).toUpperCase()}
+								</span>
+							</div>
+							<div>
+								<h6 class="mb-0 text-sm font-weight-semibold">${displayName}</h6>
+								<p class="text-xs text-muted mb-0">${donation.email ? donation.email.replace(/(.{2}).*(@.*)/, '$1***$2') : 'Private'}</p>
+							</div>
+						</div>
+					`;
+					row.appendChild(nameCell);
+					
+					// Amount
+					const amountCell = document.createElement('td');
+					amountCell.className = 'ps-3';
+					amountCell.innerHTML = `
+						<div class="badge badge-success font-weight-bold">
+							${donation.amount_paid} ${donation.currency.toUpperCase()}
+						</div>
+					`;
+					row.appendChild(amountCell);
+					
+					// Date
+					const dateCell = document.createElement('td');
+					dateCell.className = 'ps-3';
+					const date = new Date(donation.charge_date);
+					const isRecent = (Date.now() - date.getTime()) < (7 * 24 * 60 * 60 * 1000); // 7 days
+					const formattedDate = date.toLocaleDateString('en-US', {
+						month: 'short',
+						day: 'numeric',
+						year: date.getFullYear() !== new Date().getFullYear() ? 'numeric' : undefined
+					});
+					dateCell.innerHTML = `
+						<span class="text-sm ${isRecent ? 'text-success font-weight-semibold' : 'text-muted'}">
+							${formattedDate}
+							${isRecent ? '<i class="fas fa-circle text-success ms-1" style="font-size: 0.5rem;"></i>' : ''}
+						</span>
+					`;
+					row.appendChild(dateCell);
+					
+					tableBody.appendChild(row);
+				});
+			})
+			.catch(error => {
+				console.error('Error loading donations:', error);
+				tableBody.innerHTML = `
+					<tr>
+						<td colspan="3" class="text-center py-4">
+							<i class="fas fa-exclamation-triangle text-warning mb-2" style="font-size: 2rem;"></i>
+							<p class="text-muted mb-0">Unable to load donation data at this time.</p>
+							<small class="text-muted">Please try again later.</small>
+						</td>
+					</tr>
+				`;
+				if (donationsCount) donationsCount.textContent = 'Error';
+			});
+	}
+	
+	// Load donations when the DOM is ready
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', loadRecentDonations);
+	} else {
+		loadRecentDonations();
+	}
+})();
+</script>
