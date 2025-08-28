@@ -12,7 +12,7 @@ resources:
   name: "header"
 
 slug:
-subtitle: "Platform growth and community expansion"
+subtitle: 
 tags: 
   - 
 categories: 
