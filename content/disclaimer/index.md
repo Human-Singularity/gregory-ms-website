@@ -10,7 +10,8 @@ resources:
   title: gallery-title-:counter
 - src:
   name: slide-1
-slug:
+url: /disclaimer/
+slug: disclaimer
 aliases: 
 - terms
 - terms-of-service

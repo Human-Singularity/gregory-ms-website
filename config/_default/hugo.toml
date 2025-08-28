@@ -186,7 +186,7 @@ headerPhoto = ""
 
   [[menu.column_3]]
   name = "Disclaimer"
-  url = "/transparency/disclaimer/"
+  url = "/disclaimer/"
   weight = 3
 
   [[menu.column_3]]
