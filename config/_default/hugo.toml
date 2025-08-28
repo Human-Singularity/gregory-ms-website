@@ -176,37 +176,37 @@ headerPhoto = ""
   weight = 3
   [[menu.column_3]]
   name = "Annual Reports"
-  pageRef = "transparency/annual-reports/_index.md"
+  url = "/transparency/annual-reports/"
   weight = 1
 
   [[menu.column_3]]
   name = "Data Sources"
-  pageRef = "transparency/data-sources/_index.md"
+  url = "/transparency/data-sources/"
   weight = 2
 
   [[menu.column_3]]
   name = "Disclaimer"
-  pageRef = "transparency/disclaimer/index.md"
+  url = "/transparency/disclaimer/"
   weight = 3
 
   [[menu.column_3]]
   name = "Donations"
-  pageRef = "transparency/donations/_index.md"
+  url = "/transparency/donations/"
   weight = 4
 
   [[menu.column_3]]
   name = "Issue Tracker"
-  pageRef = "transparency/issue-tracker.html"
+  url = "/transparency/issue-tracker/"
   weight = 5
 
   [[menu.column_3]]
   name = "Privacy Policy"
-  pageRef = "transparency/privacy-policy/index.md"
+  url = "/transparency/privacy-policy/"
   weight = 6
 
   [[menu.column_3]]
   name = "Transparency"
-  pageRef = "transparency/_index.html"
+  url = "/transparency/"
   weight = 7
 
   [[menu.column_3]]
