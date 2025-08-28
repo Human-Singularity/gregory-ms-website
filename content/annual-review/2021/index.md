@@ -11,6 +11,7 @@ resources:
   name: thumb
 slug:
 subtitle: 
+summary: One year of Gregory-MS and what we learned
 tags: 
   - 
 categories: 

@@ -12,7 +12,9 @@ resources:
 
 slug:
 
-subtitle: 
+subtitle:
+summary: Valuable partnerships and a more professional handling of the project
+
 tags: 
   - 
 categories: 
