@@ -191,7 +191,7 @@ headerPhoto = ""
 
   [[menu.column_3]]
   name = "Donations"
-  url = "/transparency/donations/"
+  url = "/donations/"
   weight = 4
 
   [[menu.column_3]]
