@@ -13,6 +13,9 @@ resources:
 - src:
   name: slide-1
 slug:
+url: /donations
+aliases:
+  - /transparency/donations
 subtitle: 
 layout: page
 tags: 
