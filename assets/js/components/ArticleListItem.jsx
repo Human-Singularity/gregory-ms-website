@@ -22,7 +22,8 @@ import {
 export function ArticleListItem({ 
   article, 
   showRelevanceIndicators = false,
-  isSearchResult = false 
+  isSearchResult = false,
+  isObservatory = false
 }) {
   if (!article) return null;
 
@@ -31,13 +32,14 @@ export function ArticleListItem({
   const articleUrl = generateArticleURL(article);
   
   // Determine if we should use a Link or an anchor tag
-  const LinkComponent = isSearchResult ? 'a' : Link;
-  const linkProps = isSearchResult 
+  // Use anchor tags for search results OR observatory context to avoid React Router conflicts
+  const LinkComponent = (isSearchResult || isObservatory) ? 'a' : Link;
+  const linkProps = (isSearchResult || isObservatory)
     ? { 
         href: `/articles/${article.article_id}/`, 
         target: "_blank", 
         rel: "noopener noreferrer",
-        'data-umami-event': 'click--search-article-result',
+        'data-umami-event': isObservatory ? 'click--observatory-article-link' : 'click--search-article-result',
         'data-umami-event-id': article.article_id,
         'data-umami-event-title': article.title
       }
@@ -203,7 +205,8 @@ ArticleListItem.propTypes = {
     relevant: PropTypes.bool
   }).isRequired,
   showRelevanceIndicators: PropTypes.bool,
-  isSearchResult: PropTypes.bool
+  isSearchResult: PropTypes.bool,
+  isObservatory: PropTypes.bool
 };
 
 export default ArticleListItem;

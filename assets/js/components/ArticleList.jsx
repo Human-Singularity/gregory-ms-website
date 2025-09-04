@@ -16,6 +16,7 @@ import { formatDate } from '../utils';
  * @param {boolean} props.displayAsList - Whether to display as a list or grid
  * @param {boolean} props.isSearchResult - Whether to display as search results
  * @param {boolean} props.showRelevanceIndicators - Whether to show relevance indicators
+ * @param {boolean} props.isObservatory - Whether this is being displayed in the observatory context
  * @returns {JSX.Element} - ArticleList component
  */
 export function ArticleList({ 
@@ -24,7 +25,8 @@ export function ArticleList({
   options = {}, 
   displayAsList = false,
   isSearchResult = false,
-  showRelevanceIndicators = null
+  showRelevanceIndicators = null,
+  isObservatory = false
 }) {
   // Get page number from URL params
   const { pageNumber } = useParams();
@@ -90,6 +92,7 @@ export function ArticleList({
           article={article} 
           showRelevanceIndicators={showRelevanceIndicators !== null ? showRelevanceIndicators : type === 'relevant'}
           isSearchResult={isSearchResult}
+          isObservatory={isObservatory}
         />
       ))}
     </div>
