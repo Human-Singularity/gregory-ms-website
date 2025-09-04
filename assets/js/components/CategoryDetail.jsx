@@ -762,6 +762,7 @@ function CategoryDetail({ category, config, onBack }) {
               <ArticleList 
                 type="category" 
                 options={{ category: category.slug }}
+                isObservatory={true}
               />
             </div>
           )}
