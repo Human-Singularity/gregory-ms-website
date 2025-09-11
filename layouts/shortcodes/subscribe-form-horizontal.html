@@ -3,13 +3,23 @@
   <form role="form" id="contact-form-horizontal" method="post" action="https://api.gregory-ms.com/subscriptions/new/" data-umami-event="submit--subscribe" data-umami-form-type="horizontal" data-umami-page="{{ .Page.RelPermalink }}">
     <div class="card-body">
       <div class="row align-items-center">
-        <div class="col-md-3">
+        <div class="col-md-2">
           <div class="form-group mb-md-0">
             <div class="input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text pr-2"><i class="now-ui-icons users_circle-08"></i></span>
               </div>
               <input type="text" name="first_name" class="form-control" placeholder="First Name..." aria-label="First Name..." autocomplete="given-name" required>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group mb-md-0">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text pr-2"><i class="now-ui-icons text_caps-small"></i></span>
+              </div>
+              <input type="text" name="last_name" class="form-control" placeholder="Last Name..." aria-label="Last Name..." autocomplete="family-name">
             </div>
           </div>
         </div>
@@ -23,7 +33,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
           <div class="form-group mb-md-0">
             <div class="input-group">
               <select id="profile-horizontal" name="profile" class="form-control">
