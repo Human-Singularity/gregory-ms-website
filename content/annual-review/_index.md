@@ -7,6 +7,9 @@ author: Bruno Amaral
 options:
   unlisted: false
   header: mini
+aliases: 
+  - "/annual-review/"
+  - "/annual-review"
 
 description: 
 categories: []
