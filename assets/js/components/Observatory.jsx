@@ -69,7 +69,8 @@ const CATEGORY_CURATED = [
   { category_id: 81, category_tags: ['neuroprotection','investigational'] },
   { category_id: 87, category_tags: ['investigational'] },
   { category_id: 89, category_tags: ['remyelination','myelin repair','regenerative medicine'] },
-  { category_id: 91, category_tags: ['investigational'] }
+  { category_id: 91, category_tags: ['investigational'] },
+  { category_id: 94, category_tags: ['neuroprotection','investigational','cognition'] }
 ];
 
 // Normalize curated array to id/tags shape used by the component
