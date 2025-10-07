@@ -36,13 +36,13 @@ You can override these by setting global variables:
 
 ## Categories
 
-The Observatory app includes 42 real MS treatment categories from the Gregory database:
+The Observatory app includes 43 real MS treatment categories from the Gregory database:
 
 ### Major Treatment Categories:
 - **Approved Therapies**: Alemtuzumab, Aubagio, Fingolimod, Natalizumab, Ocrelizumab, Tecfidera, and more
 - **Emerging Treatments**: BTK inhibitors, CAR-T therapy, Stem cell treatments (aHSCT)
 - **Remyelination Research**: Clemastine fumarate, Opicinumab, rHIgM22
-- **Neuroprotection**: Metformin, Simvastatin, Lipoic acid derivatives
+- **Neuroprotection**: Metformin, Simvastatin, Lipoic acid derivatives, Donepezil
 - **Novel Approaches**: PIPE-307, CNM-Au8, Maresin-1
 
 ### Categories Include:
@@ -56,6 +56,7 @@ The Observatory app includes 42 real MS treatment categories from the Gregory da
 8. **CAR-T** - CAR-T cell therapy
 9. **Cladribine** - Mavenclad research
 10. **Clemastine fumarate** - Remyelination studies
+11. **Donepezil** - Acetylcholine esterase inhibitor for neuroprotection and cognition
 ...and 32 more treatment categories
 
 All categories include both research articles and clinical trials data.
