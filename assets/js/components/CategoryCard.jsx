@@ -24,15 +24,34 @@ function CategoryCard({ category, onSelect }) {
   // Function to truncate description for card display
   const getTruncatedDescription = (category) => {
     // Use category_description if available, otherwise fall back to description
-    const fullDescription = category.category_description || category.description;
+    const fullDescription = category.category_description || category.description || '';
+    
+    if (!fullDescription.trim()) {
+      return '';
+    }
+    
+    // Strip basic markdown formatting for clean card display
+    let cleanDescription = fullDescription
+      // Remove markdown headers
+      .replace(/^#{1,6}\s+/gm, '')
+      // Remove markdown links but keep the text
+      .replace(/\[([^\]]+)\]\([^\)]+\)/g, '$1')
+      // Remove markdown bold/italic
+      .replace(/\*\*(.*?)\*\*/g, '$1')
+      .replace(/\*(.*?)\*/g, '$1')
+      // Remove markdown code
+      .replace(/`([^`]+)`/g, '$1')
+      // Clean up multiple spaces and newlines
+      .replace(/\s+/g, ' ')
+      .trim();
     
     // Truncate to approximately 100 characters, ending at word boundary
-    if (fullDescription.length <= 100) {
-      return fullDescription;
+    if (cleanDescription.length <= 100) {
+      return cleanDescription;
     }
     
     // Find the last space before 100 characters to avoid cutting words
-    const truncated = fullDescription.substring(0, 100);
+    const truncated = cleanDescription.substring(0, 100);
     const lastSpace = truncated.lastIndexOf(' ');
     
     return lastSpace > 0 ? truncated.substring(0, lastSpace) + '...' : truncated + '...';

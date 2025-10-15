@@ -4,6 +4,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { ComposedChart, Bar, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer, Legend } from 'recharts';
+import ReactMarkdown from 'react-markdown';
 import { categoryService } from '../services/api';
 import ArticleList from './ArticleList';
 import TrialsList from './TrialsList';
@@ -400,46 +401,82 @@ function CategoryDetail({ category, config, onBack }) {
 
   const chartData = formatChartData(monthlyData);
 
-  // Function to render category description with formatting
+  // Function to render category description with markdown formatting
   const renderCategoryDescription = (category) => {
     // Use category_description if available, otherwise fall back to description
-    const fullDescription = category.category_description || category.description;
+    const fullDescription = category.category_description || category.description || '';
     
-    // Split by newlines and render each line
-    const lines = fullDescription.split('\n');
+    if (!fullDescription.trim()) {
+      return null;
+    }
     
-    return lines.map((line, index) => {
-      // Check if line contains a URL
-      const urlRegex = /(https?:\/\/[^\s]+)/g;
-      
-      if (urlRegex.test(line)) {
-        // Replace URLs with clickable links
-        const parts = line.split(urlRegex);
-        return (
-          <p key={index} className="text-muted">
-            {parts.map((part, partIndex) => {
-              if (urlRegex.test(part)) {
-                return (
-                  <a 
-                    key={partIndex} 
-                    href={part} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-primary"
-                  >
-                    {part}
-                  </a>
-                );
-              }
-              return part;
-            })}
-          </p>
-        );
-      } else {
-        // Regular line without URL
-        return line.trim() ? <p key={index} className="text-muted">{line}</p> : <br key={index} />;
-      }
-    });
+    return (
+      <div className="category-description text-muted">
+        <ReactMarkdown
+          components={{
+            // Customize link rendering to open in new tab
+            a: ({ href, children, ...props }) => (
+              <a 
+                href={href} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-primary"
+                {...props}
+              >
+                {children}
+              </a>
+            ),
+            // Style paragraphs
+            p: ({ children, ...props }) => (
+              <p className="text-muted mb-2" {...props}>
+                {children}
+              </p>
+            ),
+            // Style headings
+            h1: ({ children, ...props }) => (
+              <h4 className="text-primary mt-3 mb-2" {...props}>
+                {children}
+              </h4>
+            ),
+            h2: ({ children, ...props }) => (
+              <h5 className="text-primary mt-3 mb-2" {...props}>
+                {children}
+              </h5>
+            ),
+            h3: ({ children, ...props }) => (
+              <h6 className="text-primary mt-2 mb-1" {...props}>
+                {children}
+              </h6>
+            ),
+            // Style lists
+            ul: ({ children, ...props }) => (
+              <ul className="text-muted mb-2" {...props}>
+                {children}
+              </ul>
+            ),
+            ol: ({ children, ...props }) => (
+              <ol className="text-muted mb-2" {...props}>
+                {children}
+              </ol>
+            ),
+            // Style code
+            code: ({ children, ...props }) => (
+              <code className="bg-light px-1 rounded" {...props}>
+                {children}
+              </code>
+            ),
+            // Style blockquotes
+            blockquote: ({ children, ...props }) => (
+              <blockquote className="blockquote text-muted border-left border-primary pl-3 ml-3" {...props}>
+                {children}
+              </blockquote>
+            )
+          }}
+        >
+          {fullDescription}
+        </ReactMarkdown>
+      </div>
+    );
   };
 
   return (
@@ -447,11 +484,9 @@ function CategoryDetail({ category, config, onBack }) {
       <div className="col-md-12">
         {/* Header */}
         <div className="d-flex justify-content-between align-items-center mb-4">
-          <div>
+          <div className="flex-grow-1 mr-3">
             <h2 className="text-primary">{category.name}</h2>
-            <div className="category-description">
-              {renderCategoryDescription(category)}
-            </div>
+            {renderCategoryDescription(category)}
           </div>
           <button 
             className="btn btn-secondary" 
