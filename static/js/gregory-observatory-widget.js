@@ -634,14 +634,14 @@
 						${doiLink}
 						${badges.length > 0 ? '<div class="gregory-article-badges">' + badges.join(' ') + '</div>' : ''}
 					</div>
-					${article.summary ? `<p class="gregory-article-summary">${this.escapeHtml(this.sanitizeSummary(article.summary))}</p>` : ''}
-					<div class="gregory-article-meta">
-						<small class="text-muted">
-							${article.journal_name ? `<strong>${this.escapeHtml(article.journal_name)}</strong> • ` : ''}
-							${this.formatDate(article.published)}
-							${article.relevance_score ? ` • Relevance: ${(article.relevance_score * 100).toFixed(0)}%` : ''}
-						</small>
-					</div>
+				${article.summary ? `<p class="gregory-article-summary">${this.escapeHtml(this.sanitizeSummary(article.summary))}</p>` : ''}
+				<div class="gregory-article-meta">
+					<small class="text-muted">
+						${article.journal_name ? `<strong>${this.escapeHtml(article.journal_name)}</strong> • ` : ''}
+						${article.published_date ? this.formatDate(article.published_date) : ''}
+						${article.relevance_score ? ` • Relevance: ${(article.relevance_score * 100).toFixed(0)}%` : ''}
+					</small>
+				</div>
 				</div>
 			`;
 		});
