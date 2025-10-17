@@ -219,6 +219,22 @@
 	font-size: 13px;
 }
 
+.gregory-article-doi {
+	margin: 8px 0 8px 0;
+	font-size: 12px;
+}
+
+.gregory-article-doi a {
+	color: #007bff;
+	text-decoration: none;
+	transition: color 0.2s ease;
+}
+
+.gregory-article-doi a:hover {
+	color: #0056b3;
+	text-decoration: underline;
+}
+
 /* Badges */
 .badge {
 	display: inline-block;
