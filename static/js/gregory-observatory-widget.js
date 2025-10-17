@@ -620,14 +620,14 @@
 					'observatory-article',
 					`doi-${article.article_id}`
 				);
-				doiLink = `<div class="gregory-article-doi"><small><a href="${this.escapeHtml(doiWithUtm)}" target="_blank" rel="noopener noreferrer">DOI: ${this.escapeHtml(article.doi)}</a></small></div>`;
+				doiLink = `<div class="gregory-article-doi"><small><a href="${this.escapeHtml(doiWithUtm)}" target="_blank" rel="noopener">DOI: ${this.escapeHtml(article.doi)}</a></small></div>`;
 			}
 
 			html += `
 				<div class="gregory-article-item">
 					<div class="gregory-article-header">
 						<h6>
-							<a href="${this.escapeHtml(gregoryArticleUrl)}" target="_blank" rel="noopener noreferrer">
+							<a href="${this.escapeHtml(gregoryArticleUrl)}" target="_blank" rel="noopener">
 								${this.escapeHtml(article.title || 'Untitled')}
 							</a>
 						</h6>
@@ -685,8 +685,8 @@
 					<div class="gregory-trial-item">
 						<div class="gregory-trial-header">
 							<h6>
-								<a href="${this.escapeHtml(trial.url || '#')}" target="_blank" rel="noopener noreferrer">
-									${this.escapeHtml(trial.scientific_title || trial.public_title || 'Untitled')}
+							<a href="${this.escapeHtml(trial.url || '#')}" target="_blank" rel="noopener">
+								${this.escapeHtml(trial.scientific_title || trial.public_title || 'Untitled')}
 								</a>
 							</h6>
 							${statusBadge}
@@ -813,7 +813,7 @@
 					<!-- Footer -->
 					<div class="gregory-footer">
 						<p>
-							Powered by <a href="https://gregory-ms.com" target="_blank" rel="noopener noreferrer">Gregory MS</a>
+							Powered by <a href="${this.buildUtmUrl('https://gregory-ms.com', 'gregory-widget', 'widget', 'footer')}" target="_blank" rel="noopener">Gregory MS</a>
 						</p>
 					</div>
 				</div>
