@@ -603,7 +603,7 @@
 
 			// Build link to Gregory MS website with article ID
 			const gregoryArticleUrl = this.buildUtmUrl(
-				`https://gregory-ms.com/articles/${article.id}`,
+				`https://gregory-ms.com/articles/${article.article_id}`,
 				'gregory-widget',
 				'widget',
 				'observatory-article'
@@ -618,7 +618,7 @@
 					'gregory-widget',
 					'widget',
 					'observatory-article',
-					`doi-${article.id}`
+					`doi-${article.article_id}`
 				);
 				doiLink = `<div class="gregory-article-doi"><small><a href="${this.escapeHtml(doiWithUtm)}" target="_blank" rel="noopener noreferrer">DOI: ${this.escapeHtml(article.doi)}</a></small></div>`;
 			}
