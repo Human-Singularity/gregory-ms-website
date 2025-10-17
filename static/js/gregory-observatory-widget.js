@@ -504,6 +504,31 @@
 		},
 
 		/**
+		 * Sanitize article summary by removing XML/JATS tags and HTML
+		 * @param {String} summary - Raw summary text
+		 * @returns {String} Cleaned summary text
+		 */
+		sanitizeSummary: function(summary) {
+			if (!summary) return '';
+			
+			// Remove JATS/XML tags like <jats:title>, <jats:p>, etc.
+			let cleaned = summary.replace(/<jats:[^>]*>/g, '');
+			
+			// Remove common HTML tags
+			cleaned = cleaned.replace(/<[^>]*>/g, '');
+			
+			// Decode HTML entities
+			const textarea = document.createElement('textarea');
+			textarea.innerHTML = cleaned;
+			cleaned = textarea.value;
+			
+			// Clean up extra whitespace
+			cleaned = cleaned.replace(/\s+/g, ' ').trim();
+			
+			return cleaned;
+		},
+
+		/**
 		 * Format date to readable string
 		 */
 		formatDate: function(dateString) {
@@ -517,66 +542,128 @@
 		},
 
 		/**
-		 * Render articles list
+		 * Build URL with UTM parameters
+		 * @param {String} baseUrl - The base URL to add parameters to
+		 * @param {String} source - UTM source (e.g., 'widget')
+		 * @param {String} medium - UTM medium (e.g., 'embedded')
+		 * @param {String} campaign - UTM campaign name
+		 * @param {String} content - UTM content (optional, e.g., article ID)
+		 * @returns {String} URL with UTM parameters
 		 */
-		renderArticles: function() {
-			if (this.state.loading.articles && this.state.articles.length === 0) {
-				return '<div class="gregory-loading">Loading articles...</div>';
+		buildUtmUrl: function(baseUrl, source, medium, campaign, content) {
+			const url = new URL(baseUrl, window.location.origin);
+			url.searchParams.set('utm_source', source);
+			url.searchParams.set('utm_medium', medium);
+			url.searchParams.set('utm_campaign', campaign);
+			
+			// Get referrer domain to identify embedded site
+			const referrerDomain = this.getReferrerDomain();
+			if (referrerDomain) {
+				url.searchParams.set('utm_content', referrerDomain);
+			} else if (content) {
+				url.searchParams.set('utm_content', content);
 			}
-
-			if (this.state.articles.length === 0) {
-				return '<div class="alert alert-info">No articles found for this category.</div>';
-			}
-
-			let html = '<div class="gregory-articles-list">';
-
-			this.state.articles.forEach(article => {
-				const badges = [];
-				if (article.ml_prediction_gnb) badges.push('<span class="badge badge-success">ML Relevant</span>');
-				if (article.discovery_prediction === 'Relevant') badges.push('<span class="badge badge-info">Discovery</span>');
-
-				html += `
-					<div class="gregory-article-item">
-						<div class="gregory-article-header">
-							<h6>
-								<a href="${this.escapeHtml(article.link || '#')}" target="_blank" rel="noopener noreferrer">
-									${this.escapeHtml(article.title || 'Untitled')}
-								</a>
-							</h6>
-							${badges.length > 0 ? '<div class="gregory-article-badges">' + badges.join(' ') + '</div>' : ''}
-						</div>
-						${article.summary ? `<p class="gregory-article-summary">${this.escapeHtml(article.summary)}</p>` : ''}
-						<div class="gregory-article-meta">
-							<small class="text-muted">
-								${article.journal_name ? `<strong>${this.escapeHtml(article.journal_name)}</strong> • ` : ''}
-								${this.formatDate(article.published)}
-								${article.relevance_score ? ` • Relevance: ${(article.relevance_score * 100).toFixed(0)}%` : ''}
-							</small>
-						</div>
-					</div>
-				`;
-			});
-
-			html += '</div>';
-
-			if (this.state.articlesHasMore) {
-				html += `
-					<div class="gregory-load-more">
-						<button
-							class="btn btn-outline-primary"
-							onclick="GregoryObservatory.loadArticles(${this.state.articlesPage + 1})"
-							${this.state.loading.articles ? 'disabled' : ''}
-						>
-							${this.state.loading.articles ? 'Loading...' : 'Load More Articles'}
-						</button>
-					</div>
-				`;
-			}
-
-			return html;
+			
+			return url.toString();
 		},
 
 		/**
+		 * Extract domain from referrer
+		 * @returns {String} Domain name or empty string
+		 */
+		getReferrerDomain: function() {
+			try {
+				const referrer = document.referrer;
+				if (!referrer) return '';
+				const url = new URL(referrer);
+				return url.hostname.replace('www.', '');
+			} catch (e) {
+				return '';
+			}
+		},
+
+		/**
+		 * Render articles list
+		 */
+	renderArticles: function() {
+		if (this.state.loading.articles && this.state.articles.length === 0) {
+			return '<div class="gregory-loading">Loading articles...</div>';
+		}
+
+		if (this.state.articles.length === 0) {
+			return '<div class="alert alert-info">No articles found for this category.</div>';
+		}
+
+		let html = '<div class="gregory-articles-list">';
+
+		this.state.articles.forEach(article => {
+			const badges = [];
+			if (article.ml_prediction_gnb) badges.push('<span class="badge badge-success">ML Relevant</span>');
+			if (article.discovery_prediction === 'Relevant') badges.push('<span class="badge badge-info">Discovery</span>');
+
+			// Build link to Gregory MS website with article ID
+			const gregoryArticleUrl = this.buildUtmUrl(
+				`https://gregory-ms.com/articles/${article.id}`,
+				'gregory-widget',
+				'widget',
+				'observatory-article'
+			);
+
+			// Build DOI link if available
+			let doiLink = '';
+			if (article.doi) {
+				const doiUrl = `https://doi.org/${article.doi}`;
+				const doiWithUtm = this.buildUtmUrl(
+					doiUrl,
+					'gregory-widget',
+					'widget',
+					'observatory-article',
+					`doi-${article.id}`
+				);
+				doiLink = `<div class="gregory-article-doi"><small><a href="${this.escapeHtml(doiWithUtm)}" target="_blank" rel="noopener noreferrer">DOI: ${this.escapeHtml(article.doi)}</a></small></div>`;
+			}
+
+			html += `
+				<div class="gregory-article-item">
+					<div class="gregory-article-header">
+						<h6>
+							<a href="${this.escapeHtml(gregoryArticleUrl)}" target="_blank" rel="noopener noreferrer">
+								${this.escapeHtml(article.title || 'Untitled')}
+							</a>
+						</h6>
+						${doiLink}
+						${badges.length > 0 ? '<div class="gregory-article-badges">' + badges.join(' ') + '</div>' : ''}
+					</div>
+					${article.summary ? `<p class="gregory-article-summary">${this.escapeHtml(this.sanitizeSummary(article.summary))}</p>` : ''}
+					<div class="gregory-article-meta">
+						<small class="text-muted">
+							${article.journal_name ? `<strong>${this.escapeHtml(article.journal_name)}</strong> • ` : ''}
+							${this.formatDate(article.published)}
+							${article.relevance_score ? ` • Relevance: ${(article.relevance_score * 100).toFixed(0)}%` : ''}
+						</small>
+					</div>
+				</div>
+			`;
+		});
+
+		html += '</div>';
+
+		if (this.state.articlesHasMore) {
+			html += `
+				<div class="gregory-load-more">
+					<button
+						class="btn btn-outline-primary"
+						onclick="GregoryObservatory.loadArticles(${this.state.articlesPage + 1})"
+						${this.state.loading.articles ? 'disabled' : ''}
+					>
+						${this.state.loading.articles ? 'Loading...' : 'Load More Articles'}
+					</button>
+				</div>
+			`;
+		}
+
+		return html;
+	},		/**
 		 * Render trials list
 		 */
 		renderTrials: function() {
