@@ -780,7 +780,6 @@
 					<!-- Header -->
 					<div class="gregory-header">
 						<h3 class="gregory-category-title">${this.escapeHtml(category.category_name)}</h3>
-						${descriptionHtml ? `<p class="gregory-category-description">${descriptionHtml}</p>` : ''}
 					</div>
 
 					<!-- Navigation Tabs -->
