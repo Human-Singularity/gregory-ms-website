@@ -551,20 +551,25 @@
 		 * @returns {String} URL with UTM parameters
 		 */
 		buildUtmUrl: function(baseUrl, source, medium, campaign, content) {
-			const url = new URL(baseUrl, window.location.origin);
-			url.searchParams.set('utm_source', source);
-			url.searchParams.set('utm_medium', medium);
-			url.searchParams.set('utm_campaign', campaign);
-			
-			// Get referrer domain to identify embedded site
-			const referrerDomain = this.getReferrerDomain();
-			if (referrerDomain) {
-				url.searchParams.set('utm_content', referrerDomain);
-			} else if (content) {
-				url.searchParams.set('utm_content', content);
+			try {
+				const url = new URL(baseUrl);
+				url.searchParams.set('utm_source', source);
+				url.searchParams.set('utm_medium', medium);
+				url.searchParams.set('utm_campaign', campaign);
+				
+				// Get referrer domain to identify embedded site
+				const referrerDomain = this.getReferrerDomain();
+				if (referrerDomain) {
+					url.searchParams.set('utm_content', referrerDomain);
+				} else if (content) {
+					url.searchParams.set('utm_content', content);
+				}
+				
+				return url.toString();
+			} catch (e) {
+				console.error('Error building UTM URL:', e);
+				return baseUrl;
 			}
-			
-			return url.toString();
 		},
 
 		/**
@@ -766,16 +771,9 @@
 
 			if (!this.state.category) return;
 
-			const category = this.state.category;
+		const category = this.state.category;
 
-			// Format description with line breaks
-			let descriptionHtml = '';
-			if (category.category_description) {
-				descriptionHtml = this.escapeHtml(category.category_description)
-					.replace(/\n/g, '<br>');
-			}
-
-			this.container.innerHTML = `
+		this.container.innerHTML = `
 				<div class="gregory-observatory-widget">
 					<!-- Header -->
 					<div class="gregory-header">
