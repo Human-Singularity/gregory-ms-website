@@ -60,13 +60,11 @@ Gregory MS is running on a [Digital Ocean](https://digitalocean.com) virtual pri
 
 ### RSS{.title .text-primary}
 
-There are RSS a number of RSS feeds you can use to access the database in real time:
+There is an RSS feed to list the latest articles by a specific author.
 
-<a class="btn btn-outline-primary" href="https://api.gregory-ms.com/feed/latest/articles/" data-umami-event="click--developers-rss-latest-articles"><i class="fas fa-rss"></i> Latest Articles</a>
+You can access it by replacing `<orcid>` with the ORCID identifier of the author.
 
-<a class="btn btn-outline-primary" data-umami-event="click--developers-rss-latest-trials" href="https://api.gregory-ms.com/feed/latest/trials/"><i class="fas fa-rss"></i> Latest Trials</a>
-
-<a class="btn btn-outline-primary" data-umami-event="click--developers-rss-ml-prediction" href="https://api.gregory-ms.com/feed/machine-learning/"><i class="fas fa-rss"></i> Machine Learning Prediction</a>
+`https://api.gregory-ms.com/feed/author/<orcid>/`
 
 ### API Endpoints{.title .text-primary}
 
