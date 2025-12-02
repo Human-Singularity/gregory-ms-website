@@ -1,0 +1,68 @@
+projects:
+  - id: fight-ppms
+    name: fightPPMS
+    title: "Primary Progressive MS Support"
+    tagline: "Dedicated to helping people with Primary Progressive Multiple Sclerosis"
+    shortDescription: "fightPPMS is dedicated to providing information, support, and hope for people living with primary progressive multiple sclerosis (PPMS). They focus on explaining PPMS symptoms, treatment options including autologous hematopoietic stem cell transplantation (aHSCT), and sharing patient stories of recovery and hope."
+    icon: "fas fa-heart"
+    iconColor: "danger"
+    url: "https://fightppms.com"
+    urlText: "Visit fightPPMS"
+    category: "Patient Support"
+    features:
+      - "Understanding PPMS symptoms"
+      - "Treatment information and aHSCT education"
+      - "Patient success stories"
+      - "Hope and support for patients and families"
+    fullDescription: |
+      Primary progressive multiple sclerosis (PPMS) is a specific and rare form of multiple sclerosis characterized by a steady and inexorable progression of symptoms. fightPPMS is dedicated to providing you with an overview of the fundamental aspects of this disease.
+      
+      They share information about symptoms that affect daily life and highlight how people with PPMS find hope despite the challenges. Their team is dedicated and passionate about offering hope and support to people with PPMS and their families.
+      
+      The website focuses on various treatment options for PPMS, with particular emphasis on autologous hematopoietic stem cell transplantation (aHSCT), explaining in simple terms how aHSCT works and what benefits it offers for PPMS patients.
+    
+  - id: ask-a-patient
+    name: "Ask a Patient - FDA Adverse Events"
+    title: "FDA Adverse Event Database"
+    tagline: "Comprehensive adverse event reporting and patient safety data"
+    shortDescription: "Ask a Patient provides access to FDA adverse event reports, allowing patients and healthcare providers to review reported side effects and safety data for medications. Their database includes detailed adverse event summaries for drugs like GILENYA used in MS treatment."
+    icon: "fas fa-database"
+    iconColor: "info"
+    url: "https://www.askapatient.com"
+    urlText: "Visit Ask a Patient"
+    category: "Safety & Monitoring"
+    features:
+      - "FDA adverse event reports"
+      - "Drug side effect summaries"
+      - "Patient outcome tracking"
+      - "Safety data visualization"
+    fullDescription: |
+      Ask a Patient provides access to FDA Adverse Event Reporting System (FAERS) data, helping patients and healthcare providers make informed decisions about medications.
+      
+      Their database includes detailed reports on adverse events, side effects, and outcomes reported for medications used in multiple sclerosis treatment. They compile data from voluntary reports submitted by patients and healthcare providers, as well as mandatory reports from manufacturers.
+      
+      The platform helps users understand the safety profile of treatments, including the frequency and severity of reported adverse events, patient outcomes, and demographic information about affected populations.
+
+  - id: cure-ms
+    name: "CureMS"
+    title: "Dedicated to MS Treatment Innovations"
+    tagline: "Evidence-based information on autologous hematopoietic stem cell transplantation for MS"
+    shortDescription: "CureMS is a non-profit website dedicated to providing evidence-based, scientific information about autologous hematopoietic stem cell transplantation (AHSCT) as a potential curative treatment for multiple sclerosis. Created by Dr. Antonio Bertolotto, it presents peer-reviewed research without promoting unrealistic hopes."
+    icon: "fas fa-flask"
+    iconColor: "success"
+    url: "https://curems.net"
+    urlText: "Visit CureMS"
+    category: "Research & Education"
+    features:
+      - "AHSCT scientific evidence"
+      - "Peer-reviewed research"
+      - "Treatment comparisons"
+      - "AHSCT centers and costs information"
+    fullDescription: |
+      CureMS is a non-profit website part of the "Cure Multiple Sclerosis" project, which aims to identify, disseminate, implement, and verify therapeutic strategies potentially capable of curing MS.
+      
+      Founded by Dr. Antonio Bertolotto, a neurologist with extensive experience in MS clinical management and research, CureMS is dedicated mainly to autologous hematopoietic stem cell transplantation (AHSCT) because this procedure shows the most promising potential for approaching a cure in some patients.
+      
+      The website emphasizes scientific accuracy and peer-reviewed evidence, explicitly stating: "You won't find miraculous recipes or simple solutions to a complex problem like MS." All information is derived from articles published in scientific journals using the peer review method.
+      
+      The project is funded through donations to FORB (Fondazione per la Ricerca Biomedica), a non-profit organization affiliated with the University of Turin, ensuring complete independence from commercial interests.
