@@ -12,7 +12,7 @@ options:
 description: Related projects supporting multiple sclerosis research and patient support
 categories: []
 tags: []
-layout: projects-list
+layout: page
 
 draft: false
 enableDisqus: false
@@ -25,4 +25,4 @@ resources:
 
 ---
 
-<!-- Individual project pages are available at /related-projects/fight-ppms/, /related-projects/ask-a-patient/, and /related-projects/cure-ms/ -->
+{{< ms-projects-grid >}}
