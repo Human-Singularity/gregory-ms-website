@@ -23,7 +23,6 @@ tags:
 categories: 
   - 
 title: "Help keep Gregory-MS running"
-layout: page
 options:
   unlisted: false
   showHeader: true
