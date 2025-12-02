@@ -5,6 +5,7 @@ subtitle:
 options:
   header: mini
   showHeader: true
+  navbar: navbar navbar-expand-lg bg-white fixed-top font-weight-bold
 layout: relevant
 resources:
   - src: robot-hand-finger-ai-background-technology-graphics.jpeg
@@ -13,8 +14,6 @@ resources:
 params:
   showMLPredictionsOnly: true
   showTeamsSubjects: false
-options:
-  navbar: navbar navbar-expand-lg bg-white fixed-top font-weight-bold
 ---
 <div class="container mt-5 pt-5" id="relevant-research-title">
   <div class="row">

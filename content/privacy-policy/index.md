@@ -13,14 +13,13 @@ resources:
 - src:
   name: slide-1
 slug:
-subtitle: 
+subtitle: "If you're a visitor we don't save any of your data.<br>If you subscribe to the email digest we save your name, stakeholder profile, and email."
 tags: 
   - 
 categories: 
 url: /transparency/privacy-policy
 layout: page-header
 title: "Privacy Policy"
-subtitle: "If you're a visitor we don't save any of your data.<br>If you subscribe to the email digest we save your name, stakeholder profile, and email."
 disable_comments: true
 options:
   unlisted: false
