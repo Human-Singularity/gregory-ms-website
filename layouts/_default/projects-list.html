@@ -1,0 +1,75 @@
+{{ define "bodyclasses" }}single page _default/projects-list.html{{ end }}
+
+{{ define "data-attributes" }}
+	data-contentgrouptype="{{ .Section }}" data-contentgroupname="{{ .Title }}"
+{{ end }}
+
+{{ define "description" }}
+	{{ partial "description.html" . }}
+{{ end }}
+
+{{ define "main" }}
+<div class="wrapper">
+	{{ if or (eq .Params.options.header "small") (eq .Params.options.header "mini") (eq .Params.options.header nil ) }}
+		{{ partial "header-small.html" . }}
+	{{ else if eq $.Params.options.header "full"  }}
+		{{ partial "header-full.html" . }}
+	{{ end }}
+	{{ if eq .Params.options.header "search" }}
+		{{ partial "header-search.html" . }}
+	{{ end }}
+	<div class="section">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-12">
+					<div class="container-fluid py-5">
+						<div class="row justify-content-center mb-5">
+							<div class="col-lg-8 text-center">
+								<p class="lead text-muted font-weight-normal">While GregoryAI focuses on AI-powered research filtering, we recognize and support other organizations working to advance multiple sclerosis care, patient support, and scientific understanding. Learn about our partner initiatives below.</p>
+							</div>
+						</div>
+
+						<!-- Projects grid -->
+						<div class="row">
+							{{ range (index .Site.Data "ms-projects").projects }}
+							<div class="col-lg-4 col-md-6 mb-4">
+								<div class="card h-100 shadow-sm border-0 transition-all hover-lift">
+									<div class="card-body">
+										<div class="mb-3">
+											<i class="fas {{ .icon }} text-{{ .iconColor }}" style="font-size: 2.5rem;"></i>
+										</div>
+										<h5 class="card-title font-weight-bold">{{ .name }}</h5>
+										<p class="card-text text-muted small">{{ .tagline }}</p>
+										<p class="card-text">{{ .shortDescription }}</p>
+										<div class="mt-4">
+											<a href="{{ .url }}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-primary" data-umami-event="click--related-projects-{{ .id }}">
+												{{ .urlText }} <i class="fas fa-external-link-alt ms-1"></i>
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+							{{ end }}
+						</div>
+					</div>
+
+					<!-- Additional content from the markdown page -->
+					{{ .Content }}
+				</div>
+			</div>
+			<div class="separator separator-primary"></div>
+		</div>
+	</div>
+</div>
+
+<style>
+	.hover-lift {
+		transition: transform 0.3s ease, box-shadow 0.3s ease;
+	}
+	
+	.hover-lift:hover {
+		transform: translateY(-5px);
+		box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+	}
+</style>
+{{ end }}
