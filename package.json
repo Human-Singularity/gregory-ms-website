@@ -21,7 +21,6 @@
   "devDependencies": {
     "autoprefixer": "^10.4.21",
     "cssnano": "^5.1.14",
-    "node-red": "^3.0.2",
     "postcss-cli": "^10.1.0",
     "purgecss": "^5.0.0"
   },
