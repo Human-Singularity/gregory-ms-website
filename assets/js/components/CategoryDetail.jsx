@@ -784,12 +784,12 @@ function CategoryDetail({ category, config, onBack }) {
               <div className="d-flex justify-content-between align-items-center mb-3">
                 <h5>Research Articles</h5>
                 <DownloadButton
-                  apiEndpoint={`${config.API_URL}/articles/search/`}
+                  apiEndpoint={`${config.API_URL}/articles/`}
                   fileName={`${category.slug}-articles.csv`}
                   searchParams={{
                     team_id: config.TEAM_ID,
                     subject_id: config.SUBJECT_ID,
-                    search: category.name, // Search by category name
+                    category_slug: category.slug, // Filter by category slug for accurate results
                   }}
                 />
               </div>
@@ -808,12 +808,12 @@ function CategoryDetail({ category, config, onBack }) {
               <div className="d-flex justify-content-between align-items-center mb-3">
                 <h5>Clinical Trials</h5>
                 <DownloadButton
-                  apiEndpoint={`${config.API_URL}/trials/search/`}
+                  apiEndpoint={`${config.API_URL}/trials/`}
                   fileName={`${category.slug}-trials.csv`}
                   searchParams={{
                     team_id: config.TEAM_ID,
                     subject_id: config.SUBJECT_ID,
-                    search: category.name, // Search by category name
+                    category_slug: category.slug, // Filter by category slug for accurate results
                   }}
                 />
               </div>
