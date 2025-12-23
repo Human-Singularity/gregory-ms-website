@@ -66,6 +66,12 @@ You can access it by replacing `<orcid>` with the ORCID identifier of the author
 
 `https://api.gregory-ms.com/feed/author/<orcid>/`
 
+**Clinical Trials RSS Feed**
+
+Access clinical trials for multiple sclerosis. Updated daily.
+
+`https://api.gregory-ms.com/feed/trials/subject/multiple-sclerosis`
+
 ### API Endpoints{.title .text-primary}
 
 The API is served using Django Rest Framework and can be accessed at <https://api.gregory-ms.com/>. 
