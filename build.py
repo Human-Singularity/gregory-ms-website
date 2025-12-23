@@ -140,6 +140,21 @@ def process_presskit():
         print(f"Error processing presskit: {e}")
         print("Check if the Google Drive credentials file exists and is valid.")
 
+def get_hugo_version():
+    """Get the Hugo version to use from environment or arguments."""
+    # Check command-line arguments first
+    for arg in sys.argv:
+        if arg.startswith('--hugo-version='):
+            version = arg.split('=')[1]
+            print(f"Using Hugo version: {version}")
+            return version
+    
+    # Check environment variable
+    hugo_version = os.environ.get('HUGO_VERSION', 'latest')
+    if hugo_version != 'latest':
+        print(f"Using Hugo version from HUGO_VERSION: {hugo_version}")
+    return hugo_version
+
 def check_docker():
     """Check if Docker is available in the system."""
     try:
@@ -214,6 +229,10 @@ def build_website():
         print("Ensure user 'gregory' and group 'www-data' exist on the host system.")
         user_opts = []
 
+    # Get Hugo version to use
+    hugo_version = get_hugo_version()
+    hugo_image = f"hugomods/hugo:{hugo_version}"
+    
     # Use Docker to run Hugo with proper environment variables and volume mounts
     docker_command = [
         "docker", "run", "--rm",
@@ -221,7 +240,7 @@ def build_website():
         "-v", f"{current_dir}:/src",  # Mount source code
         "-v", f"{website_path}:/output",  # Mount output directory
         "-e", "NODE_ENV=production",  # Ensure production mode for JS builds
-        "hugomods/hugo:latest",
+        hugo_image,
         "hugo", "-d", "/output", "--gc", "--minify"  # Output to mounted volume
     ]
     
@@ -247,12 +266,16 @@ def serve_website():
         
     current_dir = os.getcwd()
     
+    # Get Hugo version to use
+    hugo_version = get_hugo_version()
+    hugo_image = f"hugomods/hugo:{hugo_version}"
+    
     # Use Docker to run Hugo server with proper flags for interactive use
     docker_command = [
         "docker", "run", "--rm", "-it",
         "-p", "1313:1313",
         "-v", f"{current_dir}:/src",
-        "hugomods/hugo:latest",
+        hugo_image,
         "hugo", "server", "--bind", "0.0.0.0"
     ]
     
@@ -275,15 +298,19 @@ Usage:
   python build.py [options]
 
 Options:
-  --build         Build the website using Docker (production mode)
-  --server        Start Hugo server using Docker (development mode)
-  --fast          Pull from GitHub and build the website (skip presskit processing)
-  --auto-install  Automatically install missing Python dependencies
-  --help          Show this help message
+  --build              Build the website using Docker (production mode)
+  --server             Start Hugo server using Docker (development mode)
+  --fast               Pull from GitHub and build the website (skip presskit processing)
+  --auto-install       Automatically install missing Python dependencies
+  --hugo-version=<ver> Specify Hugo version to use (e.g., latest, 0.121.0, exts-0.121.0)
+  --output=<path>      Set the output directory for the built website
+  --help               Show this help message
 
 Environment Variables:
   WEBSITE_PATH    Set the output directory for the built website
                   Default: /var/www/gregory-ms.com
+  HUGO_VERSION    Set the Hugo version to use (e.g., latest, 0.121.0, exts-0.121.0)
+                  Default: latest
 
 Description:
   This script builds the Gregory MS website using Docker to run Hugo.
