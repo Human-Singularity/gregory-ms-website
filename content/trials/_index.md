@@ -49,6 +49,12 @@ resources:
   <i class="fas fa-sync-alt text-success mr-1"></i>Our database is updated <strong>daily</strong>, and you can receive email alerts when a new clinical trial is added or updated.
 </h3>
 
+<div class="mb-4">
+  <p class="font-weight-normal">
+    <i class="fas fa-rss text-warning mr-2"></i>Prefer RSS? Subscribe to our <a href="https://api.gregory-ms.com/feed/trials/subject/multiple-sclerosis" target="_blank" rel="noopener" data-umami-event="click--trials-rss-feed">clinical trials RSS feed</a>
+  </p>
+</div>
+
 {{< subscribe-form-horizontal >}}
 
 ## Recent Clinical Trials{.mt-5 .title .text-center .text-success}
