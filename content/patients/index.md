@@ -84,7 +84,7 @@ scripts:
   <p>We also encourage you to look at the <a href="/annual-review/">Annual Report</a> section where we keep track of donations and expenses.</p>
   <p>
   <a href="/annual-review/" class="btn btn-success btn-round btn-lg font-weight-bold" data-umami-event="click--patients-page-annual-reviews">Annual Reviews <i class="fas fa-arrow-circle-right"></i></a>
-  <a href="https://donate.stripe.com/6oEeVmf1tdHIdOw7ss" target="_blank" class="btn btn-info btn-round btn-lg font-weight-bold " data-umami-event="click--patients-page-donate-text-link">Donate  </a>
+  <a href="https://donate.stripe.com/4gMbJ02IA3DqgfU93Y7N602" target="_blank" class="btn btn-info btn-round btn-lg font-weight-bold " data-umami-event="click--patients-page-donate-text-link">Donate  </a>
   </p>
 </div>
 

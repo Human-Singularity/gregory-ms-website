@@ -194,7 +194,7 @@ Gregory-MS is powered by the generosity of patients, families, researchers, and 
 				<p class="text-white opacity-8 mb-4">
 					Join our community of supporters and help keep vital MS research accessible to everyone.
 				</p>
-				<a href="https://donate.stripe.com/6oEeVmf1tdHIdOw7ss" 
+				<a href="https://donate.stripe.com/4gMbJ02IA3DqgfU93Y7N602" 
 				   target="_blank" 
 				   class="btn btn-white btn-lg"
 				   data-umami-event="click--donate-button--cta">
