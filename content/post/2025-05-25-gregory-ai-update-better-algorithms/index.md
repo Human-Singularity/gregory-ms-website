@@ -94,7 +94,7 @@ Don't forget, you can subscribe to our free newsletters:
 
 GregoryAi is fueled by hope and community support and we welcome any contribution in any form.
 
-[You can support the project with a donation](https://donate.stripe.com/6oEeVmf1tdHIdOw7ss) and by sharing it with your network.
+[You can support the project with a donation](https://donate.stripe.com/4gMbJ02IA3DqgfU93Y7N602) and by sharing it with your network.
 
 There is also a BlueSky and Mastodon account where you can follow us for updates: [@gregory-ms](https://bsky.app/profile/gregory-ms.com) and [@gregoryMS@med-mastodon.com](https://med-mastodon.com/@gregoryMS).
 

@@ -53,7 +53,7 @@ Our donation displays follow the same transparency and professionalism standards
 **Features**: Clean button design with tracking
 
 <div class="text-center my-4">
-  <a href="https://donate.stripe.com/6oEeVmf1tdHIdOw7ss" 
+  <a href="https://donate.stripe.com/4gMbJ02IA3DqgfU93Y7N602" 
      target="_blank" 
      class="btn btn-success btn-lg"
      data-umami-event="click--donate-button--example">

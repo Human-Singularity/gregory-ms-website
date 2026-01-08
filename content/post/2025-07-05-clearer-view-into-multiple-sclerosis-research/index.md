@@ -168,7 +168,7 @@ Our endgame is not be a repository of research links, it's to help researchers f
     <p>
     This is an independent project and we rely on donations to cover infrastructure costs and keep delivering notifications of cutting-edge research and clinical trials.
     </p>
-    <a class="btn btn-info btn-lg mr-2" href="https://donate.stripe.com/6oEeVmf1tdHIdOw7ss" target="_blank" role="button" data-umami-event="click--donate-button-blog-post-2025-07-05">Donate</a>
+    <a class="btn btn-info btn-lg mr-2" href="https://donate.stripe.com/4gMbJ02IA3DqgfU93Y7N602" target="_blank" role="button" data-umami-event="click--donate-button-blog-post-2025-07-05">Donate</a>
     <a class="btn btn-success btn-lg" href="mailto:team@gregory-ms.com?subject=Gregory MS Feedback" role="button" data-umami-event="click--feedback-button-blog-post-2025-07-05">Give Feedback</a>
     <a class="btn btn-outline-success btn-lg" href="/annual-review/" role="button" data-umami-event="click--annual-report-button-blog-post-2025-07-05">Gregory MS Annual Report and Accounts</a>
 </div>
