@@ -15,6 +15,47 @@ const getApiUrl = () => {
   return 'https://api.gregory-ms.com';
 };
 
+// --- LocalStorage cache with 1-hour TTL ---
+const CACHE_TTL_MS = 60 * 60 * 1000; // 1 hour
+const CACHE_PREFIX = 'gregory_api_';
+
+const cacheGet = (key) => {
+  try {
+    const raw = localStorage.getItem(CACHE_PREFIX + key);
+    if (!raw) return null;
+    const { data, ts } = JSON.parse(raw);
+    if (Date.now() - ts > CACHE_TTL_MS) {
+      localStorage.removeItem(CACHE_PREFIX + key);
+      return null;
+    }
+    return data;
+  } catch {
+    return null;
+  }
+};
+
+const cacheSet = (key, data) => {
+  try {
+    localStorage.setItem(
+      CACHE_PREFIX + key,
+      JSON.stringify({ data, ts: Date.now() })
+    );
+  } catch {
+    // Storage full — evict all cache entries and retry once
+    Object.keys(localStorage)
+      .filter((k) => k.startsWith(CACHE_PREFIX))
+      .forEach((k) => localStorage.removeItem(k));
+    try {
+      localStorage.setItem(
+        CACHE_PREFIX + key,
+        JSON.stringify({ data, ts: Date.now() })
+      );
+    } catch {
+      // Still full — silently skip caching
+    }
+  }
+};
+
 // Create axios instance with dynamic baseURL getter
 const apiClient = axios.create({
   headers: {
@@ -22,7 +63,7 @@ const apiClient = axios.create({
   },
 });
 
-// Add request interceptor to dynamically set baseURL and ensure HTTPS
+// Add request interceptor to dynamically set baseURL, ensure HTTPS, and serve from cache
 apiClient.interceptors.request.use(
   (config) => {
     const baseURL = getApiUrl();
@@ -31,6 +72,23 @@ apiClient.interceptors.request.use(
     if (config.url && config.url.startsWith('http://')) {
       config.url = config.url.replace(/^http:/, 'https:');
     }
+
+    // Serve GET requests from cache when available
+    if (config.method === 'get' || !config.method) {
+      const cacheKey = (config.baseURL || '') + (config.url || '');
+      const cached = cacheGet(cacheKey);
+      if (cached) {
+        config.adapter = () =>
+          Promise.resolve({
+            data: cached,
+            status: 200,
+            statusText: 'OK (cached)',
+            headers: {},
+            config,
+          });
+      }
+    }
+
     return config;
   },
   (error) => {
@@ -46,7 +104,7 @@ export const API_CONFIG = {
   DEFAULT_PAGE_SIZE: 10,
 };
 
-// Add response interceptor to handle deprecation warnings
+// Add response interceptor to handle deprecation warnings and cache GET responses
 apiClient.interceptors.response.use(
   (response) => {
     // Log deprecation warnings if present
@@ -55,6 +113,13 @@ apiClient.interceptors.response.use(
       console.warn('Migration Guide:', response.headers['x-migration-guide']);
       console.warn('Deprecated Endpoint:', response.headers['x-deprecated-endpoint']);
     }
+
+    // Cache successful GET responses
+    if (response.config && (response.config.method === 'get' || !response.config.method)) {
+      const cacheKey = (response.config.baseURL || '') + (response.config.url || '');
+      cacheSet(cacheKey, response.data);
+    }
+
     return response;
   },
   (error) => {
