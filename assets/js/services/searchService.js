@@ -95,6 +95,8 @@ export const searchService = {
    * @param {number} params.team_id - Team ID (required)
    * @param {number} params.subject_id - Subject ID (required)
    * @param {string} params.full_name - Full name search term
+   * @param {string} params.given_name - Given name (first name) search term
+   * @param {string} params.family_name - Family name (last name) search term
    * @param {string} params.orcid - ORCID identifier search term
    * @param {number} params.page - Page number for pagination
    * @returns {Promise} - Promise with search results
@@ -107,6 +109,8 @@ export const searchService = {
       team_id: params.team_id || 1, // Default to Team Gregory
       subject_id: params.subject_id || 1, // Default to Multiple Sclerosis
       full_name: params.full_name || undefined,
+      given_name: params.given_name || undefined,
+      family_name: params.family_name || undefined,
       orcid: params.orcid || undefined,
       page: params.page || 1,
       page_size: params.page_size || undefined // Allow requesting all results

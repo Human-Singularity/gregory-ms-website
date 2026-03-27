@@ -12,6 +12,7 @@ export const urlUtils = {
       type: urlParams.get('type') || 'articles',
       q: urlParams.get('q') || '',
       field: urlParams.get('field') || 'all',
+      authorField: urlParams.get('authorField') || 'full_name',
       status: urlParams.get('status') || '',
       orcid: urlParams.get('orcid') || '',
       page: parseInt(urlParams.get('page')) || 1
