@@ -22,6 +22,13 @@ const TRIAL_STATUS_OPTIONS = [
   { value: 'Unknown status', label: 'Unknown status' }
 ];
 
+// Author name field options
+const AUTHOR_NAME_FIELD_OPTIONS = [
+  { value: 'full_name', label: 'Full Name' },
+  { value: 'given_name', label: 'Given Name (First Name)' },
+  { value: 'family_name', label: 'Family Name (Last Name)' }
+];
+
 // Search type options
 const SEARCH_TYPE_OPTIONS = [
   { value: 'articles', label: 'Research Articles' },
@@ -40,6 +47,7 @@ function SearchApp() {
   // Search parameters
   const [searchTerm, setSearchTerm] = useState(initialParams.q);
   const [searchField, setSearchField] = useState(initialParams.field);
+  const [authorNameField, setAuthorNameField] = useState(initialParams.authorField || 'full_name');
   const [trialStatus, setTrialStatus] = useState(initialParams.status);
   const [searchType, setSearchType] = useState(initialParams.type);
   const [orcidSearch, setOrcidSearch] = useState(initialParams.orcid);
@@ -101,7 +109,9 @@ function SearchApp() {
       urlParams.orcid = cleanOrcid(orcidSearch);
     } else {
       urlParams.q = searchTerm;
-      if (searchType !== 'authors') {
+      if (searchType === 'authors') {
+        urlParams.authorField = authorNameField;
+      } else {
         urlParams.field = searchField;
       }
     }
@@ -283,9 +293,11 @@ function SearchApp() {
           const authorParams = {
             team_id: 1, // Team Gregory
             subject_id: 1, // Multiple Sclerosis
-            page: authorPage,
-            full_name: searchTerm // For authors, we search by full name
+            page: authorPage
           };
+          
+          // Set the appropriate name field based on selection
+          authorParams[authorNameField] = searchTerm;
           
           authorResponse = await searchService.searchAuthors(authorParams);
         }
@@ -524,7 +536,7 @@ function SearchApp() {
       urlParams.orcid = cleanOrcid(orcidSearch);
     } else {
       urlParams.q = searchTerm;
-      urlParams.field = searchField;
+      urlParams.authorField = authorNameField;
     }
     
     urlUtils.updateSearchParams(urlParams);
@@ -543,9 +555,11 @@ function SearchApp() {
         const authorParams = {
           team_id: 1, // Team Gregory
           subject_id: 1, // Multiple Sclerosis
-          page: newPage,
-          full_name: searchTerm // For authors, we search by full name
+          page: newPage
         };
+        
+        // Set the appropriate name field based on selection
+        authorParams[authorNameField] = searchTerm;
         
         authorResponse = await searchService.searchAuthors(authorParams);
       }
@@ -888,7 +902,7 @@ function SearchApp() {
                           urlParams.orcid = cleanOrcid(orcidSearch);
                         } else if (searchTerm) {
                           urlParams.q = searchTerm;
-                          urlParams.field = searchField;
+                          urlParams.authorField = authorNameField;
                         }
                         
                         urlUtils.updateSearchParams(urlParams);
@@ -1158,7 +1172,7 @@ function SearchApp() {
                                   type="text"
                                   className="form-control form-control-lg"
                                   id="searchTerm"
-                                  placeholder="Enter author's full name or partial name..."
+                                  placeholder="Enter author's name..."
                                   value={searchTerm}
                                   onChange={(e) => setSearchTerm(e.target.value)}
                                   required
@@ -1166,12 +1180,29 @@ function SearchApp() {
                               </div>
                             </div>
                             
-                            <div className="col-md-4 mb-3 d-flex align-items-end">
-                              <div className="form-group w-100">
-                                <small className="text-muted">
-                                  <i className="fas fa-info-circle mr-1"></i>
-                                  Search by first name, last name, or full name
-                                </small>
+                            <div className="col-md-4 mb-3">
+                              <div className="form-group">
+                                <label htmlFor="authorNameField">Search In</label>
+                                <select 
+                                  className="form-control"
+                                  id="authorNameField"
+                                  value={authorNameField}
+                                  onChange={(e) => {
+                                    setAuthorNameField(e.target.value);
+                                    // Track field selection change
+                                    if (typeof umami !== 'undefined') {
+                                      umami.track('search-author-field-change', {
+                                        field: e.target.value
+                                      });
+                                    }
+                                  }}
+                                >
+                                  {AUTHOR_NAME_FIELD_OPTIONS.map(option => (
+                                    <option key={option.value} value={option.value}>
+                                      {option.label}
+                                    </option>
+                                  ))}
+                                </select>
                               </div>
                             </div>
                           </div>
@@ -1257,7 +1288,8 @@ function SearchApp() {
                   <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> Use specific terms related to treatments, symptoms, or research topics</li>
                   <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> Try different spellings or related terms if you don't find what you're looking for</li>
                   <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> For articles and trials, use the field selector to search in titles only for more specific results</li>
-                  <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> For authors, search by full name or use their ORCID identifier for precise results</li>
+                  <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> For authors, search by full name, given name (first name), or family name (last name) for flexible search options</li>
+                  <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> For authors, you can also use their ORCID identifier for precise results</li>
                   <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> ORCID searches accept both the ID (0000-0000-0000-0000) and full URLs</li>
                   <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> For clinical trials, you can filter by recruitment status to find active research opportunities</li>
                   <li className="list-group-item"><i className="fas fa-check-circle text-success mr-2"></i> Export your results to CSV for offline reading or sharing</li>
