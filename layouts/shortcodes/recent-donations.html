@@ -60,7 +60,7 @@ Usage: {{< recent-donations limit="5" style="full" >}}
     const recentId = 'compactRecent-{{ now.Unix }}';
     const limit = {{ $limit }};
     
-    fetch('https://stripe-transparency.dash-tech-daf.workers.dev')
+    fetch('https://stripe-transparency.human-singularity.workers.dev')
       .then(response => response.json())
       .then(donations => {
         const container = document.getElementById(containerId);

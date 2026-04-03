@@ -85,9 +85,9 @@ async function fetchDonationsData() {
     try {
         const dbgEnabled = isDebugEnabled();
         console.time('fetchDonationsData');
-        dbg(dbgEnabled, 'Starting donations fetch to https://stripe-transparency.dash-tech-daf.workers.dev');
+        dbg(dbgEnabled, 'Starting donations fetch to https://stripe-transparency.human-singularity.workers.dev');
         const response = await Promise.race([
-            fetch('https://stripe-transparency.dash-tech-daf.workers.dev'),
+            fetch('https://stripe-transparency.human-singularity.workers.dev'),
             new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 5000))
         ]);
         

@@ -5,7 +5,7 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     // API endpoints
-    const DONATIONS_API_URL = 'https://stripe-transparency.dash-tech-daf.workers.dev';
+    const DONATIONS_API_URL = 'https://stripe-transparency.human-singularity.workers.dev';
     const TRIALS_API_URL = 'https://api.gregory-ms.com/trials/?team_id=1&subject_id=1&format=json';
     const ARTICLES_API_URL = 'https://api.gregory-ms.com/articles/?team_id=1&subject_id=1&format=json';
     const GOAL_AMOUNT = 500; // €500 goal for 2026
