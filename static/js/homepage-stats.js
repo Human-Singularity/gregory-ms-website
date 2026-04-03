@@ -4,6 +4,9 @@ document.addEventListener('DOMContentLoaded', function() {
     updateHomepageStats();
 });
 
+const DONATIONS_GOAL_AMOUNT = 500;
+const DONATIONS_FALLBACK_AMOUNT = 0;
+
 async function updateHomepageStats() {
     const dbgEnabled = isDebugEnabled();
     dbg(dbgEnabled, 'Fetching homepage statistics...');
@@ -95,8 +98,8 @@ async function fetchDonationsData() {
             const currentYear = data.current_year || null;
             const totalAmount = (currentYear && typeof currentYear.total_amount !== 'undefined')
                 ? currentYear.total_amount
-                : (typeof data.total_amount_paid !== 'undefined' ? data.total_amount_paid : 270);
-            const goalAmount = 500;
+                : (typeof data.total_amount_paid !== 'undefined' ? data.total_amount_paid : DONATIONS_FALLBACK_AMOUNT);
+            const goalAmount = DONATIONS_GOAL_AMOUNT;
             const percentage = Math.round(Math.min((totalAmount / goalAmount) * 100, 100));
             
             updateDonationCard(totalAmount, goalAmount, percentage);
@@ -113,7 +116,7 @@ async function fetchDonationsData() {
     } catch (error) {
         console.error('[HomepageStats] Donations fetch error', error);
         console.log('Using fallback for donations data:', error.message);
-        updateDonationCard(270, 500, 54);
+        updateDonationCard(DONATIONS_FALLBACK_AMOUNT, DONATIONS_GOAL_AMOUNT, 0);
     }
 }
 
