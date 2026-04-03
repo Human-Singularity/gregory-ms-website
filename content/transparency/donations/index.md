@@ -48,13 +48,13 @@ scripts:
         <div class="card-body p-4">
           <div class="row align-items-center">
             <div class="col-md-8">
-              <h5 class="mb-3 title"><i class="fas fa-target text-primary"></i> 2025 Goal</h5>
+              <h5 class="mb-3 title"><i class="fas fa-target text-primary"></i> 2026 Goal</h5>
               <div class="progress mb-3" style="height: 20px;" data-umami-event="view--progress-bar">
                 <div id="progress-bar" class="progress-bar bg-gradient-success" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="500">
                   <span id="progress-text" class="fw-bold">€0 / €500</span>
                 </div>
               </div>
-              <p class="mb-0">Help us reach our €500 goal to cover hosting, domain, and platform maintenance costs for 2025.</p>
+              <p class="mb-0">Help us reach our €500 goal to cover hosting, domain, and platform maintenance costs for 2026.</p>
             </div>
             <div class="col-md-4 text-center">
               <div class="p-3 bg-light rounded" data-umami-event="view--goal-percentage-card">
