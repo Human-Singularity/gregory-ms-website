@@ -103,9 +103,15 @@ export function DownloadButton({
           }
         };
         
-        // For category endpoints, always use GET with query parameters
-        const queryParams = new URLSearchParams(allParams);
-        const fullUrl = `${apiEndpoint}?${queryParams.toString()}`;
+        // Merge new params into any existing query string in the endpoint.
+        // This avoids malformed URLs like `...?author_id=123?format=csv...`.
+        const requestUrl = new URL(apiEndpoint, window.location.origin);
+        Object.entries(allParams).forEach(([key, value]) => {
+          if (value !== undefined && value !== null) {
+            requestUrl.searchParams.set(key, String(value));
+          }
+        });
+        const fullUrl = requestUrl.toString();
         console.log('Full download URL:', fullUrl);
         
         const response = await axios.get(fullUrl, axiosOptions);
