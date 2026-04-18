@@ -35,12 +35,12 @@ services:
     container_name: gregory
     image: amaralbruno/gregory-ai:latest
     restart: always
-      #build: 
-      #context: gregory/django/
-      #dockerfile: Dockerfile
-         # used for local development
-         # command: python manage.py runserver 0.0.0.0:8000
-    command: gunicorn --workers 4 --threads 2 --timeout 600 --log-level debug -b 0.0.0.0:8000 admin.wsgi
+    # build: 
+    #   context: gregory/django/
+    #   dockerfile: Dockerfile
+    # used for local development
+    # command: python manage.py runserver 0.0.0.0:8000
+    command: sh -c "python manage.py collectstatic --noinput && gunicorn --workers 4 --threads 2 --timeout 600 --log-level debug -b 0.0.0.0:8000 admin.wsgi"
     volumes:
       - ./gregory/django:/code
       - /var/www/api.gregory-ms.com/static:/code/static
