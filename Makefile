@@ -94,7 +94,7 @@ help:
 	@echo "    remote-restart     - Restart application container"
 	@echo ""
 	@echo "  🚀 Deployment Pipelines:"
-	@echo "    deploy-backend     - Backend: submodule → push → pull → restart container"
+	@echo "    deploy-backend     - Backend: submodule → push → pull → deps → migrate → restart"
 	@echo "    deploy-frontend    - Frontend: submodule → push → pull → build assets"
 	@echo "    deploy-full        - Complete: backend + dependencies + migrations"
 	@echo ""
@@ -158,7 +158,7 @@ remote-restart:
 		echo "✅ Container restarted successfully"'
 
 # Backend deployment pipeline (for application code changes)
-deploy-backend: submodule-update local-push remote-pull remote-migrate remote-restart
+deploy-backend: submodule-update local-push remote-pull remote-deps remote-migrate remote-restart
 	@echo ""
 	@echo "🎉 Backend deployment completed successfully!"
 	@echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
