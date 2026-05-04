@@ -30,9 +30,12 @@ options:
   hideSubscribeForm: true
   header: mini
 cta:
-  - label: Donate with Stripe 
+  - label: Donate €1/month
     url: https://donate.stripe.com/4gMbJ02IA3DqgfU93Y7N602
-    classes: btn btn-lg font-weight-bold bg-success btn-success 
+    classes: btn btn-lg font-weight-bold bg-success btn-success
+  - label: Choose amount
+    url: https://donate.stripe.com/6oEeVmf1tdHIdOw7ss
+    classes: btn btn-lg font-weight-bold btn-outline-success
 scripts:
   - '<script src="/js/donations-dashboard.js"></script>'
 ---
@@ -68,10 +71,13 @@ scripts:
       </div>
       <!-- Donation Button -->
       <div class="row justify-content-center mb-4">
-      <div class="mb-4">
+      <div class="mb-4 d-flex flex-wrap justify-content-center gap-2">
           <a href="https://donate.stripe.com/4gMbJ02IA3DqgfU93Y7N602" target="_blank" class="btn btn-info btn-round btn-lg font-weight-bold" data-umami-event="click--donate-button">
-            <i class="fas fa-heart me-2"></i> Donate now
+            <i class="fas fa-heart me-2"></i> Donate €1/month
             <i class="fas fa-arrow-circle-right ms-2" aria-hidden="true"></i>
+          </a>
+          <a href="https://donate.stripe.com/6oEeVmf1tdHIdOw7ss" target="_blank" class="btn btn-outline-info btn-round btn-lg font-weight-bold" data-umami-event="click--donate-custom--donations-page">
+            <i class="fas fa-hand-holding-heart me-2"></i> Choose amount
           </a>
         </div>
       <!-- Recent Donations Section -->

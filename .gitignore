@@ -160,3 +160,4 @@ pyproject.toml
 scripts/
 nginx-production-settings/
 nginx-prod
+.vscode/

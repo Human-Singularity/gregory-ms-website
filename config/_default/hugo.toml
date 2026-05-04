@@ -281,3 +281,7 @@ tag = "tags"
   writeStats = true
   # Added from hugo.toml
   useResourceCacheWhen = "never" # fallback, always, never
+# Social media configuration (optional metadata)
+[Social]
+  facebook_admin = ""
+  facebook_app_id = ""
