@@ -122,16 +122,14 @@ remote-pull:
 # Step 3: Install dependencies on remote
 remote-deps:
 		@echo "📦 [3/5] Installing dependencies on remote..."
-	@ssh gregory@House 'cd /home/gregory/gregory-ai && \
-		echo "📦 Installing Python requirements..." && \
+	@ssh gregory@House 'echo "📦 Installing Python requirements..." && \
 		docker exec gregory pip install -q -r requirements.txt && \
 		echo "✅ Dependencies installed"'
 
 # Step 4: Run database migrations on remote
 remote-migrate:
 		@echo "🔄️  [4/5] Running database migrations..."
-	@ssh gregory@House 'cd /home/gregory/gregory-ai && \
-		echo "🗃️  Applying database migrations..." && \
+	@ssh gregory@House 'echo "🗃️  Applying database migrations..." && \
 		docker exec gregory python manage.py migrate && \
 		echo "✅ Database migrations complete"'
 
