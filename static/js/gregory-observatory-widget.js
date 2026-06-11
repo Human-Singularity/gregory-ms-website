@@ -254,9 +254,7 @@
 					articles: item.count,
 					trials: 0,
 					cumulativeArticles: 0,
-					cumulativeLgbm: 0,
-					cumulativeLstm: 0,
-					cumulativePubmedBert: 0
+					cumulativeRelevant: 0
 				};
 			});
 
@@ -269,33 +267,18 @@
 						articles: 0,
 						trials: item.count,
 						cumulativeArticles: 0,
-						cumulativeLgbm: 0,
-						cumulativeLstm: 0,
-						cumulativePubmedBert: 0
+						cumulativeRelevant: 0
 					};
 				} else {
 					combinedData[item.month].trials = item.count;
 				}
 			});
 
-			// Process ML model counts if available
-			if (this.state.monthlyData.monthly_ml_article_counts_by_model) {
-				const models = this.state.monthlyData.monthly_ml_article_counts_by_model;
-
-				Object.keys(models).forEach(modelName => {
-					models[modelName].forEach(item => {
-						if (!item.month || !combinedData[item.month]) return;
-
-						if (modelName === 'lgbm_tfidf') {
-							combinedData[item.month].lgbmRelevant = item.count;
-						} else if (modelName === 'lstm') {
-							combinedData[item.month].lstmRelevant = item.count;
-						} else if (modelName === 'pubmed_bert') {
-							combinedData[item.month].pubmedBertRelevant = item.count;
-						}
-					});
-				});
-			}
+			// Process relevant article counts (deduplicated across models)
+			(this.state.monthlyData.monthly_relevant_article_counts || []).forEach(item => {
+				if (!item.month || !combinedData[item.month]) return;
+				combinedData[item.month].relevant = item.count;
+			});
 
 			// Sort by date and calculate cumulative values
 			const sortedData = Object.values(combinedData).sort((a, b) =>
@@ -303,20 +286,14 @@
 			);
 
 			let cumulativeArticles = 0;
-			let cumulativeLgbm = 0;
-			let cumulativeLstm = 0;
-			let cumulativePubmedBert = 0;
+			let cumulativeRelevant = 0;
 
 			sortedData.forEach(item => {
 				cumulativeArticles += item.articles;
-				cumulativeLgbm += item.lgbmRelevant || 0;
-				cumulativeLstm += item.lstmRelevant || 0;
-				cumulativePubmedBert += item.pubmedBertRelevant || 0;
+				cumulativeRelevant += item.relevant || 0;
 
 				item.cumulativeArticles = cumulativeArticles;
-				item.cumulativeLgbm = cumulativeLgbm;
-				item.cumulativeLstm = cumulativeLstm;
-				item.cumulativePubmedBert = cumulativePubmedBert;
+				item.cumulativeRelevant = cumulativeRelevant;
 			});
 
 			// Filter to last 12 months
@@ -378,38 +355,13 @@
 								order: 1
 							},
 							{
-								label: 'LightGBM (Cumulative)',
-								data: chartData.map(item => item.cumulativeLgbm),
+								label: 'Relevant Articles (Cumulative)',
+								data: chartData.map(item => item.cumulativeRelevant),
 								borderColor: this.config.chartColors.lgbm,
 								backgroundColor: 'transparent',
 								type: 'line',
 								yAxisID: 'y-articles',
 								borderWidth: 2,
-								borderDash: [5, 5],
-								tension: 0.1,
-								order: 1
-							},
-							{
-								label: 'LSTM (Cumulative)',
-								data: chartData.map(item => item.cumulativeLstm),
-								borderColor: this.config.chartColors.lstm,
-								backgroundColor: 'transparent',
-								type: 'line',
-								yAxisID: 'y-articles',
-								borderWidth: 2,
-								borderDash: [8, 4],
-								tension: 0.1,
-								order: 1
-							},
-							{
-								label: 'PubMed BERT (Cumulative)',
-								data: chartData.map(item => item.cumulativePubmedBert),
-								borderColor: this.config.chartColors.pubmedBert,
-								backgroundColor: 'transparent',
-								type: 'line',
-								yAxisID: 'y-articles',
-								borderWidth: 2,
-								borderDash: [12, 3],
 								tension: 0.1,
 								order: 1
 							}

@@ -321,12 +321,13 @@ export const categoryService = {
       
       // Fallback: return empty monthly counts structure
       console.warn('No monthly_counts found in category response');
-      return { 
+      return {
         data: {
           ml_threshold: 0.5,
           available_models: [],
           monthly_article_counts: [],
           monthly_ml_article_counts_by_model: {},
+          monthly_relevant_article_counts: [],
           monthly_trial_counts: []
         }
       };
@@ -354,12 +355,13 @@ export const categoryService = {
       
       // Fallback: return empty monthly counts structure
       console.warn('No monthly_counts found in category response');
-      return { 
+      return {
         data: {
           ml_threshold: 0.5,
           available_models: [],
           monthly_article_counts: [],
           monthly_ml_article_counts_by_model: {},
+          monthly_relevant_article_counts: [],
           monthly_trial_counts: []
         }
       };
