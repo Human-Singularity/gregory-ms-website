@@ -141,10 +141,28 @@ remote-restart:
 		echo "✅ Container restarted successfully"'
 
 # Backend deployment pipeline (for application code changes)
-deploy-backend: local-push remote-pull remote-deps remote-migrate remote-restart
+deploy-backend:
+	@echo "🔄 [1/4] Pulling changes on remote server..."
+	@ssh gregory@House 'cd /home/gregory/gregory-ai && \
+			PULL_OUTPUT=$$(git pull --no-edit) && \
+			echo "$$PULL_OUTPUT" && \
+			if echo "$$PULL_OUTPUT" | grep -q "Already up to date."; then \
+				echo "⏭️  No changes detected, skipping restart."; \
+			else \
+				echo "✅ Changes detected, proceeding with deployment..." && \
+				echo "📦 [2/4] Installing Python requirements..." && \
+				docker exec gregory pip install -q -r requirements.txt && \
+				echo "✅ Dependencies installed" && \
+				echo "🗃️  [3/4] Applying database migrations..." && \
+				docker exec gregory python manage.py migrate && \
+				echo "✅ Database migrations complete" && \
+				echo "🔄 [4/4] Restarting application container..." && \
+				docker restart gregory && \
+				echo "✅ Container restarted successfully"; \
+			fi'
 	@echo ""
 	@echo "🎉 Backend deployment completed successfully!"
-	@echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+	@echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
 # Frontend deployment pipeline (for static assets and frontend changes)
 deploy-frontend: local-push remote-pull build
