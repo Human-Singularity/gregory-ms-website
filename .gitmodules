@@ -1,4 +1,0 @@
-[submodule "gregory"]
-	path = gregory
-	url = git@github.com:brunoamaral/gregory.git
-	branch = main
